@@ -25,5 +25,7 @@ int main() {
 }
 
 /*
-Output
+enter a number:
+2
+28 days in the month
 */
