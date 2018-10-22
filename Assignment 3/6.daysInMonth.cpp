@@ -19,7 +19,7 @@ int main() {
 	int month;
 	cin >> month;
 	int days = 28 + (month + month/8)%2 + 2%month + 2*(1/month);
-	cout << days << endl;
+	cout << days << " days in the month" << endl;
 
 	return 0;
 }
