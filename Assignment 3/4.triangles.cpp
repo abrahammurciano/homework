@@ -28,7 +28,6 @@ int main() {
 	} else {
 		cout << "scalene triangle" << endl;
 	}
-	
 
 	return 0;
 }
