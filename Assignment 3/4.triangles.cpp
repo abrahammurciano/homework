@@ -34,5 +34,7 @@ int main() {
 }
 
 /*
-Output
+enter 3 numbers:
+7 5 3
+scalene triangle
 */

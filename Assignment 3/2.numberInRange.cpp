@@ -32,5 +32,7 @@ int main() {
 }
 
 /*
-Output
+enter 3 numbers:
+3 7 5
+between
 */

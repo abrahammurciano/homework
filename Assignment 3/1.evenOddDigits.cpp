@@ -40,5 +40,7 @@ int main() {
 }
 
 /*
-Output
+enter a number:
+16
+mixed number
 */

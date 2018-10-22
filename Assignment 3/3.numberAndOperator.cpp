@@ -42,5 +42,9 @@ int main() {
 }
 
 /*
-Output
+enter 2 numbers:
+2 10
+enter an operator:
+*
+2 * 10 = 20
 */
