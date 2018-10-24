@@ -1,4 +1,3 @@
-
 /*
  * File Name:				flightLandingTime.cpp
  * Program Description:		Program that reads the take-off time of a plane and flight duration then prints landing time.
