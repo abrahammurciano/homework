@@ -1,7 +1,7 @@
 /*
  * File Name:				6.descendingDigits.cpp
- * Program Description:		Takes a positive integer, and tells you if the digits
- * are in descending order
+ * Program Description:		Takes a positive integer, and tells you if the
+ * digits are in descending order
  * Course Name:				Introduction to Computer Science
  * Assignment Number:		4
  * Question Number:			6
@@ -49,5 +49,7 @@ int main() {
 }
 
 /*
-Output
+enter a number:
+4321
+YES
 */

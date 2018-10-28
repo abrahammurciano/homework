@@ -63,5 +63,7 @@ int main() {
 }
 
 /*
-Output
+enter 2 numbers:
+3 2
+-6
 */
