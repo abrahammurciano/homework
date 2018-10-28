@@ -40,5 +40,6 @@ int main() {
 }
 
 /*
-Output
+757 610 130 328 382 919 918 28 726 272
+not sorted list
 */
