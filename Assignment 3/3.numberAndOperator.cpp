@@ -18,27 +18,30 @@ int main() {
 
 	cout << "enter 2 numbers:" << endl;
 	int a, b;
+	float ans;
 	cin >> a >> b;
 	cout << "enter an operator:" << endl;
 	char op;
 	cin >> op;
-
-	if (op != '+' && op != '-' && op != '*' && op != '/') {
-		cout << "ERROR" << endl;
-		return 0;
+	
+	switch (op) {
+		case '+':
+			ans = a + b;
+			break;
+		case '-':
+			ans = a - b;
+			break;
+		case '*':
+			ans = a * b;
+			break;
+		case '/':
+			ans = (float)a / b;
+			break;
+		default:
+			cout << "ERROR";
+			return 0;
 	}
-
-	cout << a << ' ' << op << ' ' << b << " = ";
-	if (op == '+') {
-		cout << a + b;
-	} else if (op == '-') {
-		cout << a - b;
-	} else if (op == '*') {
-		cout << a * b;
-	} else if (op == '/') {
-		cout << (float)a / b;
-	}
-	cout << endl;
+	cout << a << ' ' << op << ' ' << b << " = " << ans << endl;
 
 	return 0;
 }
