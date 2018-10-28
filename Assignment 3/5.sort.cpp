@@ -5,7 +5,7 @@
  * Assignment Number:		3
  * Question Number:			5
  * Author:					Abraham Murciano
- * 
+ *
  * Created on:				Mon Oct 22 2018
  * Last Modified on:		Mon Oct 22 2018
  */
@@ -14,26 +14,31 @@
 using namespace std;
 
 int main() {
-	
-	int num1, num2, num3, smallest, middle, biggest;
+
+	int num1, num2, num3, smallest, middle, biggest, temp;
 	cout << "enter 3 numbers: " << endl;
 	cin >> num1 >> num2 >> num3;
 
-	// Assume num1 is biggest. work out middle and smallest
 	biggest = num1;
-	middle = (num2 > num3)? num2 : num3;
-	smallest = (num2 <= num3)? num2 : num3;
-	if (num2 > biggest) {
-		// Assume num2 is biggest. work out middle and smallest
-		biggest = num2;
-		middle = (num1 > num3)? num1 : num3;
-		smallest = (num1 <= num3)? num1 : num3;
+	middle = num2;
+	smallest = num3;
+	if (smallest > middle) {
+		// Swap smallest and middle
+		temp = middle;
+		middle = smallest;
+		smallest = temp;
 	}
-	if (num3 > biggest) {
-		// Assume num3 is biggest. work out middle and smallest
-		biggest = num3;
-		middle = (num2 > num1)? num2 : num1;
-		smallest = (num2 <= num1)? num2 : num1;
+	if (middle > biggest) {
+		// Swap biggest and middle
+		temp = middle;
+		middle = biggest;
+		biggest = temp;
+	}
+	if (smallest > middle) {
+		// Swap smallest and middle
+		temp = middle;
+		middle = smallest;
+		smallest = temp;
 	}
 
 	cout << smallest << " " << middle << " " << biggest << endl;
