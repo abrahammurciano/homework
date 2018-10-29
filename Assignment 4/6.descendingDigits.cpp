@@ -30,13 +30,11 @@ int main() {
 	int digit = 0;
 	int digitLeft = n % 10;  // Set digitLeft to the right-most digit
 	bool descending = true;  // Set descending flag to true
-	int nCopy = n;			 // Copy of n for manipulating
-	int position = 0;
-	// while nCopy can be divided into 10 (i.e. has more than 1 digit)
-	while (nCopy /= 10) {
+
+	while (n / 10) {
 		digit = digitLeft;
-		position++;
-		digitLeft = (n % (int)pow(10, position + 1)) / pow(10, position);
+		n /= 10;
+		digitLeft = n % 10;
 		if (digit >= digitLeft) {
 			descending = false;
 			break;
