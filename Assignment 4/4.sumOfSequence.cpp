@@ -28,30 +28,26 @@ int main() {
 		cout << "ERROR" << endl;
 	}
 
+	// Set values for each sub-expression of n when n=0 (before the first term)
+	int coefficientNumerator = -1;
+	int twoNMinusOne = -1;
+	float xPow2NMinus1 = 1 / (float)x;
+
 	float sum = 0;
 	int temp = 0;
-	for (int i = 1; i <= n; i++) {
+
+	for (int i = 0; i < n; i++) {
 		// Work out (-1)^(n-1)
-		int coefficientNumerator = -1;
-		temp = coefficientNumerator;
-		for (int j = 0; j <= i - 1; j++) {
-			temp *= coefficientNumerator;
-		}
-		coefficientNumerator = temp;
+		coefficientNumerator *= -1;
 
 		// Work out 2n-1
-		int twoNMiusOne = 2 * i - 1;
+		twoNMinusOne += 2;
 
 		// Work out coefficient: (-1)^(n-1)/(2n-1)
-		float coefficient = (float)coefficientNumerator / twoNMiusOne;
+		float coefficient = (float)coefficientNumerator / twoNMinusOne;
 
 		// Work out x^(2n-1)
-		int xPow2NMinus1 = x;
-		temp = xPow2NMinus1;
-		for (int j = 2; j <= twoNMiusOne; j++) {
-			temp *= xPow2NMinus1;
-		}
-		xPow2NMinus1 = temp;
+		xPow2NMinus1 *= x * x;
 
 		// Work out expression: (-1)^(n-1)/(2n-1)x^(2n-1)
 		float expression = coefficient * xPow2NMinus1;
