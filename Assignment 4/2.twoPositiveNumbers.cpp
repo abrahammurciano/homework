@@ -1,8 +1,7 @@
 /*
  * File Name:				2.twoPositiveNumbers.cpp
- * Program Description:		Takes 2 positive numbers and then a list of numbers
- * until the sum of the list is > the first number or the number of numbers in
- * the list is > the second number
+ * Program Description:		Takes 2 positive numbers and then a list of numbers until the sum of the
+ * list is > the first number or the number of numbers in the list is > the second number
  * Course Name:				Introduction to Computer Science
  * Assignment Number:		4
  * Question Number:			2
