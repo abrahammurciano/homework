@@ -27,27 +27,30 @@ int main() {
 		cout << "ERROR" << endl;
 	}
 
+	int numOfSpaces = 0;
+
 	// Loop to print out each line
 	for (int i = n; i > 0; i--) {
 		// Print the necessary spaces to right-align the numbers
-		int numOfSpaces = 0;
-		for (int j = n; j > i; j--) {
+		if (i != n) {
 			// Add 2 spaces to sub for the ", "
 			numOfSpaces += 2;
 			// Now add the number of digits to numOfSpaces
 			int numOfDigits = 1;
-			int temp = j;
-			while (temp /= 10) {
+			int iCopy = i + 1;
+			while (iCopy /= 10) {
 				numOfDigits++;
 			}
 			numOfSpaces += numOfDigits;
+			cout << string(numOfSpaces, ' ');
 		}
-		cout << string(numOfSpaces, ' ');
 
 		// Loop to print out each number
-		for (int j = i; j > 0; j--) {
-			cout << j << (j > 1 ? ", " : "\n");
+		cout << i;
+		for (int j = i - 1; j > 0; j--) {
+			cout << ", " << j;
 		}
+		cout << endl;
 	}
 
 	return 0;
