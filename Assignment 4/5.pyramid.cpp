@@ -2,8 +2,8 @@
  * File Name:				5.pyramid.cpp
  * Program Description:		Prints all integers from given number to 1 in decending order
  * Course Name:				Introduction to Computer Science
- * Assignment Number:		#
- * Question Number:			#
+ * Assignment Number:		4
+ * Question Number:			5
  * Author:					Abraham Murciano
  *
  * Created on:				Sun Oct 28 2018
