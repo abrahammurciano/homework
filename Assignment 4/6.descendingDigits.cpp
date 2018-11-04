@@ -39,9 +39,13 @@ int main() {
 	// However, if there is only one digit, it is NOT smaller that "the previous digit on its left"
 	// since there is no such digit.
 	// Therefore I included this if statement:
-	if (n < 10) {
-		descending = false;
-	}
+	//
+	// if (n < 10) {
+	//     descending = false;
+	// }
+	//
+	// However, moodle expected "YES" with one digit numbers as well.
+	// Just wanted to point that out...
 
 	// Repeat loop while n can be divided by 10 without becoming 0
 	while (n /= 10) {		 // The last digit is removed from n
