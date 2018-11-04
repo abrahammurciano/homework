@@ -7,7 +7,7 @@
  * Author:					Abraham Murciano
  *
  * Created on:				Sun Oct 28 2018
- * Last Modified on:		Sun Oct 28 2018
+ * Last Modified on:		Sun Nov 04 2018
  */
 
 #include <iostream>
@@ -15,23 +15,36 @@ using namespace std;
 
 int main() {
 
+	int n = 0;			 // User input
+	int fibN = 0;		 // Each value of the sequence
+	int fibNMinus1 = 1;  // Previous value of sequence
+	int fibNMinus2 = 0;  // 2nd previous value
+
 	// Ask user for a non-negative integer
-	int n = 0, fibN = 0, fibNMinus1 = 0, fibNMinus2 = 0;
 	cout << "enter a number:" << endl;
 	while (true) {
 		cin >> n;
+		// Test if not negative
 		if (n >= 0) {
 			break;
 		}
 		cout << "ERROR" << endl;
 	}
 
-	for (int i = 0; i < n + 1; i++) {
-		fibNMinus2 = fibNMinus1;
-		fibNMinus1 = fibN;
-		fibN = fibNMinus1 + fibNMinus2 + (i == 1 ? 1 : 0);
-		cout << fibN << (i < n ? ' ' : '\n');
+	// Print the first 2 values (unless n is 0, then stop after the 1st one)
+	cout << (n == 0 ? "0" : "0 1");
+
+	// Calculate each value of sequence until (n+1)th value
+	// Start at the 3rd value
+	for (int i = 2; i <= n; i++) {
+		fibN = fibNMinus1 + fibNMinus2;  // Calculate the new value
+		cout << ' ' << fibN;			 // Output new value
+
+		fibNMinus2 = fibNMinus1;  // Update 2nd previous value
+		fibNMinus1 = fibN;		  // Update previous value
 	}
+
+	cout << endl;
 
 	return 0;
 }

@@ -8,7 +8,7 @@
  * Author:					Abraham Murciano
  *
  * Created on:				Sun Oct 28 2018
- * Last Modified on:		Sun Oct 28 2018
+ * Last Modified on:		Sun Nov 04 2018
  */
 
 #include <iostream>
@@ -16,24 +16,22 @@ using namespace std;
 
 int main() {
 
-	// These are the 2 positive integers that we will ask the user to input
-	int sum = 0, maxSum = 0, count = 0, maxCount = 0;
+	int sum = 0, count = 0;		   // Variables that keep track of the nubmer & sum of inputs
+	int maxSum = 0, maxCount = 0;  // 2 positive integers the user will input
 
-	cout << "enter 2 positive numbers:" << endl;
+	cout << "enter 2 positive numbers:" << endl;  // Prompt the user for inputs
 	// Go through this for loop twice, once for each of the inputs
 	for (int i = 0; i < 2; i++) {
-		// Go through this while loop forever until the user inputs a valid
-		// number
+		// Go through this while loop forever until the user inputs a valid number
 		while (true) {
 			int input;
 			cin >> input;
 			if (input > 0) {
-				// After input is valid, store the input into the correct
-				// variable, then exit the loop
+				// After input is valid, store input into correct variable, then exit loop
 				if (i == 0) {
-					maxSum = input;
+					maxSum = input;  // If it's the first input
 				} else {
-					maxCount = input;
+					maxCount = input;  // If it's the second input
 				}
 				break;
 			}
@@ -42,13 +40,16 @@ int main() {
 	}
 
 	// Start capturing list input
-	cout << "enter a list of numbers:" << endl;
+	cout << "enter a list of numbers:" << endl;  // Prompt the user for a list
 	while (sum <= maxSum && count < maxCount) {
+		// Do this until the max sum or count have been reached
 		int n;
-		cin >> n;
-		sum += n;
-		count++;
+		cin >> n;  // Input the next number of the list
+		sum += n;  // Add it to sum
+		count++;   // Increment the list counter
 	}
+
+	// Output the sum
 	cout << sum << endl;
 
 	return 0;

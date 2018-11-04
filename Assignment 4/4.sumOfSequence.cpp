@@ -8,7 +8,7 @@
  * Author:					Abraham Murciano
  *
  * Created on:				Sun Oct 28 2018
- * Last Modified on:		Sun Oct 28 2018
+ * Last Modified on:		Sun Nov 04 2018
  */
 
 #include <iostream>
@@ -16,7 +16,7 @@ using namespace std;
 
 int main() {
 
-	// Ask user for 2 numbers to be stiored in x and n
+	// Ask user for 2 numbers to be stored in x and n
 	int x = 0, n = 0;
 	cout << "enter 2 numbers:" << endl;
 	cin >> x;
@@ -29,18 +29,17 @@ int main() {
 	}
 
 	// Set values for each sub-expression of n when n=0 (before the first term)
-	int coefficientNumerator = -1;
-	int twoNMinusOne = -1;
-	float xPow2NMinus1 = 1 / (float)x;
+	int coefficientNumerator = -1;		// This part of the sequence: (-1)^(n-1)
+	int twoNMinusOne = -1;				// This part of the sequence: 2n-1
+	float xPow2NMinus1 = 1 / (float)x;  // This part of the sequence: x^(2n-1)
 
-	float sum = 0;
-	int temp = 0;
+	float sum = 0;  // Stores the value of the whole sequence as each iteration is added
 
 	for (int i = 0; i < n; i++) {
-		// Work out (-1)^(n-1)
+		// Work out the next (-1)^(n-1)
 		coefficientNumerator *= -1;
 
-		// Work out 2n-1
+		// Work out the next 2n-1
 		twoNMinusOne += 2;
 
 		// Work out coefficient: (-1)^(n-1)/(2n-1)
@@ -49,10 +48,11 @@ int main() {
 		// Work out x^(2n-1)
 		xPow2NMinus1 *= x * x;
 
-		// Work out expression: (-1)^(n-1)/(2n-1)x^(2n-1)
-		float expression = coefficient * xPow2NMinus1;
-		sum += expression;
+		// Work out expression: (-1)^(n-1)/(2n-1)x^(2n-1) and add it to sum
+		sum += coefficient * xPow2NMinus1;
 	}
+
+	// Output the value of the sum of the sequence
 	cout << sum << endl;
 
 	return 0;
