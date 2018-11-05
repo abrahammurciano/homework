@@ -43,7 +43,7 @@ int area(int width, int height) {
 	return width * height;
 }
 
-// Function that calculates the area of a circle given its dimensions
+// Function that calculates the area of a circle given its radius
 float area(float radius) {
 
 	// Check if radius is negative or 0
