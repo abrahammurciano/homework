@@ -49,7 +49,9 @@ int main() {
 
 			// Output the necessary number of spaces
 			numOfSpaces += numOfDigits;
-			cout << string(numOfSpaces, ' ');
+			for (int i = 0; i < numOfSpaces; i++) {
+				cout << ' ';
+			}
 		}
 
 		// Output the row of numbers
