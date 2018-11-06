@@ -60,15 +60,16 @@ bool perfect(long long n) {
 }
 
 void printPerfect(long long max) {
-	cout << 6 << endl;
-	long long sum = 0;
-	for (long long i = 1; sum < max; i += 2) {
-		sum += i * i * i;
-		if (sum < 0) {
-			return;
-		}
-		if (perfect(sum)) {
-			cout << sum << endl;
+	if (max > 6) {
+		cout << 6 << endl;
+		long long sum = 1;
+		for (long long i = 3; sum < max && sum > 0; i += 2) {
+			sum += i * i * i;
+			if (sum % 10 == 6 || sum % 10 == 8) {
+				if (perfect(sum)) {
+					cout << sum << endl;
+				}
+			}
 		}
 	}
 }
