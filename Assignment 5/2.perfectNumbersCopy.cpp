@@ -16,18 +16,14 @@
 using namespace std;
 
 bool isPrime(long long);
-bool perfect(long long);
-void printPerfect(long long = 500);
-
-int highestPrime = 2;
+void perfect(long long);
 
 int main() {
 
 	cout << "enter a number:" << endl;
 	long long n;
 	cin >> n;
-	printPerfect(n);
-	printPerfect();
+	perfect(n);
 
 	return 0;
 }
@@ -46,26 +42,17 @@ bool isPrime(long long n) {
 	return true;
 }
 
-bool perfect(long long n) {
-	long long highestN = pow(2, highestPrime - 1) * (pow(2, highestPrime) - 1);
-	long long p = (n >= highestN) ? highestPrime : 0;
-	for (long long p = 0; p * p <= n; p++) {
-		highestPrime = p;
+void perfect(long long n) {
+	for (long long p = 2; p * p <= n; p++) {
 		if (isPrime(p)) {
 			long long mp = pow(2, p) - 1;
-			if (isPrime(mp) && n == pow(2, p - 1) * mp) {
-				return true;
+			if (n < pow(2, p - 1) * mp) {
+				return;
 			}
-		}
-	}
-
-	return false;
-}
-
-void printPerfect(long long max) {
-	for (int i = 0; i < max; i += 2) {
-		if (perfect(i)) {
-			cout << i << endl;
+			if (isPrime(mp)) {
+				long long perfectNum = pow(2, p - 1) * mp;
+				cout << perfectNum << endl;
+			}
 		}
 	}
 }
