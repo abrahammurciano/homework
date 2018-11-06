@@ -1,16 +1,3 @@
-/*
- * File Name:				2.perfectNumbers.cpp
- * Program Description:		Prints all perfect numbers less than given number, then perfect numbers
- * less than 500
- * Course Name:				Introduction to Computer Science
- * Assignment Number:		5
- * Question Number:			2
- * Author:					Abraham Murciano
- *
- * Created on:				Mon Nov 05 2018
- * Last Modified on:		Mon Nov 05 2018
- */
-
 #include <cmath>
 #include <iostream>
 using namespace std;
@@ -56,7 +43,3 @@ void perfect(long long n) {
 		}
 	}
 }
-
-/*
-Output
-*/
