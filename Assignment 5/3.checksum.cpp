@@ -7,12 +7,14 @@
  * Author:					Abraham Murciano
  *
  * Created on:				Tue Nov 06 2018
- * Last Modified on:		Tue Nov 06 2018
+ * Last Modified on:		Wed Nov 07 2018
  */
 
+#include <climits>  // Used to set defaults to the input function
 #include <iostream>
 using namespace std;
 
+int input(int = INT_MIN, int = INT_MAX);
 int sumDigits(int);
 int checksum(int);
 
@@ -20,24 +22,26 @@ int main() {
 
 	cout << "enter your ID:" << endl;  // Prompt user for a social security number
 
-	int social;  // Variable to store user input
-	int check;   // Variable to store checksum digit
-
-	// Read in social security number, until a valid checksum is returned
-	while (true) {
-		cin >> social;
-		check = checksum(social);
-		if (check >= 0) {
-			break;
-		}
-		cout << "ERROR" << endl;
-	}
+	int social = input(10000000, 99999999);  // Variable to store user input
 
 	// Output the full ID number
 	cout << "your full ID is:" << endl;
-	cout << social << check << endl;
+	cout << social << checksum(social) << endl;
 
 	return 0;
+}
+
+// Function that takes an input between min and max inclusive, then returns the input.
+// Outputs ERROR whenever input is invalid
+int input(int min, int max) {
+	int input;
+	while (true) {
+		cin >> input;
+		if (input >= min && input <= max) {
+			return input;
+		}
+		cout << "ERROR" << endl;
+	}
 }
 
 // Function that sums all the digits of parameter n
@@ -55,12 +59,6 @@ int sumDigits(int n) {
 
 // Function that returns the checksum of 8 digit number n. If 8 digits are not provided, return -1
 int checksum(int n) {
-
-	// Check if number doesn't have 8 digits, in which case return an error code
-	if (n > 100000000 || n <= 10000000) {
-		return -1;
-	}
-
 	int sum = 0;	 // Declare sum and initialise it to 0
 	int weight = 2;  // Starts with weight as 2, it will be toggled between 1 and 2 for each digit
 
@@ -73,6 +71,7 @@ int checksum(int n) {
 
 	int sumLastDigit = sum % 10;	   // Get the last digit of the sum of the weighted digits
 	int checksum = 10 - sumLastDigit;  // Calculate checksum
+	checksum %= 10;					   // In case sumLastDigit is 0
 
 	return checksum;
 }

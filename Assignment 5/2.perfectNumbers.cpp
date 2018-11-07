@@ -8,7 +8,7 @@
  * Author:					Abraham Murciano
  *
  * Created on:				Mon Nov 05 2018
- * Last Modified on:		Tue Nov 06 2018
+ * Last Modified on:		Wed Nov 07 2018
  */
 
 #include <climits>  // Necessary to detect integer overflow
@@ -16,6 +16,7 @@
 #include <iostream>
 using namespace std;
 
+long long input(long long = LLONG_MIN, long long = LLONG_MAX);
 bool isPrime(long long);
 bool perfect(long long);
 void printPerfect(long long = 500);
@@ -23,13 +24,25 @@ void printPerfect(long long = 500);
 int main() {
 
 	cout << "enter a number:" << endl;  // Prompt the user for input
-	long long n;						// Variable to store the user input
-	cin >> n;							// Read in a value to n
+	long long n = input(1);				// Variable to store the user input
 
 	printPerfect(n);
 	printPerfect();
 
 	return 0;
+}
+
+// Function that takes an input between min and max inclusive, then returns the input.
+// Outputs ERROR whenever input is invalid
+long long input(long long min, long long max) {
+	long long input;
+	while (true) {
+		cin >> input;
+		if (input >= min && input <= max) {
+			return input;
+		}
+		cout << "ERROR" << endl;
+	}
 }
 
 // Function that checks if a number n is prime
