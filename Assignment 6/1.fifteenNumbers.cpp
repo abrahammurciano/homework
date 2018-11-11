@@ -16,19 +16,24 @@ using namespace std;
 
 int main() {
 
+	// Declare the length of the array & the minimum and maximum values that are "GOOD"
 	int const length = 15, min = 1, max = 15;
-	int list[length];
-	bool inRange = true;
+	int list[length];	 // Declare array of length 'length'
+	bool inRange = true;  // Flag to keep track of weather or not numbers are in range
 
-	cout << "enter 15 numbers:" << endl;
+	cout << "enter 15 numbers:" << endl;  // Prompt for input
 
+	// Loop to input 15 numbers and check if they're within the 'good' range
 	for (int i = 0; i < length; i++) {
-		cin >> list[i];
+		cin >> list[i];  // Read a number into the ith position
+
+		// Checks if the ith number is out of range
 		if (list[i] < min || list[i] > max) {
 			inRange = false;
 		}
 	}
 
+	// Output wheather or not the numbers are in range
 	cout << (inRange ? "" : "NOT ") << "GOOD" << endl;
 
 	return 0;
