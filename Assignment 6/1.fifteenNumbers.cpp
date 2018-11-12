@@ -1,7 +1,7 @@
 /*
  * File Name:				1.fifteenNumbers.cpp
  * Program Description:		Reads in 15 whole numbers and outputs wheather or not the list contains
- * only numbers between 1 and 15
+ * all the numbers between 1 and 15
  * Course Name:				Introduction to Computer Science
  * Assignment Number:		6
  * Question Number:			1
@@ -18,23 +18,39 @@ int main() {
 
 	// Declare the length of the array & the minimum and maximum values that are "GOOD"
 	int const length = 15, min = 1, max = 15;
-	int list[length];	 // Declare array of length 'length'
-	bool inRange = true;  // Flag to keep track of weather or not numbers are in range
+	int list[length];  // Declare array of length 'length'
 
 	cout << "enter 15 numbers:" << endl;  // Prompt for input
 
 	// Loop to input 15 numbers and check if they're within the 'good' range
 	for (int i = 0; i < length; i++) {
 		cin >> list[i];  // Read a number into the ith position
+	}
 
-		// Checks if the ith number is out of range
-		if (list[i] < min || list[i] > max) {
-			inRange = false;
+	// Variable to store whether or not list contains all numbers from 1 to 15
+	bool containsAllNums = true;
+
+	// Go through all the numbers between min and max to see if they're all contained in list
+	for (int i = min; i <= max; i++) {
+		bool found = false;  // Assume the number is not in list until it's found
+
+		// Iterate through list checking if i is in list
+		for (int j = 0; j < length; j++) {
+			if (list[j] == i) {
+				found = true;
+				break;
+			}
+		}
+
+		// If any number was not found, then the list doesn't contain all values
+		if (!found) {
+			containsAllNums = false;
+			break;
 		}
 	}
 
-	// Output wheather or not the numbers are in range
-	cout << (inRange ? "" : "NOT ") << "GOOD" << endl;
+	// Output wheather or not all the numbers are in list
+	cout << (containsAllNums ? "" : "NOT ") << "GOOD" << endl;
 
 	return 0;
 }
