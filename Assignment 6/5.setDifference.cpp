@@ -61,7 +61,7 @@ int main() {
 	for (int i = 0; i < N; i++) {
 		bool isUnique = true;  // The ith element of s1 is unique until proven otherwise
 
-		for (int j = 0; j < N; j++) {  // Loop through every element of
+		for (int j = 0; j < N; j++) {  // Loop through every element of s2
 			if (s1[i] == s2[j]) {	  // If a duplicate was found in s2,
 				isUnique = false;	  // the ith element of s1 isn't unique
 				break;
