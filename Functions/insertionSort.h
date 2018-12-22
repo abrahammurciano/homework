@@ -1,8 +1,8 @@
-#ifndef insetionSort_h
-#define insetionSort_h
+#ifndef insertionSort_h
+#define insertionSort_h
 
 // Function that performs insertion sort on given array
-void insetionSort(int array[], int size) {
+void insertionSort(int array[], int size) {
 	int notSorted = 1;
 	while (notSorted < size) {
 		int val = array[notSorted];
