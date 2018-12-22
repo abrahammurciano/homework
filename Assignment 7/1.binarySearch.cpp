@@ -21,19 +21,23 @@ int binSearch(int arr[], int size, int search) {
 	// max is the highest index 'search' could be at
 	int min = 0, max = size - 1;
 
-	while (max >= min) {				 // When max and min cross each other, the search is over
-		int mid = (min + max) / 2;		 // mid is the average of min and max
-		if (search < arr[mid]) {		 // If search number is in the first half of array
-			max = mid - 1;				 // max is 1 less than the value at mid
+	while (max >= min) {			  // When max and min cross each other, the search is over
+		int mid = (min + max) / 2;	// mid is the average of min and max
+		if (search < arr[mid]) {	  // If search number is in the first half of array
+			max = mid - 1;			  // max is 1 less than the value at mid
+			if (search > arr[max]) {  // If search number is more than the value at max
+				return -1;			  // There is no result
+			}
 		} else if (search > arr[mid]) {  // If search number is in the second half of array
 			min = mid + 1;				 // min is one more than the value at mid
-		} else {  // if search isn't more or less than the value at mid, it's the same as the value
-				  // at mid
+			if (search < arr[min]) {	 // If search number is less than the value at min
+				return -1;				 // There is no result
+			}
+		} else {
+			// if search isn't more or less than the value at mid, it's the same as the value at mid
 			return mid;
 		}
 	}
-
-	return -1;  // If the while loop never returns an index, there is no result
 }
 
 int main() {
