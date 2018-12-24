@@ -170,6 +170,7 @@ int main() {
 			cin >> duration;
 
 			addLine(buses, nBuses, lineId, nStops, duration);
+			print(buses, nBuses);
 		}
 
 		// Delete a bus line
@@ -179,6 +180,7 @@ int main() {
 			cin >> lineId;
 
 			deleteLine(buses, nBuses, lineId);
+			print(buses, nBuses);
 		}
 
 		// Print all data in the system
