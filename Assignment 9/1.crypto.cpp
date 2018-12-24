@@ -1,9 +1,10 @@
 /*
- * File Name:				9.crypto.cpp
- * Program Description:		----
+ * File Name:				1.crypto.cpp
+ * Program Description:		Converts each character between a and z (lowercase) in str into the
+ * reverse character. For example, a becomes z, z -> a, b -> y, c -> x, etc.
  * Course Name:				Introduction to Computer Science
- * Assignment Number:		#
- * Question Number:			#
+ * Assignment Number:		9
+ * Question Number:			1
  * Author:					Abraham Murciano
  *
  * Created on:				Mon Dec 24 2018
@@ -26,7 +27,7 @@ void crypto(char str[]) {
 
 int main() {
 
-	int const N = 81;			 // Max length of string
+	int const N = 80;			 // Max length of string
 	char str[N];				 // Declare array to hold the string
 	cout << "enter a string: ";  // Prompt for input
 	cin.getline(str, N);		 // Read in until user presses enter
