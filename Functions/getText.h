@@ -16,6 +16,9 @@ char* getText(char terminator = '\n') {
 		char chtr;
 		cin >> noskipws >> chtr;   // Temporarily store input character (could be whitespace)
 		if (chtr == terminator) {  // Stop at terminator character
+			if (i == 0) {
+				continue;  // If first character is a terminator, ignore it
+			}
 			str[i] = '\0';
 			return str;
 		} else {
