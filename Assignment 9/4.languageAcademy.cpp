@@ -10,6 +10,7 @@
  * Last Modified on:		Wed Dec 26 2018
  */
 
+#include <climits>
 #include <iostream>
 using namespace std;
 
@@ -45,8 +46,9 @@ char* getText(char terminator = '\n') {
 	char* str = new char[size];  // Create dynamic string
 
 	while (true) {
-		char chtr;
-		cin >> noskipws >> chtr;   // Temporarily store input character (could be whitespace)
+		// Temporarily store input character (could be whitespace)
+		char chtr = terminator;
+		cin >> noskipws >> chtr >> skipws;
 		if (chtr == terminator) {  // Stop at terminator character
 			if (i == 0) {
 				continue;  // If first character is a terminator, ignore it
@@ -135,7 +137,16 @@ void newStr(char**& words, int& n, char* str) {
 	n++;
 }
 
-void delStr(char**& words, int& n, char* str) {}
+void delStr(char**& words, int& n, char* str) {
+	int pos = search(words, n, str);
+	if (pos >= 0) {
+		for (int i = pos + 1; i < n; i++) {
+			words[i - 1] = words[i];
+		}
+		resize(words, n, n - 1);
+		n--;
+	}
+}
 
 void printAll(char** words, int n) {
 	for (int i = 0; i < n; i++) {
@@ -144,9 +155,89 @@ void printAll(char** words, int n) {
 	cout << endl;
 }
 
-char* searchStr(char** words, int n, char* search) {}
+char* searchStr(char** words, int n, char* str) {
+	int pos = search(words, n, str);
+	return (pos >= 0) ? words[pos] : NULL;
+}
 
-void printChar(char** words, int n, char c) {}
+int findFirst(char** words, int n, char c) {
+	// min is the lowest index the first word starting with c could be at
+	// max is the highest index the first word starting with c could be at
+	int min = 0, max = n - 1;
+
+	while (max >= min) {			// When max and min cross each other, the search is over
+		int mid = (min + max) / 2;  // mid is the average of min and max
+
+		// If the first word starting with c is in the first half of array
+		if (c < words[mid][0] || (mid > 0 && c == words[mid][0] && c == words[mid - 1][0])) {
+			max = mid - 1;  // max is 1 less than the word at mid
+			// If the first word starting with c is after the word at max
+			if (max < min || c > words[max][0]) {
+				return -1;  // No words starting with c
+			}
+		}
+
+		// If the first word starting with c is in second half of array
+		else if (c > words[mid][0]) {
+			min = mid + 1;  // min is one more than the value at mid
+			// If str is less than the word at min
+			if (min > max || c < words[min][0]) {
+				return -1;  // No words starting with c
+			}
+		} else {
+			// if str isn't more or less than the word at mid, it's the same as the word at mid
+			return mid;
+		}
+	}
+
+	return -1;  // No words starting with c
+}
+
+int findLast(char** words, int n, char c) {
+	// min is the lowest index the last word starting with c could be at
+	// max is the highest index the last word starting with c could be at
+	int min = 0, max = n - 1;
+
+	while (max >= min) {			// When max and min cross each other, the search is over
+		int mid = (min + max) / 2;  // mid is the average of min and max
+
+		// If the last word starting with c is in the first half of array
+		if (c < words[mid][0]) {
+			max = mid - 1;  // max is 1 less than the word at mid
+			// If the last word starting with c is after the word at max
+			if (max < min || c > words[max][0]) {
+				return -1;  // No words starting with c
+			}
+		}
+
+		// If the last word starting with c is in second half of array
+		else if (c > words[mid][0] ||
+				 (mid < n - 1 && c == words[mid][0] && c == words[mid + 1][0])) {
+			min = mid + 1;  // min is one more than the value at mid
+			// If str is less than the word at min
+			if (min > max || c < words[min][0]) {
+				return -1;  // No words starting with c
+			}
+		} else {
+			// if str isn't more or less than the word at mid, it's the same as the word at mid
+			return mid;
+		}
+	}
+
+	return -1;  // No words starting with c
+}
+
+void printChar(char** words, int n, char c) {
+	int first = findFirst(words, n, c);
+	if (first < 0) {
+		return;
+	}
+	int last = findLast(words, n, c);
+	for (int i = first; i <= last; i++) {
+		cout << words[i] << ' ' << flush;
+	}
+	cout << endl;
+}
 
 int main() {
 
@@ -159,11 +250,46 @@ int main() {
 		cout << "enter 0-5: " << endl;
 		cin >> choice;
 
+		if (!cin || choice < 0 || choice > 5) {
+			cout << "ERROR" << endl;
+			cin.clear();
+			cin.ignore(INT_MAX, '\n');
+		}
+
 		// Enter a new word
-		if (choice == 0) {
+		else if (choice == 0) {
 			cout << "enter the word: " << endl;
 			char* word = getText();
 			newStr(lexicon, nWords, word);
+			printAll(lexicon, nWords);
+		}
+
+		// Delete a word
+		else if (choice == 1) {
+			cout << "enter the word to delete: " << endl;
+			char* word = getText();
+			delStr(lexicon, nWords, word);
+			printAll(lexicon, nWords);
+		}
+
+		// Search for a word
+		else if (choice == 2) {
+			cout << "enter the word to search for: " << endl;
+			char* word = getText();
+			char* p = searchStr(lexicon, nWords, word);
+			cout << (p == NULL ? "not " : "") << "found" << endl;
+		}
+
+		// Print all words begining with a letter
+		else if (choice == 3) {
+			cout << "enter the char: " << endl;
+			char letter;
+			cin >> letter;
+			printChar(lexicon, nWords, letter);
+		}
+
+		// Print all the words
+		else if (choice == 4) {
 			printAll(lexicon, nWords);
 		}
 
@@ -174,7 +300,63 @@ int main() {
 
 /*
 ========== Sample Run - start ==========
-
+enter 0-5:
+0
+enter the word:
+good
+good
+enter 0-5:
+0
+enter the word:
+hello
+good hello
+enter 0-5:
+0
+enter the word:
+shalom
+good hello shalom
+enter 0-5:
+0
+enter the word:
+today
+good hello shalom today
+enter 0-5:
+2
+enter the word to search for:
+what
+not found
+enter 0-5:
+2
+enter the word to search for:
+hello
+found
+enter 0-5:
+1
+enter the word to delete:
+hello
+good shalom today
+enter 0-5:
+1
+enter the word to delete:
+toda
+good shalom today
+enter 0-5:
+3
+enter the char:
+s
+shalom
+enter 0-5:
+0
+enter the word:
+toda
+good shalom toda today
+enter 0-5:
+3
+enter the char:
+t
+toda today
+enter 0-5:
+5
 =========== Sample Run - end ===========
 ----------------------------------------
 */

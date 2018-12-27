@@ -13,8 +13,9 @@ char* getText(char terminator = '\n') {
 	char* str = new char[size];  // Create dynamic string
 
 	while (true) {
-		char chtr;
-		cin >> noskipws >> chtr;   // Temporarily store input character (could be whitespace)
+		// Temporarily store input character (could be whitespace)
+		char chtr = terminator;
+		cin >> noskipws >> chtr >> skipws;
 		if (chtr == terminator) {  // Stop at terminator character
 			if (i == 0) {
 				continue;  // If first character is a terminator, ignore it
