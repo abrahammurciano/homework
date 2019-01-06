@@ -66,7 +66,7 @@ int mergeDescending(int arr[], const int arr1[], int size1, const int arr2[], in
 	int i1 = 0, i2 = 0;  // Set 2 indices to 0, one for each of arr1 and arr2
 	int sizeMerged = 0;  // Keeps track of the size of the merged array arr
 
-	// Repeat until either of arr1 or arr2 have been mereged
+	// Repeat until either of arr1 or arr2 have been merged
 	while (i1 < size1 && i2 < size2) {
 		// Copy the grater of the next value of arr1 and arr2 into the next position of arr
 		// Then increment sizeMerged and i1 or i2, depending on which array was coppied from
