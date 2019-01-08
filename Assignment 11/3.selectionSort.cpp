@@ -20,10 +20,12 @@ void swap(int& a, int& b) {
 	b = t;
 }
 
+// Function that finds the index of the smallest element in an array
 int smallest(int arr[], int n, int s = 0, int i = 0) {
 	return i >= n ? s : smallest(arr, n, (arr[s] < arr[i] ? s : i), i + 1);
 }
 
+// Function that performs insetion sort on an array
 void sort(int arr[], int n) {
 	if (n) {
 		swap(arr[0], arr[smallest(arr, n)]);
@@ -73,6 +75,8 @@ int main() {
 
 	cout << "after:" << endl;
 	printArray(arr, num);
+
+	delete[] arr;
 
 	return 0;
 }
