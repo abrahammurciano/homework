@@ -6,13 +6,12 @@ using namespace std;
 
 // Function that prints the values of a 1D array of integers separated by a space
 void printArray(int array[], int n, bool newLine = true) {
-	if (n < 1) {
-		return;
+	for (int i = 0; i < n - 1; i++) {
+		cout << array[i] << ' ';
 	}
 
-	cout << array[0];
-	for (int i = 1; i < n; i++) {
-		cout << " " << array[i];
+	if (n > 1) {
+		cout << array[n - 1];
 	}
 
 	if (newLine) {
