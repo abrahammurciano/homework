@@ -41,6 +41,8 @@ int main() {
 	}
 	cout << "the smallest is: " << array[smallest(array, num)] << endl;
 
+	delete[] array;
+
 	return 0;
 }
 
