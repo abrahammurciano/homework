@@ -27,7 +27,7 @@ int smallest(int arr[], int n, int s = 0, int i = 0) {
 
 // Function that performs insetion sort on an array
 void sort(int arr[], int n) {
-	if (n) {
+	if (n > 0) {
 		swap(arr[0], arr[smallest(arr, n)]);
 		sort(arr + 1, n - 1);
 	}

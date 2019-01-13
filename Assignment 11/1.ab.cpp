@@ -15,7 +15,7 @@ using namespace std;
 
 // Function that prints n 'a's and n 'b's
 void printABs(int n) {
-	if (n) {  // When n is 0, do nothing
+	if (n > 0) {  // When n is 0 or less, do nothing
 		cout << 'a';
 		printABs(n - 1);
 		cout << 'b';
