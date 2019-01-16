@@ -22,31 +22,34 @@ struct gradesFile {
 	float avg;  // Average grade
 };
 
+// Function that calculates the average grade of the grades in file
 float gradeAvg(fstream& file) {
 	int sum = 0;
 	int count = 0;
 	while (!file.eof()) {
 		int grade;
-		file >> grade;
-		sum += grade;
+		file >> grade;  // Read in the next grade from file
+		sum += grade;   // Add it to sum
 		count++;
 	}
-	return (float)sum / count;
+	return (float)sum / count;  // Return average
 }
 
+// Function that reads a file and returns a file object with the info about the file
 gradesFile read(int id, const char path[]) {
 	gradesFile f;
 	f.id = id;
-	f.stream.open(path, ios::in);
-	f.avg = gradeAvg(f.stream);
+	f.stream.open(path, ios::in);  // Open the file
+	f.avg = gradeAvg(f.stream);	// Work out the average
 	f.stream.close();
-	return f;
+	return f;  // Return the object
 }
 
 int main() {
 
 	const int nFiles = 4;
 
+	// Array of file objets
 	gradesFile files[nFiles] = {
 		read(1, "grades1.txt"),
 		read(2, "grades2.txt"),
@@ -54,8 +57,10 @@ int main() {
 		read(4, "grades4.txt"),
 	};
 
+	// Work out which has the highest average
 	int highestIndex = 0;
 	for (int i = 1; i < nFiles; i++) {
+		// If the ith file has a higher average, overwrite highest index with i
 		if (files[i].avg > files[highestIndex].avg) {
 			highestIndex = i;
 		}

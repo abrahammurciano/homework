@@ -1,0 +1,5 @@
+1234 Elkana 100
+5678 Chana 90
+9090 Penina 80
+6868 Eli 70
+4321 Shmuel 60
