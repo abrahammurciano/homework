@@ -13,11 +13,12 @@ using namespace std;
 
 int main() {
 
-	cout << "enter two rational numbers" << endl;
-	int n1, d1, n2, d2;
-	char c;  // Character to ignore the '/' in the input stream
-	cin >> n1 >> c >> d1 >> n2 >> c >> d2;
+	cout << "enter two rational numbers" << endl;  // Prompt for input
+	int n1, d1, n2, d2;							   // Declare variables to store input
+	char c;									// Character to ignore the '/' in the input stream
+	cin >> n1 >> c >> d1 >> n2 >> c >> d2;  // Read in input
 
+	// Declare 2 rational numbers with the user's inputs
 	Rational num1(n1, d1);
 	Rational num2(n2, d2);
 
