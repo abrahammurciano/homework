@@ -17,9 +17,24 @@ class Employee {
   private:
 	int id;
 	string name;
+	float wage;
+	int hours;
+	int overtime;
 
   public:
-	Employee(/* args */);
+	Employee(int _id, string _name, float _wage, int _hours, int _overtime);
+	int getId();
+	string getName();
+	float getWage();
+	int getHours();
+	int getOvertime();
+	void setId(int _id);
+	void setName(string _name);
+	void setWage(float _wage);
+	void setHours(int _hours);
+	void setOvertime(int _overtime);
+	int totalHours();
+	float salary();
 };
 
 #endif
