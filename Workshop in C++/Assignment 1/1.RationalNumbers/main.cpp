@@ -36,7 +36,21 @@ int main() {
 
 /*
 ========== Sample Run - start ==========
-
+enter two rational numbers
+5/2 1025/410
+equal
+=========== Sample Run - end ===========
+----------------------------------------
+========== Sample Run - start ==========
+enter two rational numbers
+5/0 5/1
+equal
+=========== Sample Run - end ===========
+----------------------------------------
+========== Sample Run - start ==========
+enter two rational numbers
+2/0 3/0
+different 2/1 3/1
 =========== Sample Run - end ===========
 ----------------------------------------
 */
