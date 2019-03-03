@@ -14,6 +14,14 @@
 using namespace std;
 
 // Constructor
+Employee::Employee() {
+	id = 0;
+	name = "";
+	wage = 0;
+	hours = 0;
+	overtime = 0;
+}
+
 Employee::Employee(int _id, string _name, float _wage, int _hours, int _overtime) {
 	id = _id;
 	name = _name;

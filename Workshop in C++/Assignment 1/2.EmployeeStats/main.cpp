@@ -20,15 +20,11 @@ int main() {
 	int hours;
 	int overtime;
 
-	// Variables to keep track of highest salary so far
-	float hiSalary = 0;
-	int hiSalaryId;
-	string hiSalaryName;
+	// Variable to keep track of highest salary so far
+	Employee hiSalary;
 
-	// Variables to keep track of hardest worker so far
-	int hiHours = 0;
-	int hiHoursId;
-	string hiHoursName;
+	// Variable to keep track of hardest worker so far
+	Employee hiHours;
 
 	cout << "enter details, to end enter 0" << endl;  // Prompt for input
 	while (true) {									  // Each iteration inputs 1 employee
@@ -65,31 +61,34 @@ int main() {
 
 		Employee employee(id, name, wage, hours, overtime);  // Create employee from input
 
-		if (employee.totalHours() > hiHours) {  // Check if new employee is hardest worker so far
+		if (employee.totalHours() >
+			hiHours.totalHours()) {  // Check if new employee is hardest worker so far
 			// Update hardest worker
-			hiHours = employee.totalHours();
-			hiHoursId = employee.getId();
-			hiHoursName = employee.getName();
+			hiHours = employee;
 		}
 
-		if (employee.salary() > hiSalary) {  // Check if new employee is highest paid
+		if (employee.salary() > hiSalary.salary()) {  // Check if new employee is highest paid
 			// Update highest paid employee
-			hiSalary = employee.salary();
-			hiSalaryId = employee.getId();
-			hiSalaryName = employee.getName();
+			hiSalary = employee;
 		}
 	}
 
 	// Print employee stats
-	cout << "highest salary: " << hiSalaryId << ' ' << hiSalaryName << endl;
-	cout << "hardest worker: " << hiHoursId << ' ' << hiHoursName << endl;
+	cout << "highest salary: " << hiSalary.getId() << ' ' << hiSalary.getName() << endl;
+	cout << "hardest worker: " << hiHours.getId() << ' ' << hiHours.getName() << endl;
 
 	return 0;
 }
 
 /*
 ========== Sample Run - start ==========
-
+enter details, to end enter 0
+123456789       abraham         50      40      2
+135792468       jack          100     30      0
+975312468       sarah    30      45      10
+0
+highest salary: 135792468 jack
+hardest worker: 975312468 sarah
 =========== Sample Run - end ===========
 ----------------------------------------
 */

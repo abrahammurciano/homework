@@ -22,6 +22,7 @@ class Employee {
 	int overtime;
 
   public:
+	Employee();
 	Employee(int _id, string _name, float _wage, int _hours, int _overtime);
 	int getId();
 	string getName();
