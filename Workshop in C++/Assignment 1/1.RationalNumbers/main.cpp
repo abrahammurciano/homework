@@ -14,13 +14,17 @@ using namespace std;
 int main() {
 
 	cout << "enter two rational numbers" << endl;  // Prompt for input
-	int n1, d1, n2, d2;							   // Declare variables to store input
-	char c;									// Character to ignore the '/' in the input stream
-	cin >> n1 >> c >> d1 >> n2 >> c >> d2;  // Read in input
-
+	int n, d;									   // Declare variables to store input
 	// Declare 2 rational numbers with the user's inputs
-	Rational num1(n1, d1);
-	Rational num2(n2, d2);
+	cin >> n;
+	cin.ignore(1, '/');
+	cin >> d;
+	Rational num1(n, d);
+
+	cin >> n;
+	cin.ignore(1, '/');
+	cin >> d;
+	Rational num2(n, d);
 
 	if (num1.equal(num2)) {
 		cout << "equal" << endl;
