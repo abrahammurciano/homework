@@ -13,7 +13,6 @@
 
 #include "Circle.h"
 #include "Point.h"
-#include <math.h>
 
 Circle::Circle() {
 	center = Point();
@@ -46,10 +45,10 @@ float Circle::circumference() {
 }
 
 int Circle::outside(Point p) {
-	float d = sqrt((center.x - p.x) * (center.x - p.x) + (center.y - p.y) * (center.y - p.y));
-	if (d > radius) {
+	float dSquared = (center.x - p.x) * (center.x - p.x) + (center.y - p.y) * (center.y - p.y);
+	if (dSquared > radius * radius) {
 		return 1;
-	} else if (d < radius) {
+	} else if (dSquared < radius * radius) {
 		return -1;
 	} else {
 		return 0;
