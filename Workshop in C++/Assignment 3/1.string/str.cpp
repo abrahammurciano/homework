@@ -141,6 +141,18 @@ char& str::operator[](const int i) const {
 	return array[i];
 }
 
+str& str::operator=(const str& s) {
+	if (this != &s) {
+		capacity = s.capacity;
+		len = s.len;
+		delete[] array;
+		array = new char[capacity];
+		for (int i = 0; i < capacity; i++) {
+			array[i] = s[i];
+		}
+	}
+}
+
 // Append a string to current string
 str& str::operator+=(const str& s) {
 	if (capacity < len + s.len + 1) {

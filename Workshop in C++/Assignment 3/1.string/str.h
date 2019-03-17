@@ -36,6 +36,7 @@ class str {
 	// Operators
 	char& operator[](const int i) const;
 
+	str& operator=(const str& s);
 	str& operator+=(const str& s);
 	str operator+(const str& s) const;
 
