@@ -14,7 +14,7 @@ using namespace std;
 Rnl::Rnl(int n, int d) {
 	this->n = n;
 	this->d = d ? d : 1;
-	*this = simplify();
+	simplify();
 }
 
 Rnl::Rnl(const Rnl& r) {
@@ -71,19 +71,19 @@ bool Rnl::operator>=(const Rnl& r) const {
 
 // Arithmetic operators
 Rnl Rnl::operator+(const Rnl& r) const {
-	return Rnl(n * r.d + r.n * d, d * r.d).simplify();
+	return Rnl(n * r.d + r.n * d, d * r.d);
 }
 
 Rnl Rnl::operator-(const Rnl& r) const {
-	return Rnl(n * r.d - r.n * d, d * r.d).simplify();
+	return Rnl(n * r.d - r.n * d, d * r.d);
 }
 
 Rnl Rnl::operator*(const Rnl& r) const {
-	return Rnl(n * r.n, d * r.d).simplify();
+	return Rnl(n * r.n, d * r.d);
 }
 
 Rnl Rnl::operator/(const Rnl& r) const {
-	return Rnl(n * r.d, d * r.n).simplify();
+	return Rnl(n * r.d, d * r.n);
 }
 
 // Assignment operators
