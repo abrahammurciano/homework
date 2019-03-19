@@ -20,7 +20,7 @@ class Rnl {
 	Rnl(const Rnl& r);
 	void print() const;
 	int hcf(int n, int d) const;
-	Rnl simplify() const;
+	Rnl& simplify();
 
 	// Relational operators
 	bool operator==(const Rnl& r) const;
@@ -37,17 +37,17 @@ class Rnl {
 	Rnl operator/(const Rnl& r) const;
 
 	// Assignment operators
-	Rnl operator+=(const Rnl& r);
-	Rnl operator-=(const Rnl& r);
-	Rnl operator*=(const Rnl& r);
-	Rnl operator/=(const Rnl& r);
+	Rnl& operator+=(const Rnl& r);
+	Rnl& operator-=(const Rnl& r);
+	Rnl& operator*=(const Rnl& r);
+	Rnl& operator/=(const Rnl& r);
 
 	// Increment operators
-	Rnl operator++();
+	Rnl& operator++();
 	Rnl operator++(int);
 
 	// Decrement operators
-	Rnl operator--();
+	Rnl& operator--();
 	Rnl operator--(int);
 };
 

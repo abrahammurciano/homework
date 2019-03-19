@@ -28,11 +28,13 @@ int Rnl::hcf(int n, int d) const {
 }
 
 // simplify the fraction to its simplest form
-Rnl Rnl::simplify() const {
+Rnl& Rnl::simplify() {
 	int hcf = this->hcf(n, d);  // Calculate Highest Common Factor
 
 	// Divide numerator and denominator by HCF and return result
-	return hcf == 1 ? *this : Rnl(n / hcf, d / hcf);
+	n /= hcf;
+	d /= hcf;
+	return *this;
 }
 
 void Rnl::print() const {
@@ -85,24 +87,24 @@ Rnl Rnl::operator/(const Rnl& r) const {
 }
 
 // Assignment operators
-Rnl Rnl::operator+=(const Rnl& r) {
+Rnl& Rnl::operator+=(const Rnl& r) {
 	return *this = *this + r;
 }
 
-Rnl Rnl::operator-=(const Rnl& r) {
+Rnl& Rnl::operator-=(const Rnl& r) {
 	return *this = *this - r;
 }
 
-Rnl Rnl::operator*=(const Rnl& r) {
+Rnl& Rnl::operator*=(const Rnl& r) {
 	return *this = *this * r;
 }
 
-Rnl Rnl::operator/=(const Rnl& r) {
+Rnl& Rnl::operator/=(const Rnl& r) {
 	return *this = *this / r;
 }
 
 // Increment operators
-Rnl Rnl::operator++() {
+Rnl& Rnl::operator++() {
 	n += d;
 	return *this;
 }
@@ -114,7 +116,7 @@ Rnl Rnl::operator++(int) {
 }
 
 // Decrement operators
-Rnl Rnl::operator--() {
+Rnl& Rnl::operator--() {
 	n -= d;
 	return *this;
 }
