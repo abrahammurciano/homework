@@ -41,7 +41,7 @@ int main() {
 	cout << endl;
 
 	cout << "a!=b: ";
-	cout << (bool)(a != b) << endl;
+	cout << (a != b) << endl;
 
 	cout << "a<b: ";
 	cout << (a < b) << endl;
