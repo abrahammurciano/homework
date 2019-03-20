@@ -92,11 +92,13 @@ void str::input(const str prompt, const char delim) {
 		prompt.print(true);
 	}
 
-	// Read in character at a time
+	// Read in first character that is not white space
+	char c = delim;
+	cin >> c;
 	cin >> noskipws;  // Read whitespace
+
+	// Read in character at a time
 	while (true) {
-		char c = delim;
-		cin >> c;
 		if (c != delim) {
 			// If running low on space, double capacity
 			if (len >= capacity - 1) {
@@ -104,6 +106,7 @@ void str::input(const str prompt, const char delim) {
 			}
 			array[len++] = c;
 			array[len] = '\0';
+			cin >> c;
 		} else {
 			if (len != 0) {
 				array[len] = '\0';
