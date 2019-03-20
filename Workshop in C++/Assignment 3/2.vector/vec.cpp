@@ -108,33 +108,9 @@ int vec::operator*(const vec& v) const {
 	return sum;
 }
 
-/*
-
-This is a much cleaner implementation of the + operator, but Moodle didn't accept it because the
-capacity was different to that which it expected to output. However, the capacity of the vector is
-something which the public need not care about, and it should be up to the developer to decide how
-much memory is allocated.
-
 vec vec::operator+(const vec& v) const {
 	vec concat(size + v.size);
 	concat.size = concat.capacity;
-	int index = 0;
-	for (int i = 0; i < size; i++) {
-		concat[index++] = data[i];
-	}
-	for (int i = 0; i < v.size; i++) {
-		concat[index++] = v[i];
-	}
-	return concat;
-}
-*/
-
-vec vec::operator+(const vec& v) const {
-	vec concat;
-	concat.size = size + v.size;
-	if (concat.size > concat.capacity) {
-		concat = vec(capacity * 2);
-	}
 	int index = 0;
 	for (int i = 0; i < size; i++) {
 		concat[index++] = data[i];
