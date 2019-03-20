@@ -10,9 +10,6 @@
 #ifndef vec_h
 #define vec_h
 
-//#include <...>
-// using namespace std;
-
 class vec {
   private:
 	int* data;
