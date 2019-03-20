@@ -7,6 +7,7 @@
  * Author:					Abraham Murciano
  */
 
+#include "point.h"
 #include "polygon.h"
 #include <iostream>
 using namespace std;
