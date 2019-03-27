@@ -27,7 +27,7 @@ int main() {
 		cout << "a=b" << endl;
 	}
 
-	if (n > b.length() || n <` 0) {
+	if (n > b.length() || n < 0) {
 		cout << "ERROR" << endl;
 		return 0;
 	}
