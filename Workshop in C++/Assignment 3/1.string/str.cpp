@@ -139,6 +139,28 @@ str& str::insert(const str& s, int i) {
 	return *this;
 }
 
+// Return a lowercase copy of the string
+str str::lower() const {
+	str lowerCase = *this;
+	for (int i = 0; lowerCase[i] != '\0'; i++) {
+		if (lowerCase[i] >= 'A' && lowerCase[i] <= 'Z') {
+			lowerCase[i] -= 'A' - 'a';
+		}
+	}
+	return lowerCase;
+}
+
+// Return an uppercase copy of the string
+str str::upper() const {
+	str upperCase = *this;
+	for (int i = 0; upperCase[i] != '\0'; i++) {
+		if (upperCase[i] >= 'a' && upperCase[i] <= 'z') {
+			upperCase[i] -= 'a' - 'A';
+		}
+	}
+	return upperCase;
+}
+
 // Subscript operator to get letters at specific locations of string
 char& str::operator[](const int i) const {
 	return array[i];
@@ -177,12 +199,15 @@ str str::operator+(const str& s) const {
 
 // Check if two strings are identical
 bool str::operator==(const str& s) const {
-	if (len != s.len) {
+	str left = (*this).lower();
+	str right = s.lower();
+
+	if (left != right.len) {
 		return false;
 	}
 
 	for (int i = 0; i < len; i++) {
-		if (array[i] != s[i]) {
+		if (left[i] != right[i]) {
 			return false;
 		}
 	}
@@ -197,32 +222,38 @@ bool str::operator!=(const str& s) const {
 
 // Check if string is before s in lexicographical order
 bool str::operator<(const str& s) const {
-	int minLen = (len < s.len) ? len : s.len;
+	str left = (*this).lower();
+	str right = s.lower();
+
+	int minLen = (left.len < right.len) ? left.len : right.len;
 
 	for (int i = 0; i < minLen; i++) {
-		if (array[i] < s[i]) {
+		if (left[i] < right[i]) {
 			return true;
-		} else if (array[i] > s[i]) {
+		} else if (left[i] > right[i]) {
 			return false;
 		}
 	}
 
-	return len < s.len;
+	return left.len < right.len;
 }
 
 // Check if string is before s in lexicographical order or they are equal
 bool str::operator<=(const str& s) const {
-	int minLen = (len < s.len) ? len : s.len;
+	str left = (*this).lower();
+	str right = s.lower();
+
+	int minLen = (left.len < right.len) ? left.len : right.len;
 
 	for (int i = 0; i < minLen; i++) {
-		if (array[i] < s[i]) {
+		if (left[i] < right[i]) {
 			return true;
-		} else if (array[i] > s[i]) {
+		} else if (left[i] > right[i]) {
 			return false;
 		}
 	}
 
-	return len <= s.len;
+	return left.len <= right.len;
 }
 
 // Check if string is after s in lexicographical order

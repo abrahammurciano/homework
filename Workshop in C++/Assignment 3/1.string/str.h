@@ -32,6 +32,8 @@ class str {
 	void print(const bool newLine = false) const;
 	void input(const str prompt = "", const char delim = '\n');
 	str& insert(const str& s, int i);
+	str lower() const;
+	str upper() const;
 
 	// Operators
 	char& operator[](const int i) const;
