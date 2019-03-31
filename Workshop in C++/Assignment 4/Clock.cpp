@@ -10,8 +10,10 @@
 #include "iostream"
 using namespace std;
 
+// Default Constructor
 Clock::Clock() : Clock(0, 0, 0) {}
 
+// Constructor
 Clock::Clock(int h, int m, int s) {
 	try {
 		setTime(h, m, s);
@@ -21,16 +23,58 @@ Clock::Clock(int h, int m, int s) {
 	}
 }
 
+// Copy constructor
 Clock::Clock(const Clock& c) {
 	h = c.h;
 	m = c.m;
 	s = c.s;
 }
 
+int Clock::getHour() {
+	return h;
+}
+
+int Clock::getMinute() {
+	return m;
+}
+
+int Clock::getSecond() {
+	return s;
+}
+
+// Takes an hour, minute and second, then sets the time
+void Clock::setTime(int h, int m, int s, bool valid) {
+	setHour(h, valid);
+	setMinute(m, valid);
+	setSecond(s, valid);
+}
+
+void Clock::setHour(int h, bool valid) {
+	if (valid) {
+		setHour(h);
+	} else {
+		this->h = (h >= 0 ? h : 24 + h % 24) % 24;
+	}
+}
+
+void Clock::setMinute(int m, bool valid) {
+	if (valid) {
+		setMinute(m);
+	} else {
+		this->m = (m >= 0 ? m : 60 + m % 60) % 60;
+	}
+}
+
 void Clock::setTime(int h, int m, int s) {
-	setHour(h);
-	setMinute(m);
-	setSecond(s);
+	setTime(h, m, s, true);
+}
+
+void Clock::setSecond(int s, bool valid) {
+	if (valid) {
+		setSecond(s);
+	} else {
+		this->s = (s >= 0 ? s : 60 + s % 60) % 60;
+	}
 }
 
 void Clock::setHour(int h) {
@@ -63,33 +107,66 @@ void Clock::setSecond(int s) {
 	this->s = s;
 }
 
-int Clock::getHour() {
-	return h;
+void Clock::addHour(int h) {
+	setHour(this->h + h, false);
 }
 
-int Clock::getMinute() {
-	return m;
+void Clock::addMinute(int m) {
+	int oldM = this->m;
+	setMinute(oldM + m, false);
+	addHour((oldM + m) / 60 - (oldM < -m));
 }
 
-int Clock::getSecond() {
-	return s;
+void Clock::addSecond(int s) {
+	int oldS = this->s;
+	setSecond(oldS + s, false);
+	addMinute((oldS + s) / 60 - (oldS < -s));
 }
 
+// Add a time and a number of seconds
+Clock Clock::operator+(int s) const {
+	Clock t = *this;
+	t.addSecond(s);
+	return t;
+}
+
+// Subtract a number of seconds from a time
+Clock Clock::operator-(int s) const {
+	return *this + -s;
+}
+
+// Add s seconds to the time
 Clock& Clock::operator+=(int s) {
-	setSecond((this->s + s) % 60);
-	setMinute(((this->s + s) / 60) % 60);
-	setHour((((this->s + s) / 60) / 60) % 24);
-	return *this;
+	return *this = *this + s;
 }
 
-Clock Clock::operator++() {
+// Add 1 second to the time
+Clock Clock::operator++(int) {
 	Clock temp = *this;
 	(*this) += 1;
 	return temp;
 }
 
-Clock& Clock::operator++(int) {
+// Add 1 second to the time
+Clock& Clock::operator++() {
 	return (*this) += 1;
+}
+
+// Subtract s seconds from the time
+Clock& Clock::operator-=(int s) {
+	return *this = *this - s;
+}
+
+// Subtract 1 second from the time
+Clock Clock::operator--(int) {
+	Clock temp = *this;
+	(*this) -= 1;
+	return temp;
+}
+
+// Subtract 1 second from the time
+Clock& Clock::operator--() {
+	return (*this) -= 1;
 }
 
 ostream& operator<<(ostream& out, const Clock& c) {

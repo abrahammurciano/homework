@@ -21,23 +21,39 @@ class Clock {
 	int m;
 	int s;
 
+	void setTime(int h, int m, int s, bool valid);
+	void setHour(int h, bool valid);
+	void setMinute(int m, bool valid);
+	void setSecond(int s, bool valid);
+
   public:
 	Clock();
 	Clock(int h, int m, int s = 0);
 	Clock(const Clock& c);
+
+	int getHour();
+	int getMinute();
+	int getSecond();
 
 	void setTime(int h, int m, int s);
 	void setHour(int h);
 	void setMinute(int m);
 	void setSecond(int s);
 
-	int getHour();
-	int getMinute();
-	int getSecond();
+	void addHour(int h);
+	void addMinute(int m);
+	void addSecond(int s);
+
+	Clock operator+(int s) const;
+	Clock operator-(int s) const;
 
 	Clock& operator+=(int s);
-	Clock operator++();
-	Clock& operator++(int);
+	Clock operator++(int);
+	Clock& operator++();
+
+	Clock& operator-=(int s);
+	Clock operator--(int);
+	Clock& operator--();
 };
 
 #endif
