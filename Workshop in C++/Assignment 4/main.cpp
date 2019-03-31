@@ -13,9 +13,6 @@ using namespace std;
 
 int main() {
 
-	Clock t(2, 49, 23);
-	cout << (t + -24) << endl;
-
 	return 0;
 }
 
