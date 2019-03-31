@@ -10,8 +10,17 @@
 //#include "iostream"
 // using namespace std;
 
-Account::Account(int pin, float balance) {
-	setId();
+float Account::sumWithdraw = 0;
+float Account::sumDeposit = 0;
+
+Account::Account() {
+	this->id = 0;
+	this->pin = 0;
+	this->balance = 0;
+}
+
+Account::Account(int id, int pin, float balance) {
+	setId(id);
 	setPin(pin);
 	setBalance(balance);
 }
@@ -22,21 +31,19 @@ Account::Account(const Account& a) {
 	this->balance = a.balance;
 }
 
-void Account::setId() {
-	static int newId = 1;
-	this->id = newId++;
+void Account::setId(int id) {
+	this->id = id;
 }
 
 void Account::setPin(int pin) {
 	if (this->pin < 1000 || this->pin > 9999) {
 		if (pin >= 1000 && pin <= 9999) {
-			static int newPin = pin;
-			this->pin = newPin;
+			this->pin = pin;
 		} else {
-			throw "ERROR: code must be 4 digits and cannot start with 0!";
+			throw string("ERROR: code must be of 4 digits!");
 		}
 	} else {
-		throw "ERROR: cannot change pin code!";
+		throw string("ERROR: cannot change pin code!");
 	}
 }
 
@@ -58,13 +65,13 @@ float Account::getBalance() {
 
 void Account::withdraw(float money) {
 	if (money > 2500) {
-		throw "ERROR: cannot withdraw more than 2500 NIS!";
+		throw string("ERROR: cannot withdraw more than 2500 NIS!");
 	}
 	if (balance - money < -6000) {
-		throw "ERROR: cannot have less than -6000 NIS!";
+		throw string("ERROR: cannot have less than -6000 NIS!");
 	}
 	if (money < 0) {
-		throw "ERROR: cannot withdraw negative number!";
+		throw string("ERROR: cannot withdraw negative number!");
 	}
 	balance -= money;
 	sumWithdraw += money;
@@ -72,10 +79,10 @@ void Account::withdraw(float money) {
 
 void Account::deposit(float money) {
 	if (money > 10000) {
-		throw "ERROR: cannot deposit more than 10000 NIS!";
+		throw string("ERROR: cannot deposit more than 10000 NIS!");
 	}
 	if (money < 0) {
-		throw "ERROR: cannot deposit negative number!";
+		throw string("ERROR: cannot deposit negative number!");
 	}
 	balance += money;
 	sumDeposit += money;
@@ -90,8 +97,10 @@ float Account::getSumDeposit() {
 }
 
 istream& operator>>(istream& in, Account& a) {
-	int pin;
+	int id, pin;
+	in >> id;
 	in >> pin;
+	a.setId(id);
 	a.setPin(pin);
 	return in;
 }

@@ -17,7 +17,7 @@ Clock::Clock() : Clock(0, 0, 0) {}
 Clock::Clock(int h, int m, int s) {
 	try {
 		setTime(h, m, s);
-	} catch (char* e) {
+	} catch (string e) {
 		setTime(0, 0, 0);
 		throw e;
 	}
@@ -79,30 +79,30 @@ void Clock::setSecond(int s, bool valid) {
 
 void Clock::setHour(int h) {
 	if (h < 0) {
-		throw "Invalid time – negative number of hours.";
+		throw string("Invalid time – negative number of hours.");
 	}
 	if (h > 23) {
-		throw "Invalid time – more than 24 hours.";
+		throw string("Invalid time – more than 24 hours.");
 	}
 	this->h = h;
 }
 
 void Clock::setMinute(int m) {
 	if (m < 0) {
-		throw "Invalid time – negative number of minutes.";
+		throw string("Invalid time – negative number of minutes.");
 	}
 	if (m > 59) {
-		throw "Invalid time – more than 60 minutes.";
+		throw string("Invalid time – more than 60 minutes.");
 	}
 	this->m = m;
 }
 
 void Clock::setSecond(int s) {
 	if (s < 0) {
-		throw "Invalid time – negative number of seconds.";
+		throw string("Invalid time – negative number of seconds.");
 	}
 	if (s > 59) {
-		throw "Invalid time – more than 60 seconds.";
+		throw string("Invalid time – more than 60 seconds.");
 	}
 	this->s = s;
 }
@@ -170,7 +170,8 @@ Clock& Clock::operator--() {
 }
 
 ostream& operator<<(ostream& out, const Clock& c) {
-	return out << c.h << ':' << c.m << ':' << c.s;
+	return out << (c.h < 10 ? "0" : "") << c.h << ':' << (c.m < 10 ? "0" : "") << c.m << ':'
+			   << (c.s < 10 ? "0" : "") << c.s;
 }
 
 istream& operator>>(istream& in, Clock& c) {
@@ -182,7 +183,7 @@ istream& operator>>(istream& in, Clock& c) {
 
 	in >> colon;
 	if (colon != ':') {
-		throw "Wrong time format.";
+		throw string("Wrong time format.");
 	}
 
 	in >> num;
@@ -190,7 +191,7 @@ istream& operator>>(istream& in, Clock& c) {
 
 	in >> colon;
 	if (colon != ':') {
-		throw "Wrong time format.";
+		throw string("Wrong time format.");
 	}
 
 	in >> num;

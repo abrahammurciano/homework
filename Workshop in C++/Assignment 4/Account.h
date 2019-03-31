@@ -24,10 +24,11 @@ class Account {
 	static float sumDeposit;
 
   public:
-	Account(int pin = 0, float balance = 0);
+	Account();
+	Account(int id, int pin, float balance);
 	Account(const Account& a);
 
-	void setId();
+	void setId(int id);
 	void setPin(int pin);
 	void setBalance(float balance);
 
@@ -41,8 +42,5 @@ class Account {
 	static float getSumWithdraw();
 	static float getSumDeposit();
 };
-
-float Account::sumWithdraw = 0;
-float Account::sumDeposit = 0;
 
 #endif
