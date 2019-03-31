@@ -11,7 +11,9 @@
 using namespace std;
 
 // Default Constructor
-Clock::Clock() : Clock(0, 0, 0) {}
+Clock::Clock() {
+	setTime(0, 0, 0);
+}
 
 // Constructor
 Clock::Clock(int h, int m, int s) {

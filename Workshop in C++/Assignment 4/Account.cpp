@@ -64,11 +64,11 @@ float Account::getBalance() {
 }
 
 void Account::withdraw(float money) {
-	if (money > 2500) {
-		throw string("ERROR: cannot withdraw more than 2500 NIS!");
-	}
 	if (balance - money < -6000) {
 		throw string("ERROR: cannot have less than -6000 NIS!");
+	}
+	if (money > 2500) {
+		throw string("ERROR: cannot withdraw more than 2500 NIS!");
 	}
 	if (money < 0) {
 		throw string("ERROR: cannot withdraw negative number!");
