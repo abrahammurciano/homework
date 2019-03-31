@@ -24,11 +24,10 @@ class Account {
 	static float sumDeposit;
 
   public:
-	Account();
-	Account(int id, int pin, float balance);
+	Account(int pin = 0, float balance = 0);
 	Account(const Account& a);
 
-	void setId(int id);
+	void setId();
 	void setPin(int pin);
 	void setBalance(float balance);
 
