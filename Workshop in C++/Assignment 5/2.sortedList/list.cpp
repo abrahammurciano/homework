@@ -144,7 +144,7 @@ int& list::operator[](int index) const {
 list& list::operator=(const list& l) {
 	if (this != &l) {
 		clear();
-		for (node* p = l.head; p->next != NULL; p = p->next) {
+		for (node* p = l.head; p != NULL; p = p->next) {
 			append(p->val);
 		}
 	}
