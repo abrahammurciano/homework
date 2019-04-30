@@ -48,17 +48,40 @@ int main() {
 
 /*
 ========== Sample Run - start ==========
-Enter a list, terminated by enter.
-1, 2, 3, 4, 5
-Inputted list:
-[1][2][3][4][5]
-=========== Sample Run - end ===========
-----------------------------------------
-========== Sample Run - start ==========
-Enter a list, terminated by enter.
-5|4|3|2|1
-Inputted list:
-[5][4][3][2][1]
+enter the list values
+1 2 3 4 5 4
+choose 0-2
+1
+enter a value to insert
+7
+1 2 3 4 5 7
+choose 0-2
+1
+enter a value to insert
+6
+1 2 3 4 5 6 7
+choose 0-2
+1
+enter a value to insert
+11
+1 2 3 4 5 6 7 11
+choose 0-2
+2
+enter a value to remove
+3
+1 2 4 5 6 7 11
+choose 0-2
+2
+enter a value to remove
+1
+2 4 5 6 7 11
+choose 0-2
+2
+enter a value to remove
+11
+2 4 5 6 7
+choose 0-2
+0
 =========== Sample Run - end ===========
 ----------------------------------------
 */
