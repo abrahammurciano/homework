@@ -1,5 +1,5 @@
 .data
-	array: 	.byte 1 2 4 8
+	array: 	.byte 3 9 27 81
 	size: 	.word 4
 	
 	str_arithmetic:	.asciiz "Arithmetic progression:\n"
