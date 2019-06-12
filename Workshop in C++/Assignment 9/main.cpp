@@ -122,7 +122,7 @@ int main() {
 					(*s)->print();
 				}
 				students.erase(del, students.end());
-			} else {  // invalid choice
+			} else if (choice != 0) {  // invalid choice
 				throw string("Error: Invalid choice.");
 			}
 		} catch (string e) {
