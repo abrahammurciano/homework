@@ -114,14 +114,13 @@ int main() {
 					cout << "no student takes more than 15 courses" << endl;
 				}
 			} else if (choice == 7) {  // remove all PhD students that don't take any courses
-				vector<student*>::iterator del =
-					remove_if(students.begin(), students.end(), [](student* s) {
-						return s->type() == "PhD" && s->getNCourses() == 0;
-					});
-				for (auto s = del; s != students.end(); s++) {
-					(*s)->print();
-				}
-				students.erase(del, students.end());
+				students.erase(remove_if(students.begin(),
+										 students.end(),
+										 [](student* s) {
+											 return s->type() == "PhD" && s->getNCourses() == 0;
+										 }),
+							   students.end());
+				for_each(students.begin(), students.end(), [](student* s) { s->print(); });
 			} else if (choice != 0) {  // invalid choice
 				throw string("Error: Invalid choice.");
 			}
