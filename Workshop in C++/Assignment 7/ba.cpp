@@ -12,20 +12,14 @@ using namespace std;
 
 // Default constructor
 ba::ba() {
-	grades = NULL;
 	nGrades = 0;
 }
 
 // Constructor
-ba::ba(int id, string name, string surname, int nCourses, int* grades, int nGrades)
+ba::ba(int id, string name, string surname, int nCourses, const vector<int>& grades, int nGrades)
 	: student(id, name, surname, nCourses) {
 	this->grades = grades;
 	this->nGrades = nGrades;
-}
-
-// Destructor
-ba::~ba() {
-	delete[] grades;
 }
 
 // Calculates the average grade of the student

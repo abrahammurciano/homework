@@ -16,7 +16,13 @@ ma::ma() {
 }
 
 // Constructor
-ma::ma(int id, string name, string surname, int nCourses, int* grades, int nGrades, bool research)
+ma::ma(int id,
+	   string name,
+	   string surname,
+	   int nCourses,
+	   const vector<int>& grades,
+	   int nGrades,
+	   bool research)
 	: ba(id, name, surname, nCourses, grades, nGrades) {
 	this->research = research;
 }

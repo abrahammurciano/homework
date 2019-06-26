@@ -11,19 +11,19 @@
 
 #include "student.h"
 #include <stdlib.h>
+#include <vector>
 using namespace std;
 
 class ba : public student {
   protected:
 	// Data
-	int* grades;
+	vector<int> grades;
 	int nGrades;
 
   public:
 	// Constructors
 	ba();
-	ba(int id, string name, string surname, int nCourses, int* grades, int nGrades);
-	~ba();
+	ba(int id, string name, string surname, int nCourses, const vector<int>& grades, int nGrades);
 
 	// Methods
 	float avgGrade() const;

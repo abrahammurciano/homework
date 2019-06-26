@@ -12,6 +12,7 @@
 #include "ba.h"
 #include <stdlib.h>
 #include <string>
+#include <vector>
 using namespace std;
 
 class ma : public ba {
@@ -22,7 +23,13 @@ class ma : public ba {
   public:
 	// Constructors
 	ma();
-	ma(int id, string name, string surname, int nCourses, int* grades, int nGrades, bool research);
+	ma(int id,
+	   string name,
+	   string surname,
+	   int nCourses,
+	   const vector<int>& grades,
+	   int nGrades,
+	   bool research);
 
 	// Methods
 
