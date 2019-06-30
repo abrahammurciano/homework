@@ -30,7 +30,11 @@
 			"system_error": "cpp",
 			"type_traits": "cpp",
 			"typeinfo": "cpp",
-			"fstream": "cpp"
+			"fstream": "cpp",
+			"unordered_map": "cpp",
+			"array": "cpp",
+			"deque": "cpp",
+			"vector": "cpp"
 		}
 	}
 }
