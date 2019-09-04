@@ -4,9 +4,9 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build",
+            "label": "CppCompile",
             "type": "shell",
-            "command": "cd ./debug && g++ -g *.cpp -o a.out",
+            "command": "g++ -g \"${fileDirname}/\"*.cpp -o \"${fileDirname}/\"a.out",
             "group": {
                 "kind": "build",
                 "isDefault": true

@@ -5,11 +5,11 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug",
+            "name": "CppDebug",
             "type": "cppdbg",
             "request": "launch",
-            "preLaunchTask": "build",
-            "program": "${workspaceFolder}/debug/a.out",
+            "preLaunchTask": "CppCompile",
+            "program": "${fileDirname}/a.out",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",

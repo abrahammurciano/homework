@@ -1,1 +1,0 @@
-To debug a homework program in VS Code, put it in this directory (./debug)
