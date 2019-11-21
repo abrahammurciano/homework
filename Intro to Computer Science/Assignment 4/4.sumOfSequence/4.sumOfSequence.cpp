@@ -31,9 +31,9 @@ int main() {
 	// Set values for each sub-expression of n when n=0 (before the first term)
 	int coefficientNumerator = -1;		// This part of the sequence: (-1)^(n-1)
 	int twoNMinusOne = -1;				// This part of the sequence: 2n-1
-	float xPow2NMinus1 = 1 / (float)x;  // This part of the sequence: x^(2n-1)
+	float xPow2NMinus1 = 1 / (float)x;	// This part of the sequence: x^(2n-1)
 
-	float sum = 0;  // Stores the value of the whole sequence as each iteration is added
+	float sum = 0;	// Stores the value of the whole sequence as each iteration is added
 
 	for (int i = 0; i < n; i++) {
 		// Work out the next (-1)^(n-1)
@@ -62,4 +62,8 @@ int main() {
 enter 2 numbers:
 3 2
 -6
+
+enter 2 numbers:
+5 4
+-10572.4
 */
