@@ -35,7 +35,8 @@
 			"array": "cpp",
 			"deque": "cpp",
 			"vector": "cpp",
-			"list": "cpp"
+			"list": "cpp",
+			"random": "cpp"
 		}
 	}
 }
