@@ -1,3 +1,12 @@
+/*
+ * File Name:				main.cpp
+ * Program Description:		Tries implementation
+ * Course Name:				Data Structures 2
+ * Assignment Number:		2
+ * Question Number:			1
+ * Author:					Abraham Murciano
+ */
+
 #include "trie.h"
 #include <iostream>
 #include <list>
