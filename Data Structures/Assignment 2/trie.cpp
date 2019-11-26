@@ -111,10 +111,10 @@ void trie::node::print_completions(string prefix) {
 	if (terminal) {				 // If this node is an end of word, it must be equal to prefix
 		cout << prefix << endl;	 // So print this word
 	}
-	for (int i = 0; i < alphabet_size; ++i) {		 // Go through all the children of this node
-		if (children[i]) {							 // If it's not a null pointer
-			prefix += int_to_char(i);				 // Add the character of that node to the prefix
-			children[i]->print_completions(prefix);	 // Recursively print from the child node
+	for (int i = 0; i < alphabet_size; ++i) {			  // Go through all the children of this node
+		if (children[i]) {								  // If it's not a null pointer
+			string new_prefix = prefix + int_to_char(i);  // Add the current character to the prefix
+			children[i]->print_completions(new_prefix);	  // Recursively print from the child node
 		}
 	}
 }
