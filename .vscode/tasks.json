@@ -6,7 +6,7 @@
         {
             "label": "CppCompile",
             "type": "shell",
-            "command": "g++ -g \"${fileDirname}/\"*.cpp -o \"${fileDirname}/\"a.out",
+            "command": "cd \"${fileDirname}/\" && g++ -g *.cpp -o a.out",
             "group": {
                 "kind": "build",
                 "isDefault": true
