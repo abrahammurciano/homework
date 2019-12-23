@@ -49,6 +49,8 @@ class b_tree {
 		node* remove(const K& element, int index = -1);
 		// Deallocates all children in this node and in all its children, then deallocates itself
 		void clear();
+		// Traverses the tree in order and calls function f for each key
+		void for_each(void (*f)(K&));
 	};
 
 	node* root;
@@ -63,6 +65,10 @@ class b_tree {
 	void remove(const K& element);
 	// Removes all the nodes from the b-tree
 	void clear();
+	// Traverses the tree in order and calls function f for each key
+	void for_each(void (*f)(K&));
+	// Prints all keys in order
+	void print();
 	~b_tree();
 };
 
@@ -330,6 +336,19 @@ void b_tree<K, M>::node::clear() {
 }
 
 template <class K, int M>
+void b_tree<K, M>::node::for_each(void (*f)(K&)) {
+	if (!leaf()) {
+		chid(0)->for_each(f);
+	}
+	for (int i = 0; i < keys(); ++i) {
+		f(key(i));
+		if (!leaf()) {
+			chid(i + 1)->for_each(f);
+		}
+	}
+}
+
+template <class K, int M>
 b_tree<K, M>::b_tree()
 	: root(new node()) {}
 
@@ -358,6 +377,18 @@ template <class K, int M>
 void b_tree<K, M>::clear() {
 	root->clear();
 	root = new node();
+}
+
+template <class K, int M>
+void b_tree<K, M>::for_each(void (*f)(K&)) {
+	root->for_each(f);
+}
+
+template <class K, int M>
+void b_tree<K, M>::print() {
+	root->for_each([](K& key) {
+		std::cout << key << std::endl;
+	});
 }
 
 template <class K, int M>
