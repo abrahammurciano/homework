@@ -32,6 +32,8 @@ class b_tree {
 		void rotate_right(int index);
 		// Merge the two children at index and at index+1 into one node
 		void merge_children(int index);
+		// Returns the index that a child is located in under its parent
+		int index_under_parent();
 
 	  public:
 		node(node* parent = 0, K* keys = 0, node** children = 0, int num_keys = 0);
@@ -159,10 +161,7 @@ typename b_tree<K, M>::node* b_tree<K, M>::node::rebalance() {
 		if (keys() >= MIN_KEYS) {
 			return 0;
 		}
-		int parent_index = parent->find_in_keys(key(keys() - 1));
-		while (parent->child(parent_index) != this) {
-			--parent_index;
-		}
+		int parent_index = index_under_parent();
 		try {
 			parent->rotate_right(parent_index - 1);
 		} catch (const std::string&) {
@@ -251,6 +250,14 @@ void b_tree<K, M>::node::merge_children(int index) {
 	memmove(&key(index), &key(index + 1), (keys() - index - 1) * sizeof(K));
 	memmove(&child(index + 1), &child(index + 2), (keys() - index - 1) * sizeof(node*));
 	--num_keys;
+}
+
+template <class K, int M>
+int b_tree<K, M>::node::index_under_parent() {
+	int parent_index = parent->find_in_keys(key(0)) + 1;
+	while (parent->child(parent_index) != this) {
+		--parent_index;
+	}
 }
 
 template <class K, int M>
