@@ -47,6 +47,8 @@ class b_tree {
 		node* insert(const K& element, node* sub_tree = 0);
 		// Removes a key from the b-tree
 		node* remove(const K& element, int index = -1);
+		// Deallocates all children in this node and in all its children, then deallocates itself
+		void clear();
 	};
 
 	node* root;
@@ -59,6 +61,8 @@ class b_tree {
 	void insert(const K& element);
 	// Remove an element from the b-tree
 	void remove(const K& element);
+	// Removes all the nodes from the b-tree
+	void clear();
 	~b_tree();
 };
 
@@ -232,6 +236,9 @@ void b_tree<K, M>::node::merge_children(int index) {
 	memccpy(&(child(index)->key(keys() + 1)), &(child(index + 1)->key(0)), child(index + 1)->keys() * sizeof(K));
 	if (!child(index)->leaf()) {
 		memccpy(&(child(index)->child(keys() + 1)), (&(child(index + 1)->child(0))), (child(index + 1)->keys() + 1) * sizeof(node*));
+		for (int i = 0; i < child(index + 1)->keys() + 1; ++i) {
+			child(index + 1)->child(i)->parent = child(index);
+		}
 	}
 	child(index)->num_keys += 1 + child(index + 1)->keys();
 	delete child(index + 1);
@@ -312,6 +319,17 @@ typename b_tree<K, M>::node* b_tree<K, M>::node::remove(const K& element, int in
 }
 
 template <class K, int M>
+void b_tree<K, M>::node::clear() {
+	if (!leaf()) {
+		for (int i = 0; i < keys() + 1; ++i) {
+			child(i)->clear();
+		}
+		delete child;
+	}
+	delete this;
+}
+
+template <class K, int M>
 b_tree<K, M>::b_tree()
 	: root(new node()) {}
 
@@ -334,4 +352,15 @@ void b_tree<K, M>::remove(const K& element) {
 	if (new_root) {
 		root = new_root;
 	}
+}
+
+template <class K, int M>
+void b_tree<K, M>::clear() {
+	root->clear();
+	root = new node();
+}
+
+template <class K, int M>
+b_tree<K, M>::~b_tree() {
+	root->clear();
 }
