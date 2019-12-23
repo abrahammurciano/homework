@@ -1,13 +1,13 @@
 #include <cstring>
 #include <iostream>
 
-template <class K, int O>
+template <class K, int M>
 class b_tree {
   private:
-	const static int MIN_CHILDREN = (O + 1) / 2;
-	const static int MAX_CHILDREN = O;
+	const static int MIN_CHILDREN = (M + 1) / 2;
+	const static int MAX_CHILDREN = M;
 	const static int MIN_KEYS = MIN_CHILDREN - 1;
-	const static int MAX_KEYS = O - 1;
+	const static int MAX_KEYS = M - 1;
 
 	class node {
 	  private:
@@ -37,6 +37,10 @@ class b_tree {
 		K* search(const K& element) const;
 		// Inserts a key into the b-tree
 		node* insert(const K& element, node* sub_tree = 0);
+		// Returns the node where an element is located
+		node* find_node(const K& element) const;
+		// Removes a key from the b-tree
+		void remove(const K& element);
 	};
 
 	node* root;
@@ -47,16 +51,18 @@ class b_tree {
 	bool search(const K& element) const;
 	// Insert an element into the b-tree
 	void insert(const K& element);
+	// Remove an element from the b-tree
+	void remove(const K& element);
 	~b_tree();
 };
 
-template <class K, int O>
-b_tree<K, O>::node::node(node* parent, K* keys, node** children, int num_keys)
+template <class K, int M>
+b_tree<K, M>::node::node(node* parent, K* keys, node** children, int num_keys)
 	: parent(parent), num_keys(num_keys) {
-	if (num_keys > b_tree<K, O>::MAX_KEYS) {
+	if (num_keys > b_tree<K, M>::MAX_KEYS) {
 		throw std::string("Error: Could not create node - too many keys. ") + std::string("Expected up to ") + std::to_string(MAX_KEYS) + std::string(", but received ") + std::to_string(num_keys) + '.';
 	}
-	if (num_keys < b_tree<K, O>::MIN_KEYS) {
+	if (num_keys < b_tree<K, M>::MIN_KEYS) {
 		if (children || parent) {
 			throw std::string("Error: Could not create node - too few keys for a non-root, non-leaf node. ") + std::string("Expected at least ") + std::to_string(MIN_KEYS) + std::string(", but received ") + std::to_string(num_keys) + '.';
 		}
@@ -71,33 +77,39 @@ b_tree<K, O>::node::node(node* parent, K* keys, node** children, int num_keys)
 	}
 }
 
-template <class K, int O>
-int b_tree<K, O>::node::keys() const {
+template <class K, int M>
+int b_tree<K, M>::node::keys() const {
 	return num_keys;
 }
 
-template <class K, int O>
-bool b_tree<K, O>::node::root() const {
+template <class K, int M>
+bool b_tree<K, M>::node::root() const {
 	return !parent;
 }
 
-template <class K, int O>
-bool b_tree<K, O>::node::leaf() const {
+template <class K, int M>
+bool b_tree<K, M>::node::leaf() const {
 	return !children;
 }
 
-template <class K, int O>
-K& b_tree<K, O>::node::key(int index) const {
+template <class K, int M>
+K& b_tree<K, M>::node::key(int index) const {
+	if (index >= keys() || index < 0) {
+		throw std::string("Error: Out of bounds key access attempted");
+	}
 	return _keys[index];
 }
 
-template <class K, int O>
-typename b_tree<K, O>::node* b_tree<K, O>::node::child(int index) const {
+template <class K, int M>
+typename b_tree<K, M>::node* b_tree<K, M>::node::child(int index) const {
+	if (index > keys() || index < 0) {
+		throw std::string("Error: Out of bounds child access attempted");
+	}
 	return children[index];
 }
 
-template <class K, int O>
-int b_tree<K, O>::node::find_in_keys(const K& element, int min, int max) const {
+template <class K, int M>
+int b_tree<K, M>::node::find_in_keys(const K& element, int min, int max) const {
 	if (min == max) {
 		return min;
 	}
@@ -109,8 +121,8 @@ int b_tree<K, O>::node::find_in_keys(const K& element, int min, int max) const {
 	}
 }
 
-template <class K, int O>
-typename b_tree<K, O>::node* b_tree<K, O>::node::find_leaf(const K& element) const {
+template <class K, int M>
+typename b_tree<K, M>::node* b_tree<K, M>::node::find_leaf(const K& element) const {
 	if (leaf()) {
 		return this;
 	}
@@ -118,8 +130,20 @@ typename b_tree<K, O>::node* b_tree<K, O>::node::find_leaf(const K& element) con
 	return children[index]->find_leaf(element);
 }
 
-template <class K, int O>
-K* b_tree<K, O>::node::search(const K& element) const {
+template <class K, int M>
+typename b_tree<K, M>::node* b_tree<K, M>::node::find_node(const K& element) const {
+	int index = find_in_keys(element);
+	if (key(index) == element) {
+		return this;
+	}
+	if (leaf) {
+		return 0;
+	}
+	return child(index)->find_node(element);
+}
+
+template <class K, int M>
+K* b_tree<K, M>::node::search(const K& element) const {
 	int index = find_in_keys(element);
 	if (index < keys() && element == key(index)) {
 		return &key(index);
@@ -130,8 +154,8 @@ K* b_tree<K, O>::node::search(const K& element) const {
 	return children[index]->search(element);
 }
 
-template <class K, int O>
-typename b_tree<K, O>::node* b_tree<K, O>::node::insert(const K& element, node* sub_tree) {
+template <class K, int M>
+typename b_tree<K, M>::node* b_tree<K, M>::node::insert(const K& element, node* sub_tree) {
 	if (keys() < MAX_KEYS) {
 		int index = find_in_keys(element);
 		std::memmove(&key(index + 1), &key(index), (keys() - index) * sizeof(K));
@@ -140,14 +164,22 @@ typename b_tree<K, O>::node* b_tree<K, O>::node::insert(const K& element, node* 
 			std::memmove(&child(index + 2), &child(index + 1), (keys() - index) * sizeof(node*));
 			child(index + 1) = sub_tree;
 		}
+		++num_keys;
 	} else {
 		int mid = keys() / 2;
-		node* right = new node(parent, &key(mid + 1), &child(mid + 1), keys() - mid - 1);
+		int tmp_mid = (element < key(mid) ? mid - 1 : mid);
+		node* right = new node(parent, &key(tmp_mid + 1), &child(tmp_mid + 1), keys() - tmp_mid - 1);
 		for (int i = 0; i <= right->keys(); ++i) {
 			right->child(i)->parent = right;
 		}
+		num_keys = mid;
+		if (element < right->key(0)) {
+			insert(element, sub_tree);
+		} else {
+			right->insert(element, sub_tree);
+		}
 		if (!root()) {
-			parent->insert(key(mid), right);
+			parent->insert(key(keys() - 1), right);
 		} else {
 			node** root_children = new node*[2];
 			root_children[0] = this;
@@ -156,24 +188,34 @@ typename b_tree<K, O>::node* b_tree<K, O>::node::insert(const K& element, node* 
 			delete[] root_children;
 			return root;
 		}
-		num_keys = mid;
 	}
 }
 
-template <class K, int O>
-b_tree<K, O>::b_tree()
+template <class K, int M>
+void b_tree<K, M>::node::remove(const K& element) {
+	// TODO
+}
+
+template <class K, int M>
+b_tree<K, M>::b_tree()
 	: root(new node()) {}
 
-template <class K, int O>
-bool b_tree<K, O>::search(const K& element) const {
+template <class K, int M>
+bool b_tree<K, M>::search(const K& element) const {
 	return root->search(element);
 }
 
-template <class K, int O>
-void b_tree<K, O>::insert(const K& element) {
+template <class K, int M>
+void b_tree<K, M>::insert(const K& element) {
 	node* leaf = find_leaf(element);
 	node* new_root = leaf->insert(element);
 	if (new_root) {
 		root = new_root;
 	}
+}
+
+template <class K, int M>
+void b_tree<K, M>::remove(const K& element) {
+	node* node = root->find_node(element);
+	node->remove(element);
 }
