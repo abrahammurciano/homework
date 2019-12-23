@@ -38,7 +38,8 @@
 			"list": "cpp",
 			"random": "cpp",
 			"string": "cpp",
-			"valarray": "cpp"
+			"valarray": "cpp",
+			"variant": "cpp"
 		}
 	}
 }
