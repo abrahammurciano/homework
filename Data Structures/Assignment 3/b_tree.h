@@ -21,7 +21,7 @@ class b_tree {
 		// Returns the child at the given index
 		node* child(int index) const;
 		// Returns the index of where in an array of keys a key is/should be using binary search
-		int find_in_keys(const K& element, int min = 0, int max = keys() + 1) const;
+		int find_in_keys(const K& element, int min = 0, int max = keys()) const;
 		// Returns the leaf where a new element could be inserted
 		node* find_leaf(const K& element) const;
 
@@ -37,10 +37,8 @@ class b_tree {
 		K* search(const K& element) const;
 		// Inserts a key into the b-tree
 		node* insert(const K& element, node* sub_tree = 0);
-		// Returns the node where an element is located
-		node* find_node(const K& element) const;
 		// Removes a key from the b-tree
-		void remove(const K& element);
+		void remove(const K& element, int index = -1);
 	};
 
 	node* root;
@@ -131,18 +129,6 @@ typename b_tree<K, M>::node* b_tree<K, M>::node::find_leaf(const K& element) con
 }
 
 template <class K, int M>
-typename b_tree<K, M>::node* b_tree<K, M>::node::find_node(const K& element) const {
-	int index = find_in_keys(element);
-	if (key(index) == element) {
-		return this;
-	}
-	if (leaf) {
-		return 0;
-	}
-	return child(index)->find_node(element);
-}
-
-template <class K, int M>
 K* b_tree<K, M>::node::search(const K& element) const {
 	int index = find_in_keys(element);
 	if (index < keys() && element == key(index)) {
@@ -192,8 +178,27 @@ typename b_tree<K, M>::node* b_tree<K, M>::node::insert(const K& element, node* 
 }
 
 template <class K, int M>
-void b_tree<K, M>::node::remove(const K& element) {
-	// TODO
+void b_tree<K, M>::node::remove(const K& element, int index) {
+	if (index < 0) {
+		index = find_in_keys(element);
+	}
+	if (leaf()) {
+		if (index < keys() && key(index) == element) {
+			memmove(&key(index), &key(index + 1), 1 * sizeof(K));
+			--num_keys;
+			if (keys() < MIN_KEYS) {
+				rebalance();
+			}
+		}
+	} else {
+		if ((index < keys() && key(index) == element)) {
+			node* leaf = child(index)->find_leaf(element);
+			key(index) = leaf->key(leaf->keys() - 1);
+			leaf->remove(key(index), leaf->keys() - 1);
+		} else {
+			child(index)->remove(element);
+		}
+	}
 }
 
 template <class K, int M>
@@ -216,6 +221,5 @@ void b_tree<K, M>::insert(const K& element) {
 
 template <class K, int M>
 void b_tree<K, M>::remove(const K& element) {
-	node* node = root->find_node(element);
-	node->remove(element);
+	root->remove(element);
 }
