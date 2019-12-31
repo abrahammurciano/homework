@@ -1,6 +1,9 @@
 #include "loan.h"
 using namespace std;
 
+loan::loan()
+	: _borrower_id(0), _name(""), _item_id(0) {}
+
 loan::loan(int _borrower_id, string _name, date _loan_date, int _item_id)
 	: _borrower_id(_borrower_id), _name(_name), _loan_date(_loan_date), _item_id(_item_id) {}
 

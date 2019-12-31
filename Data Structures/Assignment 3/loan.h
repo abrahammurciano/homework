@@ -12,6 +12,7 @@ class loan {
 	int _item_id;
 
   public:
+	loan();
 	loan(int _borrower_id, std::string _name, date _loan_date, int _item_id);
 	int borrower_id() const;
 	std::string name() const;
