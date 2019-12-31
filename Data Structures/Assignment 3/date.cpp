@@ -29,7 +29,7 @@ date::date()
 
 date::date(short day, short month, short year) {
 	if (day < 1 || month < 1 || year < 1970 || month > 12 || (day > days_in_month(month) && (day != 29 || !leap_year(year)))) {
-		throw string("Error: Could not construct invalid date ") + to_string(day) + '/' + to_string(month) + '/' + to_string(year) + '.';
+		throw string("Error: Could not construct invalid date ") + to_string(day) + '-' + to_string(month) + '-' + to_string(year) + '.';
 	}
 	d = year_to_days(year);
 	d += month_to_days(month, leap_year(year));
@@ -133,17 +133,18 @@ bool date::leap_year(short year) {
 	return (year % 4 == 0) && ((year % 100 != 0) || (year % 400 == 0));
 }
 
-std::ostream& operator<<(std::ostream& out, const date& d) {
+ostream& operator<<(ostream& out, const date& d) {
 	short day = d.day(), month = d.month(), year = d.year();
 	return out << year << '-' << (month < 10 ? "0" : "") << month << '-' << (day < 10 ? "0" : "") << day;
 }
 
-std::istream& operator>>(std::istream& in, date& d) {
+istream& operator>>(istream& in, date& d) {
 	char dash_1, dash_2;
 	short day, month, year;
-	return in >> day >> dash_1 >> month >> dash_2 >> year;
+	in >> year >> dash_1 >> month >> dash_2 >> day;
 	if (dash_1 != '-' || dash_2 != '-') {
 		throw string("Error: Expected a date in YYYY-MM-DD format.");
 	}
 	d = date(day, month, year);
+	return in;
 }

@@ -5,52 +5,56 @@
 using namespace std;
 
 int main() {
-	b_tree<loan, 5> loans;
+	try {
+		b_tree<loan, 5> loans;
 
-	cout << "Choose one of the following" << endl;
-	cout << "1: add a new lending" << endl;
-	cout << "2: return an item" << endl;
-	cout << "3: print all lendings " << endl;
-	cout << "4: print all lendings of a date " << endl;
-	cout << "5: exit:" << endl;
-	cout << "6: print all loans to the same person" << endl;
+		cout << "Choose one of the following" << endl;
+		cout << "1: add a new lending" << endl;
+		cout << "2: return an item" << endl;
+		cout << "3: print all lendings " << endl;
+		cout << "4: print all lendings of a date " << endl;
+		cout << "5: exit:" << endl;
+		cout << "6: print all loans to the same person" << endl;
 
-	char c = '\0';
-	while (c != '0') {
-		cin >> c;
-		if (c == '1') {
-			cout << "Enter lending data" << endl;
-			loan l;
-			cin >> l;
-			loans.insert(l);
-		} else if (c == '2') {
-			cout << "Enter lending data" << endl;
-			loan l;
-			cin >> l;
-			loans.remove(l);
-		} else if (c == '3') {
-			loans.print();
-		} else if (c == '4') {
-			cout << "Enter the required date" << endl;
-			date d;
-			cin >> d;
-			loan min(0, "", d, 0);
-			loan max(0, "", d + 1, 0);
-			loans.print_between(min, max);
-		} else if (c == '5') {
-			cout << "bye ";
-		} else if (c == '6') {
-			cout << "Enter the name of the borrower" << endl;
-			string name;
-			cin >> name;
-			loans.for_each([&](loan& l) {
-				if (l.name() == name) {
-					cout << l << endl;
-				}
-			});
-		} else {
-			cout << "error ";
+		char c = '\0';
+		while (c != '0') {
+			cin >> c;
+			if (c == '1') {
+				cout << "Enter lending data" << endl;
+				loan l;
+				cin >> l;
+				loans.insert(l);
+			} else if (c == '2') {
+				cout << "Enter lending data" << endl;
+				loan l;
+				cin >> l;
+				loans.remove(l);
+			} else if (c == '3') {
+				loans.print();
+			} else if (c == '4') {
+				cout << "Enter the required date" << endl;
+				date d;
+				cin >> d;
+				loan min(0, "", d, 0);
+				loan max(0, "", d + 1, 0);
+				loans.print_between(min, max);
+			} else if (c == '5') {
+				cout << "bye ";
+			} else if (c == '6') {
+				cout << "Enter the name of the borrower" << endl;
+				string name;
+				cin >> name;
+				loans.for_each([&](loan& l) {
+					if (l.name() == name) {
+						cout << l << endl;
+					}
+				});
+			} else {
+				cout << "error ";
+			}
 		}
+	} catch (string e) {
+		cout << e << endl;
 	}
 
 	return 0;

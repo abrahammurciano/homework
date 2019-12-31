@@ -74,7 +74,7 @@ bool loan::operator>=(const loan& l) const {
 
 istream& operator>>(istream& in, loan& l) {
 	cout << "enter id name date item ";
-	return in >> l._borrower_id >> l._borrower_id >> l._loan_date >> l._item_id;
+	return in >> l._borrower_id >> l._name >> l._loan_date >> l._item_id;
 }
 
 ostream& operator<<(ostream& out, loan& l) {
