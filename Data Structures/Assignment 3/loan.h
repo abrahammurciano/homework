@@ -31,4 +31,4 @@ class loan {
 };
 
 std::istream& operator>>(std::istream& in, loan& l);
-std::ostream& operator<<(std::ostream& out, loan& l)
+std::ostream& operator<<(std::ostream& out, loan& l);
