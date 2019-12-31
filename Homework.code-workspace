@@ -39,7 +39,30 @@
 			"random": "cpp",
 			"string": "cpp",
 			"valarray": "cpp",
-			"variant": "cpp"
+			"variant": "cpp",
+			"algorithm": "cpp",
+			"functional": "cpp",
+			"atomic": "cpp",
+			"bit": "cpp",
+			"chrono": "cpp",
+			"complex": "cpp",
+			"condition_variable": "cpp",
+			"cstdarg": "cpp",
+			"cstddef": "cpp",
+			"ctime": "cpp",
+			"map": "cpp",
+			"iterator": "cpp",
+			"memory": "cpp",
+			"memory_resource": "cpp",
+			"numeric": "cpp",
+			"optional": "cpp",
+			"ratio": "cpp",
+			"tuple": "cpp",
+			"utility": "cpp",
+			"mutex": "cpp",
+			"sstream": "cpp",
+			"thread": "cpp",
+			"cinttypes": "cpp"
 		}
 	}
 }
