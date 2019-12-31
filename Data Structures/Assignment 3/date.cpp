@@ -135,5 +135,15 @@ bool date::leap_year(short year) {
 
 std::ostream& operator<<(std::ostream& out, const date& d) {
 	short day = d.day(), month = d.month(), year = d.year();
-	return out << (day < 10 ? "0" : "") << day << '/' << (month < 10 ? "0" : "") << month << '/' << year;
+	return out << year << '-' << (month < 10 ? "0" : "") << month << '-' << (day < 10 ? "0" : "") << day;
+}
+
+std::istream& operator>>(std::istream& in, date& d) {
+	char dash_1, dash_2;
+	short day, month, year;
+	return in >> day >> dash_1 >> month >> dash_2 >> year;
+	if (dash_1 != '-' || dash_2 != '-') {
+		throw string("Error: Expected a date in YYYY-MM-DD format.");
+	}
+	d = date(day, month, year);
 }

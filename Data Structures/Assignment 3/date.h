@@ -5,14 +5,14 @@
 
 class date {
   private:
-	// Number of days since 1 Jan 1970
+	// Number of days since 1970-01-01
 	int d;
 	static const short cumulative_days[12];
-	// Given a year, returns the number of days since 1/1/1970 until 1/1/[year]
+	// Given a year, returns the number of days since 1970-01-01 until [year]-01-01
 	static int year_to_days(short year);
-	// Given a month, returns the number of days since 1/1/xxxx until 1/[month]/xxxx, depending on if it's a leap year
+	// Given a month, returns the number of days since YYYY-01-01 until YYYY-[month]-01, depending on if it's a leap year
 	static short month_to_days(short month, bool leap_year = false);
-	// Given the number of days since 1/1/xxxx, returns the current month depending on if it's a leap year
+	// Given the number of days since YYYY-01-01, returns the current month depending on if it's a leap year
 	static short days_to_month(short days, short min = 0, short max = 12);
 
   public:
@@ -43,6 +43,9 @@ class date {
 	static bool leap_year(short year);
 };
 
+// Output the date in format YYYY-MM-DD
 std::ostream& operator<<(std::ostream& out, const date& d);
+// Input a date in format YYYY-MM-DD
+std::istream& operator>>(std::istream& in, date& d);
 
 #endif
