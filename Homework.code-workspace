@@ -62,7 +62,8 @@
 			"mutex": "cpp",
 			"sstream": "cpp",
 			"thread": "cpp",
-			"cinttypes": "cpp"
+			"cinttypes": "cpp",
+			"*.def": "cpp"
 		}
 	}
 }
