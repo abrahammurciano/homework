@@ -1,4 +1,5 @@
 #include "loan.h"
+#include <sstream>
 using namespace std;
 
 loan::loan()
@@ -79,9 +80,17 @@ bool loan::operator>=(const loan& l) const {
 
 istream& operator>>(istream& in, loan& l) {
 	cout << "enter id name date item ";
-	if (!(in >> l._borrower_id >> l._name >> l._loan_date >> l._item_id)) {
-		cin.clear();
-		throw string("Error: Invalid input.");
+	stringstream loan_stream;
+	string str_temp;
+	int int_temp;
+	in >> int_temp >> str_temp;
+	loan_stream << int_temp << ' ' << str_temp << ' ';
+	in >> str_temp >> int_temp;
+	loan_stream << str_temp << ' ' << int_temp << ' ';
+	try {
+		loan_stream >> l._borrower_id >> l._name >> l._loan_date >> l._item_id;
+	} catch (string e) {
+		throw e;
 	}
 	return in;
 }

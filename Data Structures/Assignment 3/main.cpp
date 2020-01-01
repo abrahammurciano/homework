@@ -62,7 +62,7 @@ int main() {
 					}
 				});
 			} else {
-				cout << "error" << endl;
+				cout << "Error: Choice must be a number from 1 to 6. Received '" << c << "'." << endl;
 			}
 		}
 	} catch (string e) {

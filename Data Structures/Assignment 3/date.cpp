@@ -1,4 +1,5 @@
 #include "date.h"
+#include <sstream>
 using namespace std;
 
 const short date::cumulative_days[12] = {0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334};
@@ -139,10 +140,13 @@ ostream& operator<<(ostream& out, const date& d) {
 }
 
 istream& operator>>(istream& in, date& d) {
+	stringstream date_stream;
+	string temp;
+	in >> temp;
+	date_stream << temp;
 	char dash_1, dash_2;
 	short day, month, year;
-	if (!(in >> year >> dash_1 >> month >> dash_2 >> day) || dash_1 != '-' || dash_2 != '-') {
-		cin.clear();
+	if (!(date_stream >> year >> dash_1 >> month >> dash_2 >> day) || dash_1 != '-' || dash_2 != '-') {
 		throw string("Error: Expected a date in YYYY-MM-DD format.");
 	}
 	d = date(day, month, year);
