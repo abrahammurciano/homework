@@ -22,8 +22,12 @@ int main() {
 			if (c == '1') {
 				cout << "Enter lending data" << endl;
 				loan l;
-				cin >> l;
-				loans.insert(l);
+				try {
+					cin >> l;
+					loans.insert(l);
+				} catch (string e) {
+					cout << e << endl;
+				}
 			} else if (c == '2') {
 				cout << "Enter lending data" << endl;
 				loan l;
