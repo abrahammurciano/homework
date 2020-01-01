@@ -133,7 +133,9 @@ int b_tree<K, M>::node::find_in_keys(const K& element, int min, int max) const {
 		return min;
 	}
 	int mid = (min + max) / 2;
-	if (element < _keys[mid]) {
+	if (element == _keys[mid] && element < _keys[mid + 1]) {
+		return mid;
+	} else if (element < _keys[mid]) {
 		return find_in_keys(element, min, mid);
 	} else {
 		return find_in_keys(element, mid + 1, max);
