@@ -56,16 +56,13 @@ bool loan::operator!=(const loan& l) const {
 }
 
 bool loan::operator<(const loan& l) const {
-	if (loan_date() < l.loan_date()) {
-		return true;
+	if (loan_date() == l.loan_date()) {
+		if (item_id() == l.item_id()) {
+			return (borrower_id() < l.borrower_id());
+		}
+		return item_id() < l.item_id();
 	}
-	if (item_id() < l.item_id()) {
-		return true;
-	}
-	if (borrower_id() < l.borrower_id()) {
-		return true;
-	}
-	return false;
+	return loan_date() < l.loan_date();
 }
 
 bool loan::operator<=(const loan& l) const {
