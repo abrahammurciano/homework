@@ -27,17 +27,25 @@ int main() {
 			} else if (c == '2') {
 				cout << "Enter lending data" << endl;
 				loan l;
-				cin >> l;
-				loans.remove(l);
+				try {
+					cin >> l;
+					loans.remove(l);
+				} catch (string e) {
+					cout << e << endl;
+				}
 			} else if (c == '3') {
 				loans.print();
 			} else if (c == '4') {
 				cout << "Enter the required date" << endl;
 				date d;
-				cin >> d;
-				loan min(0, "", d, 0);
-				loan max(0, "", d + 1, 0);
-				loans.print_between(min, max);
+				try {
+					cin >> d;
+					loan min(0, "", d, 0);
+					loan max(0, "", d + 1, 0);
+					loans.print_between(min, max);
+				} catch (string e) {
+					cout << e << endl;
+				}
 			} else if (c == '5') {
 				cout << "bye ";
 			} else if (c == '6') {
@@ -50,7 +58,7 @@ int main() {
 					}
 				});
 			} else {
-				cout << "error ";
+				cout << "error" << endl;
 			}
 		}
 	} catch (string e) {

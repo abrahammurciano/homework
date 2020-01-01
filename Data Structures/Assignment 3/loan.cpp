@@ -79,7 +79,11 @@ bool loan::operator>=(const loan& l) const {
 
 istream& operator>>(istream& in, loan& l) {
 	cout << "enter id name date item ";
-	return in >> l._borrower_id >> l._name >> l._loan_date >> l._item_id;
+	if (!(in >> l._borrower_id >> l._name >> l._loan_date >> l._item_id)) {
+		cin.clear();
+		throw string("Error: Invalid input.");
+	}
+	return in;
 }
 
 ostream& operator<<(ostream& out, loan& l) {

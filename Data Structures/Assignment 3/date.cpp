@@ -141,8 +141,8 @@ ostream& operator<<(ostream& out, const date& d) {
 istream& operator>>(istream& in, date& d) {
 	char dash_1, dash_2;
 	short day, month, year;
-	in >> year >> dash_1 >> month >> dash_2 >> day;
-	if (dash_1 != '-' || dash_2 != '-') {
+	if (!(in >> year >> dash_1 >> month >> dash_2 >> day) || dash_1 != '-' || dash_2 != '-') {
+		cin.clear();
 		throw string("Error: Expected a date in YYYY-MM-DD format.");
 	}
 	d = date(day, month, year);
