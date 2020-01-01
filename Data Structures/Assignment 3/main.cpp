@@ -17,7 +17,7 @@ int main() {
 		cout << "6: print all loans to the same person" << endl;
 
 		char c = '\0';
-		while (c != '0') {
+		while (c != '5') {
 			cin >> c;
 			if (c == '1') {
 				cout << "Enter lending data" << endl;
