@@ -86,5 +86,6 @@ istream& operator>>(istream& in, loan& l) {
 }
 
 ostream& operator<<(ostream& out, loan& l) {
-	return out << "Lending details: id: " << l.borrower_id() << " name: " << l.name() << " date: " << l.loan_date() << " item: " << l.item_id() << endl;
+	return out << endl
+			   << "Lending details: id: " << l.borrower_id() << " name: " << l.name() << " date: " << l.loan_date() << " item: " << l.item_id() << endl;
 }
