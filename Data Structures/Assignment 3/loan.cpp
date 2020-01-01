@@ -39,6 +39,14 @@ void loan::item_id(int _item_id) {
 	this->_item_id = _item_id;
 }
 
+loan& loan::operator=(const loan& l) {
+	_borrower_id = l._borrower_id;
+	_name = l._name;
+	_loan_date = l._loan_date;
+	_item_id = l._item_id;
+	return *this;
+}
+
 bool loan::operator==(const loan& l) const {
 	return borrower_id() == l.borrower_id() && name() == l.name() && loan_date() == l.loan_date() && item_id() == l.item_id();
 }

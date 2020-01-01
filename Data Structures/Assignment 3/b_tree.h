@@ -36,7 +36,7 @@ class b_tree {
 		int index_under_parent();
 
 	  public:
-		node(node* _parent = 0, K* keys = 0, node** _children = 0, int _num_keys = 0);
+		node(node* parent = 0, K* keys = 0, node** children = 0, int num_keys = 0);
 		// Returns number of keys in this node
 		int keys() const;
 		// Returns true if this node is the root
@@ -82,24 +82,33 @@ class b_tree {
 	~b_tree();
 };
 
-template <class K, int M>
-b_tree<K, M>::node::node(node* _parent, K* keys, node** _children, int _num_keys)
-	: _parent(_parent), _num_keys(_num_keys) {
-	if (_num_keys > b_tree<K, M>::MAX_KEYS) {
-		throw std::string("Error: Could not create node - too many keys. ") + std::string("Expected up to ") + std::to_string(MAX_KEYS) + std::string(", but received ") + std::to_string(_num_keys) + '.';
+template <class T>
+void copy(T* src, T* dest, int n) {
+	if (dest <= src) {
+		std::copy(src, src + n, dest);
+	} else {
+		std::copy_backward(src, src + n, dest + n);
 	}
-	if (_num_keys < b_tree<K, M>::MIN_KEYS) {
-		if (_children || _parent) {
-			throw std::string("Error: Could not create node - too few keys for a non-root, non-leaf node. ") + std::string("Expected at least ") + std::to_string(MIN_KEYS) + std::string(", but received ") + std::to_string(_num_keys) + '.';
+}
+
+template <class K, int M>
+b_tree<K, M>::node::node(node* parent, K* keys, node** children, int num_keys)
+	: _parent(parent), _num_keys(num_keys) {
+	if (num_keys > b_tree<K, M>::MAX_KEYS) {
+		throw std::string("Error: Could not create node - too many keys. ") + std::string("Expected up to ") + std::to_string(MAX_KEYS) + std::string(", but received ") + std::to_string(num_keys) + '.';
+	}
+	if (num_keys < b_tree<K, M>::MIN_KEYS) {
+		if (children || parent) {
+			throw std::string("Error: Could not create node - too few keys for a non-root, non-leaf node. ") + std::string("Expected at least ") + std::to_string(MIN_KEYS) + std::string(", but received ") + std::to_string(num_keys) + '.';
 		}
 	}
 
-	std::memcpy(_keys, keys, _num_keys * sizeof(K));
-	if (!_children) {
-		this->_children = 0;
+	copy(keys, _keys, num_keys);
+	if (!children) {
+		_children = 0;
 	} else {
-		this->_children = new node*[MAX_CHILDREN];
-		std::memcpy(this->_children, _children, (_num_keys + 1) * sizeof(node*));
+		_children = new node*[MAX_CHILDREN];
+		copy(children, _children, num_keys + 1);
 	}
 }
 
@@ -184,10 +193,10 @@ void b_tree<K, M>::node::rotate_left(int index) {
 	}
 	_children[index - 1]->_keys[keys()] = _keys[index - 1];
 	_keys[index - 1] = _children[index]->_keys[0];
-	memmove(&(_children[index]->_keys[0]), &(_children[index]->_keys[1]), (_children[index]->keys() - 1) * sizeof(K));
+	copy(&(_children[index]->_keys[1]), &(_children[index]->_keys[0]), _children[index]->keys() - 1);
 	if (!_children[index]->leaf()) {
 		_children[index - 1]->_children[_children[index - 1]->keys() + 1] = _children[index]->_children[0];
-		memmove(&(_children[index]->_children[0]), &(_children[index]->_children[1]), (_children[index]->keys()) * sizeof(node*));
+		copy(&(_children[index]->_children[1]), &(_children[index]->_children[0]), _children[index]->keys());
 	}
 	++(_children[index - 1]->_num_keys);
 	--(_children[index]->_num_keys);
@@ -207,11 +216,11 @@ void b_tree<K, M>::node::rotate_right(int index) {
 	if (_children[index]->keys() <= MIN_KEYS) {
 		throw std::string("Error: Cannot rotate from a child with the minimum number of keys.");
 	}
-	memmove(&(_children[index + 1]->_keys[1]), &(_children[index + 1]->_keys[0]), _children[index + 1]->keys() * sizeof(K));
+	copy(&(_children[index + 1]->_keys[0]), &(_children[index + 1]->_keys[1]), _children[index + 1]->keys());
 	_children[index + 1]->_keys[0] = _keys[index];
 	_keys[index] = _children[index]->_keys[_children[index]->keys() - 1];
 	if (!_children[index]->leaf()) {
-		memmove(&(_children[index + 1]->_children[1]), &(_children[index + 1]->_children[0]), (_children[index + 1]->keys() + 1) * sizeof(node*));
+		copy(&(_children[index + 1]->_children[0]), &(_children[index + 1]->_children[1]), _children[index + 1]->keys() + 1);
 		_children[index + 1]->_children[0] = _children[index]->_children[keys()];
 	}
 	++(_children[index + 1]->_num_keys);
@@ -227,17 +236,17 @@ void b_tree<K, M>::node::merge_children(int index) {
 		throw std::string("Error: Cannot merge the last key in a node with the next one, because the next one doesn't exist.");
 	}
 	_children[index]->_keys[keys()] = _keys[index];
-	memcpy(&(_children[index]->_keys[keys() + 1]), &(_children[index + 1]->_keys[0]), _children[index + 1]->keys() * sizeof(K));
+	copy(&(_children[index + 1]->_keys[0]), &(_children[index]->_keys[keys() + 1]), _children[index + 1]->keys());
 	if (!_children[index]->leaf()) {
-		memcpy(&(_children[index]->_children[keys() + 1]), (&(_children[index + 1]->_children[0])), (_children[index + 1]->keys() + 1) * sizeof(node*));
+		copy(&(_children[index + 1]->_children[0]), &(_children[index]->_children[keys() + 1]), _children[index + 1]->keys() + 1);
 		for (int i = 0; i < _children[index + 1]->keys() + 1; ++i) {
 			_children[index + 1]->_children[i]->_parent = _children[index];
 		}
 	}
 	_children[index]->_num_keys += 1 + _children[index + 1]->keys();
 	delete _children[index + 1];
-	memmove(&_keys[index], &_keys[index + 1], (keys() - index - 1) * sizeof(K));
-	memmove(&_children[index + 1], &_children[index + 2], (keys() - index - 1) * sizeof(node*));
+	copy(&_keys[index + 1], &_keys[index], keys() - index - 1);
+	copy(&_children[index + 2], &_children[index + 1], keys() - index - 1);
 	--_num_keys;
 }
 
@@ -276,10 +285,10 @@ typename b_tree<K, M>::node* b_tree<K, M>::node::insert(const K& element, node* 
 	node* new_root = 0;	 // If a new root is created by the insertion, a pointer will be puthere and this variable will be returned
 	if (keys() < MAX_KEYS) {
 		int index = find_in_keys(element);
-		std::memmove(&_keys[index + 1], &_keys[index], (keys() - index) * sizeof(K));
+		copy(&_keys[index], &_keys[index + 1], keys() - index);
 		_keys[index] = element;
 		if (!leaf()) {
-			std::memmove(&_children[index + 2], &_children[index + 1], (keys() - index) * sizeof(node*));
+			copy(&_children[index + 1], &_children[index + 2], keys() - index);
 			_children[index + 1] = sub_tree;
 		}
 		++_num_keys;
@@ -320,7 +329,7 @@ typename b_tree<K, M>::node* b_tree<K, M>::node::remove(const K& element, int in
 	}
 	if (leaf()) {
 		if (index < keys() && _keys[index] == element) {
-			memmove(&_keys[index], &_keys[index + 1], (keys() - index - 1) * sizeof(K));
+			copy(&_keys[index + 1], &_keys[index], keys() - index - 1);
 			--_num_keys;
 			return rebalance();
 		}

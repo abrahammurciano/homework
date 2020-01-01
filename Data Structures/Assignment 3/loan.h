@@ -23,6 +23,8 @@ class loan {
 	void loan_date(date _date);
 	void item_id(int _item_id);
 
+	loan& operator=(const loan& l);
+
 	bool operator==(const loan& l) const;
 	bool operator!=(const loan& l) const;
 	bool operator<(const loan& l) const;
