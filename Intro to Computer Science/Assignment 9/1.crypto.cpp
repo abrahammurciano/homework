@@ -55,9 +55,11 @@ char* getText(char terminator = '\n') {
 // array containing the new string
 char* crypto(char str[]) {
 	int size;
-	for (size = 1; str[size] != '\0'; size++) continue;	 // Get size of str
+	for (size = 0; str[size] != '\0'; ++size) continue;	 // Get size of str
+	++size;												 // Make one extra space for '\0'
 
 	char* newStr = new char[size];	// Make new array of same size
+	newStr[size - 1] = '\0';
 
 	for (int i = 0; str[i] != '\0'; i++) {	// Loop until null terminator is found
 		// Check if character is between 'a' and 'z' in the ASCII table
