@@ -63,7 +63,9 @@
 			"sstream": "cpp",
 			"thread": "cpp",
 			"cinttypes": "cpp",
-			"*.def": "cpp"
+			"*.def": "cpp",
+			"unordered_set": "cpp",
+			"set": "cpp"
 		}
 	}
 }

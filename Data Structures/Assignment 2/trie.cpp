@@ -8,6 +8,7 @@
  */
 
 #include "trie.h"
+#include <exception>
 
 // Given a character, return the corresponding index
 int trie::node::char_to_int(char c) {
@@ -16,7 +17,7 @@ int trie::node::char_to_int(char c) {
 	} else if (c >= 'a' && c <= 'z') {	// If c is a lower case letter
 		return c - 'a';					// Subtract 'a' and return
 	} else {							// Otherwise it's not a letter, so throw an error
-		throw string("Error: Invalid character '") + c + string("'.");
+		throw std::runtime_error("Error: Invalid character.");
 	}
 }
 
@@ -36,8 +37,7 @@ bool trie::node::has_children() {
 }
 
 // Constructor
-trie::node::node(node* parent, int index)
-	: parent(parent), index(index), terminal(false) {
+trie::node::node(node* parent, int index) : parent(parent), index(index), terminal(false) {
 	children = new node*[alphabet_size];  // Allocate dynamic array for the children
 }
 
@@ -50,7 +50,7 @@ trie::node::~node() {
 }
 
 // Append a suffix to this node
-void trie::node::append(string suffix) {
+void trie::node::append(std::string suffix) {
 	// Append the first letter to this node
 	int index = char_to_int(suffix[0]);			  // Get the index corresponding to the first character
 	if (!children[index]) {						  // If that character doesn't exist
@@ -75,8 +75,8 @@ bool trie::node::remove() {
 	node *_node = this, *_parent = parent;
 	while (_parent && !_node->has_children() && !_node->terminal) {
 		// So long as the current node isn't a terminal and has no children, it is a loose end, so should be deleted
-		_parent->children[_node->index] = nullptr;	// Make the parent forget that it has that child
-		delete _node;								// Deallocade the current node
+		_parent->children[_node->index] = 0;  // Make the parent forget that it has that child
+		delete _node;						  // Deallocade the current node
 		// Go one step up the tree to repeat for the net iteration
 		_node = _parent;			// Make the current node equal to the parent
 		_parent = _parent->parent;	// And make the parent equal to the grandparent
@@ -85,9 +85,9 @@ bool trie::node::remove() {
 }
 
 // Find the node that leads to the given word or prefix
-trie::node* trie::node::find_node(string s) {
+trie::node* trie::node::find_node(std::string s) {
 	if (s == "") {	// If there is no string to search, throw an error
-		throw "Error: Cannot search for empty string.";
+		throw std::runtime_error("Error: Cannot search for empty string.");
 	}
 	int index = char_to_int(s[0]);	 // Get the index corresponding to the first character
 	if (children[index]) {			 // If the character exists
@@ -97,50 +97,50 @@ trie::node* trie::node::find_node(string s) {
 		// If it's not the last character, search for the rest of the search term under the child node
 		return children[index]->find_node(s.substr(1));
 	}
-	return nullptr;	 // If the path doesn't exist, return null
+	return 0;  // If the path doesn't exist, return null
 }
 
 // Find the node that leads to the given word
-trie::node* trie::node::find_terminal(string s) {
-	node* n = find_node(s);					// Find the node
-	return n && n->terminal ? n : nullptr;	// If it's a terminal, return it. Otherwise return null
+trie::node* trie::node::find_terminal(std::string s) {
+	node* n = find_node(s);			  // Find the node
+	return n && n->terminal ? n : 0;  // If it's a terminal, return it. Otherwise return null
 }
 
 // Print all child paths of this node after printing prefix for each one
-void trie::node::print_completions(string prefix) {
-	if (terminal) {				 // If this node is an end of word, it must be equal to prefix
-		cout << prefix << endl;	 // So print this word
+void trie::node::print_completions(std::string prefix) {
+	if (terminal) {						   // If this node is an end of word, it must be equal to prefix
+		std::cout << prefix << std::endl;  // So print this word
 	}
-	for (int i = 0; i < alphabet_size; ++i) {			  // Go through all the children of this node
-		if (children[i]) {								  // If it's not a null pointer
-			string new_prefix = prefix + int_to_char(i);  // Add the current character to the prefix
-			children[i]->print_completions(new_prefix);	  // Recursively print from the child node
+	for (int i = 0; i < alphabet_size; ++i) {				   // Go through all the children of this node
+		if (children[i]) {									   // If it's not a null pointer
+			std::string new_prefix = prefix + int_to_char(i);  // Add the current character to the prefix
+			children[i]->print_completions(new_prefix);		   // Recursively print from the child node
 		}
 	}
 }
 
 // Constructor
 trie::trie() {
-	root = new node(nullptr, -1);  // Create a root node with no parent and an invalid index
+	root = new node(0, -1);	 // Create a root node with no parent and an invalid index
 }
 
-// Insert a string into the trie
-void trie::insert(string s) {
+// Insert a std::string into the trie
+void trie::insert(const std::string& s) {
 	root->append(s);  // Append the string to the root
 }
 
 // Return true if the requested string is in the trie
-bool trie::search(string s) {
+bool trie::search(const std::string& s) {
 	return root->find_terminal(s);	// Check if the path from the root leads to a terminal node
 }
 
 // Remove a given string from the trie
-bool trie::remove(string s) {
+bool trie::remove(const std::string& s) {
 	return root->find_node(s)->remove();  // Find the node under the root and remove it
 }
 
 // Print all words in the trie sharing a given prefix
-bool trie::print_completions(string prefix) {
+bool trie::print_completions(const std::string& prefix) {
 	node* prefix_node = root->find_node(prefix);  // Find the prefix node
 	if (!prefix_node) {							  // If it doesn't exist
 		return false;							  // Return false
