@@ -1,7 +1,7 @@
 #ifndef trie_map_h
 #define trie_map_h
 
-#include "trie.h"
+#include "../Assignment 2/trie.h"
 
 template <class T>
 class trie_map : public trie {
