@@ -39,6 +39,9 @@ class hash_map {
 		void shift(direction);
 
 	  public:
+		explicit operator bool() const {
+			return slot_ptr != 0;
+		}
 		// Operators
 		bool operator==(const iterator& i) const;
 		bool operator!=(const iterator& i) const;
@@ -53,7 +56,13 @@ class hash_map {
 	hash_map(int n);
 	~hash_map();
 	int size() const;
-	void insert(K key, T value);
+	iterator find(K key) const;
+	// Inserts key into table and returns an iterator
+	iterator insert(K key);
+	// Inserts key and value into table and returns an iterator
+	iterator insert(K key, T value);
+	// Returns the value (by reference) corresponding to given key. If the key doesn't exist, the key will be added
+	T& operator[](K key);
 
 	iterator begin() const;
 	iterator end() const;
@@ -85,25 +94,10 @@ int hash_map<K, T>::size() const {
 }
 
 template <class K, class T>
-void hash_map<K, T>::insert(K key, T value) {
-	// TODO: check if key already exits
-	for (int i = 0; i < slots; ++i) {
-		int index = hash(key, i);
-		if (table[index] == 0) {
-			table[index] = new T(value);
-			++_size;
-			return;
-		}
-	}
-	expand();
-	insert(key, value);
-}
-
-template <class K, class T>
 void hash_map<K, T>::expand() {
 	hash_map<K, T> temp_map(2 * slots);
 	for (iterator i = begin(); i != end(); ++i) {
-		temp_map.insert((*i).first, (*i).second);
+		temp_map[(*i).first] = (*i).second;
 	}
 	delete[](table - 1);
 
@@ -113,6 +107,67 @@ void hash_map<K, T>::expand() {
 	hash = temp_map.hash;
 
 	temp_map.table = 0;
+}
+
+template <class K, class T>
+typename hash_map<K, T>::iterator hash_map<K, T>::insert(K key) {
+	if (size() >= slots) {	// If the table is full, double the size and rehash
+		expand();
+	}
+	// Find the first hash that maps to an empty slot
+	int index, i = 0;
+	do {
+		index = hash(key, i);
+	} while (!table[index].empty());
+	// Put the key in the slot and default construct a value
+	table[index] = slot(key, T());
+	return iterator(&table[index]);
+}
+
+template <class K, class T>
+typename hash_map<K, T>::iterator hash_map<K, T>::insert(K key, T value) {
+	iterator i = find(key);
+	if (!i) {  // If the key doesn't exist
+		i = insert(key);
+	}
+
+	(*i).second = value;
+	return i;
+}
+
+template <class K, class T>
+typename hash_map<K, T>::iterator hash_map<K, T>::find(K key) const {
+	int index;
+	for (int i = 0; i < slots; ++i) {
+		index = hash(key, i);
+		if (table[index].rec->first == key) {
+			return iterator(&table[index]);
+		}
+		if (table[index].empty() && !table[index].deleted) {
+			return end();
+		}
+	}
+	return end();
+}
+
+template <class K, class T>
+T& hash_map<K, T>::operator[](K key) {
+	iterator i = find(key);
+	if (!i) {  // If the key doesn't already exist
+		i = insert(key);
+	}
+	return (*i).second;	 // Return the corresponding value by reference
+}
+
+template <class K, class T>
+typename hash_map<K, T>::iterator hash_map<K, T>::begin() const {
+	iterator i(table - 1);
+	return ++i;
+}
+
+template <class K, class T>
+typename hash_map<K, T>::iterator hash_map<K, T>::end() const {
+	return iterator(0);
 }
 
 template <class K, class T>
@@ -190,17 +245,6 @@ bool hash_map<K, T>::slot::sentinel() const {
 template <class K, class T>
 bool hash_map<K, T>::slot::empty() const {
 	return rec == 0;
-}
-
-template <class K, class T>
-typename hash_map<K, T>::iterator hash_map<K, T>::begin() const {
-	iterator i(table - 1);
-	return ++i;
-}
-
-template <class K, class T>
-typename hash_map<K, T>::iterator hash_map<K, T>::end() const {
-	return iterator(0);
 }
 
 #endif
