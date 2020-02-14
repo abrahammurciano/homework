@@ -1,12 +1,11 @@
 #ifndef hasher_h
 #define hasher_h
 
-#include "prime.h"
 #include "random.h"
 #include <string>
 
 template <class K>
-class hasher;
+class hasher {};
 
 // ==============
 // Integer Hasher
@@ -20,18 +19,15 @@ class hasher<int> {
 	unsigned int a, b;
 
   public:
-	hasher(int m);
-	int operator()(int key) const;
+	hasher(int m) : m(m) {
+		a = random::generate(1, p);
+		b = random::generate(0, p);
+	}
+
+	int operator()(int key) const {
+		return ((a * key + b) % p) % m;
+	}
 };
-
-hasher<int>::hasher(int m) : m(m) {
-	a = random::generate(1, p);
-	b = random::generate(0, p);
-}
-
-int hasher<int>::operator()(int key) const {
-	return ((a * key + b) % p) % m;
-}
 
 // =============
 // String Hasher
@@ -44,18 +40,15 @@ class hasher<std::string> {
 	hasher<int> hash;
 
   public:
-	hasher(int m);
-	int operator()(string key) const;
-};
+	hasher(int m) : m(m), hash(hasher<int>(m)) {}
 
-hasher<std::string>::hasher(int m) : m(m), hash(hasher<int>(m)) {}
-
-int hasher<std::string>::operator()(string key) const {
-	unsigned int h = 0x7FFFFFFF;
-	for (auto i = key.begin(); i != key.end(); ++i) {
-		h += hash(*i);
+	int operator()(std::string key) const {
+		unsigned int h = 0x7FFFFFFF;
+		for (std::string::iterator i = key.begin(); i != key.end(); ++i) {
+			h += hash(*i);
+		}
+		return h % m;
 	}
-	return h % m;
-}
+};
 
 #endif

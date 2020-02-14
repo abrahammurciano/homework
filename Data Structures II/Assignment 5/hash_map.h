@@ -5,10 +5,10 @@
 #include "prime.h"
 #include <iostream>
 
-template <class K, class T>
+template <class K, class V>
 class hash_map {
   private:
-	typedef pair<K, T> record;
+	typedef std::pair<K, V> record;
 
 	class slot {
 	  public:
@@ -60,26 +60,30 @@ class hash_map {
 	hash_map(int n);
 	~hash_map();
 	int size() const;
-	iterator find(K key) const;
+	iterator find(const K& key) const;
 	// Inserts key into table and returns an iterator
-	iterator insert(K key);
+	iterator insert(const K& key);
 	// Inserts key and value into table and returns an iterator
-	iterator insert(K key, T value);
+	iterator insert(const K& key, const V& value);
 	// Returns the value (by reference) corresponding to given key. If the key doesn't exist, the key will be added
-	T& operator[](K key);
+	V& operator[](const K& key);
+	// Returns the value (by reference) corresponding to given key. If the key doesn't exist, an error will be thrown
+	const V& operator[](const K& key) const;
 	// Removes a given key from the hash table
-	void remove(K key);
+	void remove(const K& key);
+	// Removes a given iterator from the hash table
+	void remove(iterator& i);
 	void print() const;
 
 	iterator begin() const;
 	iterator end() const;
 };
 
-template <class K, class T>
-hash_map<K, T>::hash_map() : hash_map(0) {}
+template <class K, class V>
+hash_map<K, V>::hash_map() : hash_map(0) {}
 
-template <class K, class T>
-hash_map<K, T>::hash_map(int n) : _size(0), hash(0) {
+template <class K, class V>
+hash_map<K, V>::hash_map(int n) : _size(0), hash(0) {
 	if (n < 0) {
 		throw std::runtime_error("Error: Cannot have a negative number of values in a hash_map.");
 	}
@@ -90,19 +94,19 @@ hash_map<K, T>::hash_map(int n) : _size(0), hash(0) {
 	hash = double_hasher<K>(slots);
 }
 
-template <class K, class T>
-hash_map<K, T>::~hash_map() {
+template <class K, class V>
+hash_map<K, V>::~hash_map() {
 	delete[](table - 1);  // Must delete one spot behind the start of the table to also delete the first sentinel
 }
 
-template <class K, class T>
-int hash_map<K, T>::size() const {
+template <class K, class V>
+int hash_map<K, V>::size() const {
 	return _size;
 }
 
-template <class K, class T>
-void hash_map<K, T>::expand() {
-	hash_map<K, T> temp_map(2 * slots);
+template <class K, class V>
+void hash_map<K, V>::expand() {
+	hash_map<K, V> temp_map(2 * slots);
 	for (iterator i = begin(); i != end(); ++i) {
 		temp_map[i->first] = i->second;
 	}
@@ -116,8 +120,8 @@ void hash_map<K, T>::expand() {
 	temp_map.table = 0;
 }
 
-template <class K, class T>
-typename hash_map<K, T>::iterator hash_map<K, T>::insert(K key) {
+template <class K, class V>
+typename hash_map<K, V>::iterator hash_map<K, V>::insert(const K& key) {
 	if (size() >= slots * 0.7) {  // If the table is full, double the size and rehash
 		expand();
 	}
@@ -127,12 +131,12 @@ typename hash_map<K, T>::iterator hash_map<K, T>::insert(K key) {
 		index = hash(key, i);
 	} while (!table[index].empty());
 	// Put the key in the slot and default construct a value
-	table[index] = new record(key, T());
+	table[index] = new record(key, V());
 	return iterator(&table[index]);
 }
 
-template <class K, class T>
-typename hash_map<K, T>::iterator hash_map<K, T>::insert(K key, T value) {
+template <class K, class V>
+typename hash_map<K, V>::iterator hash_map<K, V>::insert(const K& key, const V& value) {
 	iterator i = find(key);
 	if (!i) {  // If the key doesn't exist
 		i = insert(key);
@@ -142,8 +146,8 @@ typename hash_map<K, T>::iterator hash_map<K, T>::insert(K key, T value) {
 	return i;
 }
 
-template <class K, class T>
-typename hash_map<K, T>::iterator hash_map<K, T>::find(K key) const {
+template <class K, class V>
+typename hash_map<K, V>::iterator hash_map<K, V>::find(const K& key) const {
 	int index, i = 0;
 	while (true) {
 		index = hash(key, i);
@@ -158,8 +162,8 @@ typename hash_map<K, T>::iterator hash_map<K, T>::find(K key) const {
 	}
 }
 
-template <class K, class T>
-T& hash_map<K, T>::operator[](K key) {
+template <class K, class V>
+V& hash_map<K, V>::operator[](const K& key) {
 	iterator i = find(key);
 	if (!i) {  // If the key doesn't already exist
 		i = insert(key);
@@ -167,48 +171,62 @@ T& hash_map<K, T>::operator[](K key) {
 	return i->second;  // Return the corresponding value by reference
 }
 
-template <class K, class T>
-void hash_map<K, T>::remove(K key) {
+template <class K, class V>
+const V& hash_map<K, V>::operator[](const K& key) const {
 	iterator i = find(key);
+	if (!i) {  // If the key doesn't already exist
+		throw std::runtime_error("Error: Could not access record of hash_map. Key provided does not exist.");
+	}
+	return i->second;  // Return the corresponding value by reference
+}
+
+template <class K, class V>
+void hash_map<K, V>::remove(const K& key) {
+	iterator i = find(key);
+	remove(i);
+}
+
+template <class K, class V>
+void hash_map<K, V>::remove(iterator& i) {
 	if (i) {
 		*(i.slot_ptr) = 0;
 		--_size;
 	}
 }
 
-template <class K, class T>
-void hash_map<K, T>::print() const {
+template <class K, class V>
+void hash_map<K, V>::print() const {
 	for (iterator i = begin(); i != end(); ++i) {
-		std::cout << i->first << ": \t" << i->second << endl;
+		std::cout << i->first << ": \t" << i->second << std::endl;
 	}
 }
 
-template <class K, class T>
-typename hash_map<K, T>::iterator hash_map<K, T>::begin() const {
+template <class K, class V>
+typename hash_map<K, V>::iterator hash_map<K, V>::begin() const {
 	iterator i(table - 1);
 	return ++i;
 }
 
-template <class K, class T>
-typename hash_map<K, T>::iterator hash_map<K, T>::end() const {
+template <class K, class V>
+typename hash_map<K, V>::iterator hash_map<K, V>::end() const {
 	return iterator(0);
 }
 
-template <class K, class T>
-hash_map<K, T>::iterator::iterator(slot* slot_ptr) : slot_ptr(slot_ptr) {}
+template <class K, class V>
+hash_map<K, V>::iterator::iterator(slot* slot_ptr) : slot_ptr(slot_ptr) {}
 
-template <class K, class T>
-bool hash_map<K, T>::iterator::operator==(const iterator& i) const {
+template <class K, class V>
+bool hash_map<K, V>::iterator::operator==(const iterator& i) const {
 	return slot_ptr == i.slot_ptr;
 }
 
-template <class K, class T>
-bool hash_map<K, T>::iterator::operator!=(const iterator& i) const {
+template <class K, class V>
+bool hash_map<K, V>::iterator::operator!=(const iterator& i) const {
 	return slot_ptr != i.slot_ptr;
 }
 
-template <class K, class T>
-void hash_map<K, T>::iterator::shift(direction d) {
+template <class K, class V>
+void hash_map<K, V>::iterator::shift(direction d) {
 	do {
 		slot_ptr += (d == forward ? 1 : -1);
 	} while (slot_ptr->empty());
@@ -217,66 +235,66 @@ void hash_map<K, T>::iterator::shift(direction d) {
 	}
 }
 
-template <class K, class T>
-typename hash_map<K, T>::iterator hash_map<K, T>::iterator::operator++() {
+template <class K, class V>
+typename hash_map<K, V>::iterator hash_map<K, V>::iterator::operator++() {
 	shift(forward);
 	return *this;
 }
 
-template <class K, class T>
-typename hash_map<K, T>::iterator hash_map<K, T>::iterator::operator++(int) {
+template <class K, class V>
+typename hash_map<K, V>::iterator hash_map<K, V>::iterator::operator++(int) {
 	iterator temp_i = *this;
 	shift(forward);
 	return temp_i;
 }
 
-template <class K, class T>
-typename hash_map<K, T>::iterator hash_map<K, T>::iterator::operator--() {
+template <class K, class V>
+typename hash_map<K, V>::iterator hash_map<K, V>::iterator::operator--() {
 	shift(backward);
 	return *this;
 }
 
-template <class K, class T>
-typename hash_map<K, T>::iterator hash_map<K, T>::iterator::operator--(int) {
+template <class K, class V>
+typename hash_map<K, V>::iterator hash_map<K, V>::iterator::operator--(int) {
 	iterator temp_i = *this;
 	shift(backward);
 	return temp_i;
 }
 
-template <class K, class T>
-pair<K, T>& hash_map<K, T>::iterator::operator*() const {
+template <class K, class V>
+std::pair<K, V>& hash_map<K, V>::iterator::operator*() const {
 	return *(slot_ptr->rec);
 }
 
-template <class K, class T>
-pair<K, T>* hash_map<K, T>::iterator::operator->() const {
+template <class K, class V>
+std::pair<K, V>* hash_map<K, V>::iterator::operator->() const {
 	return slot_ptr->rec;
 }
 
-template <class K, class T>
-hash_map<K, T>::slot::slot(record* rec) : deleted(false), rec(rec) {}
+template <class K, class V>
+hash_map<K, V>::slot::slot(record* rec) : deleted(false), rec(rec) {}
 
-template <class K, class T>
-hash_map<K, T>::slot::~slot() {
+template <class K, class V>
+hash_map<K, V>::slot::~slot() {
 	if (!sentinel()) {
 		delete rec;
 	}
 }
 
-template <class K, class T>
-typename hash_map<K, T>::slot& hash_map<K, T>::slot::operator=(record* rec) {
+template <class K, class V>
+typename hash_map<K, V>::slot& hash_map<K, V>::slot::operator=(record* rec) {
 	deleted = !rec;
 	this->rec = rec;
 	return *this;
 }
 
-template <class K, class T>
-bool hash_map<K, T>::slot::sentinel() const {
+template <class K, class V>
+bool hash_map<K, V>::slot::sentinel() const {
 	return (slot*)rec == this;	// A sentinel slot has its record pointer pointing to itself
 }
 
-template <class K, class T>
-bool hash_map<K, T>::slot::empty() const {
+template <class K, class V>
+bool hash_map<K, V>::slot::empty() const {
 	return rec == 0;
 }
 
