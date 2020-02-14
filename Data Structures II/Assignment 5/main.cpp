@@ -7,14 +7,16 @@ int main() {
 
 	hash_map<int, int> map;
 	map[57657] = 42;
-	hash_map<int, int>::iterator i = map.find(57657);
-	cout << i->second << endl;
-
+	map[12] = 1;
+	map[768] = 2;
+	map[325] = 3;
+	map[57657] = 4;
+	map[3649] = 5;
+	map[98567] = 6;
+	map[456] = 7;
+	map.print();
+	cout << endl;
 	map.remove(57657);
-	if (map.find(57657)) {
-		cout << map[57657] << endl;
-	} else {
-		cout << "Removed correctly" << endl;
-	}
+	map.print();
 	return 0;
 }

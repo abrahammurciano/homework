@@ -3,6 +3,7 @@
 
 #include "double_hasher.h"
 #include "prime.h"
+#include <iostream>
 
 template <class K, class T>
 class hash_map {
@@ -68,6 +69,7 @@ class hash_map {
 	T& operator[](K key);
 	// Removes a given key from the hash table
 	void remove(K key);
+	void print() const;
 
 	iterator begin() const;
 	iterator end() const;
@@ -170,6 +172,13 @@ void hash_map<K, T>::remove(K key) {
 	iterator i = find(key);
 	if (i) {
 		*(i.slot_ptr) = 0;
+	}
+}
+
+template <class K, class T>
+void hash_map<K, T>::print() const {
+	for (iterator i = begin(); i != end(); ++i) {
+		std::cout << i->first << ": \t" << i->second << endl;
 	}
 }
 
