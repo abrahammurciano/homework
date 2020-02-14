@@ -172,6 +172,7 @@ void hash_map<K, T>::remove(K key) {
 	iterator i = find(key);
 	if (i) {
 		*(i.slot_ptr) = 0;
+		--_size;
 	}
 }
 
