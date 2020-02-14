@@ -15,8 +15,8 @@ class hash_map {
 		record* rec;
 
 		slot(record* rec = 0);
-		slot(K key, T value);
 		~slot();
+		slot& operator=(record* rec);  // Assigns a record pointer to this slot. If updates deleted depending on rec being NULL or not
 
 		bool sentinel() const;	// Returns true if the slot is a sentinel
 		bool empty() const;		// Returns true when the record pointer is null. Will return false for occupied slots and sentinel slots
@@ -31,6 +31,8 @@ class hash_map {
 
   public:
 	class iterator {
+		friend hash_map;
+
 	  private:
 		slot* slot_ptr;
 		enum direction { backward, forward };
@@ -50,6 +52,7 @@ class hash_map {
 		iterator operator--();
 		iterator operator--(int);
 		record& operator*() const;
+		record* operator->() const;
 	};
 
 	hash_map();
@@ -63,6 +66,8 @@ class hash_map {
 	iterator insert(K key, T value);
 	// Returns the value (by reference) corresponding to given key. If the key doesn't exist, the key will be added
 	T& operator[](K key);
+	// Removes a given key from the hash table
+	void remove(K key);
 
 	iterator begin() const;
 	iterator end() const;
@@ -77,7 +82,7 @@ hash_map<K, T>::hash_map(int n) : _size(0), hash(0) {
 		throw std::runtime_error("Error: Cannot have a negative number of values in a hash_map.");
 	}
 	slots = n < 10 ? 17 : prime::next_prime(n * 1.5);  // Make sure the number of slots is prime and bigger than the amount of value to reduce the load factor
-	table = (new slot[slots + 2]) + 1;				   // Add an extra slot for a sentinel value before and after the array
+	table = (new slot[slots + 2]{0}) + 1;			   // Add an extra slot for a sentinel value before and after the array
 	table[slots].rec = (record*)&table[slots];		   // Sentinel slot will point to itself
 	table[-1].rec = (record*)&table[-1];			   // Sentinel slot will point to itself
 	hash = double_hasher<K>(slots);
@@ -97,7 +102,7 @@ template <class K, class T>
 void hash_map<K, T>::expand() {
 	hash_map<K, T> temp_map(2 * slots);
 	for (iterator i = begin(); i != end(); ++i) {
-		temp_map[(*i).first] = (*i).second;
+		temp_map[i->first] = i->second;
 	}
 	delete[](table - 1);
 
@@ -111,7 +116,7 @@ void hash_map<K, T>::expand() {
 
 template <class K, class T>
 typename hash_map<K, T>::iterator hash_map<K, T>::insert(K key) {
-	if (size() >= slots) {	// If the table is full, double the size and rehash
+	if (size() >= slots * 0.7) {  // If the table is full, double the size and rehash
 		expand();
 	}
 	// Find the first hash that maps to an empty slot
@@ -120,7 +125,7 @@ typename hash_map<K, T>::iterator hash_map<K, T>::insert(K key) {
 		index = hash(key, i);
 	} while (!table[index].empty());
 	// Put the key in the slot and default construct a value
-	table[index] = slot(key, T());
+	table[index] = new record(key, T());
 	return iterator(&table[index]);
 }
 
@@ -131,23 +136,24 @@ typename hash_map<K, T>::iterator hash_map<K, T>::insert(K key, T value) {
 		i = insert(key);
 	}
 
-	(*i).second = value;
+	i->second = value;
 	return i;
 }
 
 template <class K, class T>
 typename hash_map<K, T>::iterator hash_map<K, T>::find(K key) const {
-	int index;
-	for (int i = 0; i < slots; ++i) {
+	int index, i = 0;
+	while (true) {
 		index = hash(key, i);
-		if (table[index].rec->first == key) {
+		if (table[index].empty()) {
+			if (!table[index].deleted) {
+				return end();
+			}
+		} else if (table[index].rec->first == key) {
 			return iterator(&table[index]);
 		}
-		if (table[index].empty() && !table[index].deleted) {
-			return end();
-		}
+		++i;
 	}
-	return end();
 }
 
 template <class K, class T>
@@ -156,7 +162,15 @@ T& hash_map<K, T>::operator[](K key) {
 	if (!i) {  // If the key doesn't already exist
 		i = insert(key);
 	}
-	return (*i).second;	 // Return the corresponding value by reference
+	return i->second;  // Return the corresponding value by reference
+}
+
+template <class K, class T>
+void hash_map<K, T>::remove(K key) {
+	iterator i = find(key);
+	if (i) {
+		*(i.slot_ptr) = 0;
+	}
 }
 
 template <class K, class T>
@@ -225,16 +239,25 @@ pair<K, T>& hash_map<K, T>::iterator::operator*() const {
 }
 
 template <class K, class T>
-hash_map<K, T>::slot::slot(record* rec) : deleted(false), rec(rec) {}
+pair<K, T>* hash_map<K, T>::iterator::operator->() const {
+	return slot_ptr->rec;
+}
 
 template <class K, class T>
-hash_map<K, T>::slot::slot(K key, T value) : slot(new record(key, value)) {}
+hash_map<K, T>::slot::slot(record* rec) : deleted(false), rec(rec) {}
 
 template <class K, class T>
 hash_map<K, T>::slot::~slot() {
 	if (!sentinel()) {
 		delete rec;
 	}
+}
+
+template <class K, class T>
+typename hash_map<K, T>::slot& hash_map<K, T>::slot::operator=(record* rec) {
+	deleted = !rec;
+	this->rec = rec;
+	return *this;
 }
 
 template <class K, class T>
