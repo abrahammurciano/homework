@@ -1,0 +1,180 @@
+\documentclass[fleqn]{article}
+\usepackage[margin=1.5cm]{geometry}   % shrink margins
+\usepackage{amsmath}    % math equation environments
+\usepackage{amssymb}    % math symbols such as natural numbers N
+
+\title{Mathematical Logic HW2}
+\author{Abraham Murciano}
+
+\begin{document}
+
+\maketitle
+
+Throught this document I will use \(T\) to represent a tautology, and \(F\) to represent a contradiction.
+
+\begin{enumerate}
+	\item % 1
+	\begin{enumerate}
+		\item[(b)]
+		\(x \rightarrow x\) is a tautology, since \(\rightarrow\) is only false when the left operand is true but the right operand is false. Since in \(x \rightarrow x\) both operands are the same, it cannot occur that the left operand be true and the right one be false.
+
+		Therefore \((x \rightarrow x) \rightarrow x = T \rightarrow x\). However, \(T \rightarrow x\) is only true when \(x\) is true, so \((x \rightarrow x) \rightarrow x = x\). Therefore:
+		\begin{gather*}
+			(((x \rightarrow x) \rightarrow x) \rightarrow x) \rightarrow x \\
+			= (x \rightarrow x) \rightarrow x \\
+			= x
+		\end{gather*}
+		which is neither a tautology or a contradiction.
+
+		\item[(d)]
+		As the truth table below shows, when \(A\) is false and \(B\) and \(C\) are true, the proposition is false, otherwise it is true. Therefore this proposition is neither a tautology nor a contradiction.
+		 
+		\begin{tabular}{||c|c|c||c||}
+			\hline
+			\(A\) & \(B\) & \(C\) & \(((A \lor \lnot B) \rightarrow (A \lor (B \land C))) \rightarrow (C \rightarrow A)\) \\
+			\hline
+			F & F & F & T\\
+			F & F & T & T\\
+			F & T & F & T\\
+			F & T & T & F\\
+			T & F & F & T\\
+			T & F & T & T\\
+			T & T & F & T\\
+			T & T & T & T\\
+			\hline
+		\end{tabular}
+	\end{enumerate}
+
+	\item % 2
+	\begin{enumerate}
+		\item % a
+		``Yesterday, the sun rose in the west'' is simply an atomic proposition. It is not a contradiction, even though we know that factually it is incorrect.
+
+		\item % b
+		``It's rainy only if it's cloudy.'' is neither a tautology nor a contradiction, since although we know that in the world we live in we need clouds for there to be rain, regarding mathematical logic, we can in theory assign a truth value to ``It's rainy'' and a false value to ``it's cloudy'', thus giving our proposition a value of falsehood in that case.
+
+		\item % c
+		``If my name is Ron, then my name is not Ron.'' is neither a tautology nor a contradiction. Let \(R\) be the atomic proposition ``my name is Ron''. The former proposition is equivalent to \(R \rightarrow \lnot R\). If \(R\) takes the value `True', then \(\lnot R\) takes the value `False', in which case \(R \rightarrow \lnot R = T \rightarrow F = F\), proving that the proposition in question is not a tautology. However, if \(R\) takes the value `False', then \(R \rightarrow \lnot R = F \rightarrow T\), which evaluates to `True', so the proposition is also not a contradiction.
+	\end{enumerate}
+
+	\item % 3
+	\begin{enumerate}
+		\item[(b)]
+		\[(A \rightarrow B) \land (C \rightarrow B) \Leftrightarrow (A \lor C) \rightarrow B\]
+		Proof:
+		\begin{align*}
+			&(A \rightarrow B) \land (C \rightarrow B) \\
+			= &(\lnot (A \land \lnot B)) \land (\lnot (C \land \lnot B)) \\
+			= &(\lnot A \lor B) \land (\lnot C \lor B) \\
+			= &(\lnot A \land \lnot C) \lor B \\
+			= &\lnot (A \lor C) \lor B \\
+			= &\lnot ((A \lor C) \land \lnot B) \\
+			= &(A \lor C) \rightarrow B
+		\end{align*}
+	\end{enumerate}
+
+	\item % 4
+	\begin{enumerate}
+		\item[(b)]
+		Let \(\alpha = \) ``a is larger than b'', \(\beta = \) ``a is larger than 0'', \(\gamma = \) ``b is larger than 0'', \(\delta = \) ``b is equal to 0''.
+
+		We want to determine if
+		\[(\alpha \land (\gamma \lor \delta)) \rightarrow \beta \quad \Leftrightarrow \quad (\alpha \land \lnot \beta) \rightarrow (\lnot \gamma \land \lnot \delta)\]
+		\begin{align*}
+			&(\alpha \land (\gamma \lor \delta)) \rightarrow \beta \\
+			= &\lnot (\alpha \land (\gamma \lor \delta) \land \lnot \beta) \\
+			= &\lnot \alpha \lor \lnot (\gamma \lor \delta) \lor \beta \\
+			= &\lnot \alpha \lor \beta \lor (\lnot \gamma \land \lnot \delta) \\
+			= &\lnot (\alpha \land \lnot \beta) \lor (\lnot \gamma \land \lnot \delta) \\
+			= &\lnot ((\alpha \land \lnot \beta) \land \lnot (\lnot \gamma \land \lnot \delta)) \\
+			= &(\alpha \land \lnot \beta) \rightarrow (\lnot \gamma \land \lnot \delta)
+		\end{align*}
+		
+	\end{enumerate}
+
+	\item % 5
+	\begin{enumerate}
+		\item[(b)]
+		\begin{align*}
+			&(X \lor Y) \land (X \lor \lnot Y) \\
+			= &X \lor (Y \land \lnot Y) \\
+			= &X \lor F \\
+			= &X
+		\end{align*}
+
+		\item[(d)]
+		\begin{align*}
+			&(X \land Y \land Z) \lor (X \land Y \land \lnot Z) \lor (X \land \lnot Y) \\
+			= &X \land ((Y \land Z) \lor (Y \land \lnot Z) \lor \lnot Y) \\
+			= &X \land ((Y \land (Z \lor \lnot Z)) \lor \lnot Y) \\
+			= &X \land ((Y \land T) \lor \lnot Y) \\
+			= &X \land (Y \lor \lnot Y) \\
+			= &X \land T \\
+			= &X
+		\end{align*}
+	\end{enumerate}
+
+	\item % 6
+	\begin{enumerate}
+		\item[(b)]
+		Let \(P\) be false, and \(R\) and \(S\) be true. \(P \lor R\) is true because \(R\) is true. \(P \rightarrow S\) is true because \(P\) is false. \(R \rightarrow S\) is true because both \(R\) and \(S\) are true. This is an example where all three given propositions hold, yet \(P\) is false. Therefore the given implications do not hold.
+		
+		\item[(d)]
+		Let \(R\) be false, and \(P\) and \(S\) be true. \(P \lor R\) is true because \(P\) is true. \(R \rightarrow S\) is true because \(R\) is false. \(P \rightarrow S\) is true because both \(P\) and \(S\) are true. This is an example where all three given propositions hold, yet \(R \lor \lnot S\) is false. Therefore the given implications do not hold.
+	\end{enumerate}
+
+	\item % 7
+	\begin{gather*}
+		\alpha = A \land B \land ((A \land B) \rightarrow C) \\
+		\alpha = A \land B \land \lnot((A \land B) \land \lnot C) \\
+		\alpha = A \land B \land (\lnot(A \land B) \lor C) \\
+		\alpha = A \land B \land (\lnot A \lor \lnot B \lor C) \\
+		\alpha = (A \land B \land \lnot A) \lor (A \land B \land \lnot B) \lor (A \land B \land C) \\
+		\alpha = F \lor F \lor (A \land B \land C) \\
+		\alpha = A \land B \land C \\
+	\end{gather*}
+	\begin{gather*}
+		\beta = A \land C \land (B \rightarrow (A \land C)) \land (C \rightarrow B) \\
+		\beta = A \land C \land \lnot (B \land \lnot (A \land C)) \land \lnot (C \land \lnot B) \\
+		\beta = A \land C \land (\lnot B \lor (A \land C)) \land (\lnot C \lor B) \\
+		\beta = A \land C \land (\lnot B \lor A) \land (\lnot B \lor C) \land (\lnot C \lor B) \\
+		\beta = A \land (\lnot B \lor A) \land (\lnot B \lor C) \land ((C \land \lnot C) \lor (C \land B)) \\
+		\beta = A \land (\lnot B \lor A) \land (\lnot B \lor C) \land (F \lor (C \land B)) \\
+		\beta = A \land B \land C \land (\lnot B \lor A) \land (\lnot B \lor C) \\
+		\beta = A \land C \land ((B \land \lnot B) \lor (B \land A)) \land ((B \land \lnot B) \lor (B \land C)) \\
+		\beta = A \land C \land (F \lor (B \land A)) \land (F \lor (B \land C)) \\
+		\beta = A \land C \land B \land A \land B \land C \\
+		\beta = A \land B \land C
+	\end{gather*}
+	\begin{gather*}
+		\gamma = (C \land B) \land ((C \lor A) \land \lnot (C \rightarrow \lnot A)) \\
+		\gamma = C \land B \land ((C \lor A) \land (C \land A)) \\
+		\gamma = C \land B \land (C \lor A) \land C \land A \\
+		\gamma = A \land B \land C \land (C \lor A) \\
+		\gamma = A \land B \land C
+	\end{gather*}
+	\begin{gather*}
+		\delta = C \land (B \lor (A \rightarrow C)) \land (C \rightarrow (A \lor B)) \\
+		\delta = C \land (B \lor \lnot (A \land \lnot C)) \land \lnot (C \land \lnot (A \lor B)) \\
+		\delta = C \land (B \lor \lnot A \lor C) \land (\lnot C \lor A \lor B) \\
+		\delta = C \land (\lnot C \lor A \lor B) \\
+		\delta = (C \land \lnot C) \lor (C \land \lnot A) \lor (C \land \lnot B) \\
+		\delta = (C \land \lnot A) \lor (C \land \lnot B) \\
+		\delta = C \land (\lnot A \lor \lnot B) \\
+		\delta = \lnot (A \land B) \land C
+	\end{gather*}
+	\begin{gather*}
+		\epsilon = (A \land B \land C \land D) \lor (A \land ((\lnot B \land C) \rightarrow D) \land (A \rightarrow \lnot (B \rightarrow \lnot C))) \\
+		\epsilon = (A \land B \land C \land D) \lor (A \land \lnot ((\lnot B \land C) \land \lnot D) \land \lnot (A \land \lnot (B \land C))) \\
+		\epsilon = (A \land B \land C \land D) \lor (A \land (\lnot (\lnot B \land C) \lor D) \land (\lnot A \lor (B \land C))) \\
+		\epsilon = (A \land B \land C \land D) \lor (A \land ((B \lor \lnot C) \lor D) \land (\lnot A \lor (B \land C))) \\
+		\epsilon = (A \land B \land C \land D) \lor (A \land (B \lor \lnot C \lor D) \land (\lnot A \lor (B \land C))) \\
+		\epsilon = (A \land B \land C \land D) \lor ((B \lor \lnot C \lor D) \land ((A \land \lnot A) \lor (A \land (B \land C)))) \\
+		\epsilon = (A \land B \land C \land D) \lor ((B \lor \lnot C \lor D) \land A \land B \land C) \\
+		\epsilon = (A \land B \land C \land D) \lor (A \land B \land C) \\
+		\epsilon = A \land B \land C
+	\end{gather*}
+	\(\alpha\), \(\beta\), \(\gamma\) and \(\epsilon\) are all equivalent. \(\delta\) is not equivalent to any of them.
+\end{enumerate}
+	
+\end{document}

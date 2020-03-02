@@ -1,0 +1,253 @@
+\documentclass[fleqn]{article}
+\usepackage[margin=1.5cm]{geometry}   % shrink margins
+\usepackage{amsmath}    % math equation environments
+\usepackage{amssymb}    % math symbols such as natural numbers N.
+% \usepackage{tikz}	% for diagrams
+% \usepackage{adjustbox}	% align enumerations containing tall objects to top. Usage: \item\adjustbox{valign=t}{...}
+% \usepackage{centernot}	% centers not symbol. Usage: \centernot{...}
+
+% Math mode in tables. Usage: use column type C
+\usepackage{array}   % for \newcolumntype macro
+\newcolumntype{C}{>{$}c<{$}} % math-mode version of "c" column type
+
+% paragraph indentation within enumerations
+\usepackage{enumitem}
+\setlist{parsep=4pt,listparindent=\parindent}
+
+% Configurations for logic proofs
+% \usepackage{logicproof, etoolbox}
+% \patchcmd{\logicproof}{\center}{\flushleft}{}{}
+% \patchcmd{\endlogicproof}{\endcenter}{\endflushleft}{}{}
+
+\title{Discrete Math HW5}
+\author{Abraham Murciano}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+	\item[1.]
+	\begin{enumerate}
+		\item % a
+		\begin{gather*}
+			\{(1, a), (2, b)\} \\
+			\{(1, b), (2, a)\} \\
+			\{(1, a), (2, c)\} \\
+			\{(1, c), (2, a)\} \\
+			\{(1, b), (2, c)\} \\
+			\{(1, c), (2, b)\}
+		\end{gather*}
+		
+		\item % b
+		\begin{gather*}
+			\{(1, a), (2, a)\} \\
+			\{(1, b), (2, b)\} \\
+			\{(1, c), (2, c)\} \\
+		\end{gather*}
+	\end{enumerate}
+
+	\item[2.]
+	\begin{enumerate}
+		\item % a
+		Given that \(f(n) = 2g(n) - 1\) and \(f\) is one to one, we must show that \(g\) is also one to one.
+
+		Proof by contradiction:
+
+		Assume \(g\) is not one to one.
+		\begin{gather*}
+			\exists a, b \in \mathbb{N}, g(a) = g(b) \land a \neq b \\
+			\Rightarrow \exists a, b \in \mathbb{N}, 2g(a) - 1 = 2g(b) - 1 \land a \neq b \\
+			\Rightarrow \exists a, b \in \mathbb{N}, f(a) = f(b) \land a \neq b \\
+			\Rightarrow f \text{ is not one to one.}
+		\end{gather*}
+		This is a contradiction, so \(g\) must be one to one.
+
+		\item % b
+		If \(f\) were onto, then
+		\[\forall b \in \mathbb{N}, \exists a \in \mathbb{N}, f(a) = b\]
+		But we know that \(f(n) = 2g(n) - 1\). Since \(g(n) \in \mathbb{N}\), therefore \(2g(n)\) must always be even; so \(2g(n) - 1\) must be odd. Therefore for any even number \(e\),
+		\[\nexists a \in \mathbb{N}, f(a) = e\]
+		So \(f\) cannot be onto.
+
+		\item % c
+		\begin{align*}
+			g \circ f &=
+			\begin{cases}
+				\frac{f(n)}{2} & (f(n) \text{ is even}) \\
+				\frac{f(n) + 1}{2} & (f(n) \text{ is odd})
+			\end{cases} \\
+			&= \frac{2g(n) - 1 + 1}{2} \quad \because \text{ f(n) is always odd.} \\
+			&= g(n)
+		\end{align*}
+	\end{enumerate}
+
+    \item[4.]
+    \begin{enumerate}
+		\item % a
+		If \(f\) and \(g\) are one to one, then
+		\begin{gather*}
+			f(a) = f(b) \Rightarrow a = b \\
+			g(a) = g(b) \Rightarrow a = b
+		\end{gather*}
+		We must show that \(g \circ f\) is one to one. Then we must prove
+		\[(g \circ f)(a) = (g \circ f)(b) \Rightarrow a = b\]
+		Assuming
+		\begin{gather*}
+			(g \circ f)(a) = (g \circ f)(b), \\
+			\Rightarrow g(f(a)) = g(f(b)) \\
+			\Rightarrow f(a) = f(b) \\
+			\Rightarrow a = b \\
+			QED
+		\end{gather*}
+
+		\item % b
+		If \(g \circ f\) is one to one, then \(f\) is one to one.
+	
+		Proof by contradiction:
+
+		Assume \(f\) is not one to one. Therefore 
+		\begin{gather*}
+			\exists a, b \in A, a \neq b \land f(a) = f(b) \\
+			\Rightarrow g(f(a)) = g(f(b)) \land a \neq b \\
+			\Rightarrow g \circ f \text{ is not one to one.}
+		\end{gather*}
+		This is a contradiction, so \(f\) must be one to one.
+	\end{enumerate}
+
+	\item[5.]
+	\begin{enumerate}
+		\item[(b)]
+		If \(g \circ f\) is onto then \(g\) must be onto.
+
+		Proof by contradiction:
+
+		Assume \(g\) is not onto
+		\begin{gather*}
+			\Rightarrow \exists c \in C, \forall b \in B, g(b) \neq c \\
+			\Rightarrow \exists c \in C, \forall a \in A, g(f(b)) \neq c \\
+			\Rightarrow g \circ f \text{ is not onto.}
+		\end{gather*}
+		This is a contradiction, so \(g\) must be onto.
+
+		\item[(c)]
+		Even if \(g \circ f\) is onto, it is not necessarily true that \(f\) is onto. For example, let 
+		\begin{gather*}
+			A = \{1, 2\}, \quad B = \{a, b, c\}, \quad C = \{\alpha, \beta\} \\
+			f:A \to B = \{(1, a), (2, b)\}, \quad g:B \to C = \{(a, \alpha), (b, \beta), (c, \alpha)\}
+		\end{gather*}
+		Here, \(f\) is not onto since \(\nexists (x, c) \in f\), but \(g \circ f\) is onto because every element in \(C\) is mapped from \(A\) by \(g \circ f\).
+	\end{enumerate}
+
+	\item[8.]
+	\begin{enumerate}
+		\item[(a)]
+		\(\{-7, 2.5\}\)
+		\item[(c)]
+		\((-7, -2) \cup (0, 2.5) \cup [3, 6)\)
+	\end{enumerate}
+
+	\item[9.]
+	\begin{enumerate}
+		\item % a
+		Proof by contradiction:
+		\begin{gather*}
+			\text{Assume } C \nsubseteq f^{-1}(f(C)) \\
+			\exists c \in C, c \notin f^{-1}(f(C)) \\
+			\exists c \in C, f^{-1}(f(c)) \neq c
+		\end{gather*}
+		But this is a contradiction, since \(f^{-1}(f(x)) = x\). Therefore \(C \subseteq f^{-1}(f(C))\).
+		
+		\item % c
+		\begin{gather*}
+			A = \{1, 2\}, \quad B = \{a\}, \quad C = \{1\} \\
+			f = \{(1, a), (2, a)\} \\
+			f^{-1}(f(C)) = \{1, 2\} \supset C
+		\end{gather*}
+	\end{enumerate}
+
+	\item[12.]
+	\begin{enumerate}
+		\item % a
+		Given that \(f \circ g \circ f\) is bijective, that implies that \(f\) is bijective.
+
+		Proof by contradiction: Assume \(f\) is not bijective. Therefore \(f\) is neither one to one nor onto, because \(f\) maps from a set \(X\) to itself. Since \(f\) is not onto, then \(f(g(f(x)))\) cannot map to every element in \(X\) so \(f \circ g \circ f\) is not bijective. This is a contradiction to our premise, so our assumption must be false. Therefore \(f\) is bijective.
+	\end{enumerate}
+
+	\item[13.]
+	\begin{enumerate}
+		\item[(a)]
+		True
+		
+		\item[(d)]
+		True
+	\end{enumerate}
+
+	\item[14.]
+	\begin{enumerate}
+		\item % a
+		Given \(f:A \to A\) such that \(f(f(x)) = x\), then \(f\) is onto.
+		
+		Proof by contradiction:
+		
+		Assume \(f\) is not onto
+		\begin{gather*}
+			\Rightarrow \exists a \in A, \forall b \in A, f(b) \neq a \\
+			\Rightarrow \exists a \in A, f(a) = c \land f(c) \neq a \\
+			\Rightarrow \exists a \in A, f(f(a)) \neq a
+		\end{gather*}
+		This is a contradiction, so \(f\) must be onto.
+		
+		\item % b
+		Given \(f:A \to A\) such that \(f(f(x)) = x\), then \(f\) is one to one.
+
+		Proof by contradiction:
+		\begin{gather*}
+			(f \circ f)(x) = x \quad \Rightarrow \quad f \circ f = I_A \\
+			\text{Assume \(f\) is not one to one} \\
+			\exists a, b \in A, f(a) = f(b) \land a \neq b \\
+			\Rightarrow \exists a, b, \in A, f(f(a)) = f(f(b)) \land a \neq b
+		\end{gather*}
+		Therefore \(f \circ f\) is not one to one, but we know that \(I_A\) is one to one, and \(f \circ f = I_A\). This is a contradiction, so \(f\) must be one to one.
+		
+		\item % c
+		The relation 
+		\[R = \{(a, b) : a = b \lor f(a) = b\}\]
+		is an equivalence relation on \(A\) because it is reflexive, symmetric and transitive.
+		\begin{enumerate}
+			\item % i
+			It is reflexive since
+			\[(a, a) \in R \ \because \ a = a\]
+
+			\item % ii
+			It is symmetric because
+			\begin{gather*}
+				(a, b) \in R \quad \Rightarrow \quad a = b \lor f(a) = b \\
+				a = b \quad \Rightarrow \quad b = a \quad \Rightarrow \quad (b, a) \in R \\
+				f(a) = b \quad \Rightarrow \quad f(b) = a \ \because \ f(f(a)) = a  \quad \Rightarrow \quad (b, a) \in R
+			\end{gather*}
+
+			\item % iii
+			It is transitive because if \((a, b) \in R\) and \((b, c) \in R\), then either \(a = b\) or \(f(a) = b\), and either \(b = c\) or \(f(b) = c\). Since \((a, b) \in R\) and \((b, c) \in R\), then if \(a = b\) or if \(b = c\), then \((a, c) \in R\). 
+			
+			Otherwise \(f(a) = b\) and \(f(b) = c\). So \(f(f(a)) = c\). But we know that \(f(f(x)) = x\), so \((a, c) \in R\).
+
+		\end{enumerate}
+		
+		\item % d
+		If \(A = \{1, 2, 3, 4\}\) then a possible function definition for \(f\) can be
+		\[f = \{(1, 2), (2, 1), (3, 4), (4, 3)\}.\]
+		In this case, the quotient set of \(R\) would be
+		\[A/R = \{\{1, 2\}, \{3, 4\}\}.\]
+	\end{enumerate}
+
+	\item[18.]
+	\begin{enumerate}
+		\item % a
+		\(f\) is not one to one, because \(f(0) = f(1) = 0\).
+		\item % b
+		If \(f \circ g = I_{\mathbb{N}_0}\) then \(g\) must be \(f^{-1}\). If \(f \circ f^{-1} = I_{\mathbb{N}_0}\), then \(f\) would have to be invertible. Since \(f\) is not one to one, it cannot be invertible, so \(f \circ g \neq I_{\mathbb{N}_0}\).
+	\end{enumerate}
+\end{enumerate}
+    
+\end{document}

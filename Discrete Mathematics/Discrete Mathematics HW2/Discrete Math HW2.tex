@@ -1,0 +1,158 @@
+\documentclass[fleqn]{article}
+\usepackage[margin=2cm]{geometry}   % shrink margins
+\usepackage{amsmath}
+\usepackage{amssymb}    % math symbols such as natural numbers N
+
+\title{Discrete Math HW2}
+\author{Abraham Murciano}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+	\item[1.]
+	\begin{align*}
+		A &= \{1, 2, 3, 4\} \\
+		R &= \{(1, 1), (1, 2), (1, 3), (1, 4), (2, 2), (2, 3), (2, 4), (3, 3), (3, 4), (4, 4)\} \\
+		S &= \{(4, 1), (4, 2), (4, 3), (4, 4), (3, 2), (3, 3), (3, 4), (2, 3), (2, 4), (1, 4)\}
+	\end{align*}
+	\begin{enumerate}
+		\item[(b)]
+		\begin{enumerate}
+			\item[i.]
+			\begin{align*}
+				R^{-1} &= \{(1, 1), (2, 1), (3, 1), (4, 1), (2, 2), (3, 2), (4, 2), (3, 3), (4, 3), (4, 4)\} \\
+				&= \{(1, 1), (2, 1), (2, 2), (3, 1), (3, 2), (3, 3), (4, 1), (4, 2), (4, 3), (4, 4)\}
+			\end{align*}
+
+			\item[ii.]
+			\begin{align*}
+				R \circ S = \{&(1, 4), (1, 3), (1, 2), (1, 1), \\
+				&(2, 3), (2, 4), (2, 2), (2, 1), \\
+				&(3, 2), (3, 3), (3, 4), (3, 1), \\
+				&(4, 1), (4, 2), (4, 3), (4, 4)\}
+			\end{align*}
+			\[R \circ S = A \times A\]
+
+			\item[iii.]
+			\begin{align*}
+				S \circ R &= \{(4, 1), (4, 2), (4, 3), (4, 4), (3, 2), (3, 3), (3, 4), (2, 3), (2, 4), (1, 4)\} \\
+				S \circ R &= S
+			\end{align*}
+		\end{enumerate}
+
+		\item[(c)]
+		\begin{enumerate}
+			\item[i.]
+			\(R \cap S = \{(1, 4), (2, 3), (2, 4), (3, 3), (3, 4), (4, 4)\}\)
+
+			\item[ii.]
+			\(R \cap S\) is not reflexive. \(1\) and \(2\) are elements of \(A\), but there is no element \((1, 1)\) or \((2, 2)\) in \(R \cap S\).
+
+			\item[iii.]
+			\(R \cap S\) is not symmetric. For example, \((1, 4) \in R \cap S\), but \((4, 1) \notin R \cap S\).
+
+			\item[iv.]
+			\(R \cap S\) is antisymmetric since \(\forall (a, b) \in R \cap S, \exists (b, a) \notin R \cap S\).
+
+			\item[v.]
+			\(R \cap S\) in transitive since \(\forall (a, b), (b, c) \in R \cap S, \exists (a, c) \in R \cap S\).
+		\end{enumerate}
+	\end{enumerate}
+
+	\item[2.]
+	\begin{enumerate}
+		\item[(b)]
+		Assuming that we have a set \(S\) with \(n\) elements, the number of relations that can be defined on \(S\) is equal to the number of subsets that can be made from the set \(S \times S\) (this is equal to \(| P(S \times S) |\)). This is because every subset of \(S \times S\) is a relation on \(S\).
+		\[| P(S \times S) | = 2^{n^{2}}\]
+
+		Given that \(| A | = 2\), that implies that \(| A \times A | = 4\). So \(| P(A \times A) | = 2^4 = 16\). Therefore the number of relations that can be defined on \(P(A \times A) = 2^{16^{2}} = 2^{256}\).
+	\end{enumerate}
+
+	\item[4.]
+	\begin{enumerate}
+		\item[(a)]
+		False. If \(R \subseteq A \times A\), then every element in \(R\) is an ordered pair of elements in \(A\). So \(R^{2}\) is a set of ordered pairs of elements in \(R\), meaning \(R^{2}\) is a set of ordered pairs of ordered pairs of elements in \(A\). Therefore there is no element in \(R\) which is also in \(R^{2}\).
+
+		\item[(c)]
+		False. For example, \((3, 1) \in R\) and \((1, 2) \in R\), but \((3, 2) \notin R\) and \((3, 2) \notin R^{2}\), so \((3, 2) \notin R \cup R^{2}\). Therefore, \(R \cup R^{2}\) is not transitive.
+	\end{enumerate}
+
+	\item[6.]
+	\begin{enumerate}
+		\item[(c)]
+		Given that \(S\) and \(R\) are reflexive on \(A\), for every element \(x \in A\), both sets \(S\) and \(R\) contain the ordered pair \((x, x)\). Or more formally,
+		\[\forall \ x \in A, \quad \exists \ (x, x) \in S \land \exists \ (x, x) \in R\]
+		By the definition of relational compositions, an ordered pair \((a, b)\) is in the relation \(S \circ R\) on \(A\), if and only if there exists an element \(z \in A\) such that \((a, z) \in S\) and \((z, b) \in R\).
+
+		Therefore, since for every element \(x \in A\), both sets \(S\) and \(R\) contain the ordered pair \((x, x)\), then \(S \circ R\) must also contain \((x, x)\), proving that \(S \circ R\) is in fact reflexive.
+	\end{enumerate}
+
+	\item[7.]
+	\begin{enumerate}
+		\item[(c)]
+		\begin{enumerate}
+			\item[i.]
+			For any relation \(R\) on \(A\), \(R^{-1}\) is defined as
+			\[R^{-1} = \{(y, x) : (x, y) \in R\}\]
+			Therefore, for any ordered pair \((x, y) \in R\), there exists \((y, x) \in R^{-1}\), and vice versa. Thus:
+			\[\forall \ (x, y) \in R \cup R^{-1}, \quad \exists \ (y, x) \in R \cup R^{-1}\]
+			So \(R \cup R^{-1}\) is in fact symmetric.
+
+			\item[ii.]
+			Using the above definition of \(R^{-1}\), \(R \cap R^{-1}\) can be expressed as follows.
+			\[R \cap R^{-1} = \{(x, y) : (x, y) \in R \land (x, y) \in R^{-1}\}\]
+			This is equivalent to saying
+			\[R \cap R^{-1} = \{(x, y) : (x, y) \in R \land (y, x) \in R\}\]
+			And if any \((x, y)\) satisfies the condition, so does \((y, x)\), therefore:
+			\[\forall \ (x, y) \in R \cap R^{-1}, \quad \exists \ (y, x) \in R \cap R^{-1}\]
+			So \(R \cap R^{-1}\) is in fact symmetric.
+		\end{enumerate}
+	\end{enumerate}
+
+	\item[8.]
+	Let \(S\) and \(T\) be relations on \(\mathbb{Z}\) defined as follows:
+	\begin{gather*}
+		S = \{(k, m) \in \mathbb{Z}^{2} : \frac{k - m}{5} \in \mathbb{Z}\} \\
+		T = \{(k, m) \in \mathbb{Z}^{2} : \frac{k + m}{5} \in \mathbb{Z}\}
+	\end{gather*}
+
+	\begin{enumerate}
+		\item[i.]
+		In order to show that \(S\) is an equivalence relation, we must show that it is reflexive, symmetric and transitive.
+
+		\begin{itemize}
+			\item
+			Since the following statement is true, all \(x \in \mathbb{Z}\) is related to itself, so \(S\) is reflexive.
+			\[\forall \ x \in \mathbb{Z}, \quad \frac{x - x}{5} = 0 \in \mathbb{Z}\]
+
+			\item
+			If \(x\) is related to \(y\), then \(\frac{x - y}{5} \in \mathbb{Z}\). Let \(x - y = a\); if \(\frac{a}{5} \in \mathbb{Z}\), then \(-\frac{a}{5} = \frac{y - x}{5} \in \mathbb{Z}\), so \(y\) is related to \(x\), and thus \(S\) is symmetric.
+
+			\item
+			Let \(x \sim y\), and \(y \sim z\); We have \(\frac{x - y}{5} \in \mathbb{Z}\) and \(\frac{y - z}{5} \in \mathbb{Z}\). Therefore it is transitive, as shown below:
+			\[\frac{x - y}{5} + \frac{y - z}{5} \in \mathbb{Z} \quad \Rightarrow \quad \frac{(x - y) + (y - z)}{5} \in \mathbb{Z} \quad \Rightarrow \quad \frac{x - z}{5} \in \mathbb{Z} \quad \Rightarrow \quad x \sim z\]
+		\end{itemize}
+	\end{enumerate}
+
+	\item[9.]
+	\[R = \{(A, B) \in P(\mathbb{Z})^{2} : | A \cap B | = 1\}\]
+	\begin{enumerate}
+		\item[1)]
+		\(|A \cap A| = 1\) only if \(|A| = 1\). For example, let \(A = \{1, 2\}\). \(|A \cap A| = 2 \neq 1\). Therefore \(R\) is not reflexive.
+
+		\item[2)]
+		Given that \(A \sim B\), we know that \(|A \cap B| = 1\). Since set intersection is commutative, \(A \cap B = B \cap A\), so \(|B \cap A| = 1\). Therefore \(B \sim A\) and \(R\) is symmetric.
+
+		\item[3)]
+		\(R\) is not transitive. For example, let \(A = \{1, 2\}, B = \{2, 3\}, C = \{3, 4\}\). We have \(A \sim B\) and \(B \sim C\). However, \(A \cap C = \phi\) and \(|\phi| = 0\), so \(A \nsim C\).
+	\end{enumerate}
+
+	\item[12.]
+	Let \(R\) be a relation on a set \(A\). Prove or disprove: If \(R\) isn’t reflexive then either \(R\) isn’t symmetric or \(R\) isn’t transitive.
+
+	False. For example, let \(A = \mathbb{N}, R = \phi\). \(R\) is not reflexive, since \(\{(1, 1), (2, 2), \dots\} \nsubseteq R\). However, \(R\) is symmetric since \(\nexists \ (a, b) \in R : (b, a) \notin R\); and \(R\) is transitive since \(\nexists \ (a, b), (b, c) \in R : (a, c) \notin R\).
+\end{enumerate}
+
+\end{document}

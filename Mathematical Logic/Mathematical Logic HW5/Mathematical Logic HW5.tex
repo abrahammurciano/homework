@@ -1,0 +1,165 @@
+\documentclass[fleqn]{article}
+\usepackage[margin=1.5cm]{geometry}   % shrink margins
+\usepackage{amsmath}    % math equation environments
+\usepackage{amssymb}    % math symbols such as natural numbers N.
+% \usepackage{tikz}	% for diagrams
+% \usepackage{adjustbox}	% align enumerations containing tall objects to top. Usage: \item\adjustbox{valign=t}{...}
+% \usepackage{centernot}	% centers not symbol. Usage: \centernot{...}
+
+% Math mode in tables
+\usepackage{array}   % for \newcolumntype macro
+\newcolumntype{C}{>{$}c<{$}} % math-mode version of "c" column type
+
+% paragraph indentation within enumerations
+\usepackage{enumitem}
+\setlist{parsep=4pt,listparindent=\parindent}
+
+% Configurations for logic proofs
+\usepackage{logicproof, etoolbox}
+\patchcmd{\logicproof}{\center}{\flushleft}{}{}
+\patchcmd{\endlogicproof}{\endcenter}{\endflushleft}{}{}
+
+\title{Mathematical Logic HW5}
+\author{Abraham Murciano}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+
+	\item % 1
+	\begin{enumerate}
+		\item[(b)]
+		Prove \(((P_1 \land P_2 \land \ldots \land P_n \land \lnot C) \to \bot) \leftrightarrow ((P_1 \land P_2 \land \ldots \land P_n) \to C)\)
+		\begin{logicproof}{2}
+			\begin{subproof}
+				(P_1 \land P_2 \land \ldots \land P_n \land \lnot C) \to \bot & assumption \label{1}\\
+				\lnot (P_1 \land P_2 \land \ldots \land P_n \land \lnot C) \lor \bot & \ref{1}, material implication \label{2}\\
+				\lnot \bot & axiom \label{3}\\
+				\lnot (P_1 \land P_2 \land \ldots \land P_n \land \lnot C) & \ref{2}, \ref{3}, disjunctive syllogism \label{4}\\
+				\lnot (P_1 \land P_2 \land \ldots \land P_n) \lor C & \ref{4}, negation of conjunction \label{5}\\
+				(P_1 \land P_2 \land \ldots \land P_n) \to C & \ref{5}, material implication \label{6}
+			\end{subproof}
+			((P_1 \land P_2 \land \ldots \land P_n \land \lnot C) \to \bot) \to ((P_1 \land P_2 \land \ldots \land P_n) \to C) & \ref{1}-\ref{6}, deduction theorem \label{12}\\
+			\begin{subproof}
+				(P_1 \land P_2 \land \ldots \land P_n) \to C & assumption \label{7}\\
+				\lnot (P_1 \land P_2 \land \ldots \land P_n) \lor C & \ref{7}, material implication \label{8}\\
+				\lnot (P_1 \land P_2 \land \ldots \land P_n \land \lnot C) & \ref{8}, negation of conjunction \label{9}\\
+				\lnot (P_1 \land P_2 \land \ldots \land P_n \land \lnot C) \lor \bot & \ref{9}, disjunction introduction \label{10}\\
+				(P_1 \land P_2 \land \ldots \land P_n \land \lnot C) \to \bot & \ref{10}, material implication \label{11}
+			\end{subproof}
+			((P_1 \land P_2 \land \ldots \land P_n) \to C) \to ((P_1 \land P_2 \land \ldots \land P_n \land \lnot C) \to \bot) & \ref{7}-\ref{11}, deduction theorem \label{13}\\
+			((P_1 \land P_2 \land \ldots \land P_n \land \lnot C) \to \bot) \leftrightarrow ((P_1 \land P_2 \land \ldots \land P_n) \to C) & \ref{12}, \ref{13}, biconditional introduction
+		\end{logicproof}
+	\end{enumerate}
+	
+	\item % 2
+	\begin{enumerate}
+		\item[(b)]
+		Define the following two premises.
+		\begin{align*}
+			a &= \text{Bacon wrote plays which were attributed to Shakespeare} \\
+			b &= \text{Bacon was a great writer}
+		\end{align*}
+		We want to claim the following.
+		\begin{gather*}
+			a \to b \\
+			b \\
+			\overline{\therefore a}
+		\end{gather*}
+		By the deduction theorem, however, the claim can be true if and only if \(\vdash (a \to b) \to (b \to a)\). However, this is not a tautology, as shown in the truth table below.
+
+		\begin{tabular}{||C|C||C||}
+			\hline
+			a & b & (a \to b) \to (b \to a) \\
+			\hline
+			T & T & T \\
+			T & F & T \\
+			F & T & F \\
+			F & F & T \\
+			\hline
+		\end{tabular}
+	\end{enumerate}
+	
+	\item % 3
+	\begin{enumerate}
+		\item[(a)]
+		We must prove that the following premises are inconsistent.
+		\begin{logicproof}{0}
+			\lnot (A \to B) & premise \label{14}\\
+			\lnot (B \to C) & premise \label{15}\\
+			\lnot (\lnot A \lor B) & \ref{14}, material implication \label{16}\\
+			\lnot (\lnot B \lor C) & \ref{15}, material implication \label{17}\\
+			A \land \lnot B & \ref{16}, negation of disjunction \label{18}\\
+			B \land \lnot C & \ref{17}, negation of disjunction \label{19}\\
+			\lnot B & \ref{18}, conjunction elimination \label{20}\\
+			B & \ref{19}, conjunction elimination \label{21}\\
+			\bot & \ref{20}, \ref{21}, contradiction introduction
+		\end{logicproof}
+		
+		\item[(b)]
+		We must prove that the following premises are inconsistent.
+		\begin{logicproof}{0}
+			A & premise \label{30}\\
+			B \to \lnot (C \land A) & premise \label{26}\\
+			\lnot (C \to \lnot B) & premise \label{22}\\
+			\lnot (\lnot C \lor \lnot B) & \ref{22}, material implication \label{23}\\
+			C \land B & \ref{23}, negation of disjunction \label{24}\\
+			B & \ref{24}, conjunction elimination \label{25}\\
+			\lnot (C \land A) & \ref{26}, \ref{25}, modus ponens \label{27}\\
+			\lnot C \lor \lnot A & \ref{27}, negation of conjunction \label{29}\\
+			C & \ref{24}, conjunction elimination \label{28}\\
+			\lnot A & \ref{29}, \ref{28}, disjunctive syllogism \label{31}\\
+			\bot & \ref{30}, \ref{31}, contradiction introduction
+		\end{logicproof}
+		
+		\item[(d)]
+		We must prove that the following premises are inconsistent.
+		\begin{logicproof}{0}
+			A \leftrightarrow B & premise \label{32}\\
+			A \to C & premise \label{33}\\
+			\lnot (B \to C) & premise \label{35}\\
+			B \to A & \ref{32}, biconditional elimination \label{34}\\
+			B \to C & \ref{33}, \ref{34}, hypothetical syllogism \label{36}\\
+			\bot & \ref{35}, \ref{36}, contradiction introduction
+		\end{logicproof}
+	\end{enumerate}
+	
+	\item % 4
+	Define the following atomic propositions.
+	\begin{align*}
+		a &= \text{Moses is a hero.}\\
+		b &= \text{Moses is happy with what he has.}\\
+		c &= \text{Moses shows weakness.}\\
+		d &= \text{Moses conquers his desires.}
+	\end{align*}
+	We must show that the following propositions are inconsistent.
+	\begin{logicproof}{0}
+		a \to b & premise \label{40}\\
+		c \to \lnot b & premise \label{39}\\
+		\lnot a \to \lnot d & premise \label{42}\\
+		d \land c & premise \label{37}\\
+		c & \ref{37}, conjunction elimination \label{38}\\
+		\lnot b & \ref{39}, \ref{38}, modus ponens \label{41}\\
+		\lnot a & \ref{40}, \ref{41}, modus tollens \label{43}\\
+		\lnot d & \ref{42}, \ref{43}, modus ponens \label{45}\\
+		d & \ref{37}, conjunction elimination \label{44}\\
+		\bot & \ref{45}, \ref{44}, contradiction elimination
+	\end{logicproof}
+	
+	\item % 5
+	\begin{enumerate}
+		\item[(b)]
+		\(\Gamma \nvdash C\) does not necessarily imply that \(\Gamma \vdash \lnot C\). We will prove this by a counterexample. Let \(\Gamma = \phi\). We know that \(\phi \nvdash C\), because \(C\) is a proposition, which could be true or false, since we have no premises. However, in this case we also know that \(\phi \nvdash \lnot C\), for the same reason.
+	\end{enumerate}
+	
+	\item % 6
+	\begin{enumerate}
+		\item[(b)]
+		It is claimed that there exists a set \(\Gamma\), such that for any proposition \(C\), \(\Gamma \vdash C\) and \(\Gamma \vdash \lnot C\). This claim is true, because for any set of premises which is inconsistent, any conclusion can be derived from that set. For example, the set of premises \(\Gamma = \{A, \lnot A\}\), \(\Gamma \vdash C\), and \(\Gamma \vdash \lnot C\).
+	\end{enumerate}
+	
+\end{enumerate}
+    
+\end{document}

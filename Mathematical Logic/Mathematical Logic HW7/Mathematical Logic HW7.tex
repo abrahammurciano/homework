@@ -1,0 +1,95 @@
+\documentclass[fleqn]{article}
+\usepackage[margin=1.5cm]{geometry}   % shrink margins
+\usepackage{amsmath}    % math equation environments
+% \usepackage{amssymb}    % math symbols such as natural numbers N.
+% \usepackage{tikz}	% for diagrams
+% \usepackage{adjustbox}	% align enumerations containing tall objects to top. Usage: \item\adjustbox{valign=t}{...}
+% \usepackage{centernot}	% centers not symbol. Usage: \centernot{...}
+
+% Math mode in tables. Usage: use column type C
+\usepackage{array}   % for \newcolumntype macro
+\newcolumntype{C}{>{$}c<{$}} % math-mode version of "c" column type
+
+% paragraph indentation within enumerations
+\usepackage{enumitem}
+\setlist{parsep=4pt,listparindent=\parindent}
+
+% Configurations for logic proofs
+% \usepackage{logicproof, etoolbox}
+% \patchcmd{\logicproof}{\center}{\flushleft}{}{}
+% \patchcmd{\endlogicproof}{\endcenter}{\endflushleft}{}{}
+
+\title{Mathematical Logic HW7}
+\author{Abraham Murciano}
+
+\begin{document}
+\maketitle
+
+\begin{enumerate}
+
+	\item % 1
+	Let \(L\), \(S\), and \(P\) be the following predicates.
+	\begin{gather*}
+		L(x) = x \text{ is a lecturer at JCT.} \\
+		S(x) = x \text{ is a student at JCT.} \\
+		P(x, y) = x \text{ teaches \(y\).}
+	\end{gather*}
+	\begin{enumerate}
+		\item[(b)]
+		\(\exists a (L(a) \land \forall b (S(a) \to P(a, b)))\)
+
+		\item[(d)]
+		\(\exists a (S(a) \land \forall b (L(b) \to P(b, a)))\)
+
+		\item[(f)]
+		\(\exists a (L(a) \land \forall b (S(b) \to \lnot P(a, b)))\)
+	\end{enumerate}
+
+	\item % 2
+	\begin{enumerate}
+		\item[(b)]
+		The universe is all the students and courses of Tal College.
+		\begin{gather*}
+			S(x) = x \text{ is a student.} \\
+			F(x) = x \text{ is female.} \\
+			C(x) = x \text{ is a course.} \\
+			P(x, y) = x \text{ is in } y
+		\end{gather*}
+		\[\forall a (C(a) \to \forall b ((S(b) \land P(b, a)) \to F(b)))\]
+
+		\item[(d)]
+		The universe everything.
+		\begin{gather*}
+			P(x) = x \text{ is a person.} \\
+			K(x, y) = x \text{ knows } y.
+		\end{gather*}
+		\[\exists a (P(a) \land \forall b (P(b) \to K(a, b))) \land \exists a (P(a) \land \lnot \forall b (P(b) \to K(b, a)))\]
+	\end{enumerate}
+
+	\item % 3
+	\begin{enumerate}
+		\item [(a)] 
+		The following proposition
+		\[\forall x (M(x) \to \exists y \exists z (H(y) \land H(z) \land F(x, y) \land F(x, z)))\]
+		is equivalent to saying ``Every old person has two young relatives.''
+
+		\item[(b)]
+		The proposition ``One is young if and only if one is not old.'' can be formalized as follows.
+		\[\forall a (H(a) \leftrightarrow \lnot M(a))\]
+
+		\item [(d)]
+		The proposition ``There is a person who is not young and not old, only if every person has relatives.'' can be formalized as follows.
+		\[\exists a (\lnot H(a) \land \lnot M(a)) \to \forall a \exists b (F(a, b))\]
+	\end{enumerate}
+
+	\item % 4
+	\begin{enumerate}
+		\item[(b)]
+		\(\exists a (S(a) \land \lnot \forall b ((T(b) \land T(a, b)) \to R(a, b)))\)
+
+		\item[(d)]
+		\(\forall a (S(a) \to (D(a) \to \forall b ((T(b) \land T(a, b)) \to R(a, b))))\)
+	\end{enumerate}
+\end{enumerate}
+    
+\end{document}

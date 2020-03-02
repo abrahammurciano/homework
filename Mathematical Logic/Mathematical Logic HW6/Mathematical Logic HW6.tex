@@ -1,0 +1,195 @@
+\documentclass[fleqn]{article}
+\usepackage[margin=1.5cm]{geometry}   % shrink margins
+\usepackage{amsmath}    % math equation environments
+\usepackage{amssymb}    % math symbols such as natural numbers N.
+% \usepackage{tikz}	% for diagrams
+% \usepackage{adjustbox}	% align enumerations containing tall objects to top. Usage: \item\adjustbox{valign=t}{...}
+% \usepackage{centernot}	% centers not symbol. Usage: \centernot{...}
+
+% Math mode in tables. Usage: use column type C
+\usepackage{array}   % for \newcolumntype macro
+\newcolumntype{C}{>{$}c<{$}} % math-mode version of "c" column type
+
+% paragraph indentation within enumerations
+\usepackage{enumitem}
+\setlist{parsep=4pt,listparindent=\parindent}
+
+% Configurations for logic proofs
+% \usepackage{logicproof, etoolbox}
+% \patchcmd{\logicproof}{\center}{\flushleft}{}{}
+% \patchcmd{\endlogicproof}{\endcenter}{\endflushleft}{}{}
+
+\title{Mathematical Logic HW6}
+\author{Abraham Murciano}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+
+	\item % 1
+	All the expressions except for the 9\textsuperscript{th} and 12\textsuperscript{th} are well formed. We will be assuming that the universe for \(x\) and \(y\) are defined, and that the predicates \(P\) and \(Q\) are also defined. Otherwise, none of the expressions would be propositions since the truth value of the expressions would depend upon the universe of any quantified variable as well as the specific predicates assigned to \(P\) and \(Q\).
+	
+	\begin{enumerate}
+		\item[(b)]
+		\[\forall x (P(x)) \to Q(x)\]
+		This is not a proposition. The \(x\) in \(P(x)\) is bounded, but the \(x\) in \(Q(x)\) is not.
+
+		\item[(d)]
+		\[\forall x (P(x)) \to \forall x (Q(x))\]
+		This is a proposition, since all the variables (\(x\) in \(P(x)\) and in \(Q(x)\)) are bounded by the universal quantifier.
+
+		\item[(f)]
+		\[\forall x (\exists x (P(x)) \to Q(x))\]
+		This is a proposition. The \(x\) in \(P(x)\) is bounded by the existential quantifier, and the \(x\) in \(Q(x)\) is bounded by the universal quantifier. The two variables here are unrelated, even though they have the same name, since they are quantified by different quantifiers.
+
+		\item[(h)]
+		\[\forall x (P(x)) \to \exists y (Q(x))\]
+		This is not a proposition. The \(x\) in \(P(x)\) is bounded by the universal quantifier, but the \(x\) in \(Q(x)\) is not bounded, since the existential quantifier is bounding the variable \(y\), not \(x\).
+
+		\item[(j)]
+		\[\forall x (\exists x (P(x) \land Q(x)))\]
+		This is a proposition. Both instances of the variable \(x\) are bounded by the existential quantifier, although none are bounded by the universal quantifier.
+
+		\item[(l)]
+		\[\forall x (\forall y (P(x \land y))) \to P(y)\]
+		This expression is not well formed, but only if the domain of \(P\) is not \{true, false\}, or if the universe of \(x\) or \(y\) is not \{true, false\}. Even if it was well formed, it still would not be a proposition, since one of the \(y\)'s are free. Both the variables \(x\) and \(y\) in \(P(x \land y)\) are bounded by their respective universal quantifiers, but the \(y\) in \(P(y)\) is not bounded.
+	\end{enumerate}
+	
+	\item % 2
+	In every section (i) the universe for all variables will be defined as \(\mathbb{N}\), and in every section (ii), the universe will be defined as the set \(U = \{10, 15, 20, 25, 55, 100\}\).
+
+	\(P(x)\) is the predicate ``the last digit of \(x\) is 5.''
+
+	\(Q(x)\) is the predicate ``\(x\) is divisible by 5.''
+	\begin{enumerate}
+		\item[(b)]
+		\begin{enumerate}
+			\item % i
+			Regardless of what value te free variable takes, the proposition is always true, since the antecedent is always false, because there are natural numbers that are not divisible by 5.
+
+			\item % ii
+			The antecedent is false, therefore the proposition is true, regardless of the values assigned to the free variable \(x\).
+		\end{enumerate}
+
+		\item[(d)]
+		\begin{enumerate}
+			\item % i
+			The antecedent is false, therefore the proposition is true.
+			
+			\item % ii
+			The antecedent is also false with this universe, so the proposition is true.
+		\end{enumerate}
+
+		\item[(f)]
+		\begin{enumerate}
+			\item % i
+			The antecedent is true, since there are natural numbers with the last digit 5, but the consequent is false, since there are natural numbers which are not divisible by 5. Therefore the proposition is false.
+			
+			\item % ii
+			The antecedent is true, and so is the consequent, since all the elements in \(U\) are divisible by 5. Therefore the proposition is true.
+		\end{enumerate}
+
+		\item[(h)]
+		\begin{enumerate}
+			\item % i
+			Just like in sections (b) and (d), the antecedent is false, so the proposition is true.
+			
+			\item % ii
+			Just like in sections (b) and (d), the antecedent is false, so the proposition is true.
+		\end{enumerate}
+
+		\item[(j)]
+		\begin{enumerate}
+			\item % i
+			The proposition is true, since there exists a natural number which is divisible by 5 and ends in 5, for example 15.
+			
+			\item % ii
+			The proposition is true, since there exists a number in \(U\) which is divisible by 5 and ends in 5, for example 15.
+		\end{enumerate}
+	\end{enumerate}
+	
+	\item % 3
+	\begin{enumerate}
+		\item[(b)]
+		If the universe is \(\{a, b\}\), then:
+		\begin{multline*}
+			\exists x \forall y (P(x) \leftrightarrow \exists z R(y, z)) 
+			\quad \Leftrightarrow \quad \\
+			(
+				(
+					(P(a) \leftrightarrow R(a, a)) 
+					\lor
+					(P(a) \leftrightarrow R(a, b))
+				)
+				\land
+				(
+					(P(a) \leftrightarrow R(b, a)) 
+					\lor
+					(P(a) \leftrightarrow R(b, b))
+				)
+			) 
+			\ \lor \\
+			(
+				(
+					(P(b) \leftrightarrow R(a, a)) 
+					\lor
+					(P(b) \leftrightarrow R(a, b))
+				)
+				\land
+				(
+					(P(b) \leftrightarrow R(b, a)) 
+					\lor
+					(P(b) \leftrightarrow R(b, b))
+				)
+			) 
+		\end{multline*}
+	\end{enumerate}
+	
+	\item % 4
+	\begin{enumerate}
+		\item[(b)]
+		Define the following predicates.
+		\begin{gather*}
+			C(x) = \text{``\(x\) is a cat''} \\
+			W(x) = \text{``\(x\) is white''} \\
+			G(x) = \text{``\(x\) has green eyes''}
+		\end{gather*}
+		\begin{enumerate}
+			\item % i
+			If the universe is the set of all animals, then the proposition ``There's a cat that isn't white and has green eyes.'' can be formalized as follows.
+			\[\exists x (C(x) \land \lnot W(x) \land G(x))\]
+			
+			\item % ii
+			If the universe is the set of all cats, then the proposition can be simplified to this.
+			\[\exists x (\lnot W(x) \land G(x))\]
+		\end{enumerate}
+	\end{enumerate}
+	
+	\item % 5
+	\begin{enumerate}
+		\item[(b)]
+		``For any two distinct even numbers, there is a natural number in between them.''
+
+		This proposition is true.
+	\end{enumerate}
+	
+	\item % 6
+	\begin{enumerate}
+		\item[(b)]
+		Let \(R(a, b) = \) ``\(a\) is twice \(b\)'' where the universe is the set of rational numbers.
+		\[\forall x \exists y (R(x, y))\]
+		The above proposition is true in this interpretation.
+		
+		\item[(d)]
+		Let \(R(a, b) = \) ``\(a\) is the square of \(b\)'' where the universe is the set of non-negative real numbers.
+		\[\forall x \exists y (R(x, y))\]
+		The above proposition is true in this interpretation.
+	\end{enumerate}
+	
+	
+
+\end{enumerate}
+    
+\end{document}

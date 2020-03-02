@@ -1,0 +1,88 @@
+\documentclass[fleqn]{article}
+\usepackage[margin=1.5cm]{geometry}   % shrink margins
+\usepackage{amsmath}    % math equation environments
+\usepackage{amssymb}    % math symbols such as natural numbers N.
+
+\newenvironment{answers}{ % same as enumerate but with more space between each answer
+	\begin{enumerate}
+		\setlength{\itemsep}{\bigskipamount}
+}{	\end{enumerate}	}
+
+\newcommand{\sub}[1]{\textsubscript{#1}}
+
+% paragraph indentation within enumerations
+\usepackage{enumitem}
+\setlist{parsep=4pt,listparindent=\parindent}
+
+\title{Intro to Communications \\
+\large Homework 3}
+\author{Abraham Murciano}
+
+\begin{document}
+
+\maketitle
+
+\begin{answers}
+
+	\item % 1
+	For the IP address 192.168.9.150/27,
+    \begin{enumerate}[label=1.\arabic*.]
+		\item % 1.1
+		The subnet address is 192.168.9.128
+		\item % 1.2
+		The subnet mask is 255.255.255.224
+		\item % 1.3
+		The broadcast address is 192.168.9.159
+	\end{enumerate}
+
+	\item % 2
+	For the IP address 192.168.9.150/25,
+	\begin{enumerate}[label=2.\arabic*.]
+		\item % 2.1
+		The subnet address is 192.168.9.128
+		\item % 2.2
+		The subnet mask is 255.255.255.128
+		\item % 2.3
+		The broadcast address is 192.168.9.255
+	\end{enumerate}
+
+	\item % 3
+	\begin{enumerate}[label=3.\arabic*]
+		\item % 3.1
+		When end station 2 sends an IP message to station 6, the addresses in the frame and packet PDU headers at end station 2 are:
+		\begin{table}[h]
+		\centering
+			\begin{tabular}{|c|c|c|c|}
+				\hline
+				IP Destination & IP Source & MAC Destination & MAC Source \\
+				\hline
+				IP\sub{6} & IP\sub{2} & MAC(R\sub{1}, LAN\sub{1}) & MAC\sub{2} \\
+				\hline
+			\end{tabular}
+		\end{table}
+
+		\item % 3.2
+		If the transmitter sends an IP message to station 6 with the TTL equal to 255, when the message arrives at station 6 the TTL will be 252.
+
+		\item % 3.3
+		The transmitter starts with a congestion window of size 1. It then sends the first segment and sends that across the network. When it receives an acknowledgement for segment 1, the CWND is increased to 2. Then it sends segments 2 and 3, and receives acknowledgements for them. The CWND is now 4.
+
+		Next, the transmitter sends segments 4, 5, 6, and 7. Segment 4 reaches the receiver, but then router 2 fails and none of the other segments arrive. The receiver sends an acknowledgement for segment 4, but that gets lost in the network. At this point, the network corrects itself and finds another path from the transmitter and the receiver.
+
+		Meanwhile, the transmitter is waiting for the acknowledgements for segments 4, 5, 6, and 7, but never receives them, and a timeout occurs. The transmitter therefore sets the slow start threshold to half of the current CWND, which is 2. Then it sets the CWND back to 1 and sends segment 4 again.
+
+		The transmitter then receives an acknowledgement for segment 4, increases CWND to 2, sends segments 5 and 6, receives their acknowledgements, increases CWND to 4 and sends the rest of the packets 7, 8, 9, and 10. When the transmitter receives the acknowledgements for these four segments, it increases the CWND to 8. The transmission is now complete.
+
+		The final CWND is 8 and the broadcast sequence from the transmitter is
+		\[1, 2, 3, 4, 5, 6, 7, 4, 5, 6, 7, 8, 9, 10.\]
+
+		\item % 3.4
+		Since UDP does not check if the file was delivered correctly, the broadcast sequence from the transmitter is
+		\[1, 2, 3, 4, 5, 6, 7, 8, 9, 10.\]
+
+		\item % 3.5
+		In IPv4, the checksum and the source port fields are optional. In IPv6, however, checksum is mandatory.
+	\end{enumerate}
+\end{answers}
+
+\end{document}

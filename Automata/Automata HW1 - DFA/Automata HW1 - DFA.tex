@@ -1,0 +1,171 @@
+\documentclass[fleqn]{article}
+\usepackage[margin=3cm]{geometry}   % shrink margins
+\usepackage[margin=3cm]{caption}   % shrink captions
+\usepackage{amsmath}    % math equation environments
+\usepackage{amssymb}    % math symbols such as natural numbers N.
+\newcommand{\N}{\mathbb{N}}
+
+\newenvironment{answers}{ % same as enumerate but with more space between each answer
+	\begin{enumerate}
+		\setlength{\itemsep}{\bigskipamount}
+}{\end{enumerate}}
+
+\newcommand\Item[1][]{ % custom \Item command for block math
+  \ifx\relax#1\relax  \item \else \item[#1] \fi
+  \abovedisplayskip=0pt\abovedisplayshortskip=0pt~\vspace*{-\baselineskip}}
+
+%\usepackage{multicol}	% can be used to put enumerate in columns. Usage: \begin{multicols}{NumCols}\begin{enumerate}...
+
+\usepackage{tikz}	% for diagrams
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+
+% same as tikzpicture but for state diagrams
+% Usage:
+%	the start state must have the style "start" (so the start arrow can point to it)
+%	the start state cannot have an id, it will be given the id "start"
+%	there can only be one start state
+%		e.g. \node[state, start] {node content};
+%	all state nodes should have style "state"
+%		e.g. \node[state] (my_node_id) {node content};
+%	all accepted state nodes should also have style "accepted"
+%		e.g. \node[state, accepted] (my_node_id) {node content};
+%	all input arrows should have style "input"
+%		and optionally "bend left=40", "bend right=90", "loop", "loop right", etc. for curved arrows
+%	all input arrows should be labelled with the inputs that lead that way
+%		e.g. \draw[input, bend_left] (source) to node[above,sloped] {possible inputs} (destination);
+%	an arror starte should be labeled "error"
+\newenvironment{statediagram}{
+	\begin{tikzpicture}[
+		state/.style={circle, draw=blue!60, fill=blue!5, very thick, node distance=1.5cm},
+		start/.style={name=start},
+		accepted/.style={double, double distance=0.5mm},
+		error/.style={draw=red!60, fill=red!5, name=error},
+		input/.style={->, thick, shorten >= 1mm, shorten <= 1mm},
+	]
+}{
+	\draw[input] (start.west)+(-1cm,0) to (start.west);
+	\end{tikzpicture}
+}
+
+\newenvironment{statediagramfigure}{
+	\begin{figure}[h]
+		\centering
+		\begin{statediagram}
+}{\end{statediagram} \end{figure}}
+
+% Math mode in tables. Usage: use column type C
+% \usepackage{array}   % for \newcolumntype macro
+% \newcolumntype{C}{>{$}c<{$}} % math-mode version of "c" column type
+
+% paragraph indentation within enumerations
+\usepackage{enumitem}
+\setlist{parsep=4pt,listparindent=\parindent}
+
+\newcommand{\prefix}{\sqsubseteq}
+\newcommand{\suffix}{\sqsupseteq}
+
+\title{Automata \& Formal Languages \\
+\medskip
+\large Homework 1 - Deterministic Finite Automata}
+\author{Abraham Murciano}
+
+\begin{document}
+
+\maketitle
+
+\begin{answers}
+
+	\Item % 1
+	\[\mathcal{L} = \{w \in \{\text{a}, \text{b}, \text{c}\}^* : (\exists n \in \N : |W| = 2n)\}\]
+	\begin{statediagramfigure}
+		\node[state, accepted, start] {\(q_0\)};
+		\node[state, right=of start] (odd) {\(q_1\)};
+		\draw[input, bend left=40] (start) to node[below] {a,b,c} (odd);
+		\draw[input, bend left=40] (odd) to node[above] {a,b,c} (start);
+	\end{statediagramfigure}
+
+	\Item % 2
+	\[\mathcal{L} = \{w \in \{\text{a}, \text{b}, \text{c}\}^* : \text{abc} \prefix w\}\]
+	\begin{statediagramfigure}
+		\node[state, start] {\(q_0\)};
+		\node[state, right=of start] (a) {\(q_1\)};
+		\node[state, right=of a] (ab) {\(q_2\)};
+		\node[state, accepted, right=of ab] (abc) {\(q_3\)};
+		\node[state, error, below=1cm of start] {\(q_4\)};
+
+		\draw[input] (start) to node[above] {a} (a);
+		\draw[input] (a) to node[above] {b} (ab);
+		\draw[input] (ab) to node[above] {c} (abc);
+		\draw[input, loop right] (abc) to node[right] {a,b,c} (abc);
+		\draw[input] (start) to node[left] {b, c} (error);
+		\draw[input, bend left=20] (a) to node[above,sloped] {a, c} (error);
+		\draw[input, bend left=40] (ab) to node[below,sloped] {a, b} (error);
+		\draw[input, loop left] (error) to node[left] {a,b,c} (error);
+	\end{statediagramfigure}
+
+	\Item % 3
+	\[\mathcal{L} = \{w \in \{\text{a}, \text{b}, \text{c}\}^* : \text{abc} \suffix w\}\]
+	\begin{statediagramfigure}
+		\node[start, state] {\(q_0\)};
+		\node[state, right=of start] (a) {\(q_1\)};
+		\node[state, right=of a] (ab) {\(q_2\)};
+		\node[state, accepted, right=of ab] (abc) {\(q_3\)};
+
+		\draw[input] (start) to node[above] {a} (a);
+		\draw[input, loop below] (start) to node[below] {b,c} (start);
+
+		\draw[input] (a) to node[above] {b} (ab);
+		\draw[input, loop below] (a) to node[below] {a} (a);
+		\draw[input, bend left=40] (a) to node[below] {c} (start);
+
+		\draw[input] (ab) to node[above] {c} (abc);
+		\draw[input, bend left=40] (ab) to node[below] {a} (a);
+		\draw[input, bend left=60] (ab) to node[below] {b} (start);
+
+		\draw[input, bend right=30] (abc) to node[above] {a} (a);
+		\draw[input, bend right=40] (abc) to node[below] {b,c} (start);
+	\end{statediagramfigure}
+
+	For this language, the word ``aaaabc'' belongs in the language, but ``aaa'' does not.
+
+	\pagebreak
+	\Item
+	\[\mathcal{L} = \{w \in \{\text{a}, \text{b}, \text{c}\}^* : \text{aaa} \not\prefix w\}\]
+	\begin{statediagramfigure}
+		\node[start, state] {\(q_0\)};
+		\node[state, right=of start] (a) {\(q_1\)};
+		\node[state, right=of a] (aa) {\(q_2\)};
+		\node[state, right=of aa] (aaa) {\(q_3\)};
+		\node[state, accepted, below=of a] (ok) {\(q_4\)};
+
+		\draw[input] (start) to node[above] {a} (a);
+		\draw[input, bend right=30] (start) to node[below,sloped] {b,c} (ok);
+
+		\draw[input] (a) to node[above] {a} (aa);
+		\draw[input] (a) to node[above,sloped] {b,c} (ok);
+
+		\draw[input] (aa) to node[above] {a} (aaa);
+		\draw[input, bend left=30] (aa) to node[below,sloped] {b,c} (ok);
+
+		\draw[input, loop right] (aaa) to node[right] {a,b,c} (aaa);
+
+		\draw[input, loop below] (ok) to node[below] {a,b,c} (ok);
+	\end{statediagramfigure}
+
+	\Item
+	\[\mathcal{L} = \{w \in \{\text{a}, \text{b}, \text{c}\}^* : (\exists u,v \in \{\text{a}, \text{b}, \text{c}\}^* : w = u \text{ab} v \lor w = u \text{ba} v)\}\]
+	\begin{statediagramfigure}
+		\node[state, start] {\(q_0\)};
+		\node[state, above right=of start] (a) {\(q_1\)};
+		\node[state, below right=of start] (b) {\(q_2\)};
+
+		% \draw[input] (start) to (a) \node[above,sloped] {a};
+		% \draw[input] (start) to \node[below,sloped] {b} (b);
+		% \draw[input, loop above] (start) to \node[above] {c} (start);
+	\end{statediagramfigure}
+
+\end{answers}
+
+\end{document}

@@ -1,0 +1,183 @@
+\documentclass[fleqn]{article}
+\usepackage[margin=1.5cm]{geometry}   % shrink margins
+\usepackage{amsmath}    % math equation environments
+\usepackage{amssymb}    % math symbols such as natural numbers N
+
+\title{Mathematical Logic HW3}
+\author{Abraham Murciano}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+
+	\item % 1
+	\begin{enumerate}
+		\item[(b)]
+		\[(A \leftrightarrow (\lnot A \land B)) \rightarrow (B \land \lnot B)\]
+		\begin{tabular}{||c|c||c|c|c||}
+			\hline
+			\(A\) & \(B\) & \(\lnot A \land B\) & \(A \leftrightarrow (\lnot A \land B)\) & \((A \leftrightarrow (\lnot A \land B)) \rightarrow (B \land \lnot B)\) \\
+			\hline
+			\(T\) & \(T\) & \(F\) & \(F\) & \(T\) \\
+			\(T\) & \(F\) & \(F\) & \(F\) & \(T\) \\
+			\(F\) & \(T\) & \(T\) & \(F\) & \(T\) \\
+			\(F\) & \(F\) & \(F\) & \(T\) & \(F\) \\
+			\hline
+		\end{tabular}
+		\begin{enumerate}
+			\item % i
+			DNF:
+			\[(A \land B) \lor (A \land \lnot B) \lor (\lnot A \land B)\]
+
+			\item % ii
+			CNF:
+			\[A \lor B\]
+		\end{enumerate}
+
+		\item[(d)]
+		\[(x \rightarrow y) \rightarrow (z \land (y \downarrow x))\]
+		\begin{tabular}{||c|c|c||c|c|c|c||}
+			\hline
+			\(x\) & \(y\) & \(z\) & \(x \rightarrow y\) & \(y \downarrow x\) & \(z \land (y \downarrow x)\) & \((x \rightarrow y) \rightarrow (z \land (y \downarrow x))\) \\
+			\hline
+			\(T\) & \(T\) & \(T\) & \(T\) & \(T\) & \(T\) & \(T\) \\
+			\(T\) & \(T\) & \(F\) & \(T\) & \(T\) & \(F\) & \(F\) \\
+			\(T\) & \(F\) & \(T\) & \(F\) & \(T\) & \(T\) & \(T\) \\
+			\(T\) & \(F\) & \(F\) & \(F\) & \(T\) & \(F\) & \(T\) \\
+			\(F\) & \(T\) & \(T\) & \(T\) & \(T\) & \(T\) & \(T\) \\
+			\(F\) & \(T\) & \(F\) & \(T\) & \(T\) & \(F\) & \(F\) \\
+			\(F\) & \(F\) & \(T\) & \(T\) & \(F\) & \(F\) & \(F\) \\
+			\(F\) & \(F\) & \(F\) & \(T\) & \(F\) & \(F\) & \(F\) \\
+			\hline
+		\end{tabular}
+		\begin{enumerate}
+			\item % i
+			DNF:
+			\[(x \land y \land z) \lor (x \land \lnot y \land z) \lor (x \land \lnot y \land \lnot z) \lor (\lnot x \land y \land z)\]
+
+			\item % ii
+			CNF:
+			\[(\lnot x \lor \lnot y \lor z) \land (x \lor \lnot y \lor z) \land (x \lor y \lor \lnot z) \land (x \lor y \lor z)\]
+		\end{enumerate}
+	\end{enumerate}
+
+	\item % 2
+	\begin{enumerate}
+		\item[(b)]
+		\[((p \downarrow q) \rightarrow r) \uparrow p\]
+		\begin{tabular}{||c|c|c||c|c|c||}
+			\hline
+			\(p\) & \(q\) & \(r\) & \(p \downarrow q\) & \((p \downarrow q) \rightarrow r\) & \(((p \downarrow q) \rightarrow r) \uparrow p\) \\
+			\hline
+			\(T\) & \(T\) & \(T\) & \(F\) & \(T\) & \(F\) \\
+			\(T\) & \(T\) & \(F\) & \(F\) & \(T\) & \(F\) \\
+			\(T\) & \(F\) & \(T\) & \(F\) & \(T\) & \(F\) \\
+			\(T\) & \(F\) & \(F\) & \(F\) & \(T\) & \(F\) \\
+			\(F\) & \(T\) & \(T\) & \(F\) & \(T\) & \(T\) \\
+			\(F\) & \(T\) & \(F\) & \(F\) & \(T\) & \(T\) \\
+			\(F\) & \(F\) & \(T\) & \(T\) & \(T\) & \(T\) \\
+			\(F\) & \(F\) & \(F\) & \(T\) & \(F\) & \(T\) \\
+			\hline
+		\end{tabular}
+
+		As shown in the truth table, \(((p \downarrow q) \rightarrow r) \uparrow p\) is neither a tautology nor a contradiction.
+	\end{enumerate}
+
+	\item % 3
+	\begin{enumerate}
+		\item[(b)]
+		\begin{align*}
+			p \oplus q &= (p \land \lnot q) \lor (\lnot p \land q) \\
+			&= (\lnot \lnot p \land \lnot q) \lor (\lnot p \land \lnot \lnot q) \\
+			&= (\lnot (p \downarrow p) \land \lnot q) \lor (\lnot p \land \lnot (q \downarrow q)) \\
+			&= ((p \downarrow p) \downarrow q) \lor (p \downarrow (q \downarrow q)) \\
+			&= \lnot (((p \downarrow p) \downarrow q) \downarrow (p \downarrow (q \downarrow q))) \\
+			&= (((p \downarrow p) \downarrow q) \downarrow (p \downarrow (q \downarrow q))) \downarrow (((p \downarrow p) \downarrow q) \downarrow (p \downarrow (q \downarrow q))) \\
+		\end{align*}
+	\end{enumerate}
+
+	\item % 4
+	\begin{enumerate}
+		\item[(b)]
+		\[f(x, y, z) = \lnot x \land (\lnot y \rightarrow \lnot z)\]
+		\begin{align*}
+			f(a, a, a) &= \lnot a \land (\lnot a \rightarrow \lnot a) \\
+			&= \lnot a \land T \\
+			&= \lnot a
+		\end{align*}
+		\begin{align*}
+			f(a, a, f(a, a, a)) &= f(a, a, \lnot a) \\
+			&= \lnot a \land (\lnot a \rightarrow a) \\
+			&= \lnot a \land \lnot (\lnot a \land \lnot a) \\
+			&= \lnot a \land \lnot \lnot a \\
+			&= \lnot a \land a \\
+			&= F
+		\end{align*}
+		\begin{align*}
+			f(f(a, a, f(a, a, a)), b, b) &= f(F, b, b) \\
+			&= T \land (\lnot b \rightarrow \lnot b) \\
+			&= T \land T \\
+			&= T
+		\end{align*}
+	\end{enumerate}
+
+	\item % 5
+	\begin{enumerate}
+		\item[(b)]
+		We must show that \(\{\oplus, \land, \leftrightarrow\}\) are complete. One way to do that, is to show that with these operators we are able to make a \(\downarrow\). We are able to make a \(\downarrow\) as follows:
+
+		\begin{tabular}{||c|c||c|c|c||c||}
+			\hline
+			\(a\) & \(b\) & \(a \oplus b\) & \(a \land b\) & \(a \leftrightarrow b\) & \((a \oplus b) \leftrightarrow (a \land b)\) \\
+			\hline
+			\(T\) & \(T\) & \(F\) & \(T\) & \(T\) & \(F\) \\
+			\(T\) & \(F\) & \(T\) & \(F\) & \(F\) & \(F\) \\
+			\(F\) & \(T\) & \(T\) & \(F\) & \(F\) & \(F\) \\
+			\(F\) & \(F\) & \(F\) & \(F\) & \(T\) & \(T\) \\
+			\hline
+		\end{tabular}
+
+		As the table shows, \((a \oplus b) \leftrightarrow (a \land b) = a \downarrow b\), and we know that \(\downarrow\) on its own is itself complete, thus the set of operators \(\{\oplus, \land, \leftrightarrow\}\) is also complete.
+
+		\item[(d)]
+		We must show that the functions \(f\) and \(g\) defined below are complete.
+		\begin{gather*}
+			f(x, y, z) = y \rightarrow ((x \land \lnot z) \lor (z \land \lnot x)) \\
+			g(x, y) = \lnot x \lor y
+		\end{gather*}
+		\begin{tabular}{||c|c|c||c|c||}
+			\hline
+			\(x\) & \(y\) & \(z\) & \(f(x, y, z)\) & \(g(x, y)\) \\
+			\hline
+			\(T\) & \(T\) & \(T\) & \(F\) & \(T\) \\
+			\(T\) & \(T\) & \(F\) & \(T\) & \(T\) \\
+			\(T\) & \(F\) & \(T\) & \(T\) & \(F\) \\
+			\(T\) & \(F\) & \(F\) & \(T\) & \(F\) \\
+			\(F\) & \(T\) & \(T\) & \(T\) & \(T\) \\
+			\(F\) & \(T\) & \(F\) & \(F\) & \(T\) \\
+			\(F\) & \(F\) & \(T\) & \(T\) & \(T\) \\
+			\(F\) & \(F\) & \(F\) & \(T\) & \(T\) \\
+			\hline
+		\end{tabular}
+
+		\begin{align*}
+			g(a, a) &= \lnot a \lor a \\
+			&= T
+		\end{align*}
+		\begin{align*}
+			f(g(a, a), a, b) &= f(T, a, b) \\
+			&= a \rightarrow ((T \land \lnot b) \lor (b \land F)) \\
+			&= a \rightarrow (\lnot b \lor F) \\
+			&= a \rightarrow \lnot b \\
+			&= \lnot (a \land \lnot \lnot b) \\
+			&= \lnot (a \land b) \\
+			&= a \uparrow b
+		\end{align*}
+		We already know that \(\uparrow\) is complete, and we can make a \(\uparrow\) using the functions \(f\) and \(g\), so it follows that \(f\) and \(g\) are complete.
+	\end{enumerate}
+	
+\end{enumerate}
+	
+\end{document}

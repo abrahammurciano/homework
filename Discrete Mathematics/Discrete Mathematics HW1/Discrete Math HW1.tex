@@ -1,0 +1,225 @@
+\documentclass{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{amssymb}
+
+\title{Discrete Math HW1}
+\author{Abraham Murciano}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+	\item[1.]
+		\begin{enumerate}
+			\item[(b)]
+				True
+			\item[(c)]
+				True
+			\item[(e)]
+				False
+			\item[(f)]
+				False
+			\item[(i)]
+				True
+			\item[(k)]
+				False
+		\end{enumerate}
+		
+		\begin{enumerate}
+			\item[(g)]
+				\(x \notin y, x \subseteq y\)
+			\item[(h)]
+				\(x \in y, x \subseteq y\)
+		\end{enumerate}
+		
+	\item[3.]
+		\begin{enumerate}
+			\item[(a)]
+				\[P(A) = \{ \phi, \{0\}, \{\phi\}, \{\{\phi\}\}, \{0, \phi\}, \{0, \{\phi\}\}, \{\phi, \{\phi\}\}, \{0, \phi, \{\phi\}\}\}\]
+			
+			\item[(b)]
+				\[2^{2^{8}} = 2^{256}\]
+			
+			\item[(c)]
+				Statement: If \(A \subseteq B\) then \(P(A) \subseteq P(B) \).
+
+				Proof: If \(A \subseteq B \), then all elements of \(A\) are also elements of \(B\). \(P(A)\) is the set containing all sets made from only elements in \(A\), but since all those elements are also elements of \(B\), therefore it follows that every set in \(P(A)\) is also an element of \(P(B) \), so \(P(A) \subseteq P(B) \).
+		\end{enumerate}
+		
+	\item[4.]
+		\begin{enumerate}
+			\item[(b)]
+				\[(A-B)-C = A-(B \cup C)\]
+				\[(A \cap \overline{B})-C = (A \cap \overline{B}) \cap \overline{C} = A \cap (\overline{B} \cap \overline{C}) = A \cap \overline{(B \cup C)} = A - (B \cup C)\]
+			
+			\item[(c)]
+				\[(A \cup B)-C = (A-C) \cup (B-C)\]
+				\[(A-C) \cup (B-C) = (A \cap \overline{C}) \cup (B \cap \overline{C}) = (A \cup B) \cap \overline{C} = (A \cup B) - C\]
+		\end{enumerate}
+		
+	\item[5.]
+		\begin{enumerate}
+			\item[(a)]
+				\[(A-B) \cup (A-C) = A - (B \cap C)\]
+				\[(A \cap \overline{B}) \cup (A \cap \overline{C}) = A \cap (\overline{B} \cup \overline{C}) = A \cap \overline{(B \cap C)} = A - (B \cap C)\]
+			
+			\item[(c)]
+				\[(A-B)-C = (A-C)-(B-C)\]
+				\[(A \cap \overline{C})-(B \cap \overline{C}) = (A \cap \overline{C}) \cap \overline{(B \cap \overline{C})} = (A \cap \overline{C}) \cap (\overline{B} \cup C)\]
+				\[= A \cap (\overline{C} \cap (\overline{B} \cup C)) = A \cap ((\overline{C} \cap \overline{B})\cup (\overline{C} \cap C)) = A \cap \overline{C} \cap \overline{B} = (A-B)-C\]
+		\end{enumerate}
+		
+	\item[7.]
+		\begin{enumerate}
+			\item[(a)]
+				True
+		\end{enumerate}
+	
+	\item[8.]
+		To prove that \textcircled{1} and \textcircled{2} are equivalent, we must show that \textcircled{1} \(\Rightarrow\)\textcircled{2}  and that \textcircled{2} \(\Rightarrow\) \textcircled{1}. 
+	
+		\medbreak
+		To show that \textcircled{1} \(\Rightarrow\) \textcircled{2},
+		\[A \subseteq B \subseteq C\]
+		\[A \subseteq B \Rightarrow A \cup B = B\]
+		\[B \subseteq C \Rightarrow B \cap C = B\]
+		\[\Rightarrow A \cup B = B \cap C\]
+
+		\medbreak
+		To show that \textcircled{2} \(\Rightarrow\) \textcircled{1},
+		\[A \cup B = B \cap C \Rightarrow\]
+		\[B \cap C \subseteq B \Rightarrow A \cup B \subseteq B \Rightarrow A \cup B = B \Rightarrow A \subseteq B\]
+		\[B = B \cap C \Rightarrow B \subseteq C \Rightarrow A \subseteq B \subseteq C\]
+
+	\item[11.]
+		\(P(X) = \{\phi\} \Rightarrow X = \phi \). 
+		
+		\medbreak
+		If \(S-T = \phi\) then there are no elements in \(S\) which are not in \(T \). Therefore every element in \(S\) is also in \(T \). So \(S \subseteq T \).
+		
+	\item[12.]
+		\begin{enumerate}
+			\item[(b)]
+				\[A \oplus B = (A-B) \cup (B-A) = (A \cap \overline{B}) \cup (B \cap \overline{A}) = (\overline{B} \cap A) \cup (\overline{A} \cap B)\]
+				\[= (\overline{B} - \overline{A}) \cup (\overline{A} - \overline{B}) = (\overline{A} - \overline{B}) \cup (\overline{B} - \overline{A}) = \overline{A} \oplus \overline{B}\]
+			
+			\item[(c)]
+				\[A \oplus B = (A-B) \cup (B-A) = \{x : (x \in A \land x \notin B) \lor (x \in B \land x \notin A)\}\]
+				
+				\[A \oplus (B \oplus C) = \{x: (x \in A \land x \notin (B \oplus C)) \lor (x \in (B \oplus C) \land x \notin A)\}\]
+				\[= \{x : ((x \in A \land x \in B \land x \in C) \lor (x \in A \land x \notin B \land x \notin C))\]
+				\[\lor ((x \notin A \land x \in B \land x \notin C) \lor (x \notin A \land x \notin B \land x \in C)) \}\]
+				\[= \{x : (x \in A \land x \in B \land x \in C)\]
+				\[\lor (x \in A \land x \notin B \land x \notin C)\]
+				\[\lor (x \notin A \land x \in B \land x \notin C)\]
+				\[\lor (x \notin A \land x \notin B \land x \in C)\}\]
+
+				\[(A \oplus B) \oplus C = \{x : (x \in (A \oplus B) \land x \notin C) \lor (x \in C \land x \notin (A \oplus B))\}\]
+				\[= \{x : ((x \in A \land x \notin B \land x \notin C) \lor (x \notin A \land x \in B \land x \notin C))\]
+				\[\lor ((x \in A \land x \in B \land x \in C) \lor (x \notin A \land x \notin B \land x \in C))\}\]
+				\[= \{x : (x \in A \land x \notin B \land x \notin C)\]
+				\[\lor (x \notin A \land x \in B \land x \notin C)\]
+				\[\lor (x \in A \land x \in B \land x \in C)\]
+				\[\lor (x \notin A \land x \notin B \land x \in C)\}\]
+				
+				\paragraph{}
+				Since the conditions in the set builder notation for \(A \oplus (B \oplus C)\) are identical to those in the set builder notation for \((A \oplus B) \oplus C\) but in different order, and since the logical and operator \(\land\) is commutative, therefore this proves that \(A \oplus (B \oplus C) = (A \oplus B) \oplus C \), and therefore symmetric difference is associative.
+				
+			\item[(e)]
+				\[A \cap (B \oplus C) = (A \cap B) \oplus (A \cap C)\]
+				Proof:
+				\[A \cap (B \oplus C) = A \cap ((B - C) \cup (C - B))\]
+				\[= (A \cap (B - C)) \cup (A \cap (C - B))\]
+				\[= (A \cap (B \cap \overline{C})) \cup (A \cap (C \cap \overline{B}))\]
+				\[= (A \cap B \cap \overline{C}) \cup (A \cap C \cap \overline{B})\]
+				\[= (B \cap (A \cap \overline{C})) \cup (C \cap (A \cap \overline{B}))\]
+				\[= (B \cap (\phi \cup (A \cap \overline{C}))) \cup (C \cap (\phi \cup (A \cap \overline{B})))\]
+				\[= (B \cap ((A \cap \overline{A}) \cup (A \cap \overline{C}))) \cup (C \cap ((A \cap \overline{A}) \cup (A \cap \overline{B})))\]
+				\[= (B \cap A \cap (\overline{A} \cup \overline{C})) \cup (C \cap A \cap (\overline{A} \cup \overline{B}))\]
+				\[= ((A \cap B) \cap (\overline{A} \cup \overline{C})) \cup ((A \cap C) \cap (\overline{A} \cap \overline{B}))\]
+				\[= ((A \cap B) \cap \overline{(A \cap C)}) \cup ((A \cap C) \cap \overline{(A \cap B)})\]
+				\[= ((A \cap B) - (A \cap C)) \cup ((A \cap C) - (A \cap B))\]
+				\[= (A \cap B) \oplus (A \cap C)\]
+		\end{enumerate}
+
+	\item[14.]
+		\begin{enumerate}
+			\item[(b)]
+				\[(A \times A) \cup (B \times C) \not= (A \cup B) \times (A \cup C)\]
+				Proof by counterexample: 
+				
+				Let \(A = \{1\}\), \(B = \{2\}\), and \(C = \{3\}\).
+				\[(A \times A) \cup (B \times C)\]
+				\[= (\{1\} \times \{1\}) \cup (\{2\} \times \{3\})\]
+				\[= \{(1, 1)\} \cup \{(2, 3)\}\]
+				\[= \{(1, 1), (2, 3)\}\]
+				
+				\[(A \cup B) \times (A \cup C)\]
+				\[= (\{1\} \cup \{2\}) \times (\{1\} \cup \{3\})\]
+				\[= \{1, 2\} \times \{1, 3\}\]
+				\[= \{(1, 1), (1, 3), (2, 1), (2, 3)\}\]
+		\end{enumerate}
+
+	\item[15.]
+		\begin{enumerate}
+			\item[(a)]
+				\begin{enumerate}
+					\item[i.]
+						\[\bigcup_{i=1}^{100}A_{i} = A_{1} \cup A_{2} \cup ... \cup A_{100}\]. 
+
+						\paragraph{}
+						However, \(A_{i-1} \subseteq A_{i}\). This can be proven by induction since \(A_{1} = \{-1, 0, 1\}\) and \(A_{2} = \{-2, -1, 0, 1, 2\}\), showing that \(A_{1} \subseteq A_{2}\).
+						
+						\paragraph{}
+						Then in general, \(A_{i-1} = \{-(i-1), -(i-1)+1, -(i-1)+2, ..., i-1\}\) which is equal to \(\{-i+1, -i+2, -i+3, ..., i-1\}\). This is a set containing all the elements in \(A_{i}\) except for \(-i\) and \(i\). Therefore, any set \(A_{i-1} = A_{i} \cup \{-i, i\}\). This implies \(A_{i-1} \subseteq A_{i}\).
+
+						\paragraph{}
+						And by the transitive property of subsets, \(A_{i-1} \subseteq A_{i} \Rightarrow A_{j} \subseteq A_{i}\) for all \(j<i\).
+
+						\paragraph{}
+						Therefore \(A_{1} \cup A_{2} \cup ... \cup A_{100} = A_{100}\), because \(A_{1}, A_{2}, A_{3}, ..., A_{99}\) are all subsets of \(A_{100}\), and if \(A \subseteq B \Rightarrow A \cup B = B\). Therefore:
+						\[\bigcup_{i=1}^{100}A_{i} = A_{100}\].
+
+					\item[ii.]
+						Assuming \(0 \notin \mathbb{N}\), then 
+						\[\bigcap_{i \in \mathbb{N}}A_{i} = A_{1} \cap A_{2} \cap ...\]
+
+						\paragraph{}
+						It was shown in 15. (a) i. that for all \(i\) and \(j\), such that \(j < i\), \(A_{j} \subseteq A_{i}\). Since \(A \subseteq B \Rightarrow A \cap B = A\), it follows that \(A_{1} \cap A_{2} \cap ... = A_{1} = \{-1, 0, 1\}\)
+
+					\item[iii.]
+						\[\bigcap_{i \in \mathbb{N}}\overline{A_{i}} = \overline{A_{1}} \cap \overline{A_{2}} \cap \overline{A_{3}} \cap ...\]
+						\[A_{i-1} \subseteq A_{i} \Rightarrow \overline{A_{i-1}} \supseteq \overline{A_{i}} \Rightarrow \overline{A_{i-1}} \cap \overline{A_{i}} = \overline{A_{i}}\]
+
+						\paragraph{}
+						Therefore, since the union takes \(\overline{A_{i}}\) for all \(i\) to \(\infty\), it follows that 
+						\[\bigcap_{i \in \mathbb{N}}\overline{A_{i}} = \overline{A_{\infty}} = \phi\]
+						where \(A_{\infty}\) denotes \(\lim_{n \to \infty}A_{n}\).
+					
+				\end{enumerate}
+
+			\item[(b)]
+				\begin{enumerate}
+					\item[i.]
+						\[A_{i} = \{x \in \mathbb{N} : x \leq  i\}\]
+						\[\bigcap_{i \in \mathbb{N}}A_{i} = \{1\}\]
+
+					\item[ii.]
+						\[B_{i} = \{2x : x \in \mathbb{N} \land x \leq i\}\]
+						\[\bigcup_{j \in \mathbb{N}}\overline{B_{j}} = \mathbb{N} - \{2\}\]
+					
+				\end{enumerate}
+
+		\end{enumerate}
+
+		\item[18.]
+			\[\bigcup_{k=1}^{\infty} \left( -\frac{1}{k},\frac{1}{k} \right) = (-1, 1)\]
+			\[\bigcup_{k=1}^{\infty} \left( -\frac{1}{k},\frac{1}{k} \right) = (-1,1) \cup \left( -\frac{1}{2}, \frac{1}{2} \right) \cup \left( -\frac{1}{3}, \frac{1}{3} \right) \cup ...\]
+			\[\forall n > 1, \frac{1}{n} < 1 \Rightarrow \left( -\frac{1}{n},\frac{1}{n} \right) \subseteq (-1,1) \Rightarrow (-1, 1) \cup \left( -\frac{1}{n},\frac{1}{n} \right) = (-1,1)\]
+			\[\Rightarrow \left( -1,1 \right) \cup \left( -\frac{1}{2}, \frac{1}{2} \right) \cup \left( -\frac{1}{3}, \frac{1}{3} \right) \cup ... = (-1, 1)\]
+
+\end{enumerate}
+
+\end{document}

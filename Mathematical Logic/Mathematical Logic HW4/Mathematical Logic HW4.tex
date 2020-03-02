@@ -1,0 +1,269 @@
+\documentclass[fleqn]{article}
+\usepackage[margin=1.5cm]{geometry}   % shrink margins
+% \usepackage{amsmath}    % math equation environments
+% \usepackage{amssymb}    % math symbols such as natural numbers N.
+% \usepackage{tikz}	% for diagrams
+% \usepackage{adjustbox}	% align enumerations containing tall objects to top. Usage: \item\adjustbox{valign=t}{...}
+% \usepackage{centernot}	% centers not symbol. Usage: \centernot{...}
+
+% paragraph indentation within enumerations
+\usepackage{enumitem}
+\setlist{parsep=4pt,listparindent=\parindent}
+
+% Configurations for logic proofs
+\usepackage{logicproof, etoolbox}
+\patchcmd{\logicproof}{\center}{\flushleft}{}{}
+\patchcmd{\endlogicproof}{\endcenter}{\endflushleft}{}{}
+
+\title{Mathematical Logic HW4}
+\author{Abraham Murciano}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+
+	\item % 1
+	\begin{enumerate}
+		\item[(b)]
+		\(A \to B\) from \(\{E, A \to D, D \to (E \to B)\}\).
+		\begin{logicproof}{1}
+			E & premise \\
+			A \to D & premise \\
+			D \to (E \to B) & premise \\
+			A \to (E \to B) & 2, 3, hypothetical syllogism \\
+			\begin{subproof}
+				A & assumption \\
+				E \to B & 4, 5, modus ponens \\
+				B & 1, 6, modus ponens
+			\end{subproof}
+			A \to B & 3-5, conditional proof
+		\end{logicproof}
+
+		\item[(d)]
+		\(A \to G\) from \(\{\lnot (B \to G) \to \lnot A, A \to B\}\)
+		\begin{logicproof}{1}
+			\lnot (B \to G) \to \lnot A & premise \\
+			A \to B & premise \\
+			A \to (B \to G) & 1, transposition \\
+			\begin{subproof}
+				A & assumption \\
+				B & 2, 4, modus ponens \\
+				B \to G & 3, 4, modus ponens \\
+				G & 5, 6, modus ponens
+			\end{subproof}
+			A \to G & 4-7, conditional proof
+		\end{logicproof}
+
+		\item[(f)]
+		\(A \lor B\) from \(\{A \land B\}\)
+		\begin{logicproof}{0}
+			A \land B & premise \\
+			A & 1, conjunction elimination \\
+			A \lor B & 2, disjunction introduction
+		\end{logicproof}
+
+		\newpage
+		\item[(h)]
+		\(\lnot A\) from \(\{A \to (B \lor C), B \to D, \lnot C \lor E, (D \lor E) \to \lnot A\}\)
+		\begin{logicproof}{2}
+			A \to (B \lor C) & premise \\
+			B \to D & premise \\
+			\lnot C \lor E & premise \\
+			(D \lor E) \to \lnot A & premise \\
+			\begin{subproof}
+				A & assumption \\
+				B \lor C & 1, 5, modus ponens \\
+				\begin{subproof}
+					B & assumption \\
+					D & 2, 7, modus ponens \\
+					D \lor E & 8, disjunction introduction \\
+					\lnot A & 4, 9, modus ponens
+				\end{subproof}
+				\begin{subproof}
+					C & assumption \\
+					E & 3, 12, disjunctive syllogism \\
+					D \lor E & 13, disjunction introduction \\
+					\lnot A & 4, 14, modus ponens
+				\end{subproof}
+				\lnot A & 6, 7-10, 11-14, disjunction elimination \\
+				\bot & 5, 15, contradiction introduction
+			\end{subproof}
+			\lnot A & 5-16, negation introduction
+		\end{logicproof}
+
+		\newpage
+		\item[(j)]
+		\((y \to z) \to \lnot y\) from \(\{r \leftrightarrow s, \lnot (r \land s), z \to (y \to (r \lor s))\}\)
+		\begin{logicproof}{3}
+			r \leftrightarrow s & premise \label{1} \\
+			\lnot (r \land s) & premise \label{2} \\
+			z \to (y \to (r \lor s)) & premise \label{3} \\
+			r \to s & \ref{1}, biconditional elimination \label{4} \\
+			s \to r & \ref{1}, biconditional elimination \label{5}\\
+			\begin{subproof}
+				z & assumption \label{6} \\
+				y \to (r \lor s) & \ref{3}, \ref{6}, modus ponens \label{7}\\
+				\begin{subproof}
+					y & assumption \label{8} \\
+					r \lor s & \ref{7}, \ref{8}, modus ponens \label{9} \\
+					\begin{subproof}
+						s & assumption \label{10} \\
+						s & \ref{10}, reiteration \label{11}
+					\end{subproof}
+					s & \ref{4}, \ref{9}, \ref{10}-\ref{11}, disjunction elimination \label{12} \\
+					\begin{subproof}
+						r & assumption \label{13} \\
+						r & \ref{13}, reiteration \label{14}
+					\end{subproof}
+					r & \ref{5}, \ref{9}, \ref{13}-\ref{14}, disjunction elimination \label{15} \\
+					r \land s & \ref{12}, \ref{15}, conjunction introduction \label{16}
+				\end{subproof}
+				\begin{subproof}
+					y & assumption \label{17} \\
+					\lnot (r \land s) & \ref{2}, reiteration \label{18}
+				\end{subproof}
+				\lnot y & \ref{8}-\ref{16}, \ref{17}-\ref{18} negation introduction \label{19}\\
+				\begin{subproof}
+					y & assumption \label{20} \\
+					z & \ref{6}, reiteration \label{21}
+				\end{subproof}
+				y \to z & \ref{20}-\ref{21}, conditional proof \label{22} \\
+				\begin{subproof}
+					y \to z & \ref{22}, reiteration \label{23} \\
+					\lnot y & \ref{19}, reiteration \label{24}
+				\end{subproof}
+				(y \to z) \to \lnot y & \ref{23}-\ref{24} conditional proof \label{25}
+			\end{subproof}
+			\begin{subproof}
+				\lnot z & assumption \label{26} \\
+				\begin{subproof}
+					y \to z & assumption \label{27} \\
+					\lnot y & \ref{26}, \ref{27}, modus tollens \label{28}
+				\end{subproof}
+				(y \to z) \to \lnot y & \ref{27}-\ref{28}, conditional proof \label{29}
+			\end{subproof}
+			z \lor \lnot z & axiom \label{30} \\
+			(y \to z) \to \lnot y & \ref{6}-\ref{25}, \ref{26}-\ref{29}, \ref{30}, disjunction elimination
+		\end{logicproof}
+	\end{enumerate}
+
+	\item % 2
+	\begin{enumerate}
+		\item[(b)]
+		Proof for \(\lnot \lnot x \to x\). By deduction, if \(\{\lnot\lnot x\} \vdash x\), then it must be that \(\lnot \lnot x \to x\).
+		\begin{logicproof}{1}
+			\begin{subproof}
+				\lnot\lnot x & assumption \\
+				\lnot\lnot x \to (\lnot x \to \lnot\lnot x) & axiom 1 \\
+				\lnot x \to \lnot\lnot\ x & 1, 2, modus ponens \\
+				\lnot x \to \lnot\lnot x \to ((\lnot x \to \lnot x) \to x) & axiom 3 \\
+				(\lnot x \to \lnot x) \to x & 3, 4, modus ponens \\
+				\lnot x \to ((\lnot x \to \lnot x) \to \lnot x) & axiom 1 \\
+				\lnot x \to ((\lnot x \to \lnot x) \to \lnot x) \to ((\lnot x \to (\lnot x \to \lnot x)) \to (\lnot x \to \lnot x)) & axiom 2 \\
+				(\lnot x \to (\lnot x \to \lnot x)) \to (\lnot x \to \lnot x) & 6, 7, modus ponens \\
+				\lnot x \to (\lnot x \to \lnot x) & axiom 1 \\
+				\lnot x \to \lnot x & 8, 9, modus ponens \\
+				x & 5, 10, modus ponens
+			\end{subproof}
+			\lnot \lnot x \to x & 1-11, deduction
+		\end{logicproof}
+	\end{enumerate}
+
+	\newpage
+	\item % 3
+	\begin{enumerate}
+		\item[(b)]
+		We must prove \(\vdash \lnot \alpha \to (\alpha \to \beta)\).
+		\begin{logicproof}{2}
+			\begin{subproof}
+				\lnot \alpha & assumption \\
+				\lnot \alpha \to (\lnot \beta \to \lnot \alpha) & axiom 1 \\
+				\lnot \beta \to \lnot \alpha & 1, 2, modus ponens \\
+				(\lnot \beta \to \lnot \alpha) \to ((\lnot \beta \to \alpha) \to \beta) & axiom 3 \\
+				(\lnot \beta \to \alpha) \to \beta & 3, 4, modus ponens \\
+				\begin{subproof}
+					\alpha & assumption \\
+					\alpha \to (\lnot \beta \to \alpha) & axiom 1 \\
+					\lnot \beta \to \alpha & 6, 7, modus ponens \\
+					\beta & 5, 8, modus ponens
+				\end{subproof}
+				\alpha \to \beta & 6-9, deduction
+			\end{subproof}
+			\lnot \alpha \to (\alpha \to \beta) & 1-10, deduction
+		\end{logicproof}
+		
+		\item[(d)]
+		We must prove \(\vdash (\lnot \beta \to \lnot \alpha) \to (\alpha \to \beta)\).
+		\begin{logicproof}{2}
+			\begin{subproof}
+				\lnot \beta \to \lnot \alpha & assumption \\
+				(\lnot \beta \to \lnot \alpha) \to ((\lnot \beta \to \alpha) \to \beta) & axiom 3 \\
+				(\lnot \beta \to \alpha) \to \beta & 1, 2, modus ponens \\
+				\alpha \to (\lnot \beta \to \alpha) & axiom 1 \\
+				\begin{subproof}
+					\alpha & assumption \\
+					\lnot \beta \to \alpha & 4, 5, modus ponens \\
+					\beta & 3, 6, modus ponens
+				\end{subproof}
+				\alpha \to \beta & 5-7, deduction
+			\end{subproof}
+			(\lnot \beta \to \lnot \alpha) \to (\alpha \to \beta) & 1-8, deduction
+		\end{logicproof}
+	\end{enumerate}
+
+	\item % 4
+	\begin{enumerate}
+		\item % a
+		We must prove \(\vdash a \to (b \to a)\).
+		\begin{logicproof}{2}
+			\begin{subproof}
+				a & assumption \label{31} \\
+				\begin{subproof}
+					b & assumption \label{32} \\
+					a & \ref{31}, reiteration \label{33}
+				\end{subproof}
+				b \to a & \ref{32}-\ref{33}, conditional proof \label{34}
+			\end{subproof}
+			a \to (b \to a) & \ref{31}-\ref{34}, conditional proof
+		\end{logicproof}
+
+		\item % b
+		We must prove \((a \to (b \to c)) \to ((a \to b) \to (a \to c))\).
+		\begin{logicproof}{3}
+			\begin{subproof}
+				a \to (b \to c) & assumption \label{35}\\
+				\begin{subproof}
+					a \to b & assumption \label{37}\\
+					\begin{subproof}
+						a & assumption \label{36} \\
+						b & \ref{37}, \ref{36}, modus ponens \label{41}\\
+						b \to c & \ref{35}, \ref{36}, modus ponens \label{38}\\
+						c & \ref{41}, \ref{38}, modus ponens \label{39}
+					\end{subproof}
+					a \to c & \ref{36}-\ref{39}, conditional proof \label{40}
+				\end{subproof}
+				(a \to b) \to (a \to c) & \ref{37}-\ref{40}, conditional proof \label{42}
+			\end{subproof}
+			(a \to (b \to c)) \to ((a \to b) \to (a \to c) & \ref{35}-\ref{42}, conditional proof
+		\end{logicproof}
+
+		\item % c
+		We must prove \((\lnot b \to \lnot a) \to ((\lnot b \to a) \to b)\).
+		\begin{logicproof}{2}
+			\begin{subproof}
+				\lnot b \to \lnot a & assumption \label{43}\\
+				\begin{subproof}
+					\lnot b \to a & assumption \label{44}\\
+					b & \ref{43}, \ref{44}, negation introduction \label{45}
+				\end{subproof}
+				(\lnot b \to a) \to b & \ref{44}-\ref{45}, conditional proof \label{46}
+			\end{subproof}
+			(\lnot b \to \lnot a) \to ((\lnot b \to a) \to b) & \ref{43}-\ref{46}, conditional proof
+		\end{logicproof}
+	\end{enumerate}
+
+\end{enumerate}
+    
+\end{document}

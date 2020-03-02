@@ -1,0 +1,218 @@
+\documentclass[fleqn]{article}
+\usepackage[margin=1.5cm]{geometry}   % shrink margins
+\usepackage{amsmath}    % math equation environments
+\usepackage{amssymb}    % math symbols such as natural numbers N.
+% \usepackage{tikz}	% for diagrams
+% \usepackage{adjustbox}	% align enumerations containing tall objects to top. Usage: \item\adjustbox{valign=t}{...}
+% \usepackage{centernot}	% centers not symbol. Usage: \centernot{...}
+
+% Math mode in tables. Usage: use column type C
+\usepackage{array}   % for \newcolumntype macro
+\newcolumntype{C}{>{$}c<{$}} % math-mode version of "c" column type
+
+% paragraph indentation within enumerations
+\usepackage{enumitem}
+\setlist{parsep=4pt,listparindent=\parindent}
+
+% Configurations for logic proofs
+% \usepackage{logicproof, etoolbox}
+% \patchcmd{\logicproof}{\center}{\flushleft}{}{}
+% \patchcmd{\endlogicproof}{\endcenter}{\endflushleft}{}{}
+
+\title{Discrete Math HW6}
+\author{Abraham Murciano}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+
+	\item[2.]
+	In this question, \(x\) will be an element of one of the sets, \(f(x)\) an element of the other, and \(f\) a function to map from one set to the other.
+	\begin{enumerate}
+		\item[(b)]
+		\[f(x) = -7x + 12\]
+
+		\item[(d)]
+		\[f(x) = 
+		\begin{cases}
+			2\left(1 + \frac{1}{2^{n + 1}}\right) & \text{if } x = 1 + \frac{1}{2^n} \\
+			2x & \text{otherwise}
+		\end{cases}\]
+	\end{enumerate}
+
+	\item[3.]
+	\begin{enumerate}
+		\item[(b)]
+		Let \(A\) amd \(B\) be two disjoint sets which have the same cardinality as \(\mathbb{R}\), specifically \(\aleph_1\).
+		
+		Since every interval also has the cardinality \(\aleph_1\), there is a bijective function \(f : A \to (-\infty, 0)\) and a bijective function \(g : B \to [0, \infty)\).
+
+		Therefore we can define, using these functions, a function \(h : A \cup B \to \mathbb{R}\) such that:
+		\[h(x) = 
+		\begin{cases}
+			f(x) & x \in A \\
+			g(x) & x \in B
+		\end{cases}\]
+
+		Therefore \(|A \cup B| = |\mathbb{R}| = \aleph_0\).
+	\end{enumerate}
+
+	\item[4.]
+	\begin{alignat*}{2}
+		|A - B| &= |B - A| \\
+		|A - (B \cap A)| &= |B - (A \cap B)| & &\quad\quad \because A - B = A - (B \cap A)\\
+		|A| &= |B| & &\quad\quad \because B \cap A = A \cap B
+	\end{alignat*}
+
+	\item[5.]
+	Given that \(|A| = |B|\) and \(|C| = |D|\):
+	\begin{enumerate}
+		\item[(b)]
+		It is \textbf{not} necessarily true that
+		\[|A \cup C| = |B \cup D|.\]
+		To show this via a counterexample, Let
+		\[A = B = C = \{a\} \quad \text{and} \quad D = \{b\}\]
+		The cardinality of all these four sets is 1, so this example satisfies the premise; but
+		\begin{gather*}
+			A \cup C = \{a\} \quad \text{and} \quad B \cup D = \{a, b\} \\
+			\therefore |A \cup C| = 1 \quad \text{and} \quad |B \cup D| = 2
+		\end{gather*}
+		so the example doesn't satisfy the conclusion. Therefore the conclusion is false.
+
+		\item[(c)]
+		It is \textbf{not} necessarily true that
+		\[|A - C| = |B - D|.\]
+		To show this via a counterexample, Let
+		\[A = B = C = \{a\} \quad \text{and} \quad D = \{b\}\]
+		The cardinality of all these four sets is 1, so this example satisfies the premise; but
+		\begin{gather*}
+			A - C = \phi \quad \text{and} \quad B - D = \{a\} \\
+			\therefore |A - C| = 0 \quad \text{and} \quad |B - D| = 1
+		\end{gather*}
+		so the example doesn't satisfy the conclusion. Therefore the conclusion is false.
+
+		\item[(e)]
+		\[|K \times T| = |K| \times |T| = |T| \times |K| = |T \times K|\]
+
+		Alternatively, this can be shown by describing a bijective function \(f : |K \times T| \to |T \times K|\) such that
+		\[f = \{(t, k) \in T \times K : (k, t) \in K \times T\}\]
+	\end{enumerate}
+
+	\item[7.]
+	\begin{enumerate}
+		\item[(b)]
+		In order to show that \(|(0, 1)| = |(1, \infty)|\) we must find a bijective function \(f : (0, 1) \to (1, \infty)\).
+		\[f(x) = \tan\left(\pi x + \frac{\pi}{2}\right)\]
+		
+		This is a bijective function. To prove that it is bijective, we must show that it is both injective and surjective.
+
+		In order for \(f\) to be injective, the following must be true.
+		\[f(x) = f(y) \Rightarrow x = y\]
+		\begin{alignat*}{2}
+			f(x) &= f(y) \\
+			\tan\left(\pi x + \frac{\pi}{2}\right) &= \tan\left(\pi y + \frac{\pi}{2}\right) \\
+			\pi x + \frac{\pi}{2} &= \pi y + \frac{\pi}{2} + k \pi & \quad \quad k \in \mathbb{Z} \\
+			\pi x &= \pi y + k \pi \\
+			x &= y + k
+		\end{alignat*}
+		
+		But since \(x\) and \(y\) are both between 0 and 1, it must be that \(k = 0\). Therefore, \(x = y\) and \(f\) is injective.
+
+		In order for \(f\) to be surjective, the following must be true.
+		\[\forall y \in (1, \infty), \exists x \in (0, 1), f(x) = y\]
+		\begin{alignat*}{3}
+			1 \quad < \quad & & y \quad &= \quad \tan\left(\pi x + \frac{\pi}{2}\right) \\
+			\frac{\pi}{4} \quad < \quad&	& \tan^{-1}(y) \quad &= \quad \pi x + \frac{\pi}{2} - \pi & &\quad < \quad \frac{\pi}{2} \\
+			\frac{\pi}{4} \quad < \quad&	& \tan^{-1}(y) \quad &= \quad \pi \left(x - \frac{1}{2}\right)	& &\quad < \quad \frac{\pi}{2} \\
+			\frac{1}{4} \quad < \quad&	& \frac{\tan^{-1}(y)}{\pi} \quad &= \quad x - \frac{1}{2} & &\quad < \quad \frac{1}{2} \\
+			\frac{3}{4} \quad < \quad&	& x \quad &= \quad \frac{\tan^{-1}(y)}{\pi} + \frac{1}{2} & &\quad < \quad 1 \\
+		\end{alignat*}
+		
+		Hence for any \(y \in (1, \infty)\) choose an \(x\) according to the last equation, and that will satisfy \(f(x) = y\). Furthermore, since we have shown that \(\frac{3}{4} < x < 1\), therefore \(x \in (0, 1)\). Thus we can conclude that 
+		\[|(0, 1)| = |(1, \infty)|\]
+	\end{enumerate}
+
+	\item[8.]
+	\begin{enumerate}
+		\item[(b)]
+		To show that \(|\mathbb{Z} \times \mathbb{Z}| = |\mathbb{Z}|\), we must find a bijective function \(f : \mathbb{Z} \times \mathbb{Z} \to \mathbb{Z}\).
+		\[f(x, y) = 
+		\begin{cases}
+			0					& \text{if} \quad x = 0 \quad \land \quad y = 0 \\
+
+			-f(1 - y, 0)		& \text{if} \quad x = 0 \quad \land \quad y > 0 \quad \land \quad f(1 - y, 0) > 0 \\
+			1 - f(1 - y, 0)		& \text{if} \quad x = 0 \quad \land \quad y > 0 \quad \land \quad f(1 - y, 0) \leq 0 \\
+			-f(-y, 0)			& \text{if} \quad x = 0 \quad \land \quad y < 0 \quad \land \quad f(-y, 0) > 0 \\
+			1 - f(-y, 0)		& \text{if} \quad x = 0 \quad \land \quad y < 0 \quad \land \quad f(-y, 0) < 0 \\
+
+			-f(1 - x, -b)		& \text{if} \quad x > 0 \quad \land \quad y > 0 \quad \land \quad f(1 - x, -b) > 0 \\
+			1 - f(1 - x, -b)	& \text{if} \quad x > 0 \quad \land \quad y > 0 \quad \land \quad f(1 - x, -b) < 0 \\
+			-f(1 - x, 1 - b)	& \text{if} \quad x > 0 \quad \land \quad y \leq 0 \quad \land \quad f(1 - x, 1 - b) > 0 \\
+			1 - f(1 - x, 1 - b)	& \text{if} \quad x > 0 \quad \land \quad y \leq 0 \quad \land \quad f(1 - x, 1 - b) < 0 \\
+
+			-f(-x, -b)			& \text{if} \quad x < 0 \quad \land \quad y > 0 \quad \land \quad f(-x, -b) > 0 \\
+			1 - f(-x, -b)		& \text{if} \quad x < 0 \quad \land \quad y > 0 \quad \land \quad f(-x, -b) < 0 \\
+			-f(-x, 1 - b)		& \text{if} \quad x < 0 \quad \land \quad y \leq 0 \quad \land \quad f(-x, 1 - b) > 0 \\
+			1 - f(-x, 1 - b)	& \text{if} \quad x < 0 \quad \land \quad y \leq 0 \quad \land \quad f(-x, 1 - b) < 0 \\
+		\end{cases}\]
+
+		This rather complex recursive function is a bijection from \(\mathbb{Z} \times \mathbb{Z}\) to \(\mathbb{Z}\). Essentially, it maps each tuple of integers in the order obtained from laying \(\mathbb{Z} \times \mathbb{Z}\) out in a grid alternating between positive and negative rows and columns, then traversing them diagonally in a downwards left direction, to a corresponding integer in the order \(0, 1, -1, 2, -2, 3, -3 \dots\)
+
+		Since there is such a bijective function, therefore \(|\mathbb{Z} \times \mathbb{Z}| = |\mathbb{Z}|\).
+
+		\item[(d)]
+		We must show that \(|\mathbb{C}| = |\mathbb{R}| = \aleph_1\). Each complex number \(z\), however, can be represented in the form \(z = x + yi\), where \(x, y \in \mathbb{R}\). Using this representation, we can easily find a bijective function \(f : \mathbb{R} \times \mathbb{R} \to \mathbb{C}\) such that
+		\[f(x, y) = x + yi.\]
+		Thus it is clear that \(|\mathbb{C}| = |\mathbb{R} \times \mathbb{R}|\).
+
+		Now we must show that \(|\mathbb{R} \times \mathbb{R}| = |\mathbb{R}| = \aleph_1\). We know that \(|P(\mathbb{N})| = 2^{\aleph_0} = \aleph_1\). We also know that \(|A \times B| = |A| \times |B|\), which tells us that \(|\mathbb{R} \times \mathbb{R}| = |\mathbb{R}|^2\). Therefore we have as follows:
+		\[|\mathbb{C}| = |\mathbb{R} \times \mathbb{R}| = |\mathbb{R}|^2 = {\aleph_1}^2 = {\left(2^{\aleph_0}\right)}^2 = 2^{2 \aleph_0} = 2^{\aleph_0} = \aleph_1\]
+	\end{enumerate}
+
+	\item[10.]
+	\begin{enumerate}
+		\item[(b)]
+		Each increasing arithmetic sequence of rational numbers can be uniquely identified with two numbers, \(a, d \in \mathbb{Q}\), where \(a\) is the first term of the sequence, and \(d \geq 0\) is the common difference between each term. Therefore the cardinality of the set of all such sequences is equal to
+		\[|\mathbb{Q} \times \mathbb{Q}| = |\mathbb{N} \times \mathbb{N}| = |\mathbb{N}| = \aleph_0.\]
+	\end{enumerate}
+
+	\item[11.]
+	Define a relation \(S\) on \(\mathbb{R}\) as follows: \(xSy\) whenever \(x - y \in \mathbb{Z}\).
+	\begin{enumerate}
+		\item % a
+		To prove that \(S\) is an equivalence relation, we must show that it is reflexive, symmetric, and transitive.
+		\begin{enumerate}
+			\item % i
+			\(S\) is reflexive, because \(\forall a \in \mathbb{R}, aSa\), since \(a - a = 0 \in \mathbb{Z}\).
+			
+			\item % ii
+			\(S\) is symmetric, because if \(aSb\), then \(a - b = n \in \mathbb{Z}\), therefore \(b - a = -n \in \mathbb{Z}\), so \(bSa\).
+
+			\item % iii
+			\(S\) is transitive, because if \(aSb\) and \(bSc\), then \(a - b = n \in \mathbb{Z}\) and \(b - c = m \in \mathbb{Z}\), therefore \(a - c = (a - b) + (b - c) = n + m \in \mathbb{Z}\).
+		\end{enumerate}
+		
+		\item % b
+		The cardinality of each equivalence class of \(S\), \([x]\), is \(\aleph_0\). This is because \([x]\) has exactly one element corresponding to each integer. \([x]\) can be described as follows.
+		\[[x] = \{x + n : n \in \mathbb{Q}\}\]
+
+		\item % c
+		The cardinality of the quotient set \(\mathbb{R}/S\) is \(\aleph_1\). This is because each real number \(x \in [0, 1)\) can represent a \textit{different} equivalence class \([x]\). And we know that \(|[0, 1)| = \aleph_1\), so \(|\mathbb{R}/S| = \aleph_1\)
+	\end{enumerate}
+\pagebreak
+	\item[14.]
+	\begin{enumerate}
+		\item[(b)]
+		There are countably infinite finite subsets of \(\mathbb{N}\). A procedure for counting them could go as follows. Define 
+		\[N_i = \{n \in \mathbb{N} : n \leq i\}\]
+		
+		Start by counting all the subsets of \(N_0\). Then continue by counting all of the subsets of \(N_1\), ignoring any sets that have already been counted. Subsequently, count all the subsets of \(N_2, N_3\), etc.
+		
+		Now that we know the cardinality of the set of finite subsets of \(\mathbb{N}\) is \(\aleph_0\), and we know that each finite subset of \(\mathbb{N}\) corresponds to a unique co-finite subset of \(\mathbb{N}\), therefore we can conclude that the cardinality of the set of co-finite subsets of \(\mathbb{N}\) is equal to that of the finite subsets of \(\mathbb{N}\), namely \(\aleph_0\).
+	\end{enumerate}
+
+\end{enumerate}
+	
+\end{document}

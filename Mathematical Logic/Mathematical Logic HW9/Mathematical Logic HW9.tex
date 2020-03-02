@@ -1,0 +1,223 @@
+\documentclass[fleqn]{article}
+\usepackage[margin=1.5cm]{geometry}   % shrink margins
+\usepackage{amsmath}    % math equation environments
+\usepackage{amssymb}    % math symbols such as natural numbers N.
+% \usepackage{tikz}	% for diagrams
+% \usepackage{adjustbox}	% align enumerations containing tall objects to top. Usage: \item\adjustbox{valign=t}{...}
+% \usepackage{centernot}	% centers not symbol. Usage: \centernot{...}
+
+% Math mode in tables. Usage: use column type C
+% \usepackage{array}   % for \newcolumntype macro
+% \newcolumntype{C}{>{$}c<{$}} % math-mode version of "c" column type
+
+% paragraph indentation within enumerations
+\usepackage{enumitem}
+\setlist{parsep=4pt,listparindent=\parindent}
+
+% Configurations for logic proofs
+\usepackage{logicproof, etoolbox}
+\patchcmd{\logicproof}{\center}{\flushleft}{}{}
+\patchcmd{\endlogicproof}{\endcenter}{\endflushleft}{}{}
+
+\title{Mathematical Logic \\
+\large Homework 9}
+\author{Abraham Murciano}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+
+	\item % 1
+	Define the following three propositions.
+	\begin{gather*}
+		\varphi_1 = \forall x \exists y (R(x, y) \lor R(y, x)) \\
+		\varphi_2 = \forall x (\exists y R(x, y) \lor \exists y R(y, x)) \\
+		\varphi_3 = (\forall x \exists y R(x, y)) \lor (\forall x \exists y R(y, x))
+	\end{gather*}
+
+	\begin{enumerate}
+		\item % a
+		\begin{enumerate}
+			\item % i
+			First we will show that \(\varphi_1 \to \varphi_2\).
+			\begin{logicproof}{2}
+				\forall x \exists y (R(x, y) \lor R(y, x)) & premise \label{100} \\
+				\exists y (R(a, y) \lor R(y, a)) & \ref{100}, universal elimination \label{108} \\
+				\begin{subproof}
+					R(a, b) \lor R(b, a) & assumption \label{101} \\
+					\begin{subproof}
+						R(a, b) & assumption \label{102} \\
+						\exists y R(a, y) & \ref{102}, existential introduction \label{104} \\
+						\exists y R(a, y) \lor \exists y R(y, a) & \ref{104}, disjunction introduction \label{106}
+					\end{subproof}
+					\begin{subproof}
+						R(b, a) & assumption \label{103} \\
+						\exists y R(y, a) & \ref{103}, existential introduction \label{105} \\
+						\exists y R(a, y) \lor \exists y R(y, a) & \ref{105}, disjunction introduction \label{107}
+					\end{subproof}
+					\exists y R(a, y) \lor \exists y R(y, a) & \ref{101}, \ref{102}--\ref{106}, \ref{103}--\ref{107} disjunction elimination \label{109}
+				\end{subproof}
+				\exists y R(a, y) \lor \exists y R(y, a) & \ref{108}, \ref{101}--\ref{109}, existential elimination \label{110} \\
+				\forall x (\exists y R(x, y) \lor \exists y R(y, x)) & \ref{110}, universal introduction \label{111}
+			\end{logicproof}
+			Therefore by the deduction theorem we have
+			\[\forall x \exists y (R(x, y) \lor R(y, x)) \to \forall x (\exists y R(x, y) \lor \exists y R(y, x))\]
+			
+			\item % ii
+			Now we must show that \(\varphi_2 \to \varphi_1\).
+			\begin{logicproof}{2}
+				\forall x (\exists y R(x, y) \lor \exists y R(y, x)) & premise \label{200} \\
+				\exists y R(a, y) \lor \exists y R(y, a) & \ref{200}, universal elimination \label{209} \\
+				\begin{subproof}
+					\exists y R(a, y) & assumption \label{201} \\
+					\begin{subproof}
+						R(a, b) & assumption \label{203} \\
+						R(a, b) \lor R(b, a) & \ref{203}, disjunction introduction \label{204} \\
+						\exists y (R(a, y) \lor R(y, a)) & \ref{204}, existential introduction \label{205}
+					\end{subproof}
+					\exists y (R(a, y) \lor R(y, a)) & \ref{201}, \ref{203}--\ref{205}, existential elimination \label{210}
+				\end{subproof}
+				\begin{subproof}
+					\exists y R(y, a) & assumption \label{202} \\
+					\begin{subproof}
+						R(b, a) & assumption \label{206} \\
+						R(a, b) \lor R(b, a) & \ref{206}, disjunction introduction \label{207} \\
+						\exists y (R(a, y) \lor R(y, a)) & \ref{207}, existential introduction \label{208}
+					\end{subproof}
+					\exists y (R(a, y) \lor R(y, a)) & \ref{202}, \ref{206}--\ref{208}, existential elimination \label{211}
+				\end{subproof}
+				\exists y (R(a, y) \lor R(y, a)) & \ref{209}, \ref{201}--\ref{210}, \ref{202}--\ref{211} disjunction elimination \label{212} \\
+				\forall x \exists y (R(x, y) \lor R(y, x)) & \ref{212}, universal introduction \label{213}
+			\end{logicproof}
+			Therefore by the deduction theorem we have
+			\[\forall x (\exists y R(x, y) \lor \exists y R(y, x)) \to \forall x \exists y (R(x, y) \lor R(y, x))\]
+		\end{enumerate}
+		Since \(\varphi_1 \to \varphi_2\) and  \(\varphi_2 \to \varphi_1\), therefore \(\varphi_1\) and \(\varphi_2\) are equivalent.
+		
+		\item % b
+		\begin{enumerate}
+			\item % i
+			Now we will demonstrate that \(\varphi_2 \not\to \varphi_3\) by stating a counterexample model. Let the universe for \(x\) and \(y\) be the real numbers in the interval \([0, 1]\), and let the predicate \(R(x, y)\) be \(x < y\).
+			
+			In this example, \(\varphi_2\) means that ``for all numbers in \([0, 1]\), there is a number in \([0, 1]\) which is smaller than it, or there is a number in \([0, 1]\) which is greater than it.'' In this case, \(\varphi_2\) is true, because 0 is smaller than every number in the interval except for 0 itself, and every number in the interval is greater than 0, except for 0 itself.
+			
+			However, \(\varphi_3\) means that ``either every number in \([0, 1]\) has a number greater than it, or every number in \([0, 1]\) has a number smaller than it.'' However this is not true, because there is no number in \([0, 1]\) which is greater than 1, so the first part of the proposition is false. The second part is also false, because there is no number in \([0, 1]\) which is less than 0. Therefore \(\varphi_2 \not\to \varphi_3\).
+			
+			\item % ii
+			Now we will show that \(\varphi_3 \to \varphi_2\).
+			\begin{logicproof}{1}
+				(\forall x \exists y R(x, y)) \lor (\forall x \exists y R(y, x)) & premise \label{300} \\
+				\begin{subproof}
+					\forall x \exists y R(x, y) & assumption \label{301} \\
+					\exists y R(a, y) & \ref{301}, universal elimination \label{302} \\
+					\exists y R(a, y) \lor \exists y R(y, a) & \ref{302}, disjunction introduction \label{303}
+				\end{subproof}
+				\begin{subproof}
+					\forall x \exists y R(y, x) & assumption \label{304} \\
+					\exists y R(y, x) & \ref{304}, universal elimination \label{305} \\
+					\exists y R(a, y) \lor \exists y R(y, a) & \ref{305}, disjunction introduction \label{306}
+				\end{subproof}
+				\exists y R(a, y) \lor \exists y R(y, a) & \ref{300}, \ref{301}--\ref{303}, \ref{304}--\ref{306} disjunction elimination \label{306} \\
+				\forall x (\exists y R(x, y) \lor \exists y R(y, x)) & \ref{306}, universal introduction \label{307}
+			\end{logicproof}
+			Therefore by the deduction theorem we have
+			\[(\forall x \exists y R(x, y)) \lor (\forall x \exists y R(y, x)) \to \forall x (\exists y R(x, y) \lor \exists y R(y, x))\]
+		\end{enumerate}
+
+		\item % c
+		\begin{enumerate}
+			\item % i
+			Since \(\varphi_1 \leftrightarrow \varphi_2\) and \(\varphi_2 \not\to \varphi_3\), therefore \(\varphi_1 \not\to \varphi_3\).
+			\item % ii
+			Since \(\varphi_3 \to \varphi_2\) and \(\varphi_2 \to \varphi_1\), therefore \(\varphi_3 \to \varphi_1\).
+		\end{enumerate}
+	\end{enumerate}
+
+	\item % 2
+	\begin{enumerate}
+		\item[(b)]
+		\begin{gather*}
+			\exists x (P(x) \land Q(x)) \to \forall x (P(x) \to Q(x)) \\
+			= \forall x ((P(x) \land Q(x)) \to \forall y (P(y) \to Q(y))) \\
+			= \forall x \forall y ((P(x) \land Q(x)) \to (P(y) \to Q(y)))
+		\end{gather*}
+	\end{enumerate}
+
+	\item % 3
+	Given the following propositions
+	\begin{gather*}
+		\alpha = \exists x (P(x) \to Q(x)) \\
+		\beta = \forall x P(x) \to \exists x Q(x)
+	\end{gather*}
+	\begin{enumerate}
+		\item[(b)]
+		It is true that \(\beta \to \alpha\). A proof goes as follows.
+		\begin{logicproof}{2}
+			\forall x P(x) \to \exists x Q(x) & premise \label{400} \\
+			\lnot \forall x P(x) \lor \exists x Q(x) & \ref{400}, material implication \label{401} \\
+			\begin{subproof}
+				\lnot \forall x P(x) & assumption \label{402} \\
+				\exists x \lnot P(x) & \ref{402}, universal negation \label{403} \\
+				\begin{subproof}
+					\lnot P(a) & assumption \label{404} \\
+					\lnot P(a) \lor Q(a) & \ref{404}, disjunction introduction \label{405} \\
+					P(a) \to Q(a) & \ref{405}, material implication \label{406} \\
+					\exists x (P(x) \to Q(x)) & \ref{406}, existential introduction \label{407}
+				\end{subproof}
+				\exists x (P(x) \to Q(x)) & \ref{403}, \ref{404}--\ref{407} existential elimination \label{408}
+			\end{subproof}
+			\begin{subproof}
+				\exists x Q(x) & assumption \label{409} \\
+				\begin{subproof}
+					Q(a) & assumption \label{410} \\
+					\lnot P(a) \to Q(a) & \ref{410}, disjunction introduction \label{411} \\
+					P(a) \to Q(a) & \ref{411}, material implication \label{412} \\
+					\exists x (P(x) \to Q(x)) & \ref{412}, existential introduction \label{413}
+				\end{subproof}
+				\exists x (P(x) \to Q(x)) & \ref{409}, existential elimination \label{414}
+			\end{subproof}
+			\exists x (P(x) \to Q(x)) & \ref{401}, \ref{402}--\ref{408}, \ref{409}--\ref{414} existential elimination \label{414}
+		\end{logicproof}
+	\end{enumerate}
+
+	\item % 4
+	\begin{enumerate}
+		\item % a
+		We must prove the following implication.
+		\[\exists x P(x) \to \forall x Q(x) \vdash \forall x (P(x) \to Q(x))\]
+		\begin{logicproof}{1}
+			\exists x P(x) \to \forall x Q(x) & premise \label{500} \\
+			\lnot \exists x P(x) \lor \forall x Q(x) & \ref{500}, material implication \label{501} \\
+			\begin{subproof}
+				\lnot \exists x P(x) & assumption \label{502} \\
+				\forall x \lnot P(x) & \ref{502}, existential negation \label{503} \\
+				\lnot P(a) & \ref{503}, universal elimination \label{504} \\
+				\lnot P(a) \lor Q(a) & \ref{504}, disjunction introduction \label{505} \\
+				P(a) \to Q(a) & \ref{505}, material implication \label{506} \\
+				\forall x (P(x) \to Q(x)) & \ref{506}, universal introduction \label{507}
+			\end{subproof}
+			\begin{subproof}
+				\forall x Q(x) & assumption \label{508} \\
+				Q(a) & \ref{508}, universal elimination \label{509} \\
+				\lnot P(a) \lor Q(a) & \ref{509}, disjunction introduction \label{510} \\
+				P(a) \to Q(a) & \ref{510}, material implication \label{511} \\
+				\forall x (P(x) \to Q(x)) & \ref{511}, universal introduction \label{512}
+			\end{subproof}
+			\forall x (P(x) \to Q(x)) & \ref{501}, \ref{502}--\ref{507}, \ref{508}--\ref{512} disjunction elimination QED
+		\end{logicproof}
+		
+		\item % b
+		We must prove that the following implication does not hold. We will do so by demonstrating a counterexample model.
+		\[\forall x (P(x) \to Q(x)) \vdash \exists x P(x) \to \forall x Q(x)\]
+		Let the universe for \(x\) be \(\mathbb{Z}\). Let the proposition \(P(x)\) mean that ``\(x\) is a multiple of 4'', and the proposition \(Q(x)\) mean that ``\(x\) is even''.
+
+		It is true that for every number, if said number is a multiple of four, then it must be even. However it is untrue that if there exists a multiple of four --- which there does --- then all integers must be even.
+
+		Therefore \(\forall x (P(x) \to Q(x)) \nvdash \exists x P(x) \to \forall x Q(x)\).
+	\end{enumerate}
+
+\end{enumerate}
+    
+\end{document}

@@ -1,0 +1,231 @@
+\documentclass[fleqn]{article}
+\usepackage[margin=1.5cm]{geometry}   % shrink margins
+\usepackage{amsmath}    % math equation environments
+\usepackage{amssymb}    % math symbols such as natural numbers N
+\usepackage{tikz}	% for diagrams
+\usepackage{adjustbox}	% align enumerations to top \item\adjustbox{valign=t}{...}
+\usepackage{centernot}	% centers not \centernot
+\usepackage{enumitem}   % paragraph indentation within enumerations
+\setlist{parsep=4pt,listparindent=\parindent}
+
+\title{Discrete Mathematics HW4}
+\author{Abraham Murciano}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+
+	\item[1.]
+	\begin{enumerate}
+		\item[(b)]
+		\begin{gather*}
+			R \circ (S \cap T) = \{(x, y) \in A \times C : \exists b \in B : xRb \land bSy \land bTy\} \\
+			R \circ S = \{(x, y) \in A \times C : \exists b \in B : xRb \land bSy\} \\
+			R \circ T = \{(x, y) \in A \times C : \exists b \in B : xRb \land bTy\} \\
+			R \circ S \cap R \circ T = \{(x, y) \in A \times C : \exists b \in B : xRb \land bSy\} \cap \{(x, y) \in A \times C : \exists b \in B : xRb \land bTy\}
+		\end{gather*}
+
+		If \((x, y) \in R \circ (S \cap T)\), then \((x, y) \in R \circ S\), because if \(\exists b \in B\) such that \(xRb \land bSy \land bTy\), then \(b\) must also satisfy \(xRb \land bSy\).
+
+		If \((x, y) \in R \circ (S \cap T)\), then \((x, y) \in R \circ T\), because if \(\exists b \in B\) such that \(xRb \land bSy \land bTy\), then \(b\) must also satisfy \(xRb \land bTy\).
+
+		If \((x, y) \in R \circ S\) and \((x, y) \in R \circ T\), then \((x, y) \in R \circ S \cap R \circ T\)
+
+		We have shown that if \((x, y) \in R \circ (S \cap T)\), then \((x, y) \in R \circ S \cap R \circ T\). Therefore, \(R \circ (S \cap T) \subseteq R \circ S \cap R \circ T\).
+	\end{enumerate}
+
+    \item[2.]
+	\begin{enumerate}
+		\item[(c)]
+		\(R^2 \circ R^{-1} \neq R\). I will prove this by a counterexample. Let \(A = \{1, 2\}\), and \(R = \{(1, 2)\}\). \(R^2 = R \circ R = \phi\). Therefore \(R^2 \circ R^{-1} = \{(x, y) \in A \times A : \exists a \in A : (x, a) \in R^2 \land (a, y) \in R^{-1}\}\). However, in this case the condition \((x, a) \in R^2\) will never hold because \(R^2 = \phi\), so \(R^2 \circ R^{-1} = \phi \neq R\).
+	\end{enumerate}
+
+    \item[3.]
+	\begin{enumerate}
+		\item[(b)]
+		\begin{gather*}
+			T \circ R = \{(x, y) \in C \times B : \exists a \in A : (x, a) \in T \land (a, y) \in R\} \label{1}\\
+			T \circ S = \{(x, y) \in C \times B : \exists a \in A : (x, a) \in T \land (a, y) \in S\} \label{2}
+		\end{gather*}
+		However, we know that if \((a, y) \in R\), then \((a, y) \in S\) because we are given that \(R \subseteq S\). Therefore if \((x, y) \in T \circ R\) then \((x, y) \in T \circ S\), so we can conclude that \(T \circ R \subseteq T \circ S\).
+
+		If we are given only that \(T \circ R \subseteq T \circ S\), we cannot infer that \(R \subseteq S\). To show this by a counterexample, let:
+		\[T = \{(1, 2)\}, \quad R = \{(2, 3), (4, 5)\} \quad \text{and} \quad S = \{(2, 3)\}. \]
+		In this case, \(T \circ R = \{(1, 3)\} \subseteq T \circ S = \{(1, 3)\}\), but \(R \nsubseteq S\) because \((4, 5) \in R\) but \((4, 5) \notin S\).
+	\end{enumerate}
+
+    \item[4.]
+	\begin{enumerate}
+		\item[(a)]
+		Given that \(R \subseteq S\), then every element \((x, y) \in R\) is also in \(S\). \(R^2\) is obtained by taking every two ordered pairs \(a = (x_1, y_1), b = (x_2, y_2) \in R\) such that the second entry of \(a\) \((y_1)\) is equal to the first entry of \(b\) \((x_2)\). The ordered pair obtained would then be \((x_1, y_2) \in R^2\). But since \(R \subseteq S\), therefore \(a, b \in S\), so every element \((x_1, y_2) \in R^2\) would also be in \(S^2\).
+	\end{enumerate}
+	
+    \item[5.]
+	\begin{enumerate}
+		\item[(b)]
+		\[I_B = \{(b, b) : b \in B\}\]
+		For any pair \((a, b) \in R \subseteq A \times B\), it must be that \(b \in B\). Which means that for all pairs \((a, b) \in R\), there is a corresponding pair \((b, b) \in I_B\). To form \(R \circ I_B\), we take the first entry from each \((a, b) \in R\), which is simply \(a\), together with the second entry of its corresponding \((b, b) \in I_B\), which is \(b\), and we form a pair, \((a, b) \in R \circ I_B\).
+
+		Since this process maps each pair \((a, b) \in R\) to an identical pair \((a, b) \in R \circ I_B\), it follows that \(R\) and \(R \circ I_B\) are both identical.
+		
+		\item[(d)]
+		\[I_A = \{(a, a) : a \in A\}\]
+		For all pairs \((a, a) \in I_A\), that same pair is the only one that has a first entry \(a\). Therefore when \({I_A}^2\) is calculated, for each pair \((a, a) \in I_A\), it can only be matched with itself, to form exactly \((a, a)\). Meaning that each element \((a, a) \in I_A\) directly corresponds to an identical element in \({I_A}^2\). Therefore \(I_A = {I_A}^2\).
+	\end{enumerate}
+
+\end{enumerate}
+
+For the remainder of the questions, we are asked to use the claims from the previous questions. Below is a list of all of those claims.
+\begin{gather}
+	R \circ (S \cup T) = R \circ S \cup R \circ T \label{distrib. compos. over union}\\
+	R \circ (S \cap T) = R \circ S \cap R \circ T \label{distrib. compos. over intersect.}\\
+	(S \cup T)^{-1} = S^{-1} \cup T^{-1} \label{distrib. inverse over union}\\
+	(S \cap T)^{-1} = S^{-1} \cap T^{-1} \label{distrib. inverse over intersect.}\\
+	(S \circ T)^{-1} = S^{-1} \circ T^{-1} \label{distrib. inverse over compos.}\\
+	(R \circ S) \circ T = R \circ (S \circ T) \label{assoc. compos.}\\
+	R^a \circ R^b = R^{a+b} \label{sum exp.}\\
+	(R^a)^b = R^{ab} \label{product exp.}\\
+	(R^{-1})^{-1} = R \label{inverse of inverse}\\
+	(R^{-1})^{2} = (R^{2})^{-1} \label{square of inverse}\\
+	R_1 \subseteq R_2 \land S_1 \subseteq S_2 \Rightarrow R_1 \circ S_1 \subseteq R_2 \circ S_2 \label{compos. of subsets is subset}\\
+	R \subseteq S \Rightarrow T \circ R \subseteq T \circ S \label{extend subset with composition}\\
+	R \subseteq S \Rightarrow R^2 \subseteq S^2 \label{square subset}\\
+	R \subseteq S \Rightarrow R^{-1} \subseteq S^{-1} \label{inverse subset}\\
+	I_A \circ R = R \label{identity compos. left}\\
+	R \circ I_B = R \label{identity compos. right}\\
+	I^{-1} = I \label{inverse idetity}\\
+	I^2 = I \label{square identity}
+\end{gather}
+
+\begin{enumerate}	
+    \item[6.]
+	\begin{enumerate}
+		\item[(b)]
+		Let \(A = \{1, 2\}, R = \{(1, 1)\}, R^2 = \{(1, 1)\}\). \(R\) is not reflexive, since \(I_A = \{(1, 1), (2, 2)\} \nsubseteq R\), but \(R \subseteq R^2\), since \(R = R^2 = \{(1, 1)\}\).
+	\end{enumerate}
+	
+    \item[7.]
+	\begin{enumerate}
+		\item[(a)]
+		If \(I_A \subseteq R \circ R^{-1}\), then \(R \circ R^{-1}\) is reflexive. In order for \(R \circ R^{-1}\) to be reflexive, \(R\) must satisfy both \(Dom(R) = A\) and \(Im(R) = B\).
+	\end{enumerate}
+	
+    \item[8.]
+	\begin{enumerate}
+		\item[(a)]
+		\(R \cap R^{-1}\) is symmetric, only if \((R \cap R^{-1})^{-1} = R \cap R^{-1}\).
+		\begin{align*}
+			(R \cap R^{-1})^{-1} &= R^{-1} \cap (R^{-1})^{-1} & \text{claim } (\ref{distrib. inverse over intersect.})\\
+			&= R^{-1} \cap R & \text{claim } (\ref{inverse of inverse})
+		\end{align*}
+	\end{enumerate}
+	
+    \item[10.]
+	\begin{enumerate}
+		\item[(a)]
+		If \(R\) is transitive, then \(R^2 \subseteq R\). And by claim (\ref{inverse subset}), that means that \((R^2)^{-1} \subseteq R^{-1}\). By claim (\ref{square of inverse}), that implies that \((R^{-1})^{2} \subseteq R^{-1}\), which means that \(R^{-1}\) is transitive.
+	\end{enumerate}
+	
+    \item[12.]
+	\begin{enumerate}
+		\item[(b)]
+		Given that \(R\) is an order relation on \(A\), it must be reflexive, antisymmetric, and transitive.
+		\begin{enumerate}
+			\item % i
+			Since \(R\) is reflexive, therefore \(I_A \subseteq R\). Therefore by claim (\ref{inverse subset}), \({I_A}^{-1} \subseteq R^{-1}\). However by claim (\ref{inverse idetity}), \({I_A}^{-1} = I_A \subseteq R^{-1}\). Therefore \(R^{-1}\) is reflexive.
+
+			\item % ii
+			Since \(R\) is antisymmetric, therefore \(R^{-1} \cap R \subseteq I_A\). But \(R^{-1}\) is only antisymmetric if \((R^{-1})^{-1} \cap R^{-1} \subseteq I_A\). However, we know from claim (\ref{inverse of inverse}) that \((R^{-1})^{-1} \cap R^{-1} = R \cap R^{-1} \subseteq I_A\). Therefore \(R^{-1}\) is also antisymmetric.
+
+			\item % iii
+			Since \(R\) is transitive, therefore \(R^{-1}\) is also transitive, as we have proven in question 10 (a).
+		\end{enumerate}
+		Since we have shown that if \(R\) is an order relation, then \(R^{-1}\) must be reflexive, antisymmetric, and transitive, then if \(R\) is an order relation, then so is \(R^{-1}\).
+	\end{enumerate}
+	
+    \item[13.]
+	\begin{enumerate}
+		\item[(a)]
+		If \(R\) and \(S\) are equivalence relations on \(A\), then they must be reflexive, symmetric, and transitive.
+		\begin{enumerate}
+			\item % i
+			Since \(R\) and \(S\) are reflexive, therefore \(I_A \subseteq R\) and \(I_A \subseteq S\). Therefore \(I_A \subseteq R \cap S\), so \(R \cap S\) is reflexive.
+
+			\item % ii
+			Since \(R\) and \(S\) are symmetric, therefore \(R^{-1} = R\) and \(S^{-1} = S\). Therefore \(R^{-1} \cap S^{-1} = R \cap S\). And by claim (\ref{distrib. inverse over intersect.}), \(R^{-1} \cap S^{-1} = (R \cap S)^{-1} = R \cap S\), therefore \(R \cap S\) is reflexive.
+
+			\item % iii
+			Question 11 (a).
+		\end{enumerate}
+		Since we have shown that if \(R\) is an order relation, then \(R \cap S\) must be reflexive, antisymmetric, and transitive, then if \(R\) is an order relation, then so is \(R \cap S\).
+
+		\item[(d)]
+		If \(R, S\) and \(R \cup S\) are equivalence relations on \(A\), then they must be reflexive, symmetric, and transitive. Which means that we have the following premises:
+		\begin{gather}
+			I_A \subseteq R \label{R reflex.}\\
+			I_A \subseteq S \label{S reflex.}\\
+			I_A \subseteq R \cup S
+		\end{gather}
+		\begin{gather}
+			R^{-1} = R \\
+			S^{-1} = S \\
+			(R \cup S)^{-1} = R \cup S
+		\end{gather}
+		\begin{gather}
+			R^2 \subseteq R \\
+			S^2 \subseteq S \\
+			(R \cup S)^2 \subseteq R \cup S \label{R union S transit.}
+		\end{gather}
+		\begin{enumerate}
+			\item % i
+			To show that \(R \circ S = R \cup S\), we will show that \(R \circ S \subseteq R \cup S\) and \(R \circ S \supseteq R \cup S\).
+			\begin{enumerate}
+				\item % A
+				To show \(R \circ S \subseteq R \cup S\):
+				\begin{align*}
+					&(R \cup S)^2 \ \subseteq \ R \cup S & \text{from premise (\ref{R union S transit.})} \\
+					\Rightarrow & (R \cup S) \circ (R \cup S) \ \subseteq \ R \cup S \\
+					\Rightarrow & (R \cup S) \circ R \cup (R \cup S) \circ S \ \subseteq \ R \cup S & \text{from claim (\ref{distrib. compos. over union})} \\
+					\Rightarrow & (R \cup S) \circ S \ \subseteq \ R \cup S \\
+					\Rightarrow & R \circ S \cup S \circ S \ \subseteq \ R \cup S &  \text{from claim (\ref{distrib. compos. over union})} \\
+					\Rightarrow & R \circ S \ \subseteq \ R \cup S
+				\end{align*}
+
+				\item % B
+				To show \(R \circ S \supseteq R \cup S\):
+				\begin{align*}
+					& I_A \ \subseteq \ S & \text{from premise (\ref{S reflex.})} \\
+					\Rightarrow & R \circ I_A \ \subseteq \ R \circ S & \text{from claim (\ref{extend subset with composition})} \\
+					\Rightarrow & R \ \subseteq \ R \circ S & \text{from claim (\ref{identity compos. right})}
+				\end{align*}
+				\begin{align*}
+					& I_A \ \subseteq \ R & \text{from premise (\ref{R reflex.})} \\
+					\Rightarrow & I_A \circ S \ \subseteq \ R \circ S & \text{from claim (\ref{extend subset with composition})} \\
+					\Rightarrow & S \ \subseteq \ R \circ S & \text{from claim (\ref{identity compos. left})}
+				\end{align*}
+				\[R \subseteq R \circ S \land S \subseteq R \circ S \quad \Rightarrow \quad R \cup S \subseteq R \circ S \quad \Rightarrow \quad R \circ S \supseteq R \cup S\]
+			\end{enumerate}
+			Hence, \(R \circ S \subseteq R \cup S\).
+
+			\item % ii
+			To show that \(R \circ S = S \circ R\), we can just show that \(S \circ R = R \cup S\), since we already know that \(R \circ S = R \cup S\). But in order to show that \(S \circ R = R \cup S\), we can use the exact same procedure as in part i.
+		\end{enumerate}
+	\end{enumerate}
+	
+	\item[14.]
+	\begin{enumerate}
+		\item[(b)]
+		If \(R, S\) are order relations on \(A\), it is not necessarily true that \(R \cup S\) be an order relation as well. To illustrate this, we will show a counterexample.
+		\begin{gather*}
+			A = \{1, 2\}, \quad R = \{(1, 1), (1, 2), (2, 2)\}, \quad S = \{(2, 2), (2, 1), (1, 1)\} \\
+			R \cup S = \{(1, 1), (1, 2), (2, 1), (2, 2)\}
+		\end{gather*}
+		\(R \cup S\) is not antisymmetric in this case, since it contains both (1, 2) and (2, 1), yet \(1 \neq 2\). Therefore \(R \cup S\) is not an order relation.
+	\end{enumerate}
+	
+	
+\end{enumerate}
+    
+\end{document}

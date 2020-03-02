@@ -1,0 +1,124 @@
+\documentclass[fleqn]{article}
+\usepackage[margin=1.5cm]{geometry}   % shrink margins
+\usepackage{amsmath}    % math equation environments
+\usepackage{amssymb}    % math symbols such as natural numbers N.
+% \usepackage{tikz}	% for diagrams
+\usepackage{adjustbox}	% align enumerations containing tall objects to top. Usage: \item\adjustbox{valign=t}{...}
+% \usepackage{centernot}	% centers not symbol. Usage: \centernot{...}
+
+% Math mode in tables. Usage: use column type C
+\usepackage{array}   % for \newcolumntype macro
+\newcolumntype{C}{>{$}c<{$}} % math-mode version of "c" column type
+
+% paragraph indentation within enumerations
+\usepackage{enumitem}
+\setlist{parsep=4pt,listparindent=\parindent}
+
+% Configurations for logic proofs
+\usepackage{logicproof, etoolbox}
+\patchcmd{\logicproof}{\center}{\flushleft}{}{}
+\patchcmd{\endlogicproof}{\endcenter}{\endflushleft}{}{}
+
+\title{Mathematical Logic HW8}
+\author{Abraham Murciano}
+
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+
+    \item % 1
+    \begin{enumerate}
+		\item[(b)]
+		\begin{gather*}
+			\lnot (\exists x (P(x) \land Q(x)) \to \forall x (P(x) \to Q(x))) \\
+			= \exists x (P(x) \land Q(x)) \land \lnot \forall x (P(x) \to Q(x)) \\
+			= \exists x (P(x) \land Q(x)) \land \exists x \lnot (P(x) \to Q(x)) \\
+			= \exists x (P(x) \land Q(x)) \land \exists x (P(x) \land \lnot Q(x))
+		\end{gather*}
+	\end{enumerate}
+
+	\item % 2
+	\begin{enumerate}
+		\item[(b)]
+		We must prove \(\exists x Q(x)\).
+		\begin{logicproof}{0}
+			\forall x (P(x) \lor Q(x)) & premise \label{2} \\
+			\forall x \lnot P(x) & premise \label{4} \\
+			P(a) \lor Q(a) & \ref{2}, universal elimination \label{1} \\
+			\lnot P(a) & \ref{4}, universal elimination \label{5} \\
+			Q(a) & \ref{1}, \ref{5}, disjunctive syllogism \label{3} \\
+			\exists x Q(x) & \ref{3}, existential introduction QED
+		\end{logicproof}
+
+		\item[(d)]
+		We must prove \(\lnot \forall x Q(x)\).
+		\begin{logicproof}{1}
+			\lnot \forall x (P(x) \land Q(x)) & premise \label{6} \\
+			\forall x P(x) & premise \label{9} \\
+			\exists x \lnot (P(x) \land Q(x)) & \ref{6}, change of quantifier \label{7} \\
+			\begin{subproof}
+				\lnot (P(a) \land Q(a)) & \ref{7}, assumption \label{8} \\
+				\lnot P(a) \lor \lnot Q(a) & \ref{8}, negation of conjunction \label{10} \\
+				P(a) & \ref{9}, universal elimination \label{11} \\
+				\lnot Q(a) & \ref{10}, \ref{11}, disjunctive syllogism \label{12} \\
+				\exists x \lnot Q(x) & \ref{12}, existential introduction \label{13} \\
+				\lnot \forall x Q(x) & \ref{13}, change of quantifier \label{21}
+			\end{subproof}
+			\lnot \forall x Q(x) & \ref{7}, \ref{8}-\ref{21}, existential elimination QED
+		\end{logicproof}
+
+		\item[(f)]
+		We must prove \(Q(y) \land \exists x (P(x) \land R(x))\).
+		\begin{logicproof}{1}
+			\forall x (P(x) \to (Q(y) \land R(x))) & premise \label{14} \\
+			\exists x P(x) & premise \label{15} \\
+			\begin{subproof}
+				P(a) & \ref{15}, assumption \label{16} \\
+				P(a) \to (Q(y) \land R(a)) & \ref{14}, universal elimination \label{17} \\
+				Q(y) \land R(a) & \ref{16}, \ref{17}, modus ponens \label{18}\\
+				Q(y) & \ref{18}, conjunction elimination \label{22} \\
+				R(a) & \ref{18}, conjunction elimination \label{19} \\
+				P(a) \land R(a) & \ref{16}, \ref{19}, conjunction introduction \label{20} \\
+				\exists x (P(x) \land R(x)) & \ref{20}, existential introduction \label{23} \\
+				Q(y) \land \exists x (P(x) \land R(x)) & \ref{22}, \ref{23} conjunction introduction \label{24}
+			\end{subproof}
+			Q(y) \land \exists x (P(x) \land R(x)) & \ref{15}, \ref{16}-\ref{24}, existential elimination QED
+		\end{logicproof}
+	\end{enumerate}
+
+	\item % 3
+	\begin{enumerate}
+		\item[(b)]
+		\((\exists x P(x) \land \exists x Q(x)) \Rightarrow \exists x (P(X) \land Q(x))\) is not a valid implication.
+
+		A counterexample can be demonstrated as follows. Let the predicate \(P(x)\) be ``\(x = 0\)'', the predicate \(Q(x)\) be ``\(x = 1\)'', and the universe for \(x\) be \(\mathbb{Z}\). There does exist an integer which is equal to zero, namely zero; so \(\exists x P(x)\) is true in this interpretation. Similarly, there is an integer equal to one, so \(\exists x Q(x)\) is true as well.
+
+		If the implication were valid, we would be able to say \(\exists x (P(X) \land Q(x))\). Or in English, ``there is an integer which is equal to both one and zero''. However this consequent is false in our interpretation, since there is no such integer.
+
+		\item[(d)]
+		\(\forall x (P(x) \to Q(x)) \Rightarrow \forall x P(x) \to \forall x Q(x)\) is a valid implication. Below is the inference procedure.
+		\begin{logicproof}{2}
+			\forall x (P(x) \to Q(x)) & premise \label{301} \\
+			P(a) \to Q(a) & \ref{301}, universal elimination \label{302} \\
+			\begin{subproof}
+				\forall x P(x) & assumption \label{316} \\
+				P(a) & \ref{316}, universal elimination \label{317} \\
+				Q(a) & \ref{302}, \ref{317}, modus ponens \label{318} \\
+				\forall x Q(x) & \ref{318}, universal introduction \label{319}
+			\end{subproof}
+			\forall x P(x) \to \forall x Q(x) & \ref{316}-\ref{319}, deduction theorem QED
+		\end{logicproof}
+	\end{enumerate}
+
+	\item % 4
+	We are to determine whether the following implication is valid or not.
+	\[\forall x \exists y P(x, y) \models \exists y \forall x P(x, y)\]
+
+	The `proof' provided in the question is not sound. In line 4 of the `proof', the universal quantifier is introduced, violating one of the restrictions of the rule of inference `Universal Introduction'. The restriction in question states that from \(\varphi(\beta/\alpha)\) we can infer \(\forall x \varphi\), only if ``\(\beta\) is not mentioned in any hypothesis or undischarged assumptions''. In the question, \(z\) takes the position of \(\beta\), but \(z\) \textit{is} mentioned in an undischarged hypothesis on line 3. (Although not clear in the provided proof, line 3 should be an \textit{assumption} for the start of a new sub-proof.)
+
+	The above implication is not sound. A counterexample can be shown as follows. Let the binary predicate \(P(x, y)\) be defined as \(y = x\), and the universe for \(x\) and \(y\) be \(\mathbb{Z}\). In this interpretation, our premise \(\forall x \exists y P(x, y)\) is true, because for every integer \(x\), there is an integer \(y\) which is equal to it. However, the `conclusion' \(\exists y \forall x P(x, y)\) is false, since there is no such integer \(y\) such that all other integers are equal to it.
+\end{enumerate}
+    
+\end{document}
