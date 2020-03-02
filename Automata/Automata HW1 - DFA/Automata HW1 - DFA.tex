@@ -51,20 +51,27 @@
 	\draw[input] (start.west)+(-1cm,0) to (start.west);
 	\end{tikzpicture}
 }
-
-\newenvironment{statediagramfigure}{
+\newenvironment{statefig}{
 	\begin{figure}[h]
 		\centering
 		\begin{statediagram}
 }{\end{statediagram} \end{figure}}
 
 % Math mode in tables. Usage: use column type C
-% \usepackage{array}   % for \newcolumntype macro
-% \newcolumntype{C}{>{$}c<{$}} % math-mode version of "c" column type
+\usepackage{array}   % for \newcolumntype macro
+\newcolumntype{C}{>{$}c<{$}} % math-mode version of "c" column type
 
 % paragraph indentation within enumerations
 \usepackage{enumitem}
 \setlist{parsep=4pt,listparindent=\parindent}
+
+% Circled text. Usage: \circled{A}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+    \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+% Circled text with double border. Usage: \doublecircled{A}
+\newcommand*\doublecircled[1]{\tikz[baseline=(char.base)]{
+    \node[shape=circle,draw,inner sep=2pt,double,double distance=0.5mm] (char) {#1};}}
 
 \newcommand{\prefix}{\sqsubseteq}
 \newcommand{\suffix}{\sqsupseteq}
@@ -82,16 +89,16 @@
 
 	\Item % 1
 	\[\lang = \{w \in \{\text{a}, \text{b}, \text{c}\}^* : (\exists n \in \N : |W| = 2n)\}\]
-	\begin{statediagramfigure}
+	\begin{statefig}
 		\node[state, accepted, start] {\(q_0\)};
 		\node[state, right=of start] (odd) {\(q_1\)};
 		\draw[input, bend left=40] (start) to["{a,b,c}" below] (odd);
 		\draw[input, bend left=40] (odd) to["{a,b,c}" above] (start);
-	\end{statediagramfigure}
+	\end{statefig}
 
 	\Item % 2
 	\[\lang = \{w \in \{\text{a}, \text{b}, \text{c}\}^* : \text{abc} \prefix w\}\]
-	\begin{statediagramfigure}
+	\begin{statefig}
 		\node[state, start] {\(q_0\)};
 		\node[state, right=of start] (a) {\(q_1\)};
 		\node[state, right=of a] (ab) {\(q_2\)};
@@ -106,11 +113,14 @@
 		\draw[input, bend left=20] (a) to["{a, c}" above,sloped] (error);
 		\draw[input, bend left=40] (ab) to["{a, b}" below,sloped] (error);
 		\draw[input, loop left] (error) to["{a,b,c}" left] (error);
-	\end{statediagramfigure}
+	\end{statefig}
 
 	\Item % 3
 	\[\lang = \{w \in \{\text{a}, \text{b}, \text{c}\}^* : \text{abc} \suffix w\}\]
-	\begin{statediagramfigure}
+
+	For this language, the word ``aaaabc'' belongs in the language, but ``aaa'' does not. For the string ``aaaabc'' the DFA accepts it as follows.
+	\[q_0 \text{a} \to q_1 \text{a} \to q_1 \text{a} \to q_1 \text{a} \to q_1 \text{b} \to q_2 \text{c} \to q_3\]
+	\begin{statefig}
 		\node[start, state] {\(q_0\)};
 		\node[state, right=of start] (a) {\(q_1\)};
 		\node[state, right=of a] (ab) {\(q_2\)};
@@ -129,18 +139,16 @@
 
 		\draw[input, bend right=30] (abc) to["{a}" above] (a);
 		\draw[input, bend right=40] (abc) to["{b,c}" below] (start);
-	\end{statediagramfigure}
-
-	For this language, the word ``aaaabc'' belongs in the language, but ``aaa'' does not.
+	\end{statefig}
 
 	\pagebreak
 	\Item % 4
 	\[\lang = \{w \in \{\text{a}, \text{b}, \text{c}\}^* : \text{aaa} \not\prefix w\}\]
-	\begin{statediagramfigure}
+	\begin{statefig}
 		\node[start, state] {\(q_0\)};
 		\node[state, right=of start] (a) {\(q_1\)};
 		\node[state, right=of a] (aa) {\(q_2\)};
-		\node[state, right=of aa] (aaa) {\(q_3\)};
+		\node[state, error, right=of aa] {\(q_3\)};
 		\node[state, accepted, below=of a] (ok) {\(q_4\)};
 
 		\draw[input] (start) to["{a}" above] (a);
@@ -149,17 +157,33 @@
 		\draw[input] (a) to["{a}" above] (aa);
 		\draw[input] (a) to["{b,c}" above,sloped] (ok);
 
-		\draw[input] (aa) to["{a}" above] (aaa);
+		\draw[input] (aa) to["{a}" above] (error);
 		\draw[input, bend left=30] (aa) to["{b,c}" below,sloped] (ok);
 
-		\draw[input, loop right] (aaa) to["{a,b,c}" right] (aaa);
+		\draw[input, loop right] (error) to["{a,b,c}" right] (error);
 
 		\draw[input, loop below] (ok) to["{a,b,c}" below] (ok);
-	\end{statediagramfigure}
+	\end{statefig}
+
+	The transition table for this automata is as follows.
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{||c||C|C|C||}
+			\hline
+			& \text{a} & \text{b} & \text{c} \\
+			\hline
+			\(\to\)\circled{\(q_0\)}\phantom{\(\to\)} & q_1 & q_4 & q_4 \\
+			\circled{\(q_1\)} & q_2 & q_4 & q_4 \\
+			\circled{\(q_2\)} & q_3 & q_4 & q_4 \\
+			\circled{\(q_3\)} & q_3 & q_3 & q_3 \\
+			\doublecircled{\(q_4\)} & q_4 & q_4 & q_4 \\
+			\hline
+		\end{tabular}
+	\end{table}
 
 	\Item % 5
-	\[\lang = \{w \in \{\text{a}, \text{b}, \text{c}\}^* : (\exists u,v \in \{\text{a}, \text{b}, \text{c}\}^* : w = u \text{ab} v \lor w = u \text{ba} v)\}\]
-	\begin{statediagramfigure}
+	\[\lang = \{w \in \{\text{a}, \text{b}, \text{c}\}^* : (\exists u,v \in \{\text{a}, \text{b}, \text{c}\}^* : w = u \circ \text{ab} \circ v \lor w = u \circ \text{ba} \circ v)\}\]
+	\begin{statefig}
 		\node[state, start] {\(q_0\)};
 		\node[state, above right=of start] (a) {\(q_1\)};
 		\node[state, below right=of start] (b) {\(q_2\)};
@@ -180,11 +204,12 @@
 
 		\draw[input, loop right] (ab) to["{a,b,c}"] (ab);
 		\draw[input, loop right] (ba) to["{a,b,c}"] (ba);
-	\end{statediagramfigure}
+	\end{statefig}
 
+	\pagebreak
 	\Item % 6
 	\[\lang = \{\text{abba}\} \text{ where } \Sigma = \{\text{a}, \text{b}, \text{c}\}\]
-	\begin{statediagramfigure}
+	\begin{statefig}
 		\node[state, start] {\(q_0\)};
 		\node[state, right=of start] (a) {\(q_1\)};
 		\node[state, right=of a] (ab) {\(q_2\)};
@@ -207,7 +232,132 @@
 		\draw[input, bend left=20] (abba) to["{a,b,c}" below,sloped] (error);
 
 		\draw[input, loop below] (error) to["{a,b,c}" below] (error);
-	\end{statediagramfigure}
+	\end{statefig}
+
+	\Item % 7
+	\[\lang = \{w \in \{\text{a}, \text{b}, \text{c}\}^* : \forall u,v \in \{\text{a}, \text{b}, \text{c}\}^*, w \neq u \circ \text{abc} \circ v\}\]
+
+	For this language, the string ``cbabcba'' does not belong in the language, but ``cbacba'' does. The DFA processes the accepted word as follows.
+	\[q_0 \text{c} \to q_0 \text{b} \to q_0 \text{a} \to q_1 \text{c} \to q_0 \text{b} \to q_0 \text{a} \to q_1\]
+	\begin{statefig}
+		\node[state, start, accepted] {\(q_0\)};
+		\node[state, accepted, right=of start] (a) {\(q_1\)};
+		\node[state, accepted, right=of a] (ab) {\(q_2\)};
+		\node[state, error, right=of ab] {\(q_3\)};
+
+		\draw[input] (start) to["{a}"] (a);
+		\draw[input, loop above] (start) to["{b,c}"] (start);
+
+		\draw[input, loop above] (a) to["{a}"] (a);
+		\draw[input] (a) to["{b}"] (ab);
+		\draw[input, bend left=30] (a) to["{c}"] (start);
+
+		\draw[input, bend left=30] (ab) to["{a}"] (a);
+		\draw[input, bend left=50] (ab) to["{b}" above] (start);
+		\draw[input] (ab) to["{c}"] (error);
+
+		\draw[input, loop right] (error) to["{a,b,c}"] (error);
+	\end{statefig}
+
+	\pagebreak
+	\Item % 8
+	\[\lang = \{w \in \{\text{a}, \text{b}, \text{c}\}^* : w \text{ has the same symbol in all even positions}\}\]
+	\begin{statefig}
+		\node[state, start, accepted] {\(q_0\)};
+		\node[state, accepted, right=of start] (one) {\(q_1\)};
+		\node[state, accepted, right=of one] (b even) {\(q_4\)};
+		\node[state, accepted, right=of b even] (b odd) {\(q_5\)};
+		\node[state, accepted, above=of b even] (a even) {\(q_2\)};
+		\node[state, accepted, right=of a even] (a odd) {\(q_3\)};
+		\node[state, accepted, below=of b even] (c even) {\(q_6\)};
+		\node[state, accepted, right=of c even] (c odd) {\(q_7\)};
+		\node[state, error, right=of b odd] {\(q_8\)};
+
+		\draw[input] (start) to["{a,b,c}"] (one);
+
+		\draw[input] (one) to["{a}" sloped] (a even);
+		\draw[input] (one) to["{b}"] (b even);
+		\draw[input] (one) to["{c}" below,sloped] (c even);
+
+		\draw[input, bend left=40] (a even) to["{a,b,c}"] (a odd);
+		\draw[input, bend left=40] (a odd) to["{a}"] (a even);
+		\draw[input] (a odd) to["{b,c}" sloped] (error);
+
+		\draw[input, bend left=40] (b even) to["{a,b,c}"] (b odd);
+		\draw[input, bend left=40] (b odd) to["{b}"] (b even);
+		\draw[input] (b odd) to["{a,c}"] (error);
+
+		\draw[input, bend left=40] (c even) to["{a,b,c}"] (c odd);
+		\draw[input, bend left=40] (c odd) to["{c}"] (c even);
+		\draw[input] (c odd) to["{a,b}" sloped] (error);
+
+		\draw[input, loop right] (error) to["{a,b,c}"] (error);
+	\end{statefig}
+
+	The transition table for this automata is as follows.
+	\begin{table}[h]
+		\centering
+		\begin{tabular}{||c||C|C|C||}
+			\hline
+			& \text{a} & \text{b} & \text{c} \\
+			\hline
+			\(\to\)\doublecircled{\(q_0\)}\phantom{\(\to\)} & q_1 & q_1 & q_1 \\
+			\doublecircled{\(q_1\)} & q_2 & q_4 & q_6 \\
+			\doublecircled{\(q_2\)} & q_3 & q_3 & q_3 \\
+			\doublecircled{\(q_3\)} & q_2 & q_8 & q_8 \\
+			\doublecircled{\(q_4\)} & q_5 & q_5 & q_5 \\
+			\doublecircled{\(q_5\)} & q_8 & q_4 & q_8 \\
+			\doublecircled{\(q_6\)} & q_7 & q_7 & q_7 \\
+			\doublecircled{\(q_7\)} & q_8 & q_8 & q_6 \\
+			\circled{\(q_8\)} & q_8 & q_8 & q_8 \\
+			\hline
+		\end{tabular}
+	\end{table}
+
+	\Item % 9
+	\[\lang = \{w \in \{\text{a}, \text{b}, \text{c}\}^* : (\exists n \in \N : \#_\text{b}(w) = 2n)\}\]
+	\begin{statefig}
+		\node[state, start, accepted] {\(q_0\)};
+		\node[state, right=of start] (odd) {\(q_1\)};
+
+		\draw[input, bend left=40] (start) to["{b}"] (odd);
+		\draw[input, loop above] (start) to["{a,c}"] (start);
+
+		\draw[input, bend left=40] (odd) to["{b}"] (start);
+		\draw[input, loop above] (odd) to["{a,c}"] (odd);
+	\end{statefig}
+
+	\pagebreak
+	\Item % 10
+	\[\lang = \{\text{abaa, abbaa}\} \text{ where } \Sigma = \{\text{a}, \text{b}\}\]
+	\begin{statefig}
+		\node[state, start] {\(q_0\)};
+		\node[state, right=of start] (a) {\(q_1\)};
+		\node[state, right=of a] (ab) {\(q_2\)};
+		\node[state, right=of ab] (abb) {\(q_3\)};
+		\node[state, right=of abb] (abb?a) {\(q_4\)};
+		\node[state, accepted, right=of abb?a] (abb?aa) {\(q_5\)};
+		\node[state, error, below=of ab] {\(q_6\)};
+
+		\draw[input] (start) to["{a}"] (a);
+		\draw[input, bend right=40] (start) to["{b}" above,sloped] (error);
+
+		\draw[input] (a) to["{b}"] (ab);
+		\draw[input, bend right=20] (a) to["{a}" above,sloped] (error);
+
+		\draw[input] (ab) to["{b}"] (abb);
+		\draw[input, bend left=40] (ab) to["{a}" above] (abb?a);
+
+		\draw[input] (abb) to["{a}"] (abb?a);
+		\draw[input, bend left=20] (abb) to["{b}" above,sloped] (error);
+
+		\draw[input] (abb?a) to["{a}"] (abb?aa);
+		\draw[input, bend left=40] (abb?a) to["{b}" above,sloped] (error);
+
+		\draw[input, bend left=50] (abb?aa) to["{a,b}" above,sloped] (error);
+
+		\draw[input, loop below] (error) to["{a,b}" below] (error);
+	\end{statefig}
 
 \end{answers}
 
