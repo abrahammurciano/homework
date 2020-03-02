@@ -2,3 +2,8 @@
 .vscode/ipch/
 *.code-workspace
 playground/*
+*.aux
+*.fdb_latexmk
+*.log
+*.fls
+*.synctex.gz
