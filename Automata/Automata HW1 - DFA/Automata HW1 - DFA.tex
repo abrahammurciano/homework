@@ -3,7 +3,9 @@
 \usepackage[margin=3cm]{caption}   % shrink captions
 \usepackage{amsmath}    % math equation environments
 \usepackage{amssymb}    % math symbols such as natural numbers N.
+
 \newcommand{\N}{\mathbb{N}}
+\newcommand{\lang}{\mathcal{L}}
 
 \newenvironment{answers}{ % same as enumerate but with more space between each answer
 	\begin{enumerate}
@@ -20,6 +22,7 @@
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}
 \usetikzlibrary{shapes}
+\usetikzlibrary{quotes}
 
 % same as tikzpicture but for state diagrams
 % Usage:
@@ -34,8 +37,8 @@
 %	all input arrows should have style "input"
 %		and optionally "bend left=40", "bend right=90", "loop", "loop right", etc. for curved arrows
 %	all input arrows should be labelled with the inputs that lead that way
-%		e.g. \draw[input, bend_left] (source) to node[above,sloped] {possible inputs} (destination);
-%	an arror starte should be labeled "error"
+%		e.g. \draw[input, bend_left] (source) to["{possible inputs}" above,sloped] (destination);
+%	an arror starte should be given the style "error" and it will be given the id "error"
 \newenvironment{statediagram}{
 	\begin{tikzpicture}[
 		state/.style={circle, draw=blue!60, fill=blue!5, very thick, node distance=1.5cm},
@@ -78,16 +81,16 @@
 \begin{answers}
 
 	\Item % 1
-	\[\mathcal{L} = \{w \in \{\text{a}, \text{b}, \text{c}\}^* : (\exists n \in \N : |W| = 2n)\}\]
+	\[\lang = \{w \in \{\text{a}, \text{b}, \text{c}\}^* : (\exists n \in \N : |W| = 2n)\}\]
 	\begin{statediagramfigure}
 		\node[state, accepted, start] {\(q_0\)};
 		\node[state, right=of start] (odd) {\(q_1\)};
-		\draw[input, bend left=40] (start) to node[below] {a,b,c} (odd);
-		\draw[input, bend left=40] (odd) to node[above] {a,b,c} (start);
+		\draw[input, bend left=40] (start) to["{a,b,c}" below] (odd);
+		\draw[input, bend left=40] (odd) to["{a,b,c}" above] (start);
 	\end{statediagramfigure}
 
 	\Item % 2
-	\[\mathcal{L} = \{w \in \{\text{a}, \text{b}, \text{c}\}^* : \text{abc} \prefix w\}\]
+	\[\lang = \{w \in \{\text{a}, \text{b}, \text{c}\}^* : \text{abc} \prefix w\}\]
 	\begin{statediagramfigure}
 		\node[state, start] {\(q_0\)};
 		\node[state, right=of start] (a) {\(q_1\)};
@@ -95,44 +98,44 @@
 		\node[state, accepted, right=of ab] (abc) {\(q_3\)};
 		\node[state, error, below=1cm of start] {\(q_4\)};
 
-		\draw[input] (start) to node[above] {a} (a);
-		\draw[input] (a) to node[above] {b} (ab);
-		\draw[input] (ab) to node[above] {c} (abc);
-		\draw[input, loop right] (abc) to node[right] {a,b,c} (abc);
-		\draw[input] (start) to node[left] {b, c} (error);
-		\draw[input, bend left=20] (a) to node[above,sloped] {a, c} (error);
-		\draw[input, bend left=40] (ab) to node[below,sloped] {a, b} (error);
-		\draw[input, loop left] (error) to node[left] {a,b,c} (error);
+		\draw[input] (start) to["{a}" above] (a);
+		\draw[input] (a) to["{b}" above] (ab);
+		\draw[input] (ab) to["{c}" above] (abc);
+		\draw[input, loop right] (abc) to["{a,b,c}" right] (abc);
+		\draw[input] (start) to["{b, c}" left] (error);
+		\draw[input, bend left=20] (a) to["{a, c}" above,sloped] (error);
+		\draw[input, bend left=40] (ab) to["{a, b}" below,sloped] (error);
+		\draw[input, loop left] (error) to["{a,b,c}" left] (error);
 	\end{statediagramfigure}
 
 	\Item % 3
-	\[\mathcal{L} = \{w \in \{\text{a}, \text{b}, \text{c}\}^* : \text{abc} \suffix w\}\]
+	\[\lang = \{w \in \{\text{a}, \text{b}, \text{c}\}^* : \text{abc} \suffix w\}\]
 	\begin{statediagramfigure}
 		\node[start, state] {\(q_0\)};
 		\node[state, right=of start] (a) {\(q_1\)};
 		\node[state, right=of a] (ab) {\(q_2\)};
 		\node[state, accepted, right=of ab] (abc) {\(q_3\)};
 
-		\draw[input] (start) to node[above] {a} (a);
-		\draw[input, loop below] (start) to node[below] {b,c} (start);
+		\draw[input] (start) to["{a}" above] (a);
+		\draw[input, loop below] (start) to["{b,c}" below] (start);
 
-		\draw[input] (a) to node[above] {b} (ab);
-		\draw[input, loop below] (a) to node[below] {a} (a);
-		\draw[input, bend left=40] (a) to node[below] {c} (start);
+		\draw[input] (a) to["{b}" above] (ab);
+		\draw[input, loop below] (a) to["{a}" below] (a);
+		\draw[input, bend left=40] (a) to["{c}" below] (start);
 
-		\draw[input] (ab) to node[above] {c} (abc);
-		\draw[input, bend left=40] (ab) to node[below] {a} (a);
-		\draw[input, bend left=60] (ab) to node[below] {b} (start);
+		\draw[input] (ab) to["{c}" above] (abc);
+		\draw[input, bend left=40] (ab) to["{a}" below] (a);
+		\draw[input, bend left=60] (ab) to["{b}" below] (start);
 
-		\draw[input, bend right=30] (abc) to node[above] {a} (a);
-		\draw[input, bend right=40] (abc) to node[below] {b,c} (start);
+		\draw[input, bend right=30] (abc) to["{a}" above] (a);
+		\draw[input, bend right=40] (abc) to["{b,c}" below] (start);
 	\end{statediagramfigure}
 
 	For this language, the word ``aaaabc'' belongs in the language, but ``aaa'' does not.
 
 	\pagebreak
-	\Item
-	\[\mathcal{L} = \{w \in \{\text{a}, \text{b}, \text{c}\}^* : \text{aaa} \not\prefix w\}\]
+	\Item % 4
+	\[\lang = \{w \in \{\text{a}, \text{b}, \text{c}\}^* : \text{aaa} \not\prefix w\}\]
 	\begin{statediagramfigure}
 		\node[start, state] {\(q_0\)};
 		\node[state, right=of start] (a) {\(q_1\)};
@@ -140,30 +143,70 @@
 		\node[state, right=of aa] (aaa) {\(q_3\)};
 		\node[state, accepted, below=of a] (ok) {\(q_4\)};
 
-		\draw[input] (start) to node[above] {a} (a);
-		\draw[input, bend right=30] (start) to node[below,sloped] {b,c} (ok);
+		\draw[input] (start) to["{a}" above] (a);
+		\draw[input, bend right=30] (start) to["{b,c}" below,sloped] (ok);
 
-		\draw[input] (a) to node[above] {a} (aa);
-		\draw[input] (a) to node[above,sloped] {b,c} (ok);
+		\draw[input] (a) to["{a}" above] (aa);
+		\draw[input] (a) to["{b,c}" above,sloped] (ok);
 
-		\draw[input] (aa) to node[above] {a} (aaa);
-		\draw[input, bend left=30] (aa) to node[below,sloped] {b,c} (ok);
+		\draw[input] (aa) to["{a}" above] (aaa);
+		\draw[input, bend left=30] (aa) to["{b,c}" below,sloped] (ok);
 
-		\draw[input, loop right] (aaa) to node[right] {a,b,c} (aaa);
+		\draw[input, loop right] (aaa) to["{a,b,c}" right] (aaa);
 
-		\draw[input, loop below] (ok) to node[below] {a,b,c} (ok);
+		\draw[input, loop below] (ok) to["{a,b,c}" below] (ok);
 	\end{statediagramfigure}
 
-	\Item
-	\[\mathcal{L} = \{w \in \{\text{a}, \text{b}, \text{c}\}^* : (\exists u,v \in \{\text{a}, \text{b}, \text{c}\}^* : w = u \text{ab} v \lor w = u \text{ba} v)\}\]
+	\Item % 5
+	\[\lang = \{w \in \{\text{a}, \text{b}, \text{c}\}^* : (\exists u,v \in \{\text{a}, \text{b}, \text{c}\}^* : w = u \text{ab} v \lor w = u \text{ba} v)\}\]
 	\begin{statediagramfigure}
 		\node[state, start] {\(q_0\)};
 		\node[state, above right=of start] (a) {\(q_1\)};
 		\node[state, below right=of start] (b) {\(q_2\)};
+		\node[state, accepted, right=of a] (ab) {\(q_3\)};
+		\node[state, accepted, right=of b] (ba) {\(q_4\)};
 
-		% \draw[input] (start) to (a) \node[above,sloped] {a};
-		% \draw[input] (start) to \node[below,sloped] {b} (b);
-		% \draw[input, loop above] (start) to \node[above] {c} (start);
+		\draw[input] (start) to["{a}" below,sloped] (a);
+		\draw[input] (start) to["{b}" above,sloped] (b);
+		\draw[input, loop above] (start) to["{c}" above] (start);
+
+		\draw[input] (a) to["{b}"] (ab);
+		\draw[input, loop below] (a) to["{a}" below] (a);
+		\draw[input, bend right=30] (a) to["{c}" above,sloped] (start);
+
+		\draw[input] (b) to["{a}"] (ba);
+		\draw[input, loop above] (b) to["{b}"] (b);
+		\draw[input, bend left=30] (b) to["{c}" below,sloped] (start);
+
+		\draw[input, loop right] (ab) to["{a,b,c}"] (ab);
+		\draw[input, loop right] (ba) to["{a,b,c}"] (ba);
+	\end{statediagramfigure}
+
+	\Item % 6
+	\[\lang = \{\text{abba}\} \text{ where } \Sigma = \{\text{a}, \text{b}, \text{c}\}\]
+	\begin{statediagramfigure}
+		\node[state, start] {\(q_0\)};
+		\node[state, right=of start] (a) {\(q_1\)};
+		\node[state, right=of a] (ab) {\(q_2\)};
+		\node[state, right=of ab] (abb) {\(q_3\)};
+		\node[state, accepted, right=of abb] (abba) {\(q_4\)};
+		\node[state, error, below=of ab] {\(q_5\)};
+
+		\draw[input] (start) to["{a}"] (a);
+		\draw[input, bend right=20] (start) to["{b,c}" below,sloped] (error);
+
+		\draw[input] (a) to["{b}"] (ab);
+		\draw[input, bend right=10] (a) to["{a,c}" below,sloped] (error);
+
+		\draw[input] (ab) to["{b}"] (abb);
+		\draw[input] (ab) to["{a,c}"] (error);
+
+		\draw[input] (abb) to["{a}"] (abba);
+		\draw[input, bend left=10] (abb) to["{b,c}" below,sloped] (error);
+
+		\draw[input, bend left=20] (abba) to["{a,b,c}" below,sloped] (error);
+
+		\draw[input, loop below] (error) to["{a,b,c}" below] (error);
 	\end{statediagramfigure}
 
 \end{answers}
