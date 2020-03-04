@@ -4,7 +4,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "CppCompile",
+            "label": "C++ Compile",
             "type": "shell",
             "command": "cd \"${fileDirname}/\" && g++ -g *.cpp -o a.out",
             "group": {

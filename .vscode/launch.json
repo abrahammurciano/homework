@@ -5,10 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "CppDebug",
+            "name": "C++ Debug",
             "type": "cppdbg",
             "request": "launch",
-            "preLaunchTask": "CppCompile",
+            "preLaunchTask": "C++ Compile",
             "program": "${fileDirname}/a.out",
             "args": [],
             "stopAtEntry": false,
