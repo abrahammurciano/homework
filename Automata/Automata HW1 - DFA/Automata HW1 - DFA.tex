@@ -187,23 +187,21 @@
 		\node[state, start] {\(q_0\)};
 		\node[state, above right=of start] (a) {\(q_1\)};
 		\node[state, below right=of start] (b) {\(q_2\)};
-		\node[state, accepted, right=of a] (ab) {\(q_3\)};
-		\node[state, accepted, right=of b] (ba) {\(q_4\)};
+		\node[state, accepted, below right=of a] (ab or ba) {\(q_3\)};
 
 		\draw[input] (start) to["{a}" below,sloped] (a);
 		\draw[input] (start) to["{b}" above,sloped] (b);
 		\draw[input, loop above] (start) to["{c}" above] (start);
 
-		\draw[input] (a) to["{b}"] (ab);
+		\draw[input] (a) to["{b}"] (ab or ba);
 		\draw[input, loop below] (a) to["{a}" below] (a);
 		\draw[input, bend right=30] (a) to["{c}" above,sloped] (start);
 
-		\draw[input] (b) to["{a}"] (ba);
+		\draw[input] (b) to["{a}"] (ab or ba);
 		\draw[input, loop above] (b) to["{b}"] (b);
 		\draw[input, bend left=30] (b) to["{c}" below,sloped] (start);
 
-		\draw[input, loop right] (ab) to["{a,b,c}"] (ab);
-		\draw[input, loop right] (ba) to["{a,b,c}"] (ba);
+		\draw[input, loop right] (ab or ba) to["{a,b,c}"] (ab);
 	\end{statefig}
 
 	\pagebreak
