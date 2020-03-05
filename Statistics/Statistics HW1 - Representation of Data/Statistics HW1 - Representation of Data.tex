@@ -1,55 +1,5 @@
 \documentclass[fleqn]{article}
-\usepackage[margin=3cm]{geometry}   % shrink margins
-\usepackage[margin=3cm]{caption}   % shrink captions
-\usepackage{amsmath}    % math equation environments
-\usepackage{amssymb}    % math symbols such as natural numbers N.
-\usepackage{gensymb}	% general symbols such as \degree
-
-\newenvironment{answers}{ % same as enumerate but with more space between each answer
-	\begin{enumerate}
-		\setlength{\itemsep}{\bigskipamount}
-}{\end{enumerate}}
-
-\newcommand\Item[1][]{ % custom \Item command for block math
-  \ifx\relax#1\relax  \item \else \item[#1] \fi
-  \abovedisplayskip=0pt\abovedisplayshortskip=0pt~\vspace*{-\baselineskip}}
-
-\usepackage{multicol}	% can be used to put enumerate in columns. Usage: \begin{multicols}{NumCols}\begin{enumerate}...
-
-\newcommand*{\perm}[2]{{}^{#1}\!P_{#2}}
-\newcommand*{\comb}[2]{{}^{#1}C_{#2}}
-
-\usepackage{tikz}	% for diagrams
-% \usetikzlibrary{positioning}
-% \usetikzlibrary{arrows}
-% \usetikzlibrary{shapes}
-% \usetikzlibrary{quotes}
-
-\usepackage{pgfplots} % for plotting graphs
-\pgfplotsset{
-	/pgfplots/xlabel near ticks/.style={
-		/pgfplots/every axis x label/.style={
-        	at={(ticklabel cs:0.5)},anchor=near ticklabel
-		}
-	},
-	/pgfplots/ylabel near ticks/.style={
-		/pgfplots/every axis y label/.style={
-			at={(ticklabel cs:0.5)},rotate=90,anchor=near ticklabel
-		}
-	}
-}
-
-% \usepackage{adjustbox}	% align enumerations containing tall objects to top. Usage: \item\adjustbox{valign=t}{...}
-
-% \usepackage{centernot}	% centers not symbol. Usage: \centernot{...}
-
-% Math mode in tables. Usage: use column type C
-\usepackage{array}   % for \newcolumntype macro
-\newcolumntype{C}{>{$}c<{$}} % math-mode version of "c" column type
-
-% paragraph indentation within enumerations
-\usepackage{enumitem}
-\setlist{parsep=4pt,listparindent=\parindent}
+\usepackage{preamble}
 
 \title{
 	Statistics \\
@@ -110,7 +60,7 @@
 	\begin{enumerate}
 		\item % a
 		Table \ref{q3-frequencies} shows the frequency, relative frequency, cumulative frequency, and relative cumulative frequency.
-		\begin{table}[h]
+		\begin{table}[ht]
 			\centering
 			\begin{tabular}{||c||c|c|c|c||}
 				\hline
@@ -133,39 +83,25 @@
 			\centering
 			\begin{tikzpicture}
 				\begin{axis}[
+					bar chart,
 					width = 6cm,
-					axis lines = left,
+					bar width = 0.6cm,
 					xlabel = Maximum temperature,
 					ylabel = Frequency,
-					xlabel near ticks,
-					ylabel near ticks,
-					ymin = 0,
-					enlarge x limits=0.15,
-					enlarge y limits = {value=.1,upper},
-					bar width = 0.6cm,
-					ybar,
 					symbolic x coords={27--29,30--32,33--35,36--38,39--41},
-					x tick label style={rotate=45,anchor=north east},
-					xtick = data
+					x tick label style={rotate=45,anchor=north east}
 					]
 					\addplot coordinates {(27--29,2) (30--32,6) (33--35,12) (36--38,5) (39--41,4)};
 				\end{axis}
 			\end{tikzpicture}
 			\begin{tikzpicture}
 				\begin{axis}[
+					histogram,
 					width = 6cm,
-					axis lines = left,
 					xlabel = Maximum temperature,
 					ylabel = Frequency density,
-					xlabel near ticks,
-					ylabel near ticks,
-					ymin = 0,
-					enlarge x limits=0.05,
-					enlarge y limits = {value=.1,upper},
-					ybar,
 					symbolic x coords={26.5,29.5,32.5,35.5,38.5,41.5},
-					x tick label style={rotate=45,anchor=north east},
-					xtick = data
+					x tick label style={rotate=45,anchor=north east}
 				]
 					\addplot+[ybar interval] coordinates {(26.5,0.67) (29.5,2) (32.5,4) (35.5,1.67) (38.5,1.33) (41.5,0)};
 				\end{axis}
