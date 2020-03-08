@@ -64,7 +64,7 @@
 			\centering
 			\begin{tabular}{||c||c|c|c|c||}
 				\hline
-				Max. temp. (\degree C) & Frequency & Relative frq. & Cumulative frq. & relative cumulative frq. \\
+				Max. temp. (\degree C) & Frequency & Relative freq. & Cumulative freq. & relative cumulative freq. \\
 				\hline
 				27-29 & 2	& 0.0690 & 2	& 0.0690 \\
 				30-32 & 6	& 0.2069 & 8	& 0.2759 \\
@@ -79,7 +79,7 @@
 
 		\item % b
 		Figure \ref{q3-bar-graphs} shows a bar graph of the data in Table \ref{q3-temperature} as well as a histogram.
-		\begin{figure}[h]
+		\begin{figure}[htb]
 			\centering
 			\begin{tikzpicture}
 				\begin{axis}[
@@ -121,6 +121,149 @@
 	\end{enumerate}
 
 	\item[6.]
+	\begin{enumerate}
+		\item % a
+		For two classes with the same number of students, the average math grade of all the students combined is equal to the average of the average grades of each class separately. As an example, consider the data for the two classes in Table \ref{q6a-class-grades}.
+		\begin{table}[htb]
+			\centering
+			\begin{tabular}{||c|c||}
+				\multicolumn{2}{c}{Class 1} \\
+				\hline
+				Student & Grade \\
+				\hline
+				A & 100 \\
+				B & 98 \\
+				C & 86 \\
+				D & 79 \\
+				\hline
+			\end{tabular}
+			\hspace{10pt}
+			\begin{tabular}{||c|c||}
+				\multicolumn{2}{c}{Class 2} \\
+				\hline
+				Student & Grade \\
+				\hline
+				E & 86 \\
+				F & 68 \\
+				G & 66 \\
+				H & 59 \\
+				\hline
+			\end{tabular}
+			\caption{The grades of two classes of equal size}
+			\label{q6a-class-grades}
+		\end{table}
+
+		The average grade of Class 1 is
+		\[\frac{100 + 98 + 86 + 79}{4} = 90.75\]
+
+		The average grade of Class 2 is
+		\[\frac{86 + 68 + 66 + 59}{4} = 69.75\]
+
+		The average of these two averages is
+		\[\frac{90.75 + 69.75}{2} = 80.25\]
+
+		This is the same as the average grade of all eight students.
+		\[\frac{100 + 98 + 86 + 86 + 79 + 68 + 66 + 59}{8} = \frac{642}{8} = 80.25\]
+
+		\item % b
+		The median math grade for two classes of equal size when combined into one big class is \textbf{not} equal to the average of the two medians. For example, consider the data for two classes in Table \ref{q6a-class-grades}.
+
+		The median of Class 1 is 92, the median of Class 2 is 67, and the average of the two medians is 79.5. However, the median of all eight students is 82.5.
+
+		\item % c
+		The modal math grade of the two classes when combined into one big class is \textbf{not} necessarily less than or equal to the modal grade of each one. As an example, if two classes have grades as shown in Table \ref{q6c-class-grades}, Class 1 has a mode of 100, but that is greater than the mode of the two classes combined, which is 60.
+		\begin{table}[h]
+			\centering
+			\begin{tabular}{||c|c||}
+				\multicolumn{2}{c}{Class 1} \\
+				\hline
+				Student & Grade \\
+				\hline
+				A & 100 \\
+				B & 100 \\
+				C & 85 \\
+				D & 82 \\
+				\hline
+			\end{tabular}
+			\hspace{10pt}
+			\begin{tabular}{||c|c||}
+				\multicolumn{2}{c}{Class 2} \\
+				\hline
+				Student & Grade \\
+				\hline
+				E & 74 \\
+				F & 60 \\
+				G & 60 \\
+				H & 60 \\
+				\hline
+			\end{tabular}
+			\caption{The grades of two classes of equal size}
+			\label{q6c-class-grades}
+		\end{table}
+
+		\item % d
+		It is true that the mid-range math grade for the two classes when combined into one larger class must always lie between the mid-ranges of each of the two classes.
+
+		As an example, consider the data in Table \ref{q6c-class-grades}. The mid-range for Class 1 is
+		\[82 + \frac{100 - 82}{2} = 91\]
+
+		The mid-range for Class 2 is
+		\[60 + \frac{74-60}{2} = 67\]
+
+		And the mid-range for the two classes combined is
+		\[60 + \frac{100 - 60}{2} = 80\]
+		which is between 67 and 91.
+	\end{enumerate}
+
+	\item[7.]
+	Consider the data in Table \ref{q7}.
+	\begin{table}[htb]
+		\centering
+		\begin{tabular}{||c|c||}
+			\hline
+			\(x\) & \(f(x)\) \\
+			\hline
+			40-50 & 18 \\
+			50-60 & 6 \\
+			60-70 & \(k\) \\
+			70-80 & 9 \\
+			80-90 & 10 \\
+			90-100 & 5 \\
+			\hline
+		\end{tabular}
+		\caption{Partial data for a variable \(x\)}
+		\label{q7}
+	\end{table}
+	\begin{enumerate}
+		\item % a
+		It is possible to calculate the median value for \(x\), since we know for certain that the median class is the 60-70 class, and there are exactly 24 observations before and 24 observations after that class. Therefore the median value is precisely the midpoint of the median class. That is 65.
+
+		\item % b
+		If the average is equal to 65.4, then the missing value in Table \ref{q7} must satisfy this equation.
+		\[\frac{18 \times 45 + 6 \times 55 + 9 \times 75 + 10 \times 85 + 5 \times 95 + 65 \times k}{18 + 6 + 9 + 10 + 5 + k} = 65.4\]
+		Now we can solve for \(k\) to obtain
+		\begin{align*}
+			\frac{3140 + 65n}{48 + k} &= 65.4 \\
+			3140 + 65n &= 65.4(48 + k) \\
+			3140 + 65n &= 3139.2 + 65.4k \\
+			3140 - 3139.2 &= 65.4k - 65n \\
+			0.8 &= 0.4k \\
+			k &= 2 \\
+		\end{align*}
+
+		\item % c
+		If the 90\textsuperscript{th} percentile is 89.4, the missing value in the table must satisfy this equation.
+		\[89.4 = \frac{(48 + k)\left(\frac{90}{100}\right) - (33 + k)}{10} \times (90 - 80) + 80\]
+
+		Then we are able to solve for \(k\) to obtain the missing value in the table.
+		\begin{align*}
+			9.4 &= \frac{9}{10}(48 + k) - 33 - k \\
+			42.4 &= \frac{9}{10}(48 + k) - k \\
+			42.4 &= 43.2 + 0.9k - k \\
+			-0.8 &= - 0.1k \\
+			k &= 8 \\
+		\end{align*}
+	\end{enumerate}
 
 \end{answers}
 
