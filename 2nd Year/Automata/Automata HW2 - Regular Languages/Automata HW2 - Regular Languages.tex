@@ -1,0 +1,147 @@
+\documentclass[fleqn]{article}
+\usepackage{preamble}
+
+\title{Automata \& Formal Languages \\
+\medskip
+\large Homework 2 -- Regular Languages}
+\author{Abraham Murciano}
+
+\begin{document}
+
+\maketitle
+
+\section*{Part 1}
+
+\begin{answers}
+
+	\item % 1
+	Given a finite automaton \(A = (\Sigma, Q, q_0, \delta, F)\) with \(Q = F\), it follows that \(\lang_A = \Sigma^*\). This is because a word \(w\) is accepted if and only if \(\hat{\delta}(q_0,w) \in F\). And we know that \(\hat{\delta} : Q \times \Sigma^* \to Q\), therefore in this case we can say that \(\hat{\delta} : Q \times \Sigma^* \to F\), because \(Q = F\).
+
+	Therefore, \(\forall w \in \Sigma^*, \hat{\delta}(q_0, w) \in F\), meaning every word in \(\Sigma^*\) is accepted. Since there are no words which aren't in \(\Sigma^*\), we can say \(\lang_A = \Sigma^*\).
+
+	\item % 2
+	If \(\lang\) is an infinite language, it may still be regular. For example, if \(\lang = \Sigma^*\), it is an infinite language, but it is regular since an automata can easily be built for it.
+
+	\item % 3
+	% What is the number of computations?
+
+	\item % 4
+	In all deterministic finite automata (DFA), the number of non-cyclic paths from the start state to any state in the automaton must be finite.
+
+	A non-cyclic path is a path that does not contain the same state more than once. Since there is a finite number of states in the DFA, the total number of distinct non-cyclic paths from the start state is finite, since this number is bounded from above by \(\sum_{i=0}^{|Q|} |\Sigma|^{i}\).
+\end{answers}
+
+\section*{Part 2}
+
+\begin{answers}
+
+	\item % 1
+	Let \(\lang_1\) be a language over \(\{\text{a}, \text{b}\}\) whose words are of even length, and let \(\lang_2\) be a language over the same alphabet whose words end in ``bbb''. Figure \ref{q1a} shows DFAs accepting \(\lang_1\) and \(\lang_2\), and Figure \ref{q1b} shows a DFA accepting only words which \(\lang_1\) accepts but \(\lang_2\) does not.
+	\begin{figure}[htb]
+		\centering
+		\begin{statediagram}
+			\node[state, start, accepted] {\(q_0\)};
+			\node[state, right=of q0] (q1) {\(q_1\)};
+
+			\draw[input, bend left=40] (q0) to["{a,b}" above,sloped] (q1);
+			\draw[input, bend left=40] (q1) to["{a,b}" above,sloped] (q0);
+		\end{statediagram}
+		\begin{statediagram}
+			\node[state, start] {\(p_0\)};
+			\node[state, right=of q0] (q1) {\(p_1\)};
+			\node[state, right=of q1] (q2) {\(p_2\)};
+			\node[state, accepted, right=of q2] (q3) {\(p_3\)};
+
+			\draw[input] (q0) to["{b}" above] (q1);
+			\draw[input] (q1) to["{b}" above] (q2);
+			\draw[input] (q2) to["{b}" above] (q3);
+
+			\draw[input, loop right] (q3) to["{b}" right] (q3);
+
+			\draw[input, bend left=20] (q1) to ["{a}" below] (q0);
+			\draw[input, bend right=40] (q2) to ["{a}" above] (q0);
+			\draw[input, bend left=40] (q3) to ["{a}" below] (q0);
+
+			\draw[input, loop above] (q0) to["{a}" above] (q0);
+		\end{statediagram}
+		\caption{A DFA accepting \(\lang_1\) (left) and another accepting \(\lang_2\) (right)}
+		\label{q1a}
+	\end{figure}
+
+	\begin{figure}[htb]
+		\centering
+		\begin{statediagram}
+			\node[state, start, accepted] {\(q_0\)};
+			\node[state, right=of q0] (q01) {\(q_1\)};
+			\node[state, accepted, right=of q01] (q02) {\(q_2\)};
+			\node[state, right=of q02] (q03) {\(q_3\)};
+
+			\node[state, below=of q0] (q10) {\(q_4\)};
+			\node[state, accepted, right=of q10] (q11) {\(q_5\)};
+			\node[state, right=of q11] (q12) {\(q_6\)};
+			\node[state, right=of q12] (q13) {\(q_7\)};
+
+			\draw[input, bend left=20] (q0) to["{a}"] (q10);
+			\draw[input] (q0) to["{b}"] (q01);
+
+			\draw[input, bend left=40] (q11) to["{a}" above] (q10);
+			\draw[input] (q11) to["{b}"] (q12);
+
+			\draw[input] (q02) to["{a}" above] (q10);
+			\draw[input] (q02) to["{b}"] (q03);
+
+			\draw[input, bend left=50] (q13) to["{a}" above] (q10);
+			\draw[input, bend left=20] (q13) to["{b}"] (q03);
+
+
+			\draw[input, bend left=20] (q10) to["{a}"] (q0);
+			\draw[input] (q10) to["{b}"] (q11);
+
+			\draw[input, bend right=40] (q01) to["{a}" above] (q0);
+			\draw[input] (q01) to["{b}"] (q02);
+
+			\draw[input] (q12) to["{a}" below] (q0);
+			\draw[input] (q12) to["{b}"] (q13);
+
+			\draw[input, bend right=50] (q03) to["{a}"] (q0);
+			\draw[input, bend left=20] (q03) to["{b}"] (q13);
+		\end{statediagram}
+		\caption{A DFA accepting \(\lang_1 - \lang_2\)}
+		\label{q1b}
+	\end{figure}
+
+	\item % 2
+	Let \(\lang\) be language over the alphabet \(\{\text{a}, \text{b}\}\) whose words contain an equal number of sub-strings ``ab'' and ``ba''. For example, \(\varepsilon\), ``a'', ``b'', ``abba'', ``aba'', and ``abaaba'' belong to the language, while ``ab'', ``ba'', and ``baaaba'' do not.
+
+	This is a regular language as it is possible to construct a DFA to compute this as shown in Figure \ref{q2}.
+	\begin{figure}[htb]
+		\centering
+			\begin{statediagram}
+				\node[state, start, accepted] {\(q_0\)};
+				\node[state, accepted, above right=of q0] (q1) {\(q_1\)};
+				\node[state, accepted, below right=of q0] (q3) {\(q_3\)};
+				\node[state, right=of q1] (q2) {\(q_2\)};
+				\node[state, right=of q3] (q4) {\(q_4\)};
+
+				\draw[input] (q0) to["{a}" above,sloped] (q1);
+				\draw[input] (q0) to["{b}" above,sloped] (q3);
+
+				\draw[input, loop above] (q1) to["{a}" above,sloped] (q1);
+				\draw[input, bend left=40] (q1) to["{b}" above,sloped] (q2);
+
+				\draw[input, loop above] (q2) to["{b}" above,sloped] (q2);
+				\draw[input, bend left=40] (q2) to["{a}" above,sloped] (q1);
+
+				\draw[input, loop above] (q3) to["{b}" above,sloped] (q3);
+				\draw[input, bend left=40] (q3) to["{a}" above,sloped] (q4);
+
+				\draw[input, loop above] (q4) to["{a}" above,sloped] (q4);
+				\draw[input, bend left=40] (q4) to["{b}" above,sloped] (q3);
+			\end{statediagram}
+		\caption{A DFA which computes if a word contains ``ab'' and ``ba'' the same number of times}
+		\label{q2}
+	\end{figure}
+
+\end{answers}
+
+\end{document}
