@@ -1,5 +1,5 @@
 .data
-Array1:	.word 1, 8, 3, 4, 9,5, 0,9
+Array1:	.word 1, 8, 3, 4, 9, 5, 0, 9
 Array2:	.space 240
 
 
