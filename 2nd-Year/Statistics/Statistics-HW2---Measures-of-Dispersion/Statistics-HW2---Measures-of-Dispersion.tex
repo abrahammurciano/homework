@@ -1,0 +1,157 @@
+\documentclass[fleqn]{article}
+\usepackage{preamble}
+
+\title{
+	Statistics \\
+	\medskip
+	\large Homework 2 -- Measures of Dispersion
+}
+\author{Abraham Murciano}
+
+\begin{document}
+
+\maketitle
+
+\begin{answers}
+
+    \item[1.]
+    \begin{enumerate}
+		\item % a
+		For the following set of observations for the random variable \(X\),
+		\[\vec{x} = \{1,8,1,5,8,6,3,3,3,7\}\]
+		the range is equal to
+		\[\max(X) - \min(X) = 8 - 1 = 7\]
+
+		The mean deviation is the average of all the deviations from the mean. (\(\xbar = 4.5\))
+		\[\frac{\sum_{x \in \vec{x}}|x - \xbar|}{|\vec{x}|} = \frac{3.5+3.5+3.5+0.5+3.5+2.5+1.5+1.5+1.5+2.5}{10} = 2.4\]
+
+		The sample variance of these observations is
+		\begin{multline*}
+			\frac{\sum_{x \in \vec{x}}(x - \xbar)^2}{|\vec{x}|} = \frac{3.5^2+3.5^2+3.5^2+0.5^2+3.5^2+2.5^2+1.5^2+1.5^2+1.5^2+2.5^2}{10} \\= \frac{12.25+12.25+12.25+0.25+12.25+6.25+2.25+2.25+2.25+6.25}{10} = 6.85
+		\end{multline*}
+
+		The standard deviation is simply the square root of the variance.
+		\[s = \sqrt{6.85} \approx 2.62\]
+
+		\item % b
+		For the following set of observations for the random variable \(X\),
+		\[\vec{x} = \{14,18,30,31,15,18,27\}\]
+		the range is equal to
+		\[\max(\vec{x}) - \min(\vec{x}) = 31 - 14 = 17\]
+
+		The mean deviation is the average of all the deviations from the mean. (\(\xbar = \frac{153}{7} \approx 21.86\))
+		\[\frac{\sum_{x \in \vec{x}}|x - \xbar|}{|\vec{x}|} = \frac{7.86+3.86+8.14+9.14+6.86+3.86+5.14}{7} = 6.41\]
+
+		The sample variance of these observations is
+		\begin{multline*}
+			\frac{\sum_{x \in \vec{x}}(x - \xbar)^2}{|\vec{x}|} \approx \frac{7.86^2+3.86^2+8.14^2+9.14^2+6.86^2+3.86^2+5.14^2}{7} \\\approx \frac{61.78+14.90+66.26+83.54+47.06+14.90+26.42}{7} = 44.98
+		\end{multline*}
+
+		The standard deviation is simply the square root of the variance.
+		\[s = \sqrt{44.98} \approx 6.71\]
+	\end{enumerate}
+
+	\item[4.]
+	Given that \(a\) is the average of observations \(a_1, \dots, a_{18}\), and \(b\) is the average of \(a_1, \dots, a_9\), we are to find the average of \(a_{10}, \dots, a_{18}\) in terms of \(a\) and \(b\). Let \(c\) be this average.
+
+	\begin{equation}
+		a = \frac{\sum_{i=1}^{18}a_i}{18} = \frac{\sum_{i=1}^{9}a_i + \sum_{i=10}^{18}a_i}{18} = \frac{\sum_{i=1}^{9}a_i}{18} + \frac{\sum_{i=10}^{18}a_i}{18}
+	\end{equation}
+
+	But we know that
+	\begin{gather}
+		b = \frac{\sum_{i=1}^{9}a_i}{9} = 2 \frac{\sum_{i=1}^{9}a_i}{18} \\
+		c = \frac{\sum_{i=10}^{18}a_i}{9} = 2 \frac{\sum_{i=10}^{18}a_i}{18}
+	\end{gather}
+
+	Therefore we can now say that
+	\begin{equation}
+		a = \frac{b}{2} + \frac{c}{2} = \frac{b + c}{2} \label{q4}
+	\end{equation}
+
+	Now we can rearrange to obtain an expression for \(c\).
+	\begin{equation}
+		c = 2a - b
+	\end{equation}
+
+	As a side-note, we have proven from equation (\ref{q4}) that the average of a set of observations is the average of the averages of each half.
+
+	\item[6.]
+	For the ordered observations \(x_1, \dots, x_n\), given that the absolute values of the standardised scores of \(x_1\) and of \(x_n\) are equal, the average \(\xbar\) of all the data is equal to the average of \(x_1\) and \(x_n\).
+	\begin{equation}
+		\xbar = \frac{x_1 + x_n}{2} \label{q6-x-bar}
+	\end{equation}
+
+	To prove this, let \(z_1\) and \(z_n\) be the standardised score for \(x_1\) and \(x_n\) respectively, and let \(\xbar\) be the average and \(s\) be the standard deviation.
+	\begin{equation}
+		z_1 = \frac{x_1 - \xbar}{s} \ \text{ and } \ z_n = \frac{x_n - \xbar}{s} \label{q6-z}
+	\end{equation}
+
+	Since \(x_1\) is the smallest value in our set of observations, \(x_1 \leq \xbar\). Conversely, \(x_n\) is the largest observation, so \(x_n \geq \xbar\). Additionally, \(s\) must always be positive. Therefore \(z_1 \leq 0\) and \(z_n \geq 0\). And since \(|z_1| = |z_n|\), we know that \(-z_1 = z_n\).
+
+	Now we can rearrange the equations in (\ref{q6-z}) to obtain the following.
+	\begin{equation*}
+		x_1 = z_1 s + \xbar
+		\ \text{ and } \
+		x_n = z_n s + \xbar
+	\end{equation*}
+
+	Now we can show that indeed equation (\ref{q6-x-bar}) is correct.
+	\begin{equation*}
+		\frac{x_1 + x_n}{2} = \frac{z_1 s + \xbar + z_n s + \xbar}{2} = \frac{2\xbar}{2} + \frac{s(z_1 + z_n)}{2} = \xbar + \frac{0}{2} = \xbar
+	\end{equation*}
+
+	\item[7.]
+	\begin{enumerate}
+		\item % a
+		We are to prove that
+		\begin{equation*}
+			s^2 = \frac{\sum_{i=1}^n {x_i}^2}{n} - \xbar^2
+		\end{equation*}
+
+		Let us begin with what we know of \(s^2\).
+		\begin{equation*}
+			s^2 = \frac{\sum_{i=1}^n (x_i - \xbar)^2}{n}
+		\end{equation*}
+
+		We can expand and rearrange this equation to obtain
+		\begin{align*}
+			s^2 &= \frac{\sum_{i=1}^n ({x_i}^2 - 2 x_i \xbar + \xbar^2)}{n} \\
+			&= \frac{\sum_{i=1}^n {x_i}^2 - \sum_{i=1}^n 2 x_i \xbar + \sum_{i=1}^n \xbar^2}{n} \\
+			&= \frac{\sum_{i=1}^n {x_i}^2}{n} - \frac{\sum_{i=1}^n 2 x_i \xbar}{n} + \frac{\sum_{i=1}^n \xbar^2}{n} \\
+			&= \frac{\sum_{i=1}^n {x_i}^2}{n} - 2 \xbar \frac{\sum_{i=1}^n x_i}{n} + \frac{n \xbar^2}{n} \\
+			&= \frac{\sum_{i=1}^n {x_i}^2}{n} - 2 \xbar \cdot \xbar + \xbar^2 \\
+			&= \frac{\sum_{i=1}^n {x_i}^2}{n} - 2 \xbar^2 + \xbar^2 \\
+			&= \frac{\sum_{i=1}^n {x_i}^2}{n} - \xbar^2 \\
+		\end{align*}
+
+		\item % b
+		Given that for the following set of observations \(\{1, 5, 2, 3, m\}\), the variance \(s^2\) is 2, we seek the value of \(m\).
+
+		First we will consider an equation for the variance.
+		\begin{align*}
+			s^2 = 2 &= \frac{\sum_{i=1}^n {x_i}^2}{n} - \xbar^2 \\
+			&= \frac{1^2 + 5^2 + 2^2 + 3^2 + m^2}{5} - \left( \frac{1 + 5 + 2 + 3 + m}{5} \right)^2 \\
+			&= \frac{39 + m^2}{5} - \left( \frac{11 + m}{5} \right)^2 \\
+			&= \frac{195 + 5m^2}{25} - \frac{(11 + m)^2}{25} \\
+			&= \frac{195 + 5m^2 - (11 + m)^2}{25} \\
+		\end{align*}
+		Now we rearrange this equation to find a pair of solutions for \(m\).
+		\begin{align*}
+			\frac{195 + 5m^2 - (11 + m)^2}{25} &= 2 \\
+			\Rightarrow 195 + 5m^2 - (11 + m)^2 &= 50 \\
+			\Rightarrow 195 + 5m^2 - 121 - 22m - m^2 &= 50 \\
+			\Rightarrow 4m^2 - 22m + 24 &= 0 \\
+			\Rightarrow m \in \left\{ \frac{3}{2}, 4 \right\}
+		\end{align*}
+
+		\item % c
+		If \(m = \frac{3}{2}\), then the median is equal to 2, otherwise, if \(m = 4\), the median is equal to 3.
+	\end{enumerate}
+
+	\item[8.]
+
+
+\end{answers}
+
+\end{document}

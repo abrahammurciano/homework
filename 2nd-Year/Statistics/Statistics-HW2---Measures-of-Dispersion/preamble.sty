@@ -1,0 +1,79 @@
+% Declare that this style file requires at least LaTeX version 2e.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{preamble}
+
+\usepackage[margin=3cm]{geometry}   % shrink margins
+\usepackage[margin=3cm]{caption}   % shrink captions
+\usepackage{amsmath}    % math equation environments
+\usepackage{amssymb}    % math symbols such as natural numbers N.
+% \usepackage{textcomp}	% needed for gensymb
+% \usepackage{gensymb}	% general symbols such as \degree
+
+\newenvironment{answers}{ % same as enumerate but with more space between each answer
+	\begin{enumerate}
+		\setlength{\itemsep}{\bigskipamount}
+}{\end{enumerate}}
+
+% \newcommand\Item[1][]{ % custom \Item command for block math
+%   \ifx\relax#1\relax  \item \else \item[#1] \fi
+%   \abovedisplayskip=0pt\abovedisplayshortskip=0pt~\vspace*{-\baselineskip}}
+
+% \usepackage{multicol}	% can be used to put enumerate in columns. Usage: \begin{multicols}{NumCols}\begin{enumerate}...
+
+% \newcommand*{\perm}[2]{{}^{#1}\!P_{#2}}
+% \newcommand*{\comb}[2]{{}^{#1}C_{#2}}
+\newcommand{\xbar}{\overline{x}}
+
+% \usepackage{tikz}	% for diagrams
+% \usetikzlibrary{positioning}
+% \usetikzlibrary{arrows}
+% \usetikzlibrary{shapes}
+% \usetikzlibrary{quotes}
+
+\usepackage{pgfplots} % for plotting graphs
+\pgfplotsset{
+	compat=1.16,
+	/pgfplots/xlabel near ticks/.style={
+		/pgfplots/every axis x label/.style={
+        	at={(ticklabel cs:0.5)},anchor=near ticklabel
+		}
+	},
+	/pgfplots/ylabel near ticks/.style={
+		/pgfplots/every axis y label/.style={
+			at={(ticklabel cs:0.5)},rotate=90,anchor=near ticklabel
+		}
+	},
+	bar chart/.style={
+		axis lines = left,
+		xlabel near ticks,
+		ylabel near ticks,
+		ymin = 0,
+		enlarge x limits=0.15,
+		enlarge y limits = {value=.1,upper},
+		bar width = 1cm,
+		ybar,
+		xtick = data
+	},
+	% NOTE: For histograms, use "\addplot+[ybar interval]" instead of "\addplot"
+	histogram/.style={
+		bar chart,
+		enlarge x limits=0.05
+	}
+}
+
+% \usepackage{adjustbox}	% align enumerations containing tall objects to top. Usage: \item\adjustbox{valign=t}{...}
+
+% \usepackage{centernot}	% centers not symbol. Usage: \centernot{...}
+
+% Merge horizontal cells in a table. Usage: \multicolumn{2}{c}{Some Text}
+% \usepackage{booktabs}
+
+% Math mode in tables. Usage: use column type C
+% \usepackage{array}   % for \newcolumntype macro
+% \newcolumntype{C}{>{$}c<{$}} % math-mode version of "c" column type
+
+% paragraph indentation within enumerations
+\usepackage{enumitem}
+\setlist{parsep=4pt,listparindent=\parindent}
+
+\endinput
