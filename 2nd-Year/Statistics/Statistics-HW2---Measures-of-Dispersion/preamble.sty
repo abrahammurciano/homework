@@ -6,6 +6,7 @@
 \usepackage[margin=3cm]{caption}   % shrink captions
 \usepackage{amsmath}    % math equation environments
 \usepackage{amssymb}    % math symbols such as natural numbers N.
+\usepackage[super]{nth}	% \nth{1}, \nth{2}, \nth{3}, \nth{4}
 % \usepackage{textcomp}	% needed for gensymb
 % \usepackage{gensymb}	% general symbols such as \degree
 
@@ -23,6 +24,7 @@
 % \newcommand*{\perm}[2]{{}^{#1}\!P_{#2}}
 % \newcommand*{\comb}[2]{{}^{#1}C_{#2}}
 \newcommand{\xbar}{\overline{x}}
+\newcommand{\IQR}{\text{IQR}}
 
 % \usepackage{tikz}	% for diagrams
 % \usetikzlibrary{positioning}
@@ -30,36 +32,36 @@
 % \usetikzlibrary{shapes}
 % \usetikzlibrary{quotes}
 
-\usepackage{pgfplots} % for plotting graphs
-\pgfplotsset{
-	compat=1.16,
-	/pgfplots/xlabel near ticks/.style={
-		/pgfplots/every axis x label/.style={
-        	at={(ticklabel cs:0.5)},anchor=near ticklabel
-		}
-	},
-	/pgfplots/ylabel near ticks/.style={
-		/pgfplots/every axis y label/.style={
-			at={(ticklabel cs:0.5)},rotate=90,anchor=near ticklabel
-		}
-	},
-	bar chart/.style={
-		axis lines = left,
-		xlabel near ticks,
-		ylabel near ticks,
-		ymin = 0,
-		enlarge x limits=0.15,
-		enlarge y limits = {value=.1,upper},
-		bar width = 1cm,
-		ybar,
-		xtick = data
-	},
-	% NOTE: For histograms, use "\addplot+[ybar interval]" instead of "\addplot"
-	histogram/.style={
-		bar chart,
-		enlarge x limits=0.05
-	}
-}
+% \usepackage{pgfplots} % for plotting graphs
+% \pgfplotsset{
+% 	compat=1.16,
+% 	/pgfplots/xlabel near ticks/.style={
+% 		/pgfplots/every axis x label/.style={
+%         	at={(ticklabel cs:0.5)},anchor=near ticklabel
+% 		}
+% 	},
+% 	/pgfplots/ylabel near ticks/.style={
+% 		/pgfplots/every axis y label/.style={
+% 			at={(ticklabel cs:0.5)},rotate=90,anchor=near ticklabel
+% 		}
+% 	},
+% 	bar chart/.style={
+% 		axis lines = left,
+% 		xlabel near ticks,
+% 		ylabel near ticks,
+% 		ymin = 0,
+% 		enlarge x limits=0.15,
+% 		enlarge y limits = {value=.1,upper},
+% 		bar width = 1cm,
+% 		ybar,
+% 		xtick = data
+% 	},
+% 	% NOTE: For histograms, use "\addplot+[ybar interval]" instead of "\addplot"
+% 	histogram/.style={
+% 		bar chart,
+% 		enlarge x limits=0.05
+% 	}
+% }
 
 % \usepackage{adjustbox}	% align enumerations containing tall objects to top. Usage: \item\adjustbox{valign=t}{...}
 
