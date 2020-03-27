@@ -1,0 +1,32 @@
+\documentclass[fleqn]{article}
+\usepackage{preamble}
+
+\title{Automata \& Formal Languages \\
+\medskip
+\large Homework 3 -- Closure Properties of Regular Languages}
+\author{Abraham Murciano}
+
+\begin{document}
+
+\maketitle
+
+\begin{answers}
+
+	\item % 1
+	\begin{enumerate}
+		\item % a
+		The language \(\lang = \lang_1 \cap \lang_2 \cap \dots \cap \lang_n\), where every \(\lang_i\) is a regular language, is regular, since intersection is closed under finite intersection.
+
+		\item % b
+		The language \(\lang = \lang_1 \cap \lang_2 \cap \dots\), where every \(\lang_i\) is a regular language, is not regular, since intersection is not closed under infinite intersection.
+
+		\item % c
+		If a language \(\mathcal{R}\) is regular, and for some language \(\lang\), \(\lang - \mathcal{R}\) is regular, then \(\lang\) is regular. This is because \(\lang = (\lang - \mathcal{R}) \cup \mathcal{R}\), and regular languages are closed under finite union.
+
+		\item % d
+
+	\end{enumerate}
+
+\end{answers}
+
+\end{document}
