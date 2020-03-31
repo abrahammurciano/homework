@@ -24,6 +24,113 @@
 		If a language \(\mathcal{R}\) is regular, and for some language \(\lang\), \(\lang - \mathcal{R}\) is regular, then \(\lang\) is regular. This is because \(\lang = (\lang - \mathcal{R}) \cup \mathcal{R}\), and regular languages are closed under finite union.
 
 		\item % d
+		If a language \(\mathcal{F}\) is finite, and for some language \(\lang\), \(\lang - \mathcal{F}\) is regular, then \(\lang\) must be regular. This follows from part (c) since all finite languages are regular.
+	\end{enumerate}
+
+	\item % 2
+	If two languages \(\lang_1\) and \(\lang_2\) are regular, then the following language \(\lang\) must be regular.
+	\[\lang = \{a_1 b_1 a_2 b_2 \dots a_n b_n \in \Sigma^* : a_1 a_2 \dots a_n \in \lang_1 \land b_1 b_2 \dots b_n \in \lang_2\}\]
+
+	\(\lang\) can be shown to be regular since it is the intersection of two regular languages. Let these two languages be called \(\lang_1'\) and \(\lang_2'\). We will define these as follows.
+	\begin{gather*}
+		\lang_1' = \{a_1 b_1 a_2 b_2 \dots a_n b_n \in \Sigma^* : a_1 a_2 \dots a_n \in \lang_1\} \\
+		\lang_2' = \{a_1 b_1 a_2 b_2 \dots a_n b_n \in \Sigma^* : b_1 b_2 \dots b_n \in \lang_2\}
+	\end{gather*}
+
+	Each of these is the language that can be formed by taking \(\lang_1\) and \(\lang_2\) respectively and inserting any symbol in the language after or before each symbol in every word, respectively. To show that both \(\lang_1'\) and \(\lang_2'\) are regular given that \(\lang_1\) and \(\lang_2\) are regular, we will show that it is possible to `extend' the DFA of each of \(\lang_1\) and \(\lang_2\) to create DFAs which accept \(\lang_1'\) and \(\lang_2'\).
+
+	To construct a DFA for \(\lang_1'\) from the DFA which accepts \(\lang_1\), we can replace each transition on a symbol \(\sigma\) out of a state \(q_r\) to \(q_s\) in \(\lang_1\) into a transition on the same symbol \(\sigma\) from \(q_r\) to a new intermediate state \(q_t\), and from \(q_t\) it will transition to \(q_s\) on any symbol. If \(q_r\) was a final state in the DFA for \(\lang_1\) it will not be for \(\lang_1'\), and \(q_t\) will be instead. See Figure \ref{q2-l1-l1'}.
+
+	\begin{figure}[htb]
+		\centering
+		\begin{statediagram}
+			\node[state] (r) {\(q_r\)};
+			\node[state, right=of r] (s) {\(q_s\)};
+			\draw[input] (r) to["{\(\sigma\)}"] (s);
+		\end{statediagram}
+
+		\begin{tikzpicture}
+			\node (to) {\(\Downarrow\)};
+		\end{tikzpicture}
+
+		\begin{statediagram}
+			\node[state] (r) {\(q_r\)};
+			\node[state, right=of r] (t) {\(q_t\)};
+			\node[state, right=of t] (s) {\(q_s\)};
+			\draw[input] (r) to["{\(\sigma\)}"] (t);
+			\draw[input] (t) to["{\(\Sigma\)}"] (s);
+		\end{statediagram}
+		\caption{Conversion from \(\lang_1\) to \(\lang_1'\)}
+		\label{q2-l1-l1'}
+	\end{figure}
+
+	Similarly, a DFA for \(\lang_2'\) can be constructed from the DFA which accepts \(\lang_2\). We can replace each transition on a symbol \(\sigma\) into a state \(q_s\) from \(q_r\) in \(\lang_2\) into a transition on any symbol from \(q_r\) to a new intermediate state \(q_t\), and from \(q_t\) it will transition to \(q_s\) on the symbol \(\sigma\). The final states are unchanged, and a new start state is added to the DFA for \(\lang_2'\) which transitions to the original start state on any symbol. See Figure \ref{q2-l2-l2'}.
+
+	\begin{figure}[htb]
+		\begin{multicols}{2}
+			\centering
+			\begin{statediagram}
+				\node[state] (r) {\(q_r\)};
+				\node[state, right=of r] (s) {\(q_s\)};
+				\draw[input] (r) to["{\(\sigma\)}"] (s);
+			\end{statediagram}
+
+			\begin{tikzpicture}
+				\node (to) {\(\Downarrow\)};
+			\end{tikzpicture}
+
+			\begin{statediagram}
+				\node[state] (r) {\(q_r\)};
+				\node[state, right=of r] (t) {\(q_t\)};
+				\node[state, right=of t] (s) {\(q_s\)};
+
+				\draw[input] (r) to["{\(\Sigma\)}"] (t);
+				\draw[input] (t) to["{\(\sigma\)}"] (s);
+			\end{statediagram}
+
+
+
+			\begin{statediagram}
+				\node[state, start] {\(q_s\)};
+			\end{statediagram}
+
+			\begin{tikzpicture}
+				\node (to) {\(\Downarrow\)};
+			\end{tikzpicture}
+
+			\begin{statediagram}
+				\node[state, start] {\(q_0\)};
+				\node[state, right=of start] (1) {\(q_s\)};
+
+				\draw[input] (start) to["{\(\Sigma\)}"] (1);
+			\end{statediagram}
+		\end{multicols}
+		\caption{Conversion from \(\lang_2\) to \(\lang_2'\)}
+		\label{q2-l2-l2'}
+	\end{figure}
+
+	Since \(\lang_1'\) and \(\lang_2'\) are regular, their intersection, \(\lang\), is also regular.
+
+	\item % 3
+	Let \(\lang\) be a regular language over some alphabet \(\Sigma\).
+	\begin{enumerate}
+		\item % a
+		The language containing all words which are double the length of any word in \(\lang\),
+		\[\lang' = \{a^{2|w|} : w \in \lang\}\]
+		is regular. If the DFA for language \(\lang\) is modified such that every edge from \(q_a\) to \(q_b\) is exchanged for an edge leading to a new state on any symbol in \(\Sigma\), and the new state also leads to \(q_b\) on any symbol in \(\Sigma\), and the start state is replaced with a new state which transitions to the original start state, then an NFA which accepts \(\lang'\) can be constructed. Since this is possible, then \(\lang'\) must be regular.
+
+		\item % b
+		The language consisting of all prefixes of any word in \(\lang\),
+		\[\text{prefix}(\lang) = \{w \in \Sigma^* : \exists u \in \Sigma^*, wu \in \lang\}\]
+		is regular, since a DFA can be built for it by making any state which leads to an accepted state in \(\lang\)'s DFA into an accepted state in \(\text{prefix}(\lang)\)'s DFA.
+
+		\item % c
+		The language containing all `superstrings' of a word in \(\lang\), i.e. strings that contain a word in \(\lang\) as a substring,
+		\[\text{sup}(\lang) = \{w \in \Sigma^* : \exists x,z \in \Sigma^*, \exists y \in \lang, w=xyz\}\]
+		is a regular language. An NFA with \(\varepsilon\) transitions can easily be constructed for this language. Let \(\mathcal{A}_1\) and \(\mathcal{A}_2\) be two automatons that accept \(\Sigma^*\), and \(\text{DFA}_\lang\) be an automaton that accepts \(\lang\). We can now `concatenate' \(\mathcal{A}_1\) to \(\text{DFA}_\lang\) and then `concatenate' \(\text{DFA}_\lang\) to \(\mathcal{A}_2\). The way in which we will concatenate two automata is by adding an \(\varepsilon\)-transition from every accepted state in the first one to the start state of the second.
+
+		This operation will give us an NFA that accepts \(\text{sup}(\lang)\), so it must be regular.
+
 
 	\end{enumerate}
 

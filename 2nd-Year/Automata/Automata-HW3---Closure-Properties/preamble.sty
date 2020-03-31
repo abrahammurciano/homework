@@ -20,13 +20,18 @@
 %   \ifx\relax#1\relax  \item \else \item[#1] \fi
 %   \abovedisplayskip=0pt\abovedisplayshortskip=0pt~\vspace*{-\baselineskip}}
 
-%\usepackage{multicol}	% can be used to put enumerate in columns. Usage: \begin{multicols}{NumCols}\begin{enumerate}...
+\usepackage{multicol}	% can be used to put text in columns. Usage: \begin{multicols}{NumCols}...
 
 \usepackage{tikz}	% for diagrams
 \usetikzlibrary{positioning}
 \usetikzlibrary{arrows}
 \usetikzlibrary{shapes}
 \usetikzlibrary{quotes}
+
+% Definition of \ifnodedefined. Usage: \ifnodedefined{node-id}{...}{}
+\long\def\ifnodedefined#1#2#3{%
+    \@ifundefined{pgf@sh@ns@#1}{#3}{#2}%
+}
 
 % same as tikzpicture but for state diagrams
 % Usage:
@@ -52,7 +57,9 @@
 		input/.style={->, thick, shorten >= 1mm, shorten <= 1mm},
 	]
 }{
-	\draw[input] (start.west)+(-1cm,0) to (start.west);
+	\expandafter\ifx\csname pgf@sh@pi@start\endcsname\pgfpictureid
+		\draw[input] (start.west)+(-1cm,0) to (start.west);
+	\fi
 	\end{tikzpicture}
 }
 
