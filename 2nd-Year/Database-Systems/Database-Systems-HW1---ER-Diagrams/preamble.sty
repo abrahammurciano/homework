@@ -1,0 +1,39 @@
+% Declare that this style file requires at least LaTeX version 2e.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{preamble}
+
+\usepackage[margin=3cm]{geometry}   % shrink margins
+\usepackage[margin=3cm]{caption}   % shrink captions
+% \usepackage{amsmath}    % math equation environments
+% \usepackage{amssymb}    % math symbols such as natural numbers N.
+% \usepackage[super]{nth}	% \nth{1}, \nth{2}, \nth{3}, \nth{4}
+
+% \newcommand{\N}{\mathbb{N}}
+
+\newenvironment{answers}{ % same as enumerate but with more space between each answer
+	\begin{enumerate}[leftmargin=-0.5cm]
+		\setlength{\itemsep}{\bigskipamount}
+}{\end{enumerate}}
+
+% \newcommand\Item[1][]{ % custom \Item command for block math
+%   \ifx\relax#1\relax  \item \else \item[#1] \fi
+%   \abovedisplayskip=0pt\abovedisplayshortskip=0pt~\vspace*{-\baselineskip}}
+
+%\usepackage{multicol}	% can be used to put enumerate in columns. Usage: \begin{multicols}{NumCols}\begin{enumerate}...
+
+\usepackage{tikz}	% for diagrams
+\usepackage{tikz-er2}	% for entity relationship diagrams
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+\usetikzlibrary{calc}
+
+% Math mode in tables. Usage: use column type C
+% \usepackage{array}   % for \newcolumntype macro
+% \newcolumntype{C}{>{$}c<{$}} % math-mode version of "c" column type
+
+% paragraph indentation within enumerations
+\usepackage{enumitem}
+\setlist{parsep=4pt,listparindent=\parindent}
+
+\endinput

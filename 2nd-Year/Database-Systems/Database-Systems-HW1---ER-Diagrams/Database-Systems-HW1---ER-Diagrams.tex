@@ -1,0 +1,227 @@
+\documentclass[fleqn]{article}
+\usepackage{preamble}
+
+\title{
+	Database Systems \\
+	\medskip
+	\large Homework 1 -- Entity Relationship Diagrams
+}
+\author{Abraham Murciano}
+
+\begin{document}
+
+\maketitle
+
+\begin{answers}
+
+	\item % 1
+	\begin{enumerate}
+		\item \label{q1a} % a
+			Figure \ref{q1a-ERD} shows an entity relationship diagram (ERD) which describes the relationships between some restaurants, waiters and meals.
+			\begin{figure}[htb]
+				\centering
+				\begin{tikzpicture}
+					\node[ent] (restaurant) {Restaurant};
+					\node[att, left=of restaurant] (restaurant id) {\key{ID}} edge (restaurant);
+					\node[att, below left=of restaurant] (restaurant name) {Name} edge (restaurant);
+
+					\node[rel, right=of restaurant] (serves) {Serves} edge (restaurant);
+
+					\node[ent, right=of serves] (waiter) {Waiter} edge (serves);
+					\node[att, below=of waiter] (waiter id) {\key{ID}} edge (waiter);
+
+					\node[ent, below=of serves] (meal) {Meal} edge (serves);
+					\node[att, left=of meal] (meal id) {\key{ID}} edge (meal);
+				\end{tikzpicture}
+				\caption{ERD for question \ref{q1a}}
+				\label{q1a-ERD}
+			\end{figure}
+			\begin{enumerate}
+				\item % i
+					In this ERD, a waiter may serve at more than one restaurant, since the relationship between waiters and restaurants is many to many.
+
+				\item % ii
+					In this ERD, more than one restaurant may share the same name, because name is not a key attribute of restaurants.
+			\end{enumerate}
+
+		\item \label{q1b} % b
+			Figure \ref{q1b-ERD} describes slightly different relationships between some restaurants, waiters and meals.
+			\begin{figure}[htb]
+				\centering
+				\begin{tikzpicture}
+					\node[ent] (restaurant) {Restaurant};
+					\node[att, left=of restaurant] (restaurant id) {\key{ID}} edge (restaurant);
+					\node[att, below left=of restaurant] (restaurant name) {Name} edge (restaurant);
+
+					\node[rel, right=of restaurant] (serves) {Serves} edge (restaurant);
+
+					\node[ent, right=of serves] (waiter) {Waiter} edge (serves);
+					\node[att, below=of waiter] (waiter id) {\key{ID}} edge (waiter);
+
+					\node[ent, below=of serves] (meal) {Meal} edge[eq1<] (serves);
+					\node[att, left=of meal] (meal id) {\key{ID}} edge (meal);
+				\end{tikzpicture}
+				\caption{ERD for question \ref{q1b}}
+				\label{q1b-ERD}
+			\end{figure}
+			\begin{enumerate}
+				\item % i
+					It is possible that some meal is not served in any of the restaurants. The new constraint only enforces that each pair of restaurant and waiter appear exactly once, it does not constrain the meals at all.
+
+				\item % ii
+					A waiter may not serve more than one meal at the same restaurant because each pair of waiter and restaurant may exist once and only once.
+			\end{enumerate}
+
+		\item \label{q1c} % c
+			Figure \ref{q1c-ERD} describes relationships between some restaurants, waiters, meals and chefs.
+			\begin{figure}[htb]
+				\centering
+				\begin{tikzpicture}
+					\node[ent] (restaurant) {Restaurant};
+					\node[att, left=of restaurant] (restaurant id) {\key{ID}} edge (restaurant);
+					\node[att, above=of restaurant] (restaurant name) {Name} edge (restaurant);
+
+					\node[rel, right=of restaurant] (serves) {Serves} edge[leq1>] (restaurant);
+
+					\node[ent, right=of serves] (waiter) {Waiter} edge[eq1<] (serves);
+					\node[att, below=of waiter] (waiter id) {\key{ID}} edge (waiter);
+
+					\node[ent, below=of serves] (meal) {Meal} edge (serves);
+					\node[att, left=of meal] (meal id) {\key{ID}} edge (meal);
+
+					\node[ent, above=of serves] (chef) {Chef} edge[eq1<] (serves);
+					\node[att, right=of chef] (chef id) {\key{ID}} edge (chef);
+				\end{tikzpicture}
+				\caption{ERD for question \ref{q1c}}
+				\label{q1c-ERD}
+			\end{figure}
+			\begin{enumerate}
+				\item % i
+					It is not possible that a chef does not work in any restaurant, since the relationship to the waiter is `exactly one'. This means that every possible triple of chef, restaurant and meal must appear exactly once. In simpler terms, it means that every chef must prepare every available meal at every restaurant, so it is impossible that one chef does not work at any restaurant.
+
+				\item % ii
+					A waiter may serve the same meal prepared by many different chefs, provided they are all in different restaurants. This is because the relationship to the chef ensures that each tuple of restaurant, waiter and meal is related to precisely one chef. Therefore a specific waiter and meal can only be related to two different chefs if they are related to two different restaurants.
+			\end{enumerate}
+	\end{enumerate}
+
+	\item % 2
+	We are to create an ERD that models some tournament in which teams compete among each other. In order to create our ERD we have the following information:
+	\begin{itemize}
+		\item
+			Every player has a player ID, a player name, a nickname, and a nationality.
+
+		\item
+			Every team is composed of three players, and every team has a team ID and a team name.
+
+		\item
+			Every player must be member of a one and only one team.
+
+		\item
+			A game is defined by the two teams that play in it (the winning team and the losing team), the date and time at which the game took place.
+
+		\item
+			There are two kinds of games, pointed and not pointed. If a game is pointed, its points are recorded.
+	\end{itemize}
+
+	\begin{enumerate}
+		\item % a
+			Figure \ref{q2a-ERD} shows an ERD that illustrates this scenario.
+
+			\begin{figure}[p]
+				\centering
+				\begin{tikzpicture}
+					\node[rel] (player-team) {Plays\\on team};
+
+					\node[ent, left=of player-team] (player) {Player} edge node[pos=0.2, above ] {3} (player-team);
+					\node[att, above=of player] (player id) {\key{ID}} edge (player);
+					\node[att, left=of player] (player name) {Name} edge (player);
+					\node[att, above left=of player] (player nickname) {Nickname} edge (player);
+					\node[att, below left=of player] (player nationality) {Nationality} edge (player);
+
+					\node[ent, right=of player-team] (team) {Team} edge[eq1<] (player-team);
+					\node[att, above=of team] (team id) {\key{ID}} edge (team);
+					\node[att, right=of team] (team name) {Name} edge (team);
+
+					\node[id rel, below left=of team] (wins) {Wins} edge[eq1>] (team.south west);
+
+					\node[id rel, below right=of team] (loses) {Loses} edge[eq1>] (team.south east);
+
+					\node[weak ent, below right=of wins] (game) {Game} edge (wins) edge (loses);
+					\node[att, left=of game] (timestamp) {\key{Timestamp}} edge (game);
+
+					\node[isa, below=of game] (is a game) {IS A} edge (game);
+
+					\node[weak ent, below=of is a game] (point game) {Game with\\points} edge (is a game);
+					\node[att, left=of point game] (point game points) {Points} edge (point game);
+				\end{tikzpicture}
+				\caption{An ERD that models a tournament in which teams compete among each other}
+				\label{q2a-ERD}
+			\end{figure}
+
+		\item % b
+			Converting the ERD in figure \ref{q2a-ERD} into a set of relational schemata using the rules taught in class gives us the following schemata.
+			\begin{itemize}
+				\item[] \textsc{Player} (\key{Player ID}, Name, Nickname, Nationality, \fkey{TeamID})
+				\item[] \textsc{Team} (\key{Team ID}, Name)
+				\item[] \textsc{Game} (\key{Timestamp}, \key{\fkey{Winning team ID}}, \key{\fkey{Losing team ID}})
+				\item[] \textsc{Game with points} (\key{Timestamp}, \key{\fkey{Winning team ID}}, \key{\fkey{Losing team ID}}, Points)
+			\end{itemize}
+
+			If most of the games have points, then the \textsc{Game with points} table will hold lots of repeated data. To improve this, a \key{Game ID} key attribute can be added to the \textsc{Game} table (and the \textsc{Game with points} table), and the three other keys can be removed from the \textsc{Game with points} table.
+
+	\end{enumerate}
+
+	\pagebreak
+	\item % 3
+	Figure \ref{q3-ERD} shows an ERD. What follows is a translation from said ERD to a relational logical schema.
+	\begin{itemize}
+		\item[] \textsc{Campus} (\key{Campus name}, Founded)
+		\item[] \textsc{Building} (\key{Building name}, \key{\fkey{Campus name}})
+		\item[] \textsc{Computer} (\key{Computer ID}, \key{\fkey{Building name}}, \key{\fkey{Campus name}})
+		\item[] \textsc{Subject} (\key{Subject name})
+		\item[] \textsc{User} (\key{First time}, \key{Last time})
+		\item[] \textsc{Administrator} (\key{First time}, \key{Last time})
+	\end{itemize}
+
+	\begin{figure}[bh]
+		\centering
+		\begin{tikzpicture}
+			\node[ent] (campus) {Campus};
+			\node[att, left=of campus] (campus name) {\key{Name}} edge (campus);
+			\node[att, right=of campus] (campus founded) {Founded} edge (campus);
+
+			\node[id rel, below=of campus] (campus-building) {Located at} edge[eq1>] (campus);
+
+			\node[weak ent, below=of campus-building] (building) {Building} edge (campus-building);
+			\node[att, left=of building] (building name) {\key{Name}} edge (building);
+
+			\node[id rel, below=of building] (building-computer) {Located at} edge[eq1>] (building);
+
+			\node[weak ent, below=of building-computer] (computer) {Computer} edge (building-computer);
+			\node[att, left=of computer] (computer id) {\key{ID}} edge (computer);
+
+			\node[rel, right=of building] (studies) {Studies} edge[leq1>] (building);
+			\node[right=of studies] (1) {};
+
+			\node[ent] at (campus-building -| 1) (subject) {Subject} edge (studies);
+			\node[att, right=of subject] (subject name) {\key{Name}} edge (subject);
+
+			\node[ent] at (building-computer -| 1) (user) {User} edge (studies);
+			\node[att, above right=of user] (user first) {\key{First time}} edge (user);
+			\node[att, right=of user] (user last) {\key{Last time}} edge (user);
+
+			\node[rel, right=of computer] (computer-user) {First used} edge (computer) edge[leq1>] (user);
+			\node[att, below=of computer-user] (computer-user time) {Time} edge (computer-user);
+
+			\node[isa, below=of user, xshift=2cm] (is a user) {IS A};
+			\draw (user) to (is a user.north);
+
+			\node[ent, below=of is a user] (administrator) {Administrator} edge (is a user);
+		\end{tikzpicture}
+		\caption{An ERD representing the structure of a university}
+		\label{q3-ERD}
+	\end{figure}
+
+\end{answers}
+
+\end{document}

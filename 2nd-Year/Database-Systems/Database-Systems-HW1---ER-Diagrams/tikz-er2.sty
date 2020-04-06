@@ -1,0 +1,84 @@
+% The tikz-er2 package.
+% Ver. 1.0
+% (c) P�vel Caldo
+% January 2009
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{tikz-er2}[2009/01/31 Entity-relationship diagrams using the
+Tikz library]
+
+\RequirePackage{tikz}
+\RequirePackage[normalem]{ulem}  % for the dashed underline
+
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{arrows}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{fit}
+
+\tikzset{every ent/.style = {}}
+\tikzset{every att/.style = {}}
+\tikzset{every rel/.style = {}}
+\tikzset{every weak/.style = {}}
+\tikzset{every link/.style = {}}
+\tikzset{every isa/.style = {}}
+\tikzset{every leq1/.style = {}}
+\tikzset{every leq1>/.style = {}}
+\tikzset{every leq1</.style = {}}
+\tikzset{every eq1/.style = {}}
+\tikzset{every eq1>/.style = {}}
+\tikzset{every eq1</.style = {}}
+
+\tikzset{link/.style = {>=triangle 60, draw, thick, every link}}
+
+\tikzset{total/.style = {link, line width=2.4pt}}
+
+\tikzset{ent/.style = {rectangle, draw, black, thick,
+                	   minimum width=6em, minimum height=2.5em, align=center,
+                	   every ent}}
+
+\tikzset{weak ent/.style = {ent, double, double distance=2pt, outer sep=1.2pt}}
+
+\tikzset{att/.style = {ellipse, draw, black, thick,
+                	   minimum width=5em, minimum height=2em, node distance=2em, align=center,
+                	   every att}}
+
+%\tikzset{key att/.style = {att, font=\bfseries}}
+
+\tikzset{multi att/.style = {att, double_rectangle}}
+
+\tikzset{derived att/.style = {att, dashed}}
+
+%\tikzset{discriminator/.style = {att, font=\itshape}}
+
+\tikzset{rel/.style = {diamond, draw, black, thick,
+                	   minimum width=2em, aspect=2, align=center,
+                	   every rel}}
+
+\tikzset{id rel/.style = {rel, double, double distance=2pt, outer sep=1.2pt}}
+
+\tikzset{isa/.style = {isosceles triangle, isosceles triangle apex angle=60,
+                	   shape border rotate=90,
+                	   draw, black, thick, minimum size=3em,
+					   every isa}}
+
+\tikzset{leq1/.style = {every leq1}}
+\tikzset{leq1>/.style = {-{Triangle[length=2mm]}, every leq1, every leq1>}}
+\tikzset{leq1</.style = {{Triangle[length=2mm]}-, every leq1, every leq1<}}
+
+\tikzset{eq1/.style = {every eq1}}
+\tikzset{eq1>/.style = {-{Arc Barb[length=2mm]}, every eq1, every eq1>}}
+\tikzset{eq1</.style = {{Arc Barb[length=2mm]}-, every eq1, every eq1<}}
+
+% for text un key attributes
+\newcommand{\key}[1]{\underline{#1}}
+\newcommand{\fkey}[1]{\textit{#1}}
+
+% for text in discriminator attributes
+\def\discriminator{\bgroup
+  \ifdim\ULdepth=\maxdimen  % Set depth based on font, if not set already
+   \settodepth\ULdepth{(j}\advance\ULdepth.4pt\fi
+  \markoverwith{\kern.15em
+  \vtop{\kern\ULdepth \hrule width .3em}%
+  \kern.15em}\ULon}
+
+\endinput

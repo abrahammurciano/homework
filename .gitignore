@@ -1,7 +1,6 @@
 **/a.out
 .vscode/ipch/
 *.code-workspace
-playground/*
 *.aux
 *.fdb_latexmk
 *.log
