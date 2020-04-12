@@ -1,0 +1,37 @@
+\documentclass[fleqn]{article}
+\usepackage{preamble}
+
+\title{
+	Statistics \\
+	\medskip
+	\large Homework 3 -- Estimation
+}
+\author{Abraham Murciano}
+
+\begin{document}
+
+\maketitle
+
+\begin{answers}
+
+	\item[1.]
+	\begin{enumerate}
+		\item % a
+			Given a sample \(x_1, \dots, x_n\), we are to prove that \(\forall k \in \{1, \dots, n\}\),
+			\[\hat{\mu}_k = \frac{\sum_{i=1}^k x_i}{k}\]
+			is an unbiased estimator of the average \(\mu\). To demonstrate this, we must show that \(\E[\hat{\mu}_k] = \mu\).
+			\[\E[\hat{\mu}_k] = \frac{\sum_{i=1}^k \E[x_i]}{k} = \frac{\sum_{i=1}^k \mu}{k} = \frac{k \mu}{k} = \mu\]
+
+		\item % b
+			The larger the value of \(k\), the better the estimator \(\hat\mu_k\) is. This is because when an estimator's variance from its parameter is small, it is a better estimator. The variance of \(\hat{\mu}_k\) is
+			\[
+				\Var(\hat{\mu}_k)
+				= \Var\left(\frac{\sum_{i=1}^k x_i}{k}\right)
+				= \frac{1}{k^2} \Var\left(\sum_{i=1}^k x_i\right)
+			\]
+			It is clear from this that the larger \(k\) is, the smaller \(\frac{1}{k^2}\) is, so the smaller \(\Var(\hat{\mu}_k)\) is.
+	\end{enumerate}
+
+\end{answers}
+
+\end{document}
