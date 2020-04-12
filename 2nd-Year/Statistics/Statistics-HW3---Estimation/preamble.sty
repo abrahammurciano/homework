@@ -11,7 +11,7 @@
 % \usepackage{gensymb}	% general symbols such as \degree
 
 \newenvironment{answers}{ % same as enumerate but with more space between each answer
-	\begin{enumerate}
+	\begin{enumerate}[leftmargin=-0.5cm]
 		\setlength{\itemsep}{\bigskipamount}
 }{\end{enumerate}}
 
@@ -23,10 +23,10 @@
 
 % \newcommand*{\perm}[2]{{}^{#1}\!P_{#2}}
 % \newcommand*{\comb}[2]{{}^{#1}C_{#2}}
-% \newcommand{\xbar}{\overline{x}}
+\newcommand{\xbar}{\bar{x}}
 % \newcommand{\IQR}{\text{IQR}}
-\newcommand{\E}{\operatorname{E}}
-\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\E}[1]{\operatorname{E}\left[#1\right]}
+\newcommand{\Var}[1]{\operatorname{Var}\left(#1\right)}
 
 % \usepackage{tikz}	% for diagrams
 % \usetikzlibrary{positioning}

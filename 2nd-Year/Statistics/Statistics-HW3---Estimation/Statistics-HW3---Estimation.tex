@@ -15,23 +15,69 @@
 \begin{answers}
 
 	\item[1.]
-	\begin{enumerate}
-		\item % a
-			Given a sample \(x_1, \dots, x_n\), we are to prove that \(\forall k \in \{1, \dots, n\}\),
-			\[\hat{\mu}_k = \frac{\sum_{i=1}^k x_i}{k}\]
-			is an unbiased estimator of the average \(\mu\). To demonstrate this, we must show that \(\E[\hat{\mu}_k] = \mu\).
-			\[\E[\hat{\mu}_k] = \frac{\sum_{i=1}^k \E[x_i]}{k} = \frac{\sum_{i=1}^k \mu}{k} = \frac{k \mu}{k} = \mu\]
+		\begin{enumerate}
+			\item % a
+				Given a sample \(x_1, \dots, x_n\), we are to prove that \(\forall k \in \{1, \dots, n\}\),
+				\[\hat{\mu}_k = \frac{\sum_{i=1}^k x_i}{k}\]
+				is an unbiased estimator of the average \(\mu\). To demonstrate this, we must show that \(\E{\hat{\mu}_k} = \mu\).
+				\[\E{\hat{\mu}_k} = \frac{\sum_{i=1}^k \E{x_i}}{k} = \frac{\sum_{i=1}^k \mu}{k} = \frac{k \mu}{k} = \mu\]
 
-		\item % b
-			The larger the value of \(k\), the better the estimator \(\hat\mu_k\) is. This is because when an estimator's variance from its parameter is small, it is a better estimator. The variance of \(\hat{\mu}_k\) is
-			\[
-				\Var(\hat{\mu}_k)
-				= \Var\left(\frac{\sum_{i=1}^k x_i}{k}\right)
-				= \frac{1}{k^2} \Var\left(\sum_{i=1}^k x_i\right)
-			\]
-			It is clear from this that the larger \(k\) is, the smaller \(\frac{1}{k^2}\) is, so the smaller \(\Var(\hat{\mu}_k)\) is.
-	\end{enumerate}
+			\item % b
+				The larger the value of \(k\), the better the estimator \(\hat\mu_k\) is. This is because when an estimator's variance from its parameter is small, it is a better estimator. The variance of \(\hat{\mu}_k\) is
+				\[
+					\Var{\hat{\mu}_k}
+					= \Var{\frac{\sum_{i=1}^k x_i}{k}}
+					= \frac{1}{k^2} \Var{\sum_{i=1}^k x_i}
+				\]
+				It is clear from this that the larger \(k\) is, the smaller \(\frac{1}{k^2}\) is, so the smaller \(\Var{\hat{\mu}_k}\) is.
+		\end{enumerate}
 
+	\item[2.]
+		With respect to a random variable \(X\) having mean \(\mu\) and variance \(\sigma^2\), we have 2 independent samples of sizes \(n_1\) and \(n_2\) respectively, whose means are \(\xbar_1\) and \(\xbar_2\). We are given the following estimator.
+		\[\hat{\mu} = a\xbar_1 + (1-a)\xbar_2\]
+		\begin{enumerate}
+			\item %a
+				We are to show that \(\hat{\mu}\) is an unbiased estimator for \(\mu\) for all values of \(a\).
+
+				To achieve this we must show that \(\E{\hat\mu} = \mu\).
+				\begin{align*}
+					\E{\hat{\mu}} & = \E{a\xbar_1 + (1-a)\xbar_2} \\
+					              & = \E{a\xbar_1} + \E{(1-a)\xbar_2} \\
+					              & = a \E{\xbar_1} + (1-a) \E{\xbar_2} \\
+					              & = a \mu + (1-a) \mu \\
+					              & = a \mu + \mu - a \mu \\
+					              & = \mu
+				\end{align*}
+
+			\item % b
+				The value of \(a\) for which we have the best possible estimator (within this class of estimators) occurs when the variance of the estimator is lowest.
+				% TODO
+		\end{enumerate}
+
+	\item[4.]
+		We are given a random variable \(X\) with a mean \(\mu\) and a variance \(\sigma^2\), as well as the following two estimators for \(\mu\).
+		\begin{gather*}
+			\hat{\mu}_1 = \frac{\sum_{i=1}^7 x_i}{7} \\
+			\hat{\mu}_2 = \frac{2x_1 - x_6 + x_4}{2}
+		\end{gather*}
+
+		\begin{enumerate}
+			\item % a
+				\(\hat{\mu}_1\) is unbiased since \(\E{\hat{\mu}_1} = \mu\).
+				\[\E{\hat{\mu}_1} = \E{\frac{\sum_{i=1}^7 x_i}{7}} = \frac{\sum_{i=1}^7 \E{x_i}}{7} = \frac{7 \E{X}}{7} = \E{X} = \mu\]
+
+				\(\hat{\mu}_2\) is also unbiased since \(\E{\hat{\mu}_2} = \mu\).
+				\[\E{\hat{\mu}_2} = \E{\frac{2x_1 - x_6 + x_4}{2}} = \frac{2\E{x_1} - \E{x_6} + \E{x_4}}{2} = \frac{2\E{X}}{2} = \E{X} = \mu\]
+
+			\item % b
+				Of these two estimators, the preferred one would be the one with the smaller variance.
+				\begin{gather*}
+					\Var{\hat{\mu}_1} = \Var{\frac{\sum_{i=1}^7 x_i}{7}} = \frac{1}{49} \sum_{i=1}^7 \Var{x_i} = \frac{1}{49}7\sigma^2 = \frac{\sigma^2}{7} \\
+					\Var{\hat{\mu}_2} = \Var{\frac{2x_1 - x_6 + x_4}{2}} = \frac{\Var{2x_1} - \Var{x_6} + \Var{x_4}}{4} = \frac{4\sigma^2 - \sigma^2 + \sigma^2}{4} = \sigma^2
+				\end{gather*}
+
+				Since \(\Var{\hat{\mu}_1} \leq \Var{\hat{\mu}_2}\), \(\hat{\mu}_1\) is a better estimator for \(\mu\).
+		\end{enumerate}
 \end{answers}
 
 \end{document}
