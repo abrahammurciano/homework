@@ -51,7 +51,24 @@
 
 			\item % b
 				The value of \(a\) for which we have the best possible estimator (within this class of estimators) occurs when the variance of the estimator is lowest.
-				% TODO
+				\begin{align*}
+					\Var{\hat{\mu}} & = \Var{a\xbar_1 + (1-a)\xbar_2} \\
+					                & = a^2 \Var{\xbar_1} + (1-a)^2 \Var{\xbar_2} \\
+					                & = a^2 \sigma^2 + (1-2a+a^2) \sigma^2 \\
+					                & = 2 \sigma^2 a^2 - 2\sigma^2 a + \sigma^2
+				\end{align*}
+
+				Now we must differentiate this and set the derivative equal to zero in order to find the value of \(a\) which results in the smallest variance.
+				\begin{align*}
+					\frac{d\Var{\hat{\mu}}}{da} = 4 \sigma^2 a - 2 \sigma^2 & = 0 \\
+					4 \sigma^2 a                                            & =  2 \sigma^2 \\
+					a                                                       & =  \frac{2\sigma^2}{4\sigma^2} = \frac{1}{2} \\
+				\end{align*}
+
+				To show that it is indeed a minimum and not a maximum, we must now take the second derivative and check that it is positive when \(a = \frac{1}{2}\).
+				\begin{align*}
+					\frac{d^2\Var{\hat{\mu}}}{da^2} = 4 \sigma^2 \geq 0
+				\end{align*}
 		\end{enumerate}
 
 	\item[4.]
@@ -78,6 +95,77 @@
 
 				Since \(\Var{\hat{\mu}_1} \leq \Var{\hat{\mu}_2}\), \(\hat{\mu}_1\) is a better estimator for \(\mu\).
 		\end{enumerate}
+
+	\item[9.]
+		Given that a sample of size \(n\) was taken from a continuous random variable, \(X\), which has the gamma distribution that follows, we are to find the maximum likelihood estimator for \(\lambda\).
+		\[
+			f(x) = \begin{cases}
+				\displaystyle{\frac{e^{-\lambda x} \lambda^m x^{m-1}}{\Gamma(m)}} & \text{if } x > 0 \land \lambda > 0 \\
+				0                                                                 & \text{otherwise}
+			\end{cases}
+		\]
+
+		To do so, the likelihood function must first be found. The likelihood function, \(L(x_1, \dots, x_n)\), is the product of the probability function at each observed value of \(x\).
+		\[
+			L(x_1, \dots, x_n) = \prod f(x_i)
+			= \prod \frac{e^{-\lambda x_i} \lambda^m {x_i}^{m-1}}{\Gamma(m)}
+			= \frac{\lambda^{mn} e^{-\lambda \sum x_i} \left(\prod x_i \right)^{m-1}}{\Gamma(m)^n}
+		\]
+
+		Subsequently we must find the point for \(\lambda\) which causes the likelihood function to have the highest value. This can be achieved by differentiating the likelihood function and setting it equal to zero, or doing the same to its logarithm. This can be done since the function \(f(x) = \ln(x)\) is monotonically increasing.
+		\begin{align*}
+			\ln(L) & = \ln \left( \frac{\lambda^{mn} e^{-\lambda \sum x_i} \left(\prod x_i \right)^{m-1}}{\Gamma(m)^n} \right) \\
+			       & = \ln \left( \lambda^{mn} e^{-\lambda \sum x_i} \left(\prod x_i \right)^{m-1}\right) - \ln(\Gamma(m)^n) \\
+			       & = \ln(\lambda^{mn}) + \ln\left( e^{-\lambda \sum x_i} \right) + \ln\left( \left(\prod x_i \right)^{m-1}\right) - n \ln(\Gamma(m)) \\
+			       & = mn \ln(\lambda) - \lambda \sum x_i + (m-1) \ln\left(\prod x_i \right) - n \ln(\Gamma(m))
+		\end{align*}
+
+		Now we can differentiate and solve for \(\lambda\) when the derivative is set to zero.
+		\[
+			\frac{d\ln(L)}{d\lambda} = \frac{mn}{\lambda} - \sum x_i = 0 \quad \Rightarrow \quad \hat{\lambda} = \frac{mn}{\sum x_i}
+		\]
+
+		To ensure that this is a maximum likelihood estimator and not a minimum likelihood estimator, we must differentiate it once more and verify that the result is negative. (What follows is in fact negative since both \(m\) and \(n\) are positive.)
+		\[
+			\frac{d^2 \ln(L)}{d \lambda^2} = - \frac{mn}{\lambda^2} \leq 0
+		\]
+
+	\item[10.]
+		\(X\) has the following discrete distribution. A sample of size n is taken from it. We are to find a maximum likelihood estimator \(\hat{\theta}\) and show that it is not biased.
+		\[
+			f(x; \theta) = \begin{cases}
+				\frac{1}{2} - \theta & \text{if } x = 0 \\
+				\frac{1}{2} + \theta & \text{if } x = 1
+			\end{cases}
+		\]
+
+		The likelihood function is as follows. Let \(k\) be the number of occurrences in which \(x = 0\).
+		\[
+			L(x_1, \dots, x_n) = \prod f(x_i; \theta) = \left(\frac{1}{2} - \theta\right)^k \left(\frac{1}{2} + \theta\right)^{n-k}
+		\]
+
+		We then find the logarithm of this function, differentiate it with respect to \(\theta\), and solve for \(\theta\) when \(\ln(L) = 0\).
+		\begin{align*}
+			\ln(L) & = \ln \left(\left(\frac{1}{2} - \theta\right)^k \left(\frac{1}{2} + \theta\right)^{n-k}\right) \\
+			       & = \ln \left(\left(\frac{1}{2} - \theta\right)^k \right) + \ln \left(\left(\frac{1}{2} + \theta\right)^{n-k}\right) \\
+			       & = k \ln \left(\frac{1}{2} - \theta \right) + (n-k) \ln \left(\frac{1}{2} + \theta\right)
+		\end{align*}
+		\begin{align*}
+			\frac{d\ln(L)}{d\theta} = 2\left(\frac{k}{2\theta-1} + \frac{n-k}{2\theta+1}\right) & = 0 \\
+			\frac{k}{2\theta-1} + \frac{n-k}{2\theta+1}                                         & = 0 \\
+			\frac{k}{2\theta-1}                                                                 & = \frac{k-n}{2\theta+1} \\
+			k(2\theta+1)                                                                        & = (k-n)(2\theta-1) \\
+			2k\theta+k                                                                          & = 2k\theta - k - 2n\theta + n \\
+			2n\theta                                                                            & = n - 2k \\
+			\theta                                                                              & = \frac{n - 2k}{2n} = \frac{1}{2} - \frac{k}{n} \\
+			\Rightarrow \hat{\theta}                                                            & = \frac{1}{2} - \frac{k}{n}
+		\end{align*}
+
+		Now that \(\hat\theta\) has been found, we must show that it is unbiased. To do so, we show that \(\E{\hat{\theta}} = \theta\).
+		\[
+			\E{\hat{\theta}} = \frac{1}{2} - \frac{\E{k}}{n} = \frac{1}{2} - \frac{n P(X = 0)}{n} = \frac{1}{2} - \frac{n \left( \frac{1}{2} - \theta \right)}{n} = \frac{1}{2} - \left( \frac{1}{2} - \theta \right) = \theta
+		\]
+
 \end{answers}
 
 \end{document}
