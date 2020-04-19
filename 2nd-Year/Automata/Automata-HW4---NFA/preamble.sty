@@ -1,0 +1,74 @@
+% Declare that this style file requires at least LaTeX version 2e.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{preamble}
+
+\usepackage[margin=3cm]{geometry}   % shrink margins
+\usepackage[margin=3cm]{caption}   % shrink captions
+\usepackage{amsmath}    % math equation environments
+\usepackage{amssymb}    % math symbols such as natural numbers N.
+% \usepackage[super]{nth}	% \nth{1}, \nth{2}, \nth{3}, \nth{4}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\lang}{\mathcal{L}}
+
+\newenvironment{answers}{ % same as enumerate but with more space between each answer
+	\begin{enumerate}[leftmargin=-0.5cm]
+		\setlength{\itemsep}{\bigskipamount}
+}{\end{enumerate}}
+
+% \newcommand\Item[1][]{ % custom \Item command for block math
+%   \ifx\relax#1\relax  \item \else \item[#1] \fi
+%   \abovedisplayskip=0pt\abovedisplayshortskip=0pt~\vspace*{-\baselineskip}}
+
+%\usepackage{multicol}	% can be used to put enumerate in columns. Usage: \begin{multicols}{NumCols}\begin{enumerate}...
+
+\usepackage{tikz}	% for diagrams
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+\usetikzlibrary{quotes}
+
+% same as tikzpicture but for state diagrams
+% Usage:
+%	the start state must have the style "start" (so the start arrow can point to it)
+%	the start state cannot have an id, it will be given the id "start"
+%	there can only be one start state
+%		e.g. \node[state, start] {node content};
+%	all state nodes should have style "state"
+%		e.g. \node[state] (my_node_id) {node content};
+%	all accepted state nodes should also have style "accepted"
+%		e.g. \node[state, accepted] (my_node_id) {node content};
+%	all input arrows should have style "input"
+%		and optionally "bend left=40", "bend right=90", "loop", "loop right", etc. for curved arrows
+%	all input arrows should be labelled with the inputs that lead that way
+%		e.g. \draw[input, bend_left] (source) to["{possible inputs}" above, sloped] (destination);
+%	an arror starte should be given the style "error" and it will be given the id "error"
+\newenvironment{statediagram}{
+	\begin{tikzpicture}[
+		state/.style={circle, draw=blue!60, fill=blue!5, very thick, node distance=1cm},
+		start/.style={name=start},
+		accepted/.style={double, double distance=0.5mm, outer sep=1.8pt},
+		error/.style={draw=red!60, fill=red!5},
+		input/.style={->, thick},
+		input</.style={<-, thick},
+	]
+}{
+	\draw[input] (start.west)+(-6mm,0) to (start.west);
+	\end{tikzpicture}
+}
+
+\newenvironment{statefig}{
+	\begin{figure}[h]
+		\centering
+		\begin{statediagram}
+}{\end{statediagram} \end{figure}}
+
+% Math mode in tables. Usage: use column type C
+\usepackage{array}   % for \newcolumntype macro
+\newcolumntype{C}{>{$}c<{$}} % math-mode version of "c" column type
+
+% paragraph indentation within enumerations
+\usepackage{enumitem}
+\setlist{parsep=4pt,listparindent=\parindent}
+
+\endinput

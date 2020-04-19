@@ -1,0 +1,135 @@
+\documentclass[fleqn]{article}
+\usepackage{preamble}
+
+\title{Automata \& Formal Languages \\
+\medskip
+\large Homework 4 -- Non-Deterministic Finite Automata}
+\author{Abraham Murciano}
+
+\begin{document}
+
+\maketitle
+
+\begin{answers}
+
+	\item % 1
+		\begin{enumerate}
+			\item % a
+				Figure \ref{q1a} shows an NFA without \(\varepsilon\) transitions or multiple start states which identifies the language \(\{\varepsilon\}\).
+				\begin{figure}[htb]
+					\centering
+					\begin{statediagram}
+						\node[state, start, accepted] {\(q_0\)};
+						\node[state, right=of start] (q1) {\(q_1\)};
+						\draw[input] (start) to["{\(\Sigma\)}"] (q1);
+					\end{statediagram}
+					\caption{NFA for question 1a}
+					\label{q1a}
+				\end{figure}
+
+			\item % b
+				Figure \ref{q1b} shows an NFA which accepts the language of words over \{a,b\} that end in ``abb''.
+				\begin{figure}[htb]
+					\centering
+					\begin{statediagram}
+						\node[state, start] {\(q_0\)};
+						\node[state, right=of start] (a) {\(q_1\)};
+						\node[state, right=of a] (b1) {\(q_2\)};
+						\node[state, accepted, right=of b1] (b2) {\(q_3\)};
+
+						\draw[input, loop above] (start) to["{\(\Sigma\)}", above] (start);
+						\draw[input] (start) to["{a}"] (a);
+						\draw[input] (a) to["{b}"] (b1);
+						\draw[input] (b1) to["{b}"] (b2);
+					\end{statediagram}
+					\caption{NFA for question 1b}
+					\label{q1b}
+				\end{figure}
+
+			\item % c
+				Figure \ref{q1c} shows an NFA which accepts the language of words over \(\Sigma = \{\text{a}, \text{b}\}\) that contain ``aa'' or that have an odd number of ``b''s.
+				\begin{figure}[htb]
+					\centering
+					\begin{statediagram}
+						\node[state, start] {\(q_0\)};
+						\node[state, above right=of start] (a1) {\(q_1\)};
+						\node[state, accepted, right=of a1] (a2) {\(q_2\)};
+						\node[state, accepted, below right=of start] (b_odd) {\(q_3\)};
+
+						\draw[input] (start) to["{a}", sloped] (a1);
+						\draw[input, bend left=40] (start) to["{b}"] (b_odd);
+						\draw[input, loop above] (start) to["{a}"] (start);
+						\draw[input] (a1) to["{a}", sloped] (a2);
+						\draw[input, loop right] (a2) to["{\(\Sigma\)}"] (a2);
+						\draw[input, bend left=40] (b_odd) to["{b}"] (start);
+						\draw[input, bend right=40] (b_odd) to["{a}" right] (a1);
+						\draw[input, loop right] (b_odd) to["{a}"] (b_odd);
+					\end{statediagram}
+					\caption{NFA for question 1c}
+					\label{q1c}
+				\end{figure}
+		\end{enumerate}
+	\item % 2
+		Figure \ref{q2-f} shows a conversion of the NFA in figure \ref{q1c} into a DFA. Table \ref{q2-t} shows a table which we can use to aid us in the construction of the DFA.
+		\begin{table}
+			\centering
+			\begin{tabular}{||C|C|C|C||}
+				\hline
+				\text{New label} & \text{Current state} & \text{Transition on a} & \text{Transition on b} \\
+				\hline
+				r_0              & \{q_0\}              & \{q_0, q_1\}           & \{q_3\} \\
+				r_1              & \{q_0, q_1\}         & \{q_0, q_1, q_2\}      & \{q_3\} \\
+				r_2              & \{q_3\}              & \{q_1, q_3\}           & \{q_0\} \\
+				r_3              & \{q_0, q_1, q_2\}    & \{q_0, q_1, q_2\}      & \{q_2, q_3\} \\
+				r_4              & \{q_1, q_3\}         & \{q_1, q_2, q_3\}      & \{q_0\} \\
+				r_5              & \{q_2, q_3\}         & \{q_1, q_2, q_3\}      & \{q_0, q_2\} \\
+				r_6              & \{q_1, q_2, q_3\}    & \{q_1, q_2, q_3\}      & \{q_0, q_2\} \\
+				r_7              & \{q_0, q_2\}         & \{q_0, q_1, q_2\}      & \{q_2, q_3\} \\
+				\hline
+			\end{tabular}
+			\caption{A table to translate the NFA in figure \ref{q1c} to the DFA in figure \ref{q2-f}}
+			\label{q2-t}
+		\end{table}
+		\begin{figure}[htb]
+			\centering
+			\begin{statediagram}
+				\node[state, start] {\(r_0\)};
+				\node[state, above right=of start] (r1) {\(r_1\)};
+				\node[state, accepted, below right=of start] (r2) {\(r_2\)};
+				\node[state, accepted, right=of r1] (r3) {\(r_3\)};
+				\node[state, accepted, right=of r2] (r4) {\(r_4\)};
+				\node[state, accepted, right=of r3] (r5) {\(r_5\)};
+				\node[state, accepted, right=of r4] (r6) {\(r_6\)};
+				\node[state, accepted, below right=of r5] (r7) {\(r_7\)};
+
+				\draw[input] (start) to["{a}", sloped] (r1);
+				\draw[input] (start) to["{b}", sloped] (r2);
+
+				\draw[input] (r1) to["{a}"] (r3);
+				\draw[input] (r1) to["{b}"] (r2);
+
+				\draw[input] (r2) to["{a}"] (r4);
+				\draw[input, bend left=50] (r2) to["{b}", sloped] (start);
+
+				\draw[input, loop above] (r3) to["{a}"] (r3);
+				\draw[input] (r3) to["{b}"] (r5);
+
+				\draw[input] (r4) to["{a}"] (r6);
+				\draw[input, bend left=75] (r4) to["{b}" below, sloped] (start);
+
+				\draw[input] (r5) to["{a}"] (r6);
+				\draw[input] (r5) to["{b}" below, sloped] (r7);
+
+				\draw[input, loop below] (r6) to["{a}"] (r6);
+				\draw[input] (r6) to["{b}", sloped] (r7);
+
+				\draw[input, bend right=75] (r7) to["{a}" above, sloped] (r3);
+				\draw[input, bend right=40] (r7) to["{b}" below, sloped] (r5);
+			\end{statediagram}
+			\caption{A DFA equivalent to the automata in figure \ref{q1c}}
+			\label{q2-f}
+		\end{figure}
+
+\end{answers}
+
+\end{document}
