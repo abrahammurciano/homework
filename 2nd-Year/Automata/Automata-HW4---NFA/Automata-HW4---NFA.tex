@@ -130,6 +130,93 @@
 			\label{q2-f}
 		\end{figure}
 
+		\pagebreak
+	\item % 3
+		\begin{enumerate}
+			\item % a
+				Let \(A\) be the following NFA without \(\varepsilon\) transitions,
+				\[
+					A = (Q_A, \Sigma, \delta_A, q_{0}, F_A)
+				\]
+				where \(Q_A\) is a finite set of states, \(\Sigma\) is the alphabet, \(\delta_A: Q_A \times \Sigma \to P(Q_A)\) is the transition function, \(q_0\) is the only start state, and \(F_A\) is the set of final states.
+
+				We must show that an NFA, \(B\), exists which has only one final state and accepts the same language as \(A\) with the exception of \(\varepsilon\). Specifically,
+				\[
+					\lang(B) = \lang(A) - \{\varepsilon\}
+				\]
+
+				Let
+				\[
+					B = (Q_B, \Sigma, \delta_B, q_0, \{f_B\})
+				\]
+				where \(Q_B = Q_A \cup \{f_B\}\) is the set of states, \(\delta_B: Q_B \times \Sigma \to P(Q_B)\) is the transition function, \(q_0\) is once again the only start state, and \(f_B\) is the only final state of \(B\) which was not in \(Q_A\) but is in \(Q_B\).
+
+				To properly define \(B\) given that \(A\) is properly defined, all that remains is to provide a definition for \(\delta_B\) in terms of elements of \(A\).
+				\[
+					\delta_B(q, \sigma) = \begin{cases}
+						\delta_A(q, \sigma)              & \text{if } \delta_A(q, \sigma) \cap F_A = \phi    \\
+						\delta_A(q, \sigma) \cup \{f_B\} & \text{if } \delta_A(q, \sigma) \cap F_A \neq \phi
+					\end{cases}
+				\]
+
+				In simpler terms, what all of the above means is that given the NFA \(A\), we can construct another NFA which we label \(B\) which has only one final state \(f_B\) by adding a new state \(f_B\) and transitioning to it as well whenever a transition takes us to  what would have been a final state in NFA \(A\).
+
+				We must now show that indeed, \(\lang(B) = \lang(A) - \{\varepsilon\}\). To do so we will show that given a word \(w = u\sigma\) which ends is the symbol \(\sigma\), if \(A\) accepts it then so does \(B\), and vice versa.
+				\begin{align*}
+					w \in \lang(A) & \Rightarrow \hat{\delta}_A(q_0, w) \cap F_A \neq \phi \\
+					               & \Rightarrow \delta_A(\hat{\delta}_A(q_0, u), \sigma) \cap F_A \neq \phi \\
+					               & \Rightarrow \delta_B(\hat{\delta}_A(q_0, u), \sigma) = \delta_A(\hat{\delta}_A(q_0, u), \sigma) \cup \{f_B\} \\
+					               & \Rightarrow \hat{\delta}_B(q_0, w) \cap \{f_B\} = \{f_B\} \neq \phi                                          & \text{because } \hat{\delta}_A(q_0, u) \subseteq \hat{\delta}_B(q_0, u) & \\
+					               & \Rightarrow w \in \lang(B)
+				\end{align*}
+
+				The above proves that if \(A\) accepts \(w\) then so does \(B\). To prove that if \(B\) accepts \(w\) then \(A\) accepts it, we can use the following proof.
+				\begin{align*}
+					w \in \lang(B) & \Rightarrow \hat{\delta}_B(q_0, w) \cap \{f_B\} \neq \phi \\
+					               & \Rightarrow f_B \in \hat{\delta}_B(q_0, w) \\
+					               & \Rightarrow f_B \in \delta_B(\hat{\delta}_B(q_0, u), \sigma) \\
+					               & \Rightarrow f_B \in \delta_B(\hat{\delta}_A(q_0, u), \sigma)            & \text{because } \delta_B(f_B, \sigma) = \phi & \\
+					               & \Rightarrow \delta_A(\hat{\delta}_A(q_0, u), \sigma) \cap F_A \neq \phi \\
+					               & \Rightarrow \hat{\delta}_A(q_0, w) \cap F_A \neq \phi \\
+					               & \Rightarrow w \in \lang (A)
+				\end{align*}
+
+				This proves that any word which is accepted by one is also accepted by the other, with the exception of the word \(\varepsilon\). This proof is invalid for \(\varepsilon\) because we assumes that \(w = u\sigma\), so \(w\) must have at least one symbol (\(\sigma\)).
+
+			\item % b
+				Since all regular languages can be identified by an NFA with a single start state and without \(\varepsilon\) transitions, then any regular language which does not contain \(\varepsilon\) can be identified by an NFA with a single start state, without \(\varepsilon\) transitions, and with only one final state. This NFA can be constructed using the definition specified in part a.
+		\end{enumerate}
+
+	\item % 4
+		Let \(\lang\) be any regular language. We must show that \(\lang^R\) -- that is, the language of all the words which can be obtained from \(\lang\) by reversing the order of the symbols -- is also regular.
+
+		Since \(\lang\) is a regular language, there exists an NFA which accepts it. That NFA can be modified to accept \(\lang^R\). Firstly, the final states of the new NFA will be only the old start state. Then a new state \(q_0\) will be added. This new state is the start state of the new NFA. If \(\varepsilon \in \lang\), then \(q_0\) will also be accepted.
+
+		Next, all the transitions from a state \(q_a\) to another state \(q_b\) on a symbol \(\sigma\) will be reversed, so that \(q_b\) will transition to \(q_a\) on that same symbol \(\sigma\). And finally, for all transitions (after the reversal of the transitions) coming out of a state \(q_f\) which was a final state in the old NFA, to any other state \(q_g\) on a symbol \(\sigma\) will be copied so that there is a transition coming out of \(q_0\) leading to \(q_g\) on the symbol \(\sigma\).
+
+		This is all that is needed to construct an NFA which accepts \(\lang^R\) given an NFA that accepts \(\lang\). Therefore \(\lang^R\) must be regular.
+
+	\item % 5
+		Given any finite automaton \(A\), if we reverse every acceptance state in \(A\) to a non-acceptance state, and vice versa, we will not necessarily receive an automaton which identifies the complement of \(\lang(A)\).
+
+		We will prove this with a counter-example. Consider the NFA in figure \ref{q5-1}. It accepts the language \(\{\varepsilon\}\). If we make all accepted states not accepted and all not accepted states into accepted ones, then we end up with the NFA in figure \ref{q5-2}. The accepted language fot this NFA is \(\phi\). This is clearly not the complement of \(\{\varepsilon\}\), so we can conclude that toggling the states' acceptance will not necessarily yield an automaton which accepts the complement of the language.
+		\begin{figure}[htb]
+			\centering
+			\begin{statediagram}
+				\node[state, start, accepted] {\(q_0\)};
+			\end{statediagram}
+			\caption{An NFA which accepts the language \(\{\varepsilon\}\)}
+			\label{q5-1}
+		\end{figure}
+		\begin{figure}[htb]
+			\centering
+			\begin{statediagram}
+				\node[state, start] {\(q_0\)};
+			\end{statediagram}
+			\caption{An NFA which accepts the language \(\phi\)}
+			\label{q5-2}
+		\end{figure}
+
 \end{answers}
 
 \end{document}
