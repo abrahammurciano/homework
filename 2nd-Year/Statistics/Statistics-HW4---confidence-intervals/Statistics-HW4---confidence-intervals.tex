@@ -1,0 +1,53 @@
+\documentclass[fleqn]{article}
+\usepackage{preamble}
+
+\title{
+	Statistics \\
+	\medskip
+	\large Homework 4 -- Confidence Intervals
+}
+\author{Abraham Murciano}
+
+\begin{document}
+
+\maketitle
+
+\begin{answers}
+
+	\item[1.]
+		The lifetime of a certain device is a random variable \(X\) which is distributed normally with a standard deviation of \(\sigma = 3\). Five devices were checked and found to have an average life of \(\xbar = 30\).
+		\begin{enumerate}
+			\item % a
+				We are to find a 90\% confidence interval for the lifetime of this device. Since \(1 - \alpha = 0.9\), we have \(\alpha = 0.1\). We can use the following formula.
+				\begin{gather*}
+					P \left( \xbar - z_{1 - \frac{\alpha}{2}} \cdot \frac{\sigma}{\sqrt{n}} < \mu < \xbar + z_{1 - \frac{\alpha}{2}} \cdot \frac{\sigma}{\sqrt{n}} \right) = 1 - \alpha \\
+					P \left( 30 - z_{0.95} \cdot \frac{3}{\sqrt{5}} < \mu < 30 + z_{0.95} \cdot \frac{3}{\sqrt{5}} \right) = 0.9 \\
+					P \left( 30 - 2.575 \cdot \frac{3}{\sqrt{5}} < \mu < 30 + 2.575 \cdot \frac{3}{\sqrt{5}} \right) = 0.9 \\
+					P \left( 26.545 < \mu < 33.455 \right) = 0.9
+				\end{gather*}
+
+				Therefore the confidence interval is \((26.545, 33.455)\).
+
+			\item % b
+		\end{enumerate}
+
+	\item[3.]
+
+
+	\item[4.]
+
+
+	\item[5.]
+
+
+	\item[8.]
+
+
+	\item[9.]
+
+
+	\item[13.]
+
+\end{answers}
+
+\end{document}
