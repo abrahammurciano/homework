@@ -2,9 +2,9 @@
 
 \usepackage{hyperref}
 \hypersetup{
-    colorlinks=true,
+    colorlinks,
 	urlcolor=blue,
-	breaklinks=true
+	linkcolor=black,
 }
 \urlstyle{same}
 
@@ -44,9 +44,8 @@ All three of the C.I.A. (confidentiality, integrity, and availability) values co
 	\item[Availability] was also attacked, since the attackers stole the usernames of ten users with unique usernames such as @drug, @w, and @L, and sold them. Therefore the availability of the accounts of these ten people was compromised.
 \end{description}
 
-More information on this attack can be found here.
+More information on this attack can be found \href{https://nytimes.com/2020/07/31/technology/twitter-hack-arrest.html}{here}.
 
-\url{https://nytimes.com/2020/07/31/technology/twitter-hack-arrest.html}
 
 \subsection{Vulnerability in IoT Devices}
 
@@ -71,8 +70,52 @@ All three of the C.I.A. values could be attacked.
 	\item[Availability] is also under attack. As we mentioned above, power outages -- i.e. unavailability of electricity -- can be caused by exploiting this vulnerability.
 \end{description}
 
-More information on this vulnerability can be found here.
+More information on this vulnerability can be found \href{https://securityintelligence.com/posts/new-vulnerability-could-put-iot-devices-at-risk/}{here}.
 
-\href{https://securityintelligence.com/posts/new-vulnerability-could-put-iot-devices-at-risk/}{https://securityintelligence.com/posts/new-vulnerability-could-put-iot-}\\\href{https://securityintelligence.com/posts/new-vulnerability-could-put-iot-devices-at-risk/}{devices-at-risk/}
+\section{Threat Assessment}
+
+Below is a threat assessment which analyses four threats on my personal computer. Some of the fields include a numerical assessment, in which case the range is provided in the form \((x, y)\), where \(x\) is the lowest value for that field and \(y\) is the highest. For risk priority, each of the four vulnerabilities will be assigned a unique integer, where the lower the number the higher the priority.
+
+\begin{enumerate}
+	\item
+		\begin{description}
+			\item[Asset] The password manager which is on my computer.
+			\item[Threat] An attacker who succeeds in controlling my computer remotely or physically can access or take control of any of the accounts whose credentials are stored in the password manager, which would allow them to see all my passwords to these accounts.
+			\item[Likelihood (1-5)] 3
+			\item[Consequence (1-6)] 2 -- Complete control of all my accounts can be lost, which can lead to identity theft, and even bank robbery.
+			\item[Risk Level (4-1)] 2
+			\item[Risk Priority] 1
+		\end{description}
+
+	\item
+		\begin{description}
+			\item[Asset] My personal computer is always signed in to many online accounts, such as my email or social media applications.
+			\item[Threat] A hacker who gains access to my computer can access or take control of any of these accounts, which would allow them to see lots of my personal information and to falsely communicate with other people via those means in my name.
+			\item[Likelihood (1-5)] 2
+			\item[Consequence (1-6)] 3 -- Complete control of these accounts can be lost, which can lead to identity theft.
+			\item[Risk Level (4-1)] 2
+			\item[Risk Priority] 2
+		\end{description}
+
+	\item
+		\begin{description}
+			\item[Asset] Confidential files which are stored on my computer.
+			\item[Threat] An individual with malicious intent who gains access to my confidential files can leak them onto the internet or threaten to do so in order to blackmail me.
+			\item[Likelihood (1-5)] 1
+			\item[Consequence (1-6)] 1 -- The files on my computer aren't confidential enough to warrant giving in to blackmail, nor is it there anything too private that I would not want them available to the public.
+			\item[Risk Level (4-1)] 4
+			\item[Risk Priority] 4
+		\end{description}
+
+	\item
+		\begin{description}
+			\item[Asset] Work files which have not been backed up.
+			\item[Threat] A hacker can encrypt my files and hold them at ransom.
+			\item[Likelihood (1-5)] 1
+			\item[Consequence (1-6)] 2 -- Most of the files I work on I back up to cloud services within a couple of days of creating them. So if a hacker did succeed in targeting me with ransomware, there would likely be nothing that I would be willing to pay a ransom for, and the attack would amount to not much more than a nuisance.
+			\item[Risk Level (4-1)] 3
+			\item[Risk Priority] 3
+		\end{description}
+\end{enumerate}
 
 \end{document}

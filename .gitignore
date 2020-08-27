@@ -6,4 +6,5 @@
 *.log
 *.fls
 *.synctex.gz
+*.out
 .vscode
