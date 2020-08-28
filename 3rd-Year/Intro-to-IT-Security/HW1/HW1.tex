@@ -118,4 +118,20 @@ Below is a threat assessment which analyses four threats on my personal computer
 		\end{description}
 \end{enumerate}
 
+\section{Confidentiality Can Be More Important than Integrity}
+
+An example of where confidentiality is more important than integrity is in a password manager. It is crucial that no unauthorised parties are able to see the passwords stored in a password manager, since that would grant them unauthorised access to countless other accounts.
+
+However it is usually not as terrible a situation if an attacker is able to change the records stored in a password manager. It may temporarily block an individual's access to their account if they do not remember their password and do not have it stored anywhere else, but most of these accounts provide some form of resetting one's password if they forgot it.
+
+\section{Integrity Can Be More Important than Confidentiality}
+
+Conversely, there are situations where integrity is more important than confidentiality. One such example is in a bank account. If an attacker can cause there to be less money in someone else's account or more money in their own account, that is catastrophic for the bank, but if an attacker is only able to see how much money someone has in their account, that is \emph{usually} not such a big deal.
+
+\section{Availability Can Be More Important than Integrity and Confidentiality}
+
+An excellent example of where availability is the most important is systems which provide the public with information, such as Wikipedia. Confidentiality is of no concern at all, since all th information they provide is public anyway. Availability is the most important because the whole purpose of these systems is to provide information. For example, if Wikipedia was targeted with a denial of service attack, it would affect many students who consistently use it as a resource, and it would likely mean the entire website would be unaccessible.
+
+However if such a system's integrity was compromised, it would likely only affect a small subset of the people who use the system, as it would be a lot harder to compromise the integrity of \emph{all} the data. To illustrate this point, we can point out that Wikipedia allows anyone to edit an article, making it extremely easy for anyone to compromise the integrity of their data, yet people still rely heavily on Wikipedia for so many things.
+
 \end{document}
