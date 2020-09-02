@@ -1,5 +1,5 @@
 from base64 import urlsafe_b64encode, urlsafe_b64decode
-from Crypto.Cipher import AES
+from Crypto.Cipher import AES # needs `pip install pycryptodome`
 
 def crack(ciphertext, cars):
 	for car in cars:
@@ -10,7 +10,6 @@ def crack(ciphertext, cars):
 		except:
 			pass
 
-
 def decrypt(ciphertext, key):
 	encrypted_bytes = urlsafe_b64decode(base64_pad(ciphertext))
 	iv = encrypted_bytes[:AES.block_size]
@@ -18,14 +17,11 @@ def decrypt(ciphertext, key):
 	cipher = AES.new(key.encode(), AES.MODE_CFB, iv, segment_size=AES.block_size * 8)
 	return cipher.decrypt(remaining_bytes)
 
-
 def base64_pad(s):
 	return s + '=' * (64 - len(s))
 
-
 def base64_unpad(s):
 	return s.rstrip('=')
-
 
 if __name__ == "__main__":
 	ciphertext = input("Enter the base 64 encoded ciphertext:\n")
