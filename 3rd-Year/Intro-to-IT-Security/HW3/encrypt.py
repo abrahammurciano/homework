@@ -11,6 +11,9 @@ base64unpad = lambda s: s.rstrip('=')
 
 def encrypt(key, msg):
 	iv = Random.new().read(BS)
-	cipher = AES.new(key, AES.MODE_CFB, iv, segment_size=AES.block_size * 8)
-	encrypted_msg = cipher.encrypt(pad(str(msg)))
-	return base64unpad(urlsafe_b64encode(iv + encrypted_msg))
+	cipher = AES.new(str.encode(key), AES.MODE_CFB, iv, segment_size=AES.block_size * 8)
+	encrypted_msg = cipher.encrypt(str.encode(pad(str(msg))))
+	return base64unpad(urlsafe_b64encode(iv + encrypted_msg).decode())
+
+
+print(encrypt("ChevroletTelorvehcJCTjct", "Hello, World!"))

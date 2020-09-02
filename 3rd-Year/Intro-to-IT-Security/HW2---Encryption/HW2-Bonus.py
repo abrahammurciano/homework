@@ -1,3 +1,5 @@
+# At first the homework was unclear to me and I thought we had to make a program that will crack an actual substitution cypher. I had already done most of it, so I am submitting it anyway.
+
 from itertools import permutations
 
 # message - an encrypted string that is to be decrypted
