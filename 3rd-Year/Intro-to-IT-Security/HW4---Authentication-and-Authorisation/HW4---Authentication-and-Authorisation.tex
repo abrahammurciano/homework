@@ -1,0 +1,37 @@
+\documentclass{article}
+
+\usepackage{config_fancyverbatim}
+
+\setlength{\parskip}{\medskipamount}
+
+\title{Introduction to IT Security\\
+\medskip
+\large Homework 4 -- Authentication and Authorisation}
+\author{Abraham Murciano}
+
+\begin{document}
+
+\maketitle
+
+\section{Hashing}
+
+Firstly, we are to build a function which receives a string and returns a hex encoded SHA256 hash. Here is said function.
+
+\VerbatimInput[label=\fbox{\color{Black}sha256\_hash.py}]{sha256_hash.py}
+
+Next, we are tasked with building a function which will receive login credentials and store them securely in a database. Below is some Python code which will achieve this.
+
+\VerbatimInput[label=\fbox{\color{Black}add\_user.py}]{add_user.py}
+
+If an attacker would try to crack the hash using brute force, it will take an extremely long time, but calculating an average would be impossible without knowing what kind of processing power the attacker has at their disposal or the length and character set of the password whose hash they are attempting to find.
+
+Other attack vectors one may consider would be to have a database with a list of all possible hashes along with strings that generate each hash. Creating such a resource would take up a ridiculous amount of space and time, but once created it would take a matter of seconds to find a string which hashes to a particular hash. The amount of space such a table would occupy would be 64 bytes (32 for the hash, and about 32 for the string) multiplied by the number of different SHA256 hashes, which is \(2^{256}\). This equals approximately seven unvigintillion four hundred ten vigintillion terabytes, which is a completely infeasible amount of storage.
+
+Rainbow tables are a method which aids in greatly reducing the amount of storage that a database would take up, at the cost of computation time. However, neither of these methods would work to crack the password whose hash we stored in the database, since the hash is stored along with a salt which is a randomly generated 255-character long string, which is different for each user. This means that if a rainbow table or database would be used to try to reverse lookup the hash, said rainbow table or database would have to be specially crafted for each individual user, which would prevent attackers from using pre-generated rainbow tables or databases.
+
+\section{Public Key Protocols}
+
+% https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange
+% computerphile public key
+
+\end{document}

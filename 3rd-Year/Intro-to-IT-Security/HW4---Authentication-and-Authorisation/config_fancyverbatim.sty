@@ -1,0 +1,13 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{config_fancyverbatim}[Custom configurations for fancyvrb]
+
+\usepackage[dvipsnames]{xcolor}
+\RequirePackage{fancyvrb}
+
+\RecustomVerbatimCommand{\VerbatimInput}{VerbatimInput}{
+	fontsize=\footnotesize,
+	frame=lines,  % top and bottom rule only
+	framesep=2em, % separation between frame and text
+	rulecolor=\color{Gray},
+	labelposition=topline
+}
