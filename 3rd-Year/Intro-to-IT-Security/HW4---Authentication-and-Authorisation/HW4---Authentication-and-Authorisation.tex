@@ -1,6 +1,7 @@
 \documentclass{article}
 
 \usepackage{config_fancyverbatim}
+\usepackage{amsmath}
 
 \setlength{\parskip}{\medskipamount}
 
@@ -31,7 +32,14 @@ Rainbow tables are a method which aids in greatly reducing the amount of storage
 
 \section{Public Key Protocols}
 
-% https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange
-% computerphile public key
+We are tasked with describing a protocol we can use to communicate securely between a client and a server over a public connection without using CA certificates and without keeping any of the client's source code private.
+
+The protocol we will describe is the Diffie-Hellman key exchange. We start off by choosing two numbers, which are sent publicly between the client and the server. These we will call \(g\) and \(p\). Both of these are prime, and \(p\) is very large (on the order of four thousand bits).
+
+Next, the client chooses a secret number \(c_s\) at random between 1 and \(p\), which it keeps private, and the server chooses a similar number which we shall label \(s_s\). The client then calculates \(g^{c_s} \bmod p\) and the server calculates \(g^{s_s} \bmod p\). We will label these resulting numbers \(c_p\) and \(s_p\) respectively, since these are shared publicly.
+
+Once \(c_p\) and \(s_p\) are exchanged between the client and the server, the client now calculates the secret key \(k = {s_p}^{c_s} \bmod p\), and the server calculates the exact same secret key \(k = {c_p}^{s_s} \bmod p\). The mathematical reason why the key they each generate is beyond the scope of this paper, but the important part is that both \(c_s\) and \(s_s\) are kept private and are randomly generated, and without these it is extremely difficult for an attacker to guess the secret key \(k\) without these.
+
+Once we have a shared secret key, the client and server can use a symmetric encryption algorithm such as AES to encrypt their messages.
 
 \end{document}
