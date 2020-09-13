@@ -42,4 +42,8 @@ Once \(c_p\) and \(s_p\) are exchanged between the client and the server, the cl
 
 Once we have a shared secret key, the client and server can use a symmetric encryption algorithm such as AES to encrypt their messages.
 
+However, the problem with Diffie-Hellman is that it is vulnerable to a man in the middle attack. One solution we can use to avoid this is by using some asymmetric cryptography protocol. The server can have a public and private key. The client does not need a private key, since if it had one we are given that any installation files may be stolen. The client does however store the public key of the server in its installation files.
+
+This way, the client can be sure that any \(g^{s_s} \bmod p\) which can be decrypted with the server's public key was in fact sent from the server. Even though the client does not have a pair of keys, and messages from the client can be intercepted and changed by an attacker, the attacker would not be able to cause the client to think that they are actually the server. So once they establish the Diffie-Hellman exchange, the attacker would be left harmless.
+
 \end{document}
