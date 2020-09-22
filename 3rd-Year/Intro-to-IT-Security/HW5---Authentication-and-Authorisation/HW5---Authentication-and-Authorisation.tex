@@ -66,8 +66,31 @@ Finally, we can run this command to display the password, which tells us that th
 \begin{verbatim}
 	$ john ./password --show
 	userChallenge:drAgon777:1001:1001::/home/userChallenge:/bin/sh
-
 	1 password hash cracked, 0 left
 \end{verbatim}
+
+\section{Multilevel Security Systems}
+
+Consider the access matrix shown in table \ref{access-matrix}. User 2 can read anything users 1 and 3 write, but users 1 and 3 cannot read anything user 2 writes. User 3 can read what user 1 writes in files 1 and 2, but user 1 cannot read anything user 3 writes. Hence we have a valid MLS system where user 2 has the highest level, followed by user 3, and user 1 who has the lowest clearance level.
+
+\begin{table}[hbp]
+	\centering
+	\begin{tabular}{|c||c|c|c|}
+		\hline
+		& File 1 & File 2 & File 3 \\
+		\hline
+		\hline
+		User 1 & w & rw & w \\
+		\hline
+		User 2 & r & r & rw \\
+		\hline
+		User 3 & rw & r & w \\
+		\hline
+	\end{tabular}
+	\caption{Access matrix for some file system}
+	\label{access-matrix}
+\end{table}
+
+This system follows the Bell-LaPadula model, since each subject may not read objects at higher security levels, and no subject can write to an object at any lower security level.
 
 \end{document}
