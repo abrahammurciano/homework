@@ -97,6 +97,48 @@ This revealed that the version is 5.6.33-log and the user is zixem@localhost.
 
 \subsection{Level 2}
 
+In this challenge we are facing a website with a URL parameter of the form \verb`?showprofile=4`. The site then shows the user ID, username, and age of the selected profile.
 
+The first thing I tried was to replace the four with a single quote. That caused the site to display a MySQL syntax error message which occurred ``near ` ` ' ' ' at line 1''. Since there were five single quotes in the error message, the first and last ones are part of the error message, used to quote actual SQL code. That leaves three quotes which were in the SQL query. This indicates that whatever input I give is put in single quotes, probably because the profile id field is of type string.
+
+Next, I want the query to always fail, so that I can union my own data to the result set. The following URL parameter achieves that. The final single quote must be there to match the quote that was intended to go after the four.
+
+\begin{verbatim}
+	?showprofile=4' and 0=1 and '
+\end{verbatim}
+
+The next step is to determine how many columns are being selected. I requested the site with a few similar URL parameters, until one did not give me an error.
+
+\begin{verbatim}
+	?showprofile=4' and 0=1 union select 'one','two','three','four
+\end{verbatim}
+
+This showed `one'. `two', and `three' on the page, but did not show `four'. So finally I ran the following query to reveal the user and version.
+
+\begin{verbatim}
+	?showprofile=4' and 0=1 union select user(),version(),'','
+\end{verbatim}
+
+\subsection{Level 3}
+
+This challenge is practically identical in structure to the previous one. Attempting to run a slightly altered version of the final URL parameter from the previous level gave the following error message.
+
+\begin{verbatim}
+	...syntax to use near 'uni select user(),version(),'',''' at...
+\end{verbatim}
+
+As the error message shows, the word `union' is being converted to `uni'. To combat this, I attempted to use the word `unionon', and that worked. The final query is shown below.
+
+\begin{verbatim}
+	?item=3' and 0=1 union select user(),version(),'','
+\end{verbatim}
+
+\subsection{Level 4}
+
+Again, this challenge was identical to the second one, other than there being a different number of columns. The first thing I tried was to use the same query as the one from Level 2, then when I was told there was a different number of columns, I added some more until I got the right answer. This is the final query.
+
+\begin{verbatim}
+	?ebookid=7' and 0=1 union select user(),version(),'','','
+\end{verbatim}
 
 \end{document}
