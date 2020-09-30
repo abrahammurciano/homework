@@ -1,0 +1,97 @@
+\documentclass{article}
+
+\setlength{\parskip}{\medskipamount}
+\makeatletter
+\let \@sverbatim \@verbatim
+\def \@verbatim {\@sverbatim \verbatimplus}
+{\catcode`'=13 \gdef \verbatimplus{\catcode`'=13 \chardef '=13 }}
+\makeatother
+
+\title{Introduction to IT Security\\
+\medskip
+\large Homework 8 -- Cross Site Scripting}
+\author{Abraham Murciano and Jacques Benzakein}
+
+\begin{document}
+
+\maketitle
+
+\section{Warmup}
+
+We are told that there is a function \verb`escape` which takes our input string \verb`s` and generates some HTML to log the text in the browser console. Our task is to give it input which would cause the browser to alert `1'. Below is the function.
+
+\begin{verbatim}
+	function escape(s) {
+	    return '<script>console.log("'+s+'");</script>';
+	}
+\end{verbatim}
+
+In this case, the string \verb`"+alert(1)+"` (with quotes) would cause the browser to alert `1'.
+
+\section{Adobe}
+
+In this section, we have a slightly more complex \verb`escape` function. This time it escapes any double quotes in the input string.
+
+\begin{verbatim}
+	function escape(s) {
+	    s = s.replace(/"/g, '\\"');
+	    return '<script>console.log("' + s + '");</script>';
+	}
+\end{verbatim}
+
+In order to successfully close the first open quote, we input \verb`\"` which would be converted to \verb`\\"`. We escape the backslash with our own backslash, leaving the double quote unescaped.
+
+Then to get rid of the original double quote after we alert `1', we use \verb`)//` to close the brackets and comment out the trailing quote. The final input was \verb`\"+alert(1))//`.
+
+\section{JSON}
+
+Here, the \verb`escape` function uses \verb`JSON.stringify` instead of a regex replace. This also escapes our backslashes, so we cannot use the trick from the previous challenge. The code is the following.
+
+\begin{verbatim}
+	function escape(s) {
+	    s = JSON.stringify(s);
+	    return '<script>console.log(' + s + ');</script>';
+	}
+\end{verbatim}
+
+Instead, we are able to close the script tag and open a new one, then comment out the remaining code. Like this.
+
+\begin{verbatim}
+	</script><script>alert(1)//
+\end{verbatim}
+
+\section{Markdown}
+
+Now we have a more complex function. The first statement replaces \verb`<` and \verb`"` with \verb`&lt;` and \verb`&quot;` respectively. Then the next two statements simply perform some markdown processing on links and images.
+
+\begin{verbatim}
+	function escape(s) {
+	    var text = s.replace(/</g, '&lt;').replace(/"/g, '&quot;');
+	    // URLs
+	    text = text.replace(/(http:\/\/\S+)/g,
+	        '<a href="$1">$1</a>');
+	    // [[img123|Description]]
+	    text = text.replace(/\[\[(\w+)\|(.+?)\]\]/g,
+		    '<img alt="$2" src="$1.gif">');
+	    return text;
+	}
+\end{verbatim}
+
+The trick here was to put a link inside an image description, so each of their double quotes would cancel each other out. Suppose we input the following string.
+
+\begin{verbatim}
+	[[_|http://onerror='alert(1)']]
+\end{verbatim}
+
+This string gets converted into the following HTML code.
+
+\begin{verbatim}
+	<img alt="<a href="http://onerror=alert(1)//" src="_.gif">">
+	http://onerror=alert(1)//]]</a>
+\end{verbatim}
+
+When the browser attempts to render this, it first sees an image tag, with an \verb`alt` attribute with the value \verb`<a href=`, since the quote immediately following the \verb`=` closes the first one. Then the browser detects an attribute \verb`http:` with no value, and then \verb`onerror=alert(1)//"` becomes another attribute of this image tag in the form of \verb`onerror="alert(1)//""`. The trailing double quote becomes part of the JavaScript, but it is commented out to have no effect. Then the remaining text simply becomes a text node.
+
+So the \verb`onerror` attribute's value runs as JavaScript code since the image \verb`_.gif` was not able to load because it does not exist.
+
+\end{document}
