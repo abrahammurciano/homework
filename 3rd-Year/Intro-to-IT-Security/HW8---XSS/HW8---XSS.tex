@@ -131,6 +131,12 @@ Attempting to create a text node containing script tags does not work, because t
 	]+(!![]+[])[+[]]])[!+[]+!+[]+[+[]]])()</script>
 \end{verbatim}
 
+Which happens to be equivalent to the much more human readable following:
+
+\begin{verbatim}
+    Comment#> <script>alert(1)</script><!
+\end{verbatim}
+
 \section{Callback}
 
 In this challenge, the function takes a string which again is expected to contain a `\#' symbol. It then generates a script tag which attempts to call a function with the name given before the `\#', passing it a JavaScript object with a single property called ``userdata'' whose value is whatever was after the `\#'.
