@@ -13,6 +13,8 @@
 
 \maketitle
 
+\section*{Part 1: Interface Definition}
+
 We are given the following code which we can assume is correct.
 
 \begin{verbatim}
@@ -30,7 +32,7 @@ We are given the following code which we can assume is correct.
 	}
 \end{verbatim}
 
-\section*{Section A}
+\subsection*{Section A}
 
 We are told A is an interface, and we are tasked with writing its declaration.
 
@@ -42,7 +44,7 @@ We are told A is an interface, and we are tasked with writing its declaration.
 	}
 \end{verbatim}
 
-\section*{Section B}
+\subsection*{Section B}
 
 We must now implement classes B and C.
 
@@ -59,7 +61,7 @@ We must now implement classes B and C.
 	}
 \end{verbatim}
 
-\section{Section C}
+\subsection*{Section C}
 
 Below is a UML diagram for the classes A, B, and C.
 
@@ -69,8 +71,12 @@ Below is a UML diagram for the classes A, B, and C.
 \end{figure}
 
 
-\section{Section D}
+\subsection*{Section D}
 
 C cannot be an interface, because we call its constructor in the code, and interfaces cannot be instantiated.
+
+\section*{Part 2: Plane and Train System}
+
+If our plane and train classes would implement the \verb`Comparable` interface, then when calling \verb`sortTarnsport` on an array containing both of these different types, we would get an error saying that we cannot cast from one of the types to the other. However, if these classes implement the generic \verb`Comparable<T>` interface, where \verb`T` is the class \verb`Train` or \verb`Plane`, then our code would not allow for such a circumstance to occur, since we must pass it specifically an array of \verb`Train` objects or \verb`Plane` objects, not anything else.
 
 \end{document}
