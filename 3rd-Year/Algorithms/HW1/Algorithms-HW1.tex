@@ -1,0 +1,87 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}		% for algorithms in pseudo code. Usage: \begin{algorithmic}
+
+\title{Analysis of Algorithms \\
+\medskip
+\large Homework 1}
+\author{Abraham Murciano}
+
+\begin{document}
+
+\maketitle
+
+\section{The 0-1 Knapsack Problem}
+
+We are given a set of \(n\) items and a knapsack which can carry up to a weight of \(W\). For each item \(i\), its weight is \(w_i\) and its value \(v_i\). Each item can be put into the knapsack only as a whole. The problem is to find a subset of items of maximal value which can be carried in the knapsack without exceeding the weight limit.
+
+\subsection*{Part A}
+
+Suppose there is a greedy algorithm which attempts to solve this problem, defined as follows.
+
+\begin{algorithm}
+	\begin{algorithmic}
+		\Function{GreedyKnapsack}{items, $w$, $v$, $W$}
+		\State let knapsack = \{\}
+		\State let current weight = 0
+		\State let current value = 0
+		\State sort items by value to weight ratio (highest first)
+		\For{\(i\) in items}
+		\If{\(\text{current weight} + w_i \leq W\)}
+		\State insert \(i\) into knapsack
+		\State increment current weight by \(w_i\)
+		\State increment current value by \(v_i\)
+		\EndIf
+		\EndFor
+		\Return knapsack
+		\EndFunction
+	\end{algorithmic}
+\end{algorithm}
+
+Now suppose we attempt to use this algorithm to give us the optimal knapsack for a list of items with the following parameters.
+
+\begin{gather*}
+	\text{items} = \{1, 2, 3\}\\
+	W = 9\\
+	w_1 = 6,\ w_2 = 5,\ w_3 = 4\\
+	v_1 = 7,\ v_2 = 5,\ v_3 = 4
+\end{gather*}
+
+Our algorithm would first sort the items by value to weight ratio, and since item 1 has a slightly higher ratio it will be the first item. Then the algorithm will check if item 1 fits into the knapsack, which it does. Therefore it will be inserted. Now, when it moves onto the next two items, neither will fit, since the knapsack already has item one. So the knapsack returned will only contain item 1, thus yielding a total value of 7.
+
+However, this is not the optimal solution, since we can fit both items 2 and 3, for a total weight of 9, and a total value of 9.
+
+\subsection*{Part B}
+
+The example described in Part A satisfies the condition that when the weights are sorted in increasing order, namely \((4,5,6)\), the values also turn out to be sorted in increasing order, namely \((4,5,7)\). As shown in Part A, this is in fact a counter example to the correctness of a greedy algorithm, so we may conclude that the greedy algorithm defined above is not necessarily correct even when the weights and values are in the same order.
+
+\section{Coin Exchange Problem}
+
+We are given a banknote of value \(A\) and (an unlimited amount of) coins of values \(\{c^i : c, i \in \mathbb{N} \land 0 \leq i \leq k \land c > 1 \land k > 1\}\). The goal is to find a way to change the banknote for the minimal number of coins.
+
+\subsection*{Part A}
+
+Suppose we have a problem of this format, whose optimal solution to reach the value \(A\) is some set of coins \(x\) (possibly including many different coins of the same value), we can be certain that for any subset of these coins \(s \subseteq x\), \(s\) will be an optimal solution to reach the value which the coins in \(s\) sums up to.
+
+This can be easily proven since if this was not the case, and there was a set \(t\) such that \(|t| < |s|\), whose coins summed up to the same values as those in \(s\), then we would have a solution to the initial problem \(y = (x - s) \cup t\) such that \(|y| < |x|\). And this is a contradiction to our assumption that \(x\) was an optimal solution.
+
+\subsection*{Part B}
+
+A greedy algorithm that solves this problem is as follows.
+
+\begin{algorithm}
+	\begin{algorithmic}
+		\Function{GreedyCoinExchange}{$c$, $k$, $A$}
+		\If{A = 0}
+		\Return \{\}
+		\EndIf
+		\State let \(v\) = \(c^{\left\lfloor{log_cA}\right\rfloor}\)
+		\State \Return \(\{v\} \cup \text{\Call{GreedyCoinExchange}{$c$, $k$, $A - v$}}\)
+		\EndFunction
+	\end{algorithmic}
+\end{algorithm}
+
+\end{document}
