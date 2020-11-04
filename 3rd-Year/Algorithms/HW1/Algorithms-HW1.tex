@@ -75,13 +75,24 @@ A greedy algorithm that solves this problem is as follows.
 \begin{algorithm}
 	\begin{algorithmic}
 		\Function{GreedyCoinExchange}{$c$, $k$, $A$}
-		\If{A = 0}
+		\If{\(A = 0\)}
 		\Return \{\}
 		\EndIf
-		\State let \(v\) = \(c^{\left\lfloor{log_cA}\right\rfloor}\)
-		\State \Return \(\{v\} \cup \text{\Call{GreedyCoinExchange}{$c$, $k$, $A - v$}}\)
+		\State let \(a\) = \Call{Min}{$\left\lfloor{log_cA}\right\rfloor, k$}
+		\State \Return \(\{\text{a coin of value } c^a\} \cup \text{\Call{GreedyCoinExchange}{$c$, $k$, $A - c^a$}}\)
 		\EndFunction
 	\end{algorithmic}
 \end{algorithm}
 
+To prove the correctness of this algorithm, we must show that the solution obtained by it is always optimal. We will do this in three stages.
+
+\begin{enumerate}
+	\item Show that the optimal solution must contain less than \(c\) coins of the same value for all values less than \(c^k\).
+	\item Prove that no other solutions satisfy the criterion of stage one.
+	\item Show that the solution provided by the algorithm satisfies the criterion, and thus, by stages one and two, must be the optimal solution.
+\end{enumerate}
+
+To start off, we must understand that the optimal solution must contain less than \(c\) coins of the same value for all values less than \(c^k\). This is easily demonstrated since if there were \(c\) coins of the same value \(c^a < c^k\) in a solution, then we could replace the \(c\) coins of value \(c^a\) with one coin of value \(c^{a+1} \leq c^k\), and we would end up with the same total value, thus showing that our solution was not optimal.
+
+Now we must prove stage two. We must show that for all other solutions which are not optimal, there must be at least one coin denomination \(c^a < c^k\) for which there are at least \(c\) coins.
 \end{document}
