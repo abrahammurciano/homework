@@ -5,6 +5,8 @@
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}		% for algorithms in pseudo code. Usage: \begin{algorithmic}
 
+\setlength{\parskip}{\medskipamount}
+
 \title{Analysis of Algorithms \\
 \medskip
 \large Homework 1}
@@ -84,15 +86,16 @@ A greedy algorithm that solves this problem is as follows.
 	\end{algorithmic}
 \end{algorithm}
 
-To prove the correctness of this algorithm, we must show that the solution obtained by it is always optimal. We will do this in three stages.
+To prove the correctness of this algorithm, we must show that the solution obtained by it is always optimal. We will do this by use of a couple of lemmas.
 
-\begin{enumerate}
-	\item Show that the optimal solution must contain less than \(c\) coins of the same value for all values less than \(c^k\).
-	\item Prove that no other solutions satisfy the criterion of stage one.
-	\item Show that the solution provided by the algorithm satisfies the criterion, and thus, by stages one and two, must be the optimal solution.
-\end{enumerate}
+The first lemma we must use is as follows. Suppose that we have a set of coins \(S\) (possibly with multiple coins of the same denomination) whose values are all of the form \(c^j\), where \(j<k\), \(c\) is a constant, and \(j\) may change from coin to coin. Additionally, suppose that \(\sum_{s \in S}\text{value}(s) \geq c^k\). Then there exists some set \(T \subseteq S\) such that \(\sum_{t \in T}\text{value}(t) = c^k\).
 
-To start off, we must understand that the optimal solution must contain less than \(c\) coins of the same value for all values less than \(c^k\). This is easily demonstrated since if there were \(c\) coins of the same value \(c^a < c^k\) in a solution, then we could replace the \(c\) coins of value \(c^a\) with one coin of value \(c^{a+1} \leq c^k\), and we would end up with the same total value, thus showing that our solution was not optimal.
+Our second lemma states that the optimal solution to reach the value \(A\) must contain at least one coin of the highest available value less than or equal to \(A\).
 
-Now we must prove stage two. We must show that for all other solutions which are not optimal, there must be at least one coin denomination \(c^a < c^k\) for which there are at least \(c\) coins.
+We will prove the lemma by contradiction. Suppose the optimal solution to reach a goal of \(A\) did not contain the largest available coin value less than or equal to \(A\). We'll call this value \(c^a\), as labelled in the algorithm. That means that the optimal solution is a set of coins \(S\), all smaller than or equal to \(c^{a-1}\), which reach \(A\), and reach or exceed \(c^a\). However, by our first lemma, there must be some subset of \(S\) which exactly equals \(c^a\), since all coins in \(S\) are powers of \(c\). Therefore, we would be able to replace said subset with a single coin of value \(c^a\), thus giving us a more optimal solution than \(S\), showing that \(S\) was not optimal, which is a contradiction. Thus our lemma must be correct.
+
+We can now prove the correctness of the algorithm using induction. With a base case of \(A=1\), the algorithm will return a set containing a single coin of value 1, which is trivially the optimal solution.
+
+Now we assume that for all \(A < u\), \textsc{GreedyCoinExchange}(\(c, k, A\)) returns an optimal solution, and show from there that \textsc{GreedyCoinExchange}(\(c, k, u\)) also does. Our algorithm returns a set containing the largest coin available to us which does not exceed \(u\), as well as the optimal solution to the remaining value. And since according to our lemma the optimal solution must contain said coin, our solution must be optimal.
+
 \end{document}
