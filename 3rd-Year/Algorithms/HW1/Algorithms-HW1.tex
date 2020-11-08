@@ -27,9 +27,9 @@ Suppose there is a greedy algorithm which attempts to solve this problem, define
 \begin{algorithm}
 	\begin{algorithmic}
 		\Function{GreedyKnapsack}{items, $w$, $v$, $W$}
-		\State let knapsack = \{\}
-		\State let current weight = 0
-		\State let current value = 0
+		\State knapsack := \{\}
+		\State current weight := 0
+		\State current value := 0
 		\State sort items by value to weight ratio (highest first)
 		\For{\(i\) in items}
 		\If{\(\text{current weight} + w_i \leq W\)}
@@ -80,9 +80,9 @@ A greedy algorithm that solves this problem is as follows.
 	\begin{algorithmic}
 		\Function{GreedyCoinExchange}{$c$, $k$, $A$}
 		\If{\(A = 0\)}
-		\Return \{\}
+		\Return \(\phi\)
 		\EndIf
-		\State let \(a\) = \Call{Min}{$\left\lfloor{log_cA}\right\rfloor, k$}
+		\State \(a\) := \Call{Min}{$\left\lfloor{log_cA}\right\rfloor, k$}
 		\State \Return \(\{\text{a coin of value } c^a\} \cup \text{\Call{GreedyCoinExchange}{$c$, $k$, $A - c^a$}}\)
 		\EndFunction
 	\end{algorithmic}
@@ -115,5 +115,41 @@ We will prove the lemma by contradiction. Suppose the optimal solution to reach 
 We can now prove the correctness of the algorithm using induction. With a base case of \(A=1\), the algorithm will return a set containing a single coin of value 1, which is trivially the optimal solution.
 
 Now we assume that for all \(A < u\), \textsc{GreedyCoinExchange}(\(c, k, A\)) returns an optimal solution, and show from there that \textsc{GreedyCoinExchange}(\(c, k, u\)) also does. Our algorithm returns a set containing the largest coin available to us which does not exceed \(u\), as well as the optimal solution to the remaining value. And since according to our lemma the optimal solution must contain said coin, our solution must be optimal.
+
+\subsection*{Part C}
+
+The runtime of the algorithm is \(O(\lg(A))\) if the largest coin has a value larger than \(A\), or \(O(A)\) if \(A\) is much larger than all the coins. All things considered, the complexity is \(O(A-k+\lg(A))\).
+
+\subsection*{Part D}
+
+There is no greedy solution for a problem of this sort, where the coin denominations are arbitrary, and are not powers of some common base. As a counter-example, suppose we have the coin denominations \(\{10, 9, 1\}\). If we apply a greedy algorithm to reach a total value of eighteen, the first coin we would take would have a value of ten, and then we would have to take eight more coins with a value of one. The solution would contain a total of nine coins. However, the optimal solution is two coins worth nine each.
+
+\section{Relay Stations Problem}
+
+There is a straight stretch of road on which a set of \(n\) houses \(H\) are arbitrarily scattered. We are given that the distance from the beginning of the road to the \(i\)\textsuperscript{th} house \(h_i\) is \(d_h\). The goal is to position a minimal number of relay stations such that the distance between each house and the closest relay station is at most \(D\).
+
+\subsection*{Part B}
+
+\begin{algorithmic}
+	\begin{algorithm}
+		\Function{RelayStations}{$H$, $D$}
+		\State sort \(H\)
+		\State \(f := d_1\)
+		\Comment{\(f\) is the distance to the first unresolved house}
+		\State \(p := \phi\)
+		\Comment{\(p\) is the positions we will place relay stations}
+		\For{\(h \in H\)}
+		\If{\(d_h > f + 2 D\)}
+		\Comment{\(h\) no longer fits into previous group}
+		\State \(p := p \cup \{f + D\}\)
+		\Comment{Position a station in for the previous group}
+		\State \(f := d_h\)
+		\Comment{Start a new group at the next house}
+		\EndIf
+		\EndFor
+		\Return \(p\)
+		\EndFunction
+	\end{algorithm}
+\end{algorithmic}
 
 \end{document}
