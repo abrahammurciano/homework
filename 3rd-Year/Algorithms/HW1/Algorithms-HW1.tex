@@ -72,6 +72,8 @@ This can be easily proven since if this was not the case, and there was a set \(
 
 \subsection*{Part B}
 
+\subsubsection*{The Algorithm}
+
 A greedy algorithm that solves this problem is as follows.
 
 \begin{algorithm}
@@ -88,11 +90,27 @@ A greedy algorithm that solves this problem is as follows.
 
 To prove the correctness of this algorithm, we must show that the solution obtained by it is always optimal. We will do this by use of a couple of lemmas.
 
-The first lemma we must use is as follows. Suppose that we have a set of coins \(S\) (possibly with multiple coins of the same denomination) whose values are all of the form \(c^j\), where \(j<k\), \(c\) is a constant, and \(j\) may change from coin to coin. Additionally, suppose that \(\sum_{s \in S}\text{value}(s) \geq c^k\). Then there exists some set \(T \subseteq S\) such that \(\sum_{t \in T}\text{value}(t) = c^k\).
+\subsubsection*{Lemma 1}
+
+The first lemma we must use is as follows. Suppose that we have a set of coins \(S\) (possibly with multiple coins of the same denomination) whose values are all of the form \(c^w\), where \(w<k\), \(c\) is a constant, and \(w\) may change from coin to coin. Additionally, suppose that \(\sum_{s \in S}\text{value}(s) \geq c^k\). Then there exists some set \(T \subseteq S\) such that \(\sum_{t \in T}\text{value}(t) = c^k\).
+
+To prove this lemma, let \(T \subseteq S\) be the subset with the smallest sum greater than or equal to \(c^k\). \(T\) must exist, since in absence of any other choices, \(S\) would fit the criteria. So we suppose our claim is false, and the sum of the coins in \(T\) is \(V\) so
+
+\[V = \sum_{t \in T} \text{value} (t) > c^k\]
+
+Now let \(c^z\) be the value of the smallest coin in \(T\). Since all the coins in \(T\) have values of sums of higher powers of \(c\), \(V\) must be divisible by \(c^z\). And since \(c^k\) is also divisible by \(c^z\) (because \(z < k\)), therefore \(V - c^k\) must be divisible by \(c^z\), so
+
+\[V - c^k \geq c^z \quad \Rrightarrow \quad V - c^z \geq c^k\]
+
+If this was true, we could remove a coin of value \(c^z\) from \(T\) to obtain a subset of \(S\) with sum still greater than or equal to \(c^k\), contradicting our assumption that \(T\) was the subset with the smallest sum greater than or equal to \(c^k\). Therefore our claim is true and there does exist a \(T \subseteq S\) such that \(\sum_{t \in T}\text{value}(t) = c^k\).
+
+\subsubsection*{Lemma 2}
 
 Our second lemma states that the optimal solution to reach the value \(A\) must contain at least one coin of the highest available value less than or equal to \(A\).
 
 We will prove the lemma by contradiction. Suppose the optimal solution to reach a goal of \(A\) did not contain the largest available coin value less than or equal to \(A\). We'll call this value \(c^a\), as labelled in the algorithm. That means that the optimal solution is a set of coins \(S\), all smaller than or equal to \(c^{a-1}\), which reach \(A\), and reach or exceed \(c^a\). However, by our first lemma, there must be some subset of \(S\) which exactly equals \(c^a\), since all coins in \(S\) are powers of \(c\). Therefore, we would be able to replace said subset with a single coin of value \(c^a\), thus giving us a more optimal solution than \(S\), showing that \(S\) was not optimal, which is a contradiction. Thus our lemma must be correct.
+
+\subsubsection*{The Proof}
 
 We can now prove the correctness of the algorithm using induction. With a base case of \(A=1\), the algorithm will return a set containing a single coin of value 1, which is trivially the optimal solution.
 
