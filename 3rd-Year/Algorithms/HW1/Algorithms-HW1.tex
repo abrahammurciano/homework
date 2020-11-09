@@ -128,6 +128,12 @@ There is no greedy solution for a problem of this sort, where the coin denominat
 
 There is a straight stretch of road on which a set of \(n\) houses \(H\) are arbitrarily scattered. We are given that the distance from the beginning of the road to the \(i\)\textsuperscript{th} house \(h_i\) is \(d_h\). The goal is to position a minimal number of relay stations such that the distance between each house and the closest relay station is at most \(D\).
 
+\subsection*{Part A}
+
+Suppose \(p\) is a minimal set containing the distances to place relay stations to cover all the houses. Then we can say that for any \(r \subseteq p\), it will be a minimal solution to cover all the houses which \(r\) covers (with a distance no larger than \(D\)).
+
+This can be proven by contradiction. Suppose the contrary; that there exists a set of station positions \(s\) such that \(|s| < |r|\) and placing a station in every position in \(s\) will cover all the houses which \(r\) covers. Then we can obtain another solution \(q = (p - r) \cup s\) where \(|q| < |p|\), contradicting the minimality of \(p\). Therefore \(r\) must be a minimal solution to cover the houses which it covers.
+
 \subsection*{Part B}
 
 \begin{algorithmic}
