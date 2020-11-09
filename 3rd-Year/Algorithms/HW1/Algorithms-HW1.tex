@@ -72,8 +72,6 @@ This can be easily proven since if this was not the case, and there was a set \(
 
 \subsection*{Part B}
 
-\subsubsection*{The Algorithm}
-
 A greedy algorithm that solves this problem is as follows.
 
 \begin{algorithm}
@@ -90,9 +88,7 @@ A greedy algorithm that solves this problem is as follows.
 
 To prove the correctness of this algorithm, we must show that the solution obtained by it is always optimal. We will do this by use of a couple of lemmas.
 
-\subsubsection*{Lemma 1}
-
-The first lemma we must use is as follows. Suppose that we have a set of coins \(S\) (possibly with multiple coins of the same denomination) whose values are all of the form \(c^w\), where \(w<k\), \(c\) is a constant, and \(w\) may change from coin to coin. Additionally, suppose that \(\sum_{s \in S}\text{value}(s) \geq c^k\). Then there exists some set \(T \subseteq S\) such that \(\sum_{t \in T}\text{value}(t) = c^k\).
+\paragraph{Lemma 1.} The first lemma we must use is as follows. Suppose that we have a set of coins \(S\) (possibly with multiple coins of the same denomination) whose values are all of the form \(c^w\), where \(w<k\), \(c\) is a constant, and \(w\) may change from coin to coin. Additionally, suppose that \(\sum_{s \in S}\text{value}(s) \geq c^k\). Then there exists some set \(T \subseteq S\) such that \(\sum_{t \in T}\text{value}(t) = c^k\).
 
 To prove this lemma, let \(T \subseteq S\) be the subset with the smallest sum greater than or equal to \(c^k\). \(T\) must exist, since in absence of any other choices, \(S\) would fit the criteria. So we suppose our claim is false, and the sum of the coins in \(T\) is \(V\) so
 
@@ -104,15 +100,11 @@ Now let \(c^z\) be the value of the smallest coin in \(T\). Since all the coins 
 
 If this was true, we could remove a coin of value \(c^z\) from \(T\) to obtain a subset of \(S\) with sum still greater than or equal to \(c^k\), contradicting our assumption that \(T\) was the subset with the smallest sum greater than or equal to \(c^k\). Therefore our claim is true and there does exist a \(T \subseteq S\) such that \(\sum_{t \in T}\text{value}(t) = c^k\).
 
-\subsubsection*{Lemma 2}
-
-Our second lemma states that the optimal solution to reach the value \(A\) must contain at least one coin of the highest available value less than or equal to \(A\).
+\paragraph{Lemma 2.} Our second lemma states that the optimal solution to reach the value \(A\) must contain at least one coin of the highest available value less than or equal to \(A\).
 
 We will prove the lemma by contradiction. Suppose the optimal solution to reach a goal of \(A\) did not contain the largest available coin value less than or equal to \(A\). We'll call this value \(c^a\), as labelled in the algorithm. That means that the optimal solution is a set of coins \(S\), all smaller than or equal to \(c^{a-1}\), which reach \(A\), and reach or exceed \(c^a\). However, by our first lemma, there must be some subset of \(S\) which exactly equals \(c^a\), since all coins in \(S\) are powers of \(c\). Therefore, we would be able to replace said subset with a single coin of value \(c^a\), thus giving us a more optimal solution than \(S\), showing that \(S\) was not optimal, which is a contradiction. Thus our lemma must be correct.
 
-\subsubsection*{The Proof}
-
-We can now prove the correctness of the algorithm using induction. With a base case of \(A=1\), the algorithm will return a set containing a single coin of value 1, which is trivially the optimal solution.
+\paragraph{The Proof.} We can now prove the correctness of the algorithm using induction. With a base case of \(A=1\), the algorithm will return a set containing a single coin of value 1, which is trivially the optimal solution.
 
 Now we assume that for all \(A < u\), \textsc{GreedyCoinExchange}(\(c, k, A\)) returns an optimal solution, and show from there that \textsc{GreedyCoinExchange}(\(c, k, u\)) also does. Our algorithm returns a set containing the largest coin available to us which does not exceed \(u\), as well as the optimal solution to the remaining value. And since according to our lemma the optimal solution must contain said coin, our solution must be optimal.
 
@@ -126,11 +118,11 @@ There is no greedy solution for a problem of this sort, where the coin denominat
 
 \section{Relay Stations Problem}
 
-There is a straight stretch of road on which a set of \(n\) houses \(H\) are arbitrarily scattered. We are given that the distance from the beginning of the road to the \(i\)\textsuperscript{th} house \(h_i\) is \(d_h\). The goal is to position a minimal number of relay stations such that the distance between each house and the closest relay station is at most \(D\).
+There is a straight stretch of road on which a set of \(n\) houses \(H\) are arbitrarily scattered. We are given that the distance from the beginning of the road to the \(i\)\textsuperscript{th} house \(h_i\) is \(d_{h_i}\). The goal is to position a minimal number of relay stations such that each house is within some range \(R\) from at least one relay station.
 
 \subsection*{Part A}
 
-Suppose \(p\) is a minimal set containing the distances to place relay stations to cover all the houses. Then we can say that for any \(r \subseteq p\), it will be a minimal solution to cover all the houses which \(r\) covers (with a distance no larger than \(D\)).
+Suppose \(p\) is a minimal set containing the distances to place relay stations to cover all the houses. Then we can say that for any \(r \subseteq p\), it will be a minimal solution to cover all the houses which \(r\) covers (with a distance no larger than \(R\)).
 
 This can be proven by contradiction. Suppose the contrary; that there exists a set of station positions \(s\) such that \(|s| < |r|\) and placing a station in every position in \(s\) will cover all the houses which \(r\) covers. Then we can obtain another solution \(q = (p - r) \cup s\) where \(|q| < |p|\), contradicting the minimality of \(p\). Therefore \(r\) must be a minimal solution to cover the houses which it covers.
 
@@ -138,16 +130,16 @@ This can be proven by contradiction. Suppose the contrary; that there exists a s
 
 \begin{algorithmic}
 	\begin{algorithm}
-		\Function{RelayStations}{$H$, $D$}
+		\Function{RelayStations}{$H$, $R$}
 		\State sort \(H\)
-		\State \(f := d_1\)
+		\State \(f := -\infty\)
 		\Comment{\(f\) is the distance to the first unresolved house}
 		\State \(p := \phi\)
 		\Comment{\(p\) is the positions we will place relay stations}
 		\For{\(h \in H\)}
-		\If{\(d_h > f + 2 D\)}
+		\If{\(d_h > f + 2 R\)}
 		\Comment{\(h\) no longer fits into previous group}
-		\State \(p := p \cup \{f + D\}\)
+		\State \(p := p \cup \{f + R\}\)
 		\Comment{Position a station in for the previous group}
 		\State \(f := d_h\)
 		\Comment{Start a new group at the next house}
@@ -157,5 +149,17 @@ This can be proven by contradiction. Suppose the contrary; that there exists a s
 		\EndFunction
 	\end{algorithm}
 \end{algorithmic}
+
+\paragraph{Proof of Correctness.} Suppose the set of station positions returned by our algorithm is \(p\). Suppose \(q\) is a minimal solution. None of the relay stations positioned by our algorithm are within the distance \(2R\) of another, that is, their signals do not overlap.
+
+Define \(p_i\) as the \(i\)\textsuperscript{th} smallest position to the beginning of the road in \(p\), and define \(q_i\) similarly. It must be the case that \(\forall i (p_i \geq q_i)\), meaning that the \(i\)\textsuperscript{th} station according to our algorithm is not closer to the start than the \(i\)\textsuperscript{th} station in any minimal solution. This is because if for some \(i\), \(q_i\) was further down the road than \(p_i\), at least one house (the one furthest up the road which is covered by \(p_i\)) would not have coverage from \(q\)'s placements, which is impossible since \(q\) must cover all the houses.
+
+It is fairly obvious that both the furthest station in \(p\) and the furthest station in \(q\) give service to the furthest house. So the distance between them is at most \(2R\).
+
+Now to conclude our proof, we suppose that \(p\) is not minimal. That means \(|q| = a < |p| = b\). And we have shown that \(p_a\) must be further down the road than \(q_a\), which is the position of last station in \(q\). However, \(p_b\) (the position of the last station in \(p\)), which is greater than \(p_a\), must be within \(2R\) of \(q_a\). Meaning \(q_a \leq p_a < p_b\), which implies \(p_b - p_a \leq p_b - q_a \leq 2R\). Which means that \(p_a\) and \(p_b\) have overlapping ranges, which is a contradiction. Therefore \(|p| = |q|\), so \(p\) is minimal.
+
+\subsection*{Part C}
+
+Quite clearly, the complexity of the second part of \textsc{RelayStations} is linear with respect to the number of houses. That is, \(O(n)\). However, we must first sort the houses by their distance from the start of the road, so overall, the complexity is \(O(n + n\lg(n)) = O(n\lg(n))\).
 
 \end{document}
