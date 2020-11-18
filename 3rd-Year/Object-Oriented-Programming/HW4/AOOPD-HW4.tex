@@ -13,14 +13,30 @@
 
 \maketitle
 
-\section*{Question 1}
+\section{Eater/Silverware System}
 
-\subsection*{Part A}
+\subsection*{Part A: Basic Design}
 
 Thi system represents Eaters and Silverware. An Eater has an eat operation, and a Silverware has a scoop operation. Each Eater has a single Silverware and he uses its scoop operation. There are two types of Eaters: QuietEater and NoisyEater. There are two types of Silverware: Chopstick and Fork.
 
 \begin{figure}[ht]
 	\includegraphics[width=\textwidth]{hw4q1a.png}
+\end{figure}
+
+\subsection*{Part B: Adding a Spoon}
+
+Suppose we are given a compiled Spoon class, having an operation shlook. We would like to use Spoon as an additional Silverware (Where shlook corresponds to scoop). However, we are not allowed to change Spoon's code or even recompile it. Below is a new diagram incorporating Spoon into the system. We used the class adapter pattern.
+
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{hw4q1b.png}
+\end{figure}
+
+\subsection*{Part C: Adding Drinkers}
+
+We would like to add Drinkers to our system from part A. A Drinker also has a Silverware. In addition, we want to add to each of the existing Silverware a stir operation. Only Drinkers use a Silverware's stir operation and only Eaters use its scoop operation. We must draw a new diagram incorporating Drinkers into the system.
+
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{hw4q1c.png}
 \end{figure}
 
 \end{document}
