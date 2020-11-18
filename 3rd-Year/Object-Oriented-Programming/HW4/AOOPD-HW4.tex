@@ -1,6 +1,7 @@
 \documentclass{article}
 
 \usepackage{graphicx}
+\usepackage{amsmath}
 
 \setlength{\parskip}{\medskipamount}
 
@@ -37,6 +38,24 @@ We would like to add Drinkers to our system from part A. A Drinker also has a Si
 
 \begin{figure}[ht]
 	\includegraphics[width=\textwidth]{hw4q1c.png}
+\end{figure}
+
+\section{Speech Censoring System}
+
+This system represents Mammals. Each Mammal has a speak operation, generating RawData representing the Mammal's voice. A Human is a type of Mammal. Every invocation of speak by a human should be followed by a voice-analysis process. If the Human's voice contains certain words (The list of words may change from one execution to another), the Human will be warned. A Human with 3 warnings executes a function payFine.
+
+Apart from Human, there are additional Mammals (e.g., Dog), but Human is the only Mammal that can be warned. There may be other non-Mammal warn-able classes that generate voice (e.g., Parrot, Gramophone). We must incorporate the following functions.
+
+\begin{description}
+	\item[List \(<\text{String}>\) convertSoundToText (RawData voice)] returns a list of words that the voice contains.
+	\item[void CensorVoice(RawData voice, ? client)] Analyzes the voice and if it contains certain words, warns the client.
+	\item[void warn()] Updates the object that it has been warned.
+\end{description}
+
+Below is the design which conforms to the above specification.
+
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{hw4q2.png}
 \end{figure}
 
 \end{document}
