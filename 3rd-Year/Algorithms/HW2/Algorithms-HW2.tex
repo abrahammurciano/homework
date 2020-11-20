@@ -1,0 +1,87 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}		% for algorithms in pseudo code. Usage: \begin{algorithmic}
+\usepackage{slashbox}
+
+\setlength{\parskip}{\medskipamount}
+
+\title{Analysis of Algorithms \\
+\medskip
+\large Homework 2}
+\author{Abraham Murciano}
+
+\begin{document}
+
+\maketitle
+
+\section{Matrix Multiplication}
+
+We are given the following four matrices to be multiplied, as well as their sizes.
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|c|c|}
+		\hline
+		Matrix           & Size \\
+		\hline
+		\(\mathbf{A}_1\) & \(10 \times 30\) \\
+		\(\mathbf{A}_2\) & \(30 \times 5\) \\
+		\(\mathbf{A}_3\) & \(5 \times 60\) \\
+		\(\mathbf{A}_4\) & \(60 \times 10\) \\
+		\hline
+	\end{tabular}
+\end{table}
+
+We are to apply the algorithm described in class in order to find the order in which to apply the associative matrix multiplications such that the number of scalar multiplications is minimal.
+
+When multiplying two matrices, suppose these are of sizes \(r \times s\) and \(s \times t\), the resulting matrix would be of size \(r \times t\), meaning \(r \cdot t\) dot products must be calculated. And each of those dot products would be a sum of \(s\) scalar multiplications. Therefore the total number of scalar multiplications for these two matrices is \(r \cdot s \cdot t\).
+
+When multiplying a chain of \(n\) matrixes, we can say that whatever the optimal order of performing the multiplications, if the last two matrices to be multiplied are
+\begin{equation*}
+	(\mathbf{A}_1 \times \dots \times \mathbf{A}_k) \times (\mathbf{A}_{k+1} \times \dots \times \mathbf{A}_n)
+\end{equation*}
+then the way to multiply \(\mathbf{A}_1 \times \dots \times \mathbf{A}_k\) must be optimal, and the same can be said about \(\mathbf{A}_{k+1} \times \dots \times \mathbf{A}_n\).
+
+We denote by \(m_{i,j}\) the minimal number of scalar multiplications required to multiply matrices \(\mathbf{A}_i\) through \(\mathbf{A}_j\), where the dimensions of matrix \(\mathbf{A}_i\) is denoted by \(d_i \times d_{i+1}\). Now we can define \(m_{i,j}\).
+\begin{equation*}
+	m_{i,j} =
+	\begin{cases}
+		0                                                                                                      & i = j \\
+		\displaystyle\min_{i \leq k < j} \left( m_{i,k} + m_{k+1, j} + d_i \cdot d_{k+1} \cdot d_{j+1} \right) & i < j
+	\end{cases}
+\end{equation*}
+
+Let \(s_{i,j}\) be the value of \(k\) which gives the minimal number of multiplications in the definition of \(m_{i,j}\). Now we are ready to compute the initial question by calculating \(m_{1,4}\), \(s_{1,4}\), and all the intermediate results, as shown in table \ref{q1}.
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|c|cccc|}
+		\hline
+		\backslashbox{\(i\)}{\(j\)} & 1 & 2    & 3    & 4 \\
+		\hline
+		1                           & 0 & 1500 & 4500 & 5000 \\
+		2                           & - & 0    & 9000 & 4500 \\
+		3                           & - & -    & 0    & 3000 \\
+		4                           & - & -    & -    & 0 \\
+		\hline
+	\end{tabular}
+	\begin{tabular}{|c|cccc|}
+		\hline
+		\backslashbox{\(i\)}{\(j\)} & 1 & 2 & 3 & 4 \\
+		\hline
+		1                           & - & 1 & 2 & 2 \\
+		2                           & - & - & 2 & 2 \\
+		3                           & - & - & - & 3 \\
+		4                           & - & - & - & - \\
+		\hline
+	\end{tabular}
+	\caption{The computed final and intermediate results of \(m_{1,4}\) (left) and \(s_{1,4}\) (right)}
+	\label{q1}
+\end{table}
+
+Thus we have shown that the optimal way to multiply \(\mathbf{A}_1 \times \mathbf{A}_2 \times \mathbf{A}_3 \times \mathbf{A}_4\) is \(((\mathbf{A}_1)(\mathbf{A}_2))((\mathbf{A}_3)(\mathbf{A}_4))\) with a total of 5000 scalar multiplications.
+
+\end{document}
