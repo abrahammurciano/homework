@@ -81,7 +81,7 @@ A greedy algorithm that solves this problem is as follows.
 		\Return \(\phi\)
 		\EndIf
 		\State \(a\) := \Call{Min}{$\left\lfloor{log_cA}\right\rfloor, k$}
-		\State \Return \(\{\text{a coin of value } c^a\} \cup \text{\Call{GreedyCoinExchange}{$c$, $k$, $A - c^a$}}\)
+		\State \Return \(\{\text{a coin of value } c^a\} \cup \Call{GreedyCoinExchange}{c, k, A - c^a}\)
 		\EndFunction
 	\end{algorithmic}
 \end{algorithm}

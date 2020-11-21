@@ -84,4 +84,20 @@ Let \(s_{i,j}\) be the value of \(k\) which gives the minimal number of multipli
 
 Thus we have shown that the optimal way to multiply \(\mathbf{A}_1 \times \mathbf{A}_2 \times \mathbf{A}_3 \times \mathbf{A}_4\) is \(((\mathbf{A}_1)(\mathbf{A}_2))((\mathbf{A}_3)(\mathbf{A}_4))\) with a total of 5000 scalar multiplications.
 
+\section{Longest Non-Decreasing Subsequence}
+
+\paragraph{The problem.} Given a sequence of natural numbers \(S = (s_1, s_2, \dots, s_n)\), we are to create an algorithm to find the longest monotonically non-decreasing subsequence as well as its length.
+
+\paragraph{The optimal substructure.} Suppose \(T\) is a solution; i.e. it is a non-decreasing subsequence of \(S\) of maximal length. Suppose \(T'\) is a prefix of \(T\) such that \(|T'| = m\) and the last value of \(T'\) is \(s_a\).
+
+We can be certain that \(T'\) is the longest non-decreasing subsequence of the prefix of \(S\) of length \(a\) (i.e. the first \(a\) terms of \(S\)), such that the last element of the subsequence is less than or equal to \(t_{m+1}\).
+
+\paragraph{The proof.} Suppose \(T'\) is not the longest subsequence within the conditions specified earlier. Meaning there exists \(U\) which is a longer subsequence of the prefix of \(S\) of length \(a\). Then we would be able to substitute the prefix \(T'\) for the \(U\) in the subsequence \(T\), and that would give a longer subsequence of \(S\), contradicting the maximality of \(T\).
+
+\paragraph{The formula.}
+
+\begin{equation*}
+	T_{a,}
+\end{equation*}
+
 \end{document}
