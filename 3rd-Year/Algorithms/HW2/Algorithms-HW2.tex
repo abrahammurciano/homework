@@ -154,15 +154,20 @@ Regarding the space complexity, we keep two arrays \(p\) and \(l\), each of leng
 
 \section{Activity Selection Problem}
 
-We are given a set of activities \(A = \{a_1, \dots, a_n\}\), and a single resource. Each activity \(a_i\) has a start time \(s_i\) and a finish time \(f_i\) such that \(f_i > s_i\). The time range of the activity \(a_i\) is the half-open interval \([s_i, f_i)\). Also given the start time \(S\) and the finish time \(F\) of the resource. (If for activity \(i\), \(s_i < S\) or \(f_i > F\) then this activity cannot use the resource.)
+We are given a set of activities \(A = \{a_1, \dots, a_n\}\), and a single resource. Each activity \(a_i\) has a start time \(s_i\) and a finish time \(f_i\) such that \(f_i > s_i\). The time range of the activity \(a_i\) is the half-open interval \([s_i, f_i)\). We are also given the start time \(S\) and the finish time \(F\) of the resource. (If for activity \(i\), \(s_i < S\) or \(f_i > F\) then this activity cannot use the resource.)
 
-The goal is to find a subset \(A' \subseteq A\) of mutually compatible activities such that the resource is maximally used, i.e. such that the value of \(\sum_{a_i \in A'}(f_i - s_i)\) is maximal.
+We shall denote by \(A_{S,F}\) the subset of \(A\) such that all its activities can use the resource which starts at \(S\) and ends at \(F\). More formally,
+\begin{equation*}
+	A_{S,F} = \{a_i \in A : s_i \geq S \land f_i \leq F\}
+\end{equation*}
 
-\subsection*{Part A}
+The goal is to find a set \(C_{S,F} \subseteq A_{S,F}\) of mutually compatible activities such that the resource is used for a maximal amount of time, i.e. such that the value of \(T_{S,F} = \sum_{a_i \in C_{S,F}}(f_i - s_i)\) is maximal.
+
+\subsection{A Greedy Algorithm}
 
 In the first lecture of the course a similar problem was presented along with a greedy algorithm which could solve it. In that problem the goal was to select as many compatible activities as possible, whereas in this problem we aim for maximal use of the resource.
 
-\subsection*{Part B}
+\subsection{A Counter-example to the Greedy Algorithm}
 
 To show that the greedy algorithm does not always return the correct result we will propose a counter-example. Suppose \(S = 0\) and \(F = 10\). Suppose the start times and finish times of the activities are as shown in table \ref{q3b-1}.
 
@@ -180,10 +185,21 @@ To show that the greedy algorithm does not always return the correct result we w
 	\label{q3b-1}
 \end{table}
 
-The greedy algorithm would first select the activity which finishes first, namely \(a_1\), then would eliminate \(a_3\) which is incompatible with \(a_1\); then it would select \(a_2\), which is the activity with the second smallest finish time. So it would return \(\{a_1, a_2\}\), which uses the resource for \((1-0)+(6-5)=2\) units of time. However there is a solution which uses the resource for longer, namely \(\{a_3\}\) which uses it for 10 time units.
+The greedy algorithm would first select the activity which finishes first, namely \(a_1\), then would eliminate \(a_3\) which is incompatible with \(a_1\); then it would select \(a_2\), which is the activity with the second smallest finish time. So it would return \(\{a_1, a_2\}\), which uses the resource for \((1 - 0) + (6 - 5) = 2\) units of time. However there is a solution which uses the resource for longer, namely \(\{a_3\}\) which uses it for 10 time units.
 
-\subsection*{Part C}
+\subsection{The Optimal Substructure}
 
+If the solution to the problem is \(C\), and one of its activities ends at \(f_x\), then the subset of \(C\) whose activities all finish before or at \(f_x\) must be an optimal solution to a smaller problem where its resource has a finish time of \(f_x\). Similarly, the subset of \(C\) whose activities all start after or at \(f_x\) must be a solution to the smaller problem where the resource has a start time of \(f_x\).
 
+\subsection{A Recursive Formula}
+
+Let \(C_{S,F}\) denote the set of compatible activities in \(A_{S,F}\) such that \(T_{S,F}\) is maximal (where \(T_{S,F}\) is the amount of time that the activities in \(C_{S,F}\) are running).
+\begin{equation*}
+	C_{S,F} =
+	\begin{cases}
+		\\
+		\displaystyle\max_{a_i \in A_{S,F}} ()
+	\end{cases}
+\end{equation*}
 
 \end{document}
