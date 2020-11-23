@@ -189,16 +189,18 @@ The greedy algorithm would first select the activity which finishes first, namel
 
 \subsection{The Optimal Substructure}
 
-If the solution to the problem is \(C\), and one of its activities ends at \(f_x\), then the subset of \(C\) whose activities all finish before or at \(f_x\) must be an optimal solution to a smaller problem where its resource has a finish time of \(f_x\). Similarly, the subset of \(C\) whose activities all start after or at \(f_x\) must be a solution to the smaller problem where the resource has a start time of \(f_x\).
+If the solution to the problem is \(C_{S,F}\), and one of its activities ends at \(f_x\), then the subset of \(C_{S,F}\) whose activities all finish before or at \(f_x\) --- i.e. \(C_{S,f_x}\) --- must be an optimal solution to a smaller problem where its resource has a finish time of \(f_x\). Similarly, the subset of \(C_{S,F}\) whose activities all start after or at \(f_x\) --- i.e. \(C_{f_x,F}\) --- must be a solution to the smaller problem where the resource has a start time of \(f_x\).
 
 \subsection{A Recursive Formula}
 
-Let \(C_{S,F}\) denote the set of compatible activities in \(A_{S,F}\) such that \(T_{S,F}\) is maximal (where \(T_{S,F}\) is the amount of time that the activities in \(C_{S,F}\) are running).
+As defined above, \(C_{S,F}\) denotes the set of compatible activities in \(A_{S,F}\) such that \(T_{S,F}\) is maximal (where \(T_{S,F}\) is the amount of time that the activities in \(C_{S,F}\) are running).
+
+Additionally we will define the \(\max\) of a collection of sets of activities as set which yields the largest \(T_{S,F}\) (i.e. it uses the resource for longest).
 \begin{equation*}
 	C_{S,F} =
 	\begin{cases}
-		\\
-		\displaystyle\max_{a_i \in A_{S,F}} ()
+		\phi                                                                          & A_{S,F} = \phi    \\
+		\displaystyle\max_{a_i \in A_{S,F}} \left( C_{S, f_i} \cup C_{f_i, F} \right) & A_{S,F} \neq \phi
 	\end{cases}
 \end{equation*}
 
