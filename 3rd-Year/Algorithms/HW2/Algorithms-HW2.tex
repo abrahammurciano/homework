@@ -148,8 +148,42 @@ And in order to find a maximal subsequence which ends in \(s_i\), we first find 
 
 Finally to obtain the final result, we select the elements in the largest subsequence, which is \(h\) operations, and \(h\) is \(O(n)\).
 
-The complexity of the algorithm is therefore \(O(n^2)\). (And according to my conjecture, it would be closer to \(O(n\lg(n))\))
+The complexity of the algorithm is therefore at most \(O(n^2)\). (And according to my conjecture, it would be closer to \(O(n\lg(n))\))
 
 Regarding the space complexity, we keep two arrays \(p\) and \(l\), each of length \(n\), as well as \(h\) heaps, whose combined size is \(n\) (since each \(i\) is only inserted into one heap). Thus the algorithm uses \(O(n)\) extra space.
+
+\section{Activity Selection Problem}
+
+We are given a set of activities \(A = \{a_1, \dots, a_n\}\), and a single resource. Each activity \(a_i\) has a start time \(s_i\) and a finish time \(f_i\) such that \(f_i > s_i\). The time range of the activity \(a_i\) is the half-open interval \([s_i, f_i)\). Also given the start time \(S\) and the finish time \(F\) of the resource. (If for activity \(i\), \(s_i < S\) or \(f_i > F\) then this activity cannot use the resource.)
+
+The goal is to find a subset \(A' \subseteq A\) of mutually compatible activities such that the resource is maximally used, i.e. such that the value of \(\sum_{a_i \in A'}(f_i - s_i)\) is maximal.
+
+\subsection*{Part A}
+
+In the first lecture of the course a similar problem was presented along with a greedy algorithm which could solve it. In that problem the goal was to select as many compatible activities as possible, whereas in this problem we aim for maximal use of the resource.
+
+\subsection*{Part B}
+
+To show that the greedy algorithm does not always return the correct result we will propose a counter-example. Suppose \(S = 0\) and \(F = 10\). Suppose the start times and finish times of the activities are as shown in table \ref{q3b-1}.
+
+\begin{table}[hbtp]
+	\centering
+	\begin{tabular}{|c|ccc|}
+		\hline
+		\(i\)   & 1 & 2 & 3 \\
+		\hline
+		\(s_i\) & 0 & 5 & 0 \\
+		\(f_i\) & 1 & 6 & 10 \\
+		\hline
+	\end{tabular}
+	\caption{Start times and finish times of activities}
+	\label{q3b-1}
+\end{table}
+
+The greedy algorithm would first select the activity which finishes first, namely \(a_1\), then would eliminate \(a_3\) which is incompatible with \(a_1\); then it would select \(a_2\), which is the activity with the second smallest finish time. So it would return \(\{a_1, a_2\}\), which uses the resource for \((1-0)+(6-5)=2\) units of time. However there is a solution which uses the resource for longer, namely \(\{a_3\}\) which uses it for 10 time units.
+
+\subsection*{Part C}
+
+
 
 \end{document}
