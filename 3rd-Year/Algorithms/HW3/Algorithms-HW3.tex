@@ -1,0 +1,154 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}		% for algorithms in pseudo code. Usage: \begin{algorithmic}
+\MakeRobust{\Call}
+
+\setlength{\parskip}{\smallskipamount}
+
+\title{Analysis of Algorithms \\
+\medskip
+\large Homework 3}
+\author{Abraham Murciano}
+
+\begin{document}
+
+\maketitle
+
+\section{The Kruskal and Prim Algorithms}
+
+We are given the following weighted, undirected graph \(G = (V, E)\) where \(V\) is the set of vertices, \(E\) is a set of edges, and \(W_{u,v}\) is the weight from vertices \(u\) to \(v\).
+\begin{gather*}
+	V = \{a, b, c, d, e, f, g, h, i\} \\
+	E = \{\{a, b\}, \{a, h\}, \{a, i\}, \{b, c\}, \{b, f\}, \{c, d\}, \{d, e\},\\ \{d, g\}, \{d, h\}, \{e, f\}, \{f, g\}, \{h, i\}\} \\
+	W_{a, b} = 4, W_{a, h} = 10, W_{a, i} = 6, W_{b, c} = 7, W_{b, f} = 12, W_{c, d} = 8, W_{d, e} = 3, \\ W_{d, g} = 5, W_{d, h} = 2, W_{e, f} = 11, W_{f, g} = 1, W_{h, i} = 9)
+\end{gather*}
+
+\subsection{Kruskal}
+
+We are to run the Kruskal algorithm on this graph, showing intermediate stages. We begin with the set of edges to return \(F\), initialised to \(\phi\). We also begin with a disjoint set \(D\), starting with each vertex in its own set; i.e \(D = \{\{v\} : v \in V\}\).
+
+The set the algorithm returns as a minimum spanning forrest is
+\begin{equation*}
+	F = \{\{a, b\}, \{a, i\}, \{b, c\}, \{c, d\}, \{d, e\}, \{d, g\}, \{d, h\}, \{f, g\}\}
+\end{equation*}
+as shown by the intermediate steps in table \ref{q1a-steps}.
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{|c|c|c|}
+		\hline
+		Step & Variable & Value \\
+		\hline
+		1    & \(F\)    & \(\{\{f, g\}\}\) \\
+		     & \(D\)    & \(\{\{a\}, \{b\}, \{c\}, \{d\}, \{e\}, \{f, g\}, \{h\}, \{i\}\}\) \\
+		\hline
+		2    & \(F\)    & \(\{\{d, h\}, \{f, g\}\}\) \\
+		     & \(D\)    & \(\{\{a\}, \{b\}, \{c\}, \{d, h\}, \{e\}, \{f, g\}, \{i\}\}\) \\
+		\hline
+		3    & \(F\)    & \(\{\{d, e\}, \{d, h\}, \{f, g\}\}\) \\
+		     & \(D\)    & \(\{\{a\}, \{b\}, \{c\}, \{d, e, h\}, \{f, g\}, \{i\}\}\) \\
+		\hline
+		4    & \(F\)    & \(\{\{a, b\}, \{d, e\}, \{d, h\}, \{f, g\}\}\) \\
+		     & \(D\)    & \(\{\{a, b\}, \{c\}, \{d, e, h\}, \{f, g\}, \{i\}\}\) \\
+		\hline
+		5    & \(F\)    & \(\{\{a, b\}, \{d, e\}, \{d, g\}, \{d, h\}, \{f, g\}\}\) \\
+		     & \(D\)    & \(\{\{a, b\}, \{c\}, \{d, e, f, g, h\}, \{i\}\}\) \\
+		\hline
+		6    & \(F\)    & \(\{\{a, b\}, \{a, i\}, \{d, e\}, \{d, g\}, \{d, h\}, \{f, g\}\}\) \\
+		     & \(D\)    & \(\{\{a, b, i\}, \{c\}, \{d, e, f, g, h\}\}\) \\
+		\hline
+		7    & \(F\)    & \(\{\{a, b\}, \{a, i\}, \{b, c\}, \{d, e\}, \{d, g\}, \{d, h\}, \{f, g\}\}\) \\
+		     & \(D\)    & \(\{\{a, b, c, i\}, \{d, e, f, g, h\}\}\) \\
+		\hline
+		8    & \(F\)    & \(\{\{a, b\}, \{a, i\}, \{b, c\}, \{c, d\}, \{d, e\}, \{d, g\}, \{d, h\}, \{f, g\}\}\) \\
+		     & \(D\)    & \(\{\{a, b, c, d, e, f, g, h, i\}\}\) \\
+		\hline
+	\end{tabular}
+	\caption{The steps taken during the execution of the Kruskal algorithm}
+	\label{q1a-steps}
+\end{table}
+
+\subsection*{Prim}
+
+Using the same example we are to run Prim's algorithm which returns the same thing. We start with an set of vertices \(V_0\) initialised to an arbitrary vertex (here we choose \(a\)), which we insert vertices into one at a time. We also use a set \(E_0\) which is the subset of edges to return, initialised to \(\phi\). By the end,
+\begin{equation*}
+	E_0 = \{\{a, b\}, \{a, i\}, \{b, c\}, \{c, d\}, \{d, e\}, \{d, g\}, \{d, h\}, \{f, g\}\}
+\end{equation*}
+
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{|c|c|c|}
+		\hline
+		Step & Variable & Value \\
+		\hline
+		1    & \(V_0\)  & \(\{a\}\) \\
+		     & \(E_0\)  & \(\phi\) \\
+		\hline
+		2    & \(V_0\)  & \(\{a, b\}\) \\
+		     & \(E_0\)  & \(\{\{a, b\}\}\) \\
+		\hline
+		3    & \(V_0\)  & \(\{a, b, i\}\) \\
+		     & \(E_0\)  & \(\{\{a, b\}, \{a, i\}\}\) \\
+		\hline
+		4    & \(V_0\)  & \(\{a, b, c, i\}\) \\
+		     & \(E_0\)  & \(\{\{a, b\}, \{a, i\}\}, \{b, c\}\) \\
+		\hline
+		5    & \(V_0\)  & \(\{a, b, c, d, i\}\) \\
+		     & \(E_0\)  & \(\{\{a, b\}, \{a, i\}\}, \{b, c\}, \{c, d\}\) \\
+		\hline
+		6    & \(V_0\)  & \(\{a, b, c, d, h, i\}\) \\
+		     & \(E_0\)  & \(\{\{a, b\}, \{a, i\}\}, \{b, c\}, \{c, d\}, \{d, h\}\) \\
+		\hline
+		7    & \(V_0\)  & \(\{a, b, c, d, e, h, i\}\) \\
+		     & \(E_0\)  & \(\{\{a, b\}, \{a, i\}\}, \{b, c\}, \{c, d\}, \{d, e\}, \{d, h\}\) \\
+		\hline
+		8    & \(V_0\)  & \(\{a, b, c, d, e, g, h, i\}\) \\
+		     & \(E_0\)  & \(\{\{a, b\}, \{a, i\}\}, \{b, c\}, \{c, d\}, \{d, e\}, \{d, g\}, \{d, h\}\) \\
+		\hline
+		9    & \(V_0\)  & \(\{a, b, c, d, e, f, g, h, i\}\) \\
+		     & \(E_0\)  & \(\{\{a, b\}, \{a, i\}, \{b, c\}, \{c, d\}, \{d, e\}, \{d, g\}, \{d, h\}, \{f, g\}\}\) \\
+		\hline
+	\end{tabular}
+	\caption{The steps taken during the execution of the Prim algorithm}
+	\label{q1b-steps}
+\end{table}
+
+\section{Minimal Spanning Trees and Shortest Paths}
+
+It is not necessarily true that the path between any two vertices on a minimal spanning tree of a graph is also a shortest path between these two vertices on this graph. As a counter-example, suppose we have the following graph.
+\begin{gather*}
+	V = \{a, b, c\} \\
+	E = \{\{a, b\}, \{b, c\}, \{a, c\}\} \\
+	W_{a,b} = 2, W_{b, c} = 2, W_{a,c} = 3
+\end{gather*}
+
+Here, the shorted path between \(a\) and \(c\) is the single edge \(\{a, c\}\) of weight 3, however the path between them in the minimal spanning tree is of weight 4.
+
+\section{Finding the Maximal Spanning Tree}
+
+We are to write an algorithm to find the maximal spanning tree of a graph. The algorithm presented below is a slight modification of Kruskal's algorithm, where instead of sorting the edges by increasing weight, we sort them by decreasing weight.
+
+\begin{algorithm}
+	\begin{algorithmic}
+		\Function{MaximalSpanningTree}{$V, E$}
+		\State \(F := \phi\)
+		\State \(D := \Call{DisjointSet}{V}\)
+		\State Sort \(E\) by decreasing weight
+		\For{\((u, v) \in E\)}
+		\If{\(D.\Call{FindSet}{u} \neq D.\Call{FindSet}{v}\)}
+		\State \(F := F \cup \{(u, v)\}\)
+		\State \(D.\Call{Union}{D.\Call{FindSet}{u}, D.\Call{FindSet}{v}}\)
+		\EndIf
+		\EndFor
+		\State \Return \(F\)
+		\EndFunction
+	\end{algorithmic}
+\end{algorithm}
+
+The proof of its correctness is the same logic as that for Kruskal's algorithm, and its complexity is identical, namely \(O(E\alpha(V))\), where \(\alpha\) is the inverse Ackermann function. It uses \(O(V)\) extra space because \(D\) uses \(O(V)\) space, and the maximal spanning tree contains \(|V| - 1\) edges.
+
+\end{document}

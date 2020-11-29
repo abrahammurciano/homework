@@ -66,6 +66,11 @@
 			"*.def": "cpp",
 			"unordered_set": "cpp",
 			"set": "cpp"
-		}
+		},
+		"cSpell.words": [
+			"Kruskal",
+			"Kruskal's",
+			"Prim's"
+		]
 	}
 }
