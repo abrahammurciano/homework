@@ -5,6 +5,9 @@
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}		% for algorithms in pseudo code. Usage: \begin{algorithmic}
 \MakeRobust{\Call}
+\usepackage{tikz}	% for diagrams
+\usetikzlibrary{positioning}
+\usetikzlibrary{quotes}
 
 \setlength{\parskip}{\smallskipamount}
 
@@ -150,5 +153,35 @@ We are to write an algorithm to find the maximal spanning tree of a graph. The a
 \end{algorithm}
 
 The proof of its correctness is the same logic as that for Kruskal's algorithm, and its complexity is identical, namely \(O(E\alpha(V))\), where \(\alpha\) is the inverse Ackermann function. It uses \(O(V)\) extra space because \(D\) uses \(O(V)\) space, and the maximal spanning tree contains \(|V| - 1\) edges.
+
+\section{Propositions on Minimal Spanning Trees}
+
+For each of the following propositions we are to prove or disprove them. Let \(G\) be a connected undirected weighted graph.
+
+\begin{enumerate}
+	\item
+		\(G\) has only one minimal spanning tree.
+
+		This statement is false, as shown in the counter-example in figure \ref{q4a-counter}. Since all three edges are the same weight, and any two of them form a spanning tree, there are three distinct spanning trees, which are all minimal.
+		\begin{figure}[htbp]
+			\centering
+			\begin{tikzpicture}
+				[vertex/.style={circle, draw=black, node distance=0.8cm}]
+				\node[vertex] (a) {\(a\)};
+				\node[vertex, below left=of a] (b)  {\(b\)};
+				\node[vertex, below right=of a] (c) {\(c\)};
+				\draw (a) to["{1}" above left] (b);
+				\draw (a) to["{1}" above right] (c);
+				\draw (b) to["{1}" below] (c);
+			\end{tikzpicture}
+			\caption{A graph with three different minimal spanning trees}
+			\label{q4a-counter}
+		\end{figure}
+
+	\item
+		If all the weights in \(G\) are different, then there exists only one minimal spanning tree.
+
+		This proposition is true. We shall prove it by contradiction. Suppose the contrary; i.e. there exist two spanning trees \(T_1\) and \(T_2\) such that \(T_1 \neq T_2\).
+\end{enumerate}
 
 \end{document}
