@@ -182,6 +182,10 @@ For each of the following propositions we are to prove or disprove them. Let \(G
 		If all the weights in \(G\) are different, then there exists only one minimal spanning tree.
 
 		This proposition is true. We shall prove it by contradiction. Suppose the contrary; i.e. there exist two minimal spanning trees \(S\) and \(T\) such that \(S \neq T\). Let \(e\) be an edge in \(S\) which is not in \(T\). If we remove \(e\) from \(S\), we obtain two disjoint trees. Let \(S_1\) and \(S_2\) be the sets of vertices in each of these sub-trees. Finally let \(f = \{u, v\}\) be the shortest edge in \(T\) such that \(u \in S_1\) and \(v \in S_2\).
+
+		If \(w_f < w_e\), then we can replace \(e\) with \(f\) in \(S\), to obtain a more minimal spanning tree, contradicting the minimality of \(S\).
+
+		Otherwise,
 \end{enumerate}
 
 \end{document}
