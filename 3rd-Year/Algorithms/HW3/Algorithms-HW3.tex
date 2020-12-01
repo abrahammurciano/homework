@@ -162,7 +162,7 @@ For each of the following propositions we are to prove or disprove them. Let \(G
 	\item
 		\(G\) has only one minimal spanning tree.
 
-		This statement is false, as shown in the counter-example in figure \ref{q4a-counter}. Since all three edges are the same weight, and any two of them form a spanning tree, there are three distinct spanning trees, which are all minimal.
+		\paragraph{Disproof.} This statement is false, as shown in the counter-example in figure \ref{q4a-counter}. Since all three edges are the same weight, and any two of them form a spanning tree, there are three distinct spanning trees, which are all minimal.
 		\begin{figure}[htbp]
 			\centering
 			\begin{tikzpicture}
@@ -181,7 +181,35 @@ For each of the following propositions we are to prove or disprove them. Let \(G
 	\item
 		If all the weights in \(G\) are different, then there exists only one minimal spanning tree.
 
-		This proposition is true. We shall prove it by contradiction. Suppose the contrary; i.e. there exist two spanning trees \(T_1\) and \(T_2\) such that \(T_1 \neq T_2\).
+		\paragraph{Proof.} This proposition is true. We shall prove it by contradiction. Suppose the contrary; i.e. there exist two spanning trees \(T_1\) and \(T_2\) such that \(T_1 \neq T_2\).
+
+	\item
+		If \(G\) has two edges of the same weight, then there must be at least two minimal spanning trees.
+
+		\paragraph{Disproof.} This can be disproven with a counter-example as shown in figure \ref{q4c-counter}.
+
+		\begin{figure}[htbp]
+			\centering
+			\begin{tikzpicture}
+				[vertex/.style={circle, draw=black, node distance=0.8cm}]
+				\node[vertex] (a) {a};
+				\node[vertex, right=of a] (b) {b};
+				\node[vertex, right=of b] (c) {c};
+				\draw (a) to["{1}" above] (b);
+				\draw (b) to["{1}" above] (c);
+			\end{tikzpicture}
+			\caption{A graph with two edges of the same weight and only one minimal spanning tree}
+			\label{q4c-counter}
+		\end{figure}
 \end{enumerate}
+
+\section{More Proofs on Spanning Trees}
+
+\begin{itemize}
+	\item
+		Each connected undirected graph \(G=(V,E)\) has a spanning tree.
+
+		\paragraph{Proof.} A spanning tree is a connected subgraph which contains every vertex but no cycles. \(G\) itself is connected (thus spans all the vertices), but may contain cycles. We will show that it is possible to remove all cycles from \(G\) without causing the graph to become disconnected.
+\end{itemize}
 
 \end{document}
