@@ -211,13 +211,29 @@ For each of the following propositions we are to prove or disprove them. Let \(G
 
 \section{More Proofs on Spanning Trees}
 
-\begin{itemize}
+\begin{enumerate}
 	\item
 		Each connected undirected graph \(G=(V,E)\) has a spanning tree.
 
 		\paragraph{Proof.} A spanning tree is a connected subgraph which contains every vertex but no cycles. \(G\) itself is connected (thus spans all the vertices), but may contain cycles. We will show that it is possible to remove all cycles from \(G\) without causing the graph to become disconnected.
 
-		Suppose \(G\) has a path \((a_0, a_1, \dots, a_n, a_0)\) which is a cycle.
-\end{itemize}
+		Suppose \(G\) has a cycle. Let \(u\) and \(v\) be any two distinct vertices in the cycle. There must exist two paths from \(u\) to \(v\), both of which are two different partitions of the cycle. If we remove any single edge in the cycle, the cycle disappears, yet we only broke precisely one of the two paths from \(u\) to \(v\). Thus \(v\) can still be reached from \(u\) by using the unbroken of the two aforementioned paths.
+
+		Thus we have shown that any cycle can be broken without compromising the sub-graph's span, so if we remove all cycles in \(G\) in this way we will obtain a spanning tree.
+
+	\item
+		We are given a connected undirected weighted graph \(G=(V,E,W)\). A new graph \(G' = (V, E, W')\) is formed by adding a constant weight \(a\) to each of its edges. (i.e. for each edge \(e \in E\) there is a new weight \(w'_e = w_e + a\).) If \(T\) is a minimal spanning tree for \(G\), then it remains one for \(G'\).
+
+		\paragraph{Proof.} We know that every spanning tree must have the same number of edges, namely \(|V| - 1\). Therefore if \(w_X\) is the total weight of a spanning tree \(X\) in \(G\), the total weight of \(X\) in \(G'\) must be \(x + |V| \cdot a\), and \(|V| \cdot a\) is constant.
+
+		Let \(S \neq T\) be the any spanning tree. Since \(T\) is minimal in \(G\), it must be that \(w_T < w_S\). Therefore the total weight of \(S\) in \(G'\), which is \(w_S + |V| \cdot a\) is greater than that of \(T\) in \(G'\), which is \(w_T + |V| \cdot a\). Therefore \(T\) must also be more minimal than \(S\) in \(G'\), proving that \(T\) is the most minimal spanning tree of \(G'\).
+
+	\item
+		We are given a connected undirected weighted graph \(G=(V,E,W)\). A new graph \(G' = (V, E, W')\) is formed by multiplying the weight of each of its edges by a constant \(a > 0\). (i.e. for each edge \(e \in E\) there is a new weight \(w'_e = aw_e\).) If \(T\) is a minimal spanning tree for \(G\), then it remains one for \(G'\).
+
+		\paragraph{Proof.} If \(X = (V_X, E_X, W_X)\) is a spanning tree of \(G\), then the total weight of the edges in \(X\) is \(w_X = \sum_{e \in E_X}(w_e)\). Therefore the total weight of \(X\) in \(G'\) must be \(\sum_{e \in E_X}(aw_e) = a \sum_{e \in E_X}(w_e) = aw_x\).
+
+		Let \(S \neq T\) be the any spanning tree. Since \(T\) is minimal in \(G\), it must be that \(w_T < w_S\). Therefore the total weight of \(S\) in \(G'\), which is \(aw_S\) is greater than that of \(T\) in \(G'\), which is \(aw_T\). Therefore \(T\) must also be more minimal than \(S\) in \(G'\), proving that \(T\) is the most minimal spanning tree of \(G'\).
+\end{enumerate}
 
 \end{document}
