@@ -22,11 +22,11 @@
 
 \section{The Kruskal and Prim Algorithms}
 
-We are given the following weighted, undirected graph \(G = (V, E)\) where \(V\) is the set of vertices, \(E\) is a set of edges, and \(W_{u,v}\) is the weight from vertices \(u\) to \(v\).
+We are given the following weighted, undirected graph \(G = (V, E)\) where \(V\) is the set of vertices, \(E\) is a set of edges, and \(w_{u,v}\) is the weight from vertices \(u\) to \(v\).
 \begin{gather*}
 	V = \{a, b, c, d, e, f, g, h, i\} \\
 	E = \{\{a, b\}, \{a, h\}, \{a, i\}, \{b, c\}, \{b, f\}, \{c, d\}, \{d, e\},\\ \{d, g\}, \{d, h\}, \{e, f\}, \{f, g\}, \{h, i\}\} \\
-	W_{a, b} = 4, W_{a, h} = 10, W_{a, i} = 6, W_{b, c} = 7, W_{b, f} = 12, W_{c, d} = 8, W_{d, e} = 3, \\ W_{d, g} = 5, W_{d, h} = 2, W_{e, f} = 11, W_{f, g} = 1, W_{h, i} = 9)
+	w_{a, b} = 4, w_{a, h} = 10, w_{a, i} = 6, w_{b, c} = 7, w_{b, f} = 12, w_{c, d} = 8, w_{d, e} = 3, \\ w_{d, g} = 5, w_{d, h} = 2, w_{e, f} = 11, w_{f, g} = 1, w_{h, i} = 9)
 \end{gather*}
 
 \subsection{Kruskal}
@@ -126,7 +126,7 @@ It is not necessarily true that the path between any two vertices on a minimal s
 \begin{gather*}
 	V = \{a, b, c\} \\
 	E = \{\{a, b\}, \{b, c\}, \{a, c\}\} \\
-	W_{a,b} = 2, W_{b, c} = 2, W_{a,c} = 3
+	w_{a,b} = 2, w_{b, c} = 2, w_{a,c} = 3
 \end{gather*}
 
 Here, the shorted path between \(a\) and \(c\) is the single edge \(\{a, c\}\) of weight 3, however the path between them in the minimal spanning tree is of weight 4.
@@ -156,7 +156,7 @@ The proof of its correctness is the same logic as that for Kruskal's algorithm, 
 
 \section{Propositions on Minimal Spanning Trees}
 
-For each of the following propositions we are to prove or disprove them. Let \(G\) be a connected undirected weighted graph.
+For each of the following propositions we are to prove or disprove them. Let \(G = (V, E)\) be a connected undirected weighted graph.
 
 \begin{enumerate}
 	\item
@@ -181,7 +181,13 @@ For each of the following propositions we are to prove or disprove them. Let \(G
 	\item
 		If all the weights in \(G\) are different, then there exists only one minimal spanning tree.
 
-		\paragraph{Proof.} This proposition is true. We shall prove it by contradiction. Suppose the contrary; i.e. there exist two spanning trees \(T_1\) and \(T_2\) such that \(T_1 \neq T_2\).
+		\paragraph{Proof.} This proposition is true. We shall prove it by contradiction. Suppose the contrary; i.e. there exist two minimal spanning trees \(S\) and \(T\) such that \(S \neq T\). Let \(e\) be the edge with the smallest weight in \(S\) which is not in \(T\), or vice versa. (Without loss of generality, suppose \(e \in S\).)
+
+		If we add \(e\) to \(T\), we obtain a graph \(T_1\) with a cycle. This cycle must contain some other edge \(f\) which is not in \(S\), and we know that \(w_e < w_f\), since we chose \(e\) to be the smallest edge which was not common to \(S\) and \(T\), and all the edges are of different sizes.
+
+		Therefore we can define \(T_2\) as the graph obtained if we remove \(f\) from \(T_1\). This breaks the only cycle in \(T_1\), meaning \(T_2\) is a tree. It spans the same vertices that \(T_1\) spans, which are the same vertices that \(T\) spans, so since \(T\) spans the entire graph, so does \(T_2\). Finally, the total weight of the edges in \(T_2\) is smaller than that of \(T\), since \(T_2\) only differs by having \(e\) instead of \(f\), which has a smaller weight.
+
+		Thus we have shown that there exists a smaller spanning tree than \(T\), which contradicts \(T\)'s minimality. Therefore we can conclude that there cannot be two minimal spanning trees if the weights are all different.
 
 	\item
 		If \(G\) has two edges of the same weight, then there must be at least two minimal spanning trees.
@@ -210,6 +216,8 @@ For each of the following propositions we are to prove or disprove them. Let \(G
 		Each connected undirected graph \(G=(V,E)\) has a spanning tree.
 
 		\paragraph{Proof.} A spanning tree is a connected subgraph which contains every vertex but no cycles. \(G\) itself is connected (thus spans all the vertices), but may contain cycles. We will show that it is possible to remove all cycles from \(G\) without causing the graph to become disconnected.
+
+		Suppose \(G\) has a path \((a_0, a_1, \dots, a_n, a_0)\) which is a cycle.
 \end{itemize}
 
 \end{document}
