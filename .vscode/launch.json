@@ -6,6 +6,13 @@
   "configurations": [
 	{
 		"type": "java",
+		"name": "CodeLens (Launch) - AgglomerativeClusteringTest",
+		"request": "launch",
+		"mainClass": "AgglomerativeClusteringTest",
+		"projectName": "homework_bc470c93"
+	},
+	{
+		"type": "java",
 		"name": "CodeLens (Launch) - AirportUtilTest",
 		"request": "launch",
 		"mainClass": "Airport.AirportUtilTest",

@@ -68,6 +68,7 @@
 			"set": "cpp"
 		},
 		"cSpell.words": [
+			"Clusterable",
 			"Kruskal",
 			"Kruskal's",
 			"Prim's"
