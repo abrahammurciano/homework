@@ -1,6 +1,7 @@
 package src;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -22,52 +23,47 @@ public class AgglomerativeClustering<T extends Clusterable<T>> implements Cluste
 		// if every element ends up in the same cluster, we're done
 		while (clusters.size() != 1) {
 			// extract the two most similar clusters, cluster1, cluster2 from clusters
-			// uses wrappers so they can be modified from the lambdas
-			Wrapper<Double> min_distance = new Wrapper<>(Double.MAX_VALUE);
-			Wrapper<Set<T>> cluster1 = new Wrapper<>();
-			Wrapper<Set<T>> cluster2 = new Wrapper<>();
 
-			// for each cluster
-			clusters.stream().forEach(cluster -> {
-				// for each element in that cluster
-				cluster.stream().forEach(element -> {
-					// compare it to every other cluster
-					clusters.stream().forEach(other_cluster -> {
-						// don't compare any cluster to itself
-						if (cluster == other_cluster) {
-							return;
-						}
-						// for each element in the other cluster
-						other_cluster.stream().forEach(other_element -> {
-							// check the distance between the two chosen elements in the two chosen
-							// clusters
-							double distance = element.distance(other_element);
-							// if its smaller than the previously found shortest distance, update
-							// the shortest distance, and the two clusters which contain the closest
-							// elements
-							if (distance < min_distance.get()) {
-								min_distance.set(distance);
-								cluster1.set(cluster);
-								cluster2.set(other_cluster);
-							}
-						});
-					});
-				});
-			});
+			// map each cluster to its closest cluster
+			Pair<Set<T>, Pair<Set<T>, Double>> closest_pair = clusters.stream()
+					.map(cluster -> new Pair<Set<T>, Pair<Set<T>, Double>>(cluster,
+							clusters.stream() // convert set to stream
+									// remove cluster from stream
+									.filter(other_cluster -> cluster != other_cluster)
+									// convert each cluster to tuple with distance
+									.map(other_cluster -> new Pair<Set<T>, Double>(
+											// make the other cluster the first value of the pair
+											other_cluster,
+											// get the distance between cluster and other_cluster
+											cluster.stream().map(
+													// find shortest distance between element some
+													// other_element
+													element -> other_cluster.stream()
+															.map(other_element -> other_element
+																	.distance(element))
+															.min(Comparator.naturalOrder()).get())
+													.min(Comparator.naturalOrder()).get()))
+									.min(Comparator.comparing(pair -> pair.y)).get()))
+					.min(Comparator.comparing(pair -> pair.y.y)).get();
+
+			// uses wrappers so they can be modified from the lambdas
+			double min_distance = closest_pair.y.y;
+			Set<T> cluster1 = closest_pair.x;
+			Set<T> cluster2 = closest_pair.y.x;
 
 			// if the shortest distance found between clusters exceeds the threshold, we're done
-			if (min_distance.get() > threshold) {
+			if (min_distance > threshold) {
 				return clusters;
 			}
 
 			// remove the two closest clusters
-			clusters.remove(cluster2.get());
+			clusters.remove(cluster2);
 			// must be removed then added, because union will change the hash
-			clusters.remove(cluster1.get());
+			clusters.remove(cluster1);
 			// union them
-			cluster1.get().addAll(cluster2.get());
+			cluster1.addAll(cluster2);
 			// insert the union back into the set
-			clusters.add(cluster1.get());
+			clusters.add(cluster1);
 		}
 
 		return clusters;
