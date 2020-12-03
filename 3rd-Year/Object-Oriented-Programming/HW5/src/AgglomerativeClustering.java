@@ -1,3 +1,5 @@
+package src;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -18,9 +20,6 @@ public class AgglomerativeClustering<T extends Clusterable<T>> implements Cluste
 				.collect(Collectors.toSet());
 
 		while (clusters.size() != 1) {
-			System.out.print("number of clusters: ");
-			System.out.print(clusters.size());
-			System.out.println();
 			// extract the two most similar clusters, c1,c2 from clusters
 			double[] min_distance = {Double.MAX_VALUE};
 			List<Set<T>> cluster1 = new ArrayList<>();
@@ -52,7 +51,9 @@ public class AgglomerativeClustering<T extends Clusterable<T>> implements Cluste
 			}
 
 			clusters.remove(c2);
+			clusters.remove(c1);
 			c1.addAll(c2);
+			clusters.add(c1);
 		}
 
 		return clusters;

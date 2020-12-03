@@ -1,3 +1,5 @@
+package src;
+
 import java.nio.file.Paths;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -52,6 +54,6 @@ public class TwoDPoint implements Clusterable<TwoDPoint> {
 
 	@Override
 	public int hashCode() {
-		return Double.hashCode(x);
+		return Double.hashCode(x) ^ Double.hashCode(y);
 	}
 }

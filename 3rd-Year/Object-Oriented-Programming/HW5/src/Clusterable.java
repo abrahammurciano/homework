@@ -1,3 +1,5 @@
-public interface Clusterable <T>{
+package src;
+
+public interface Clusterable<T> {
 	public double distance(T other);
 }

@@ -1,3 +1,5 @@
+package src;
+
 import java.io.IOException;
 import java.util.Set;
 
@@ -8,8 +10,8 @@ public class AgglomerativeClusteringTest {
 	// TODO: Set the correct value to the paths and thresholds
 	private static final String POINTS_PATH = "src/points.txt";
 	private static final String BITARRAYS_PATH = "src/bitArrays.txt";
-	private static final double TWO_D_POINT_CLUSTERING_THRESHOLD = 200;
-	private static final double BIT_ARRAY_CLUSTERING_THRESHOLD = 200;
+	private static final double TWO_D_POINT_CLUSTERING_THRESHOLD = 2;
+	private static final double BIT_ARRAY_CLUSTERING_THRESHOLD = 2;
 
 	public static void main(String[] args) throws IOException {
 		Clustering<TwoDPoint> twoDPointClustering =
