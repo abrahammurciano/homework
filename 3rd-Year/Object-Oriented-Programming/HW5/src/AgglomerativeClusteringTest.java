@@ -1,3 +1,5 @@
+// Abraham Murciano (910015) and Daniel Klein (343808119)
+
 package src;
 
 import java.io.IOException;
@@ -7,7 +9,6 @@ import static org.junit.Assert.assertEquals;
 
 
 public class AgglomerativeClusteringTest {
-	// TODO: Set the correct value to the paths and thresholds
 	private static final String POINTS_PATH = "src/points.txt";
 	private static final String BITARRAYS_PATH = "src/bitArrays.txt";
 	private static final double TWO_D_POINT_CLUSTERING_THRESHOLD = 2;
@@ -28,5 +29,4 @@ public class AgglomerativeClusteringTest {
 		System.out.println("The number of bitArray clusters is: " + bitArrayClusterSet.size());
 		assertEquals(2, bitArrayClusterSet.size());
 	}
-
 }

@@ -11,6 +11,7 @@ public class TwoDPoint implements Clusterable<TwoDPoint> {
 	double x;
 	double y;
 
+	// construct a point from a string such as "12.34,83.123"
 	public TwoDPoint(String str) {
 		String[] arr = str.split(",");
 		x = Double.parseDouble(arr[0]);
@@ -22,6 +23,7 @@ public class TwoDPoint implements Clusterable<TwoDPoint> {
 		this.y = y;
 	}
 
+	// calculate euclidean distance
 	@Override
 	public double distance(TwoDPoint other) {
 		return Math.sqrt((x - other.x) * (x - other.x) + (y - other.y) * (y - other.y));
@@ -32,6 +34,7 @@ public class TwoDPoint implements Clusterable<TwoDPoint> {
 		return x + ", " + y;
 	}
 
+	// read points from a file where each point is a new line
 	public static Set<TwoDPoint> readPoints(String path) throws IOException {
 		try (Stream<String> lines = Files.lines(Paths.get(path));) {
 			return lines.map(TwoDPoint::new).collect(Collectors.toSet());
