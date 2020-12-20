@@ -34,13 +34,23 @@ Figure \ref{q1a} shows a graph with negative weights such that if we apply Dijks
 		\node[vertex, above right=of S] (v1) {\(v_1\)};
 		\node[vertex, below right=of S] (v2) {\(v_2\)};
 		\node[vertex, below right=of v1] (D) {\(D\)};
-		\draw[->] (S) to["4"] (v1);
-		\draw[->] (S) to["8" below left] (v2);
-		\draw[->] (v1) to["2"] (D);
-		\draw[->] (v2) to["-4" below right] (D);
+		\draw (S) to["4"] (v1);
+		\draw (S) to["8" below left] (v2);
+		\draw (v1) to["2"] (D);
+		\draw (v2) to["-4" below right] (D);
 	\end{tikzpicture}
 	\caption{Graph for which Dijkstra doesn't work}
 	\label{q1a}
 \end{figure}
+
+Starting off, we assign the unvisited vertices \(v_1\) and \(v_2\) with the distances 4 and 8 respectively, marking \(S\) as visited. Then we take the unvisited vertex with the smallest distance, \(v_1\), and check its neighbours, namely \(D\). We assign it the distance 6 and mark \(v_1\) as visited. Now that our destination vertex is the unvisited vertex with the shortest distance, the algorithm would claim that it has finished, with the shortest path going through \(v_1\) with a distance of 6.
+
+However, in reality the shortest path goes through \(v_2\) and has a total distance of \(8 - 4 = 4\). This path was not considered by the algorithm because the path to the intermediate vertex \(v_2\) has a larger distance than the path it found first.
+
+\subsection*{Part B}
+
+If we take the example graph in figure \ref{q1a} and modify it so that the edges are directed (away from \(S\) or towards \(D\)), then that would form a directed acyclic graph for which Dijkstra's algorithm would not work for a similar reason to that of part A.
+
+\section{Floyd-Warshall with Negative Cycles}
 
 \end{document}

@@ -71,7 +71,8 @@
 			"Clusterable",
 			"Kruskal",
 			"Kruskal's",
-			"Prim's"
+			"Prim's",
+			"Warshall"
 		]
 	}
 }
