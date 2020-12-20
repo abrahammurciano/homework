@@ -53,6 +53,29 @@ If we take the example graph in figure \ref{q1a} and modify it so that the edges
 
 \section{Floyd-Warshall with Negative Cycles}
 
-% TODO
+We are to add pseudocode to the Floyd-Warshall algorithm which checks for negative cycles. First, let us take a look at the algorithm.
+
+\begin{algorithm}
+	\begin{algorithmic}
+		\Function{FloydWarshallNegativeCycles}{$V$, $E$}
+		\For{\((u,v) \in V \times V\)} \Comment{Initialise all distances to infinity}
+		\State \(D_{u,v} := \infty\)
+		\EndFor
+		\For{\((u,v) \in E\)} \Comment{Apply distances of each edge}
+		\State \(D_{u,v} := \Call{Weight}{u, v}\)
+		\EndFor
+		\For{\(v \in V\)} \Comment{Set distance to itself to zero}
+		\State \(D_{v,v} := 0\)
+		\EndFor
+		\For{\(k \in V\)} \Comment{\(k\) is a possible intermediate vertex between all \((u, v)\)}
+		\For{\(u \in V\)}
+		\For{\(v \in V\)}
+		\State \(D_{u,v} := \Call{Min}{D_{u,k} + D_{k,v}, D_{u,v}}\) \Comment{Seek shorter path via \(k\)}
+		\EndFor
+		\EndFor
+		\EndFor
+		\EndFunction
+	\end{algorithmic}
+\end{algorithm}
 
 \end{document}
