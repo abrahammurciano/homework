@@ -96,4 +96,26 @@ Therefore, if \(G\) contains negative cycles, when the algorithm concludes, it w
 	\end{algorithmic}
 \end{algorithm}
 
+\section{Shortest Path of Alternating Colour}
+
+We are given a directed, positively weighted graph whose vertices are each either red or blue. We are to write an algorithm which seeks the shortest path from two given vertices, \(v_1\) and \(v_2\), which alternates colours. Meaning if a vertex in the returned path is of one colour, the vertices immediately before and after it must be of the other colour.
+
+This can easily be achieved by removing all edges between two vertices of the same colour, then finding the shortest path with any other algorithm suitable for that purpose.
+
+\begin{algorithm}
+	\begin{algorithmic}
+		\Function{ShortestAlternatingPath}{$V$, $E$}
+		\State \(E' := \phi\)
+		\For{\((u, v) \in E\)}
+		\If{\(\Call{Colour}{u} \neq \Call{Colour}{v}\)}
+		\State insert \((u, v)\) into \(E'\)
+		\EndIf
+		\EndFor
+		\State \Return \Call{ShortestPath}{$V$, $E'$}
+		\EndFunction
+	\end{algorithmic}
+\end{algorithm}
+
+Suppose the complexity of \textsc{ShortestPath} is \(O(f(V, E))\), therefore the complexity of \textsc{ShortestAlternatingPath} would be \(O(E + f(V, E))\), which would change depending on which algorithm was used by \textsc{ShortestPath}.
+
 \end{document}
