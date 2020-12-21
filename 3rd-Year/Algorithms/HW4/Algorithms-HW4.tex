@@ -8,6 +8,9 @@
 \usepackage{tikz}	% for diagrams
 \usetikzlibrary{positioning}
 \usetikzlibrary{quotes}
+% Math mode in tables
+\usepackage{array}   % for \newcolumntype macro
+\newcolumntype{C}{>{$}c<{$}} % math-mode version of "c" column type
 
 \setlength{\parskip}{\smallskipamount}
 
@@ -159,19 +162,19 @@ We are given the graph in figure \ref{q4}, and told to run Dijkstra's algorithm 
 
 \begin{table}[htbp]
 	\centering
-	\begin{tabular}{||c||c|c||c|c||c|c||c|c||c|c||}
+	\begin{tabular}{||C||C|C||C|C||C|C||C|C||C|C||}
 		\hline
-		  & \(d\)      & \(\pi\) & \(d\)      & \(\pi\) & \(d\)      & \(\pi\) & \(d\)      & \(\pi\) & \(d\)      & \(\pi\) \\
+		  & d      & \pi & d      & \pi & d      & \pi & d      & \pi & d      & \pi \\
 		\hline
 		\hline
-		1 & \(\infty\) & --      & \(\infty\) & --      & \(\infty\) & --      & \(\infty\) & --      & \(\infty\) & -- \\
-		2 & 0          & --      & 0          & --      & 0          & --      & 0          & --      & 0          & -- \\
-		3 & \(\infty\) & --      & \(\infty\) & --      & \(\infty\) & --      & 9          & 6       & 9          & 6 \\
-		4 & \(\infty\) & --      & \(\infty\) & --      & \(\infty\) & --      & \(\infty\) & --      & 20         & 7 \\
-		5 & \(\infty\) & --      & 7          & 2       & 7          & 2       & 7          & 2       & 7          & 2 \\
-		6 & \(\infty\) & --      & \(\infty\) & --      & 8          & 5       & 8          & 5       & 8          & 5 \\
-		7 & \(\infty\) & --      & \(\infty\) & --      & \(\infty\) & --      & 12         & 6       & 12         & 6 \\
-		8 & \(\infty\) & --      & \(\infty\) & --      & 9          & 5       & 9          & 5       & 9          & 5 \\
+		1 & \infty & --  & \infty & --  & \infty & --  & \infty & --  & \infty & -- \\
+		2 & 0      & --  & 0      & --  & 0      & --  & 0      & --  & 0      & -- \\
+		3 & \infty & --  & \infty & --  & \infty & --  & 9      & 6   & 9      & 6 \\
+		4 & \infty & --  & \infty & --  & \infty & --  & \infty & --  & 20     & 7 \\
+		5 & \infty & --  & 7      & 2   & 7      & 2   & 7      & 2   & 7      & 2 \\
+		6 & \infty & --  & \infty & --  & 8      & 5   & 8      & 5   & 8      & 5 \\
+		7 & \infty & --  & \infty & --  & \infty & --  & 12     & 6   & 12     & 6 \\
+		8 & \infty & --  & \infty & --  & 9      & 5   & 9      & 5   & 9      & 5 \\
 		\hline
 	\end{tabular}
 	\caption{Intermediate values of \(d\) and \(\pi\) for running Dijkstra on the graph in figure \ref{q4}}
@@ -233,5 +236,88 @@ For each of these propositions we are to determine whether or not they are true.
 \paragraph{Proposition B.} If there is a negative cycle in a graph, then no shortest path between any two vertices can be defined.
 
 \paragraph{False.} There may still be a shortest path between two nodes if there does not exist any path between said nodes which contains any node in the negative cycle.
+
+\section{Bellman-Ford Example}
+
+Figure \ref{q7-graph} shows a graph to run Bellman ford on, starting from vertex \(A\). Table \ref{q7-steps} shows the intermediate values of \(d\) and \(\pi\) throughout the running of the algorithm. Figure \ref{q7-tree} shows the tree of shortest paths returned by the algorithm.
+
+\begin{figure}[htbp]
+	\centering
+	\begin{tikzpicture}
+		[vertex/.style={circle, draw=black, node distance=1.5cm}]
+		\node[vertex] (A) {A};
+		\node[vertex, right=of A] (C) {C};
+		\node[vertex, above=of C] (B) {B};
+		\node[vertex, below=of C] (D) {D};
+		\node[vertex, right=2.5cm of 2] (E) {E};
+		\node[vertex, below=of E] (F) {F};
+		\node[vertex, below=of F] (G) {G};
+		\node[vertex, right=of F] (H) {H};
+
+		\draw[->] (A) to["2"] (B);
+		\draw[->] (A) to["11"] (C);
+		\draw[->] (A) to["6" below left] (D);
+		\draw[->] (B) to["7"] (E);
+		\draw[->] (C) to["2"] (B);
+		\draw[->] (C) to["2", pos=0.3] (F);
+		\draw[->] (D) to["-2", pos=0.7] (E);
+		\draw[->, bend left=20] (D) to["-6"] (G);
+		\draw[->] (E) to["-1"] (F);
+		\draw[->] (E) to["-2"] (H);
+		\draw[->] (F) to["-1"] (G);
+		\draw[->, bend left=20] (G) to["9"] (D);
+		\draw[->] (G) to["-3" below right] (H);
+		\draw[->] (H) to["5"] (F);
+	\end{tikzpicture}
+	\caption{A directed weighted graph to run Bellman-Ford on}
+	\label{q7-graph}
+\end{figure}
+
+\begin{table}[htbp]
+	\centering
+	\begin{tabular}{||C||C|C||C|C||}
+		\hline
+		  & d      & \pi & d  & \pi \\
+		\hline
+		\hline
+		A & 0      & --  & 0  & -- \\
+		B & \infty & --  & 2  & A \\
+		C & \infty & --  & 11 & A \\
+		D & \infty & --  & 6  & A \\
+		E & \infty & --  & 4  & D \\
+		F & \infty & --  & 2  & H \\
+		G & \infty & --  & 0  & D \\
+		H & \infty & --  & -3 & G \\
+		\hline
+	\end{tabular}
+	\caption{Intermediate values of \(d\) and \(\pi\) for running Bellman-Ford on the graph in figure \ref{q7-graph}}
+	\label{q7-steps}
+\end{table}
+
+
+\begin{figure}[htbp]
+	\centering
+	\begin{tikzpicture}
+		[vertex/.style={circle, draw=black, node distance=1.5cm}]
+		\node[vertex] (A) {A};
+		\node[vertex, right=of A] (C) {C};
+		\node[vertex, above=of C] (B) {B};
+		\node[vertex, below=of C] (D) {D};
+		\node[vertex, right=2.5cm of 2] (E) {E};
+		\node[vertex, below=of E] (F) {F};
+		\node[vertex, below=of F] (G) {G};
+		\node[vertex, right=of F] (H) {H};
+
+		\draw[->] (A) to["2"] (B);
+		\draw[->] (A) to["11"] (C);
+		\draw[->] (A) to["6"] (D);
+		\draw[->] (D) to["-2", pos=0.7] (E);
+		\draw[->] (D) to["-6"] (G);
+		\draw[->] (G) to["-3" below right] (H);
+		\draw[->] (H) to["5"] (F);
+	\end{tikzpicture}
+	\caption{A tree of shortest paths returned by Bellman-Ford from the graph in figure \ref{q7-graph}}
+	\label{q7-tree}
+\end{figure}
 
 \end{document}
