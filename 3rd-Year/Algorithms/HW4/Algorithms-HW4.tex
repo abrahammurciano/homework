@@ -226,8 +226,12 @@ We are given a weighted directed graph \(G\). It is known that there are negativ
 
 For each of these propositions we are to determine whether or not they are true.
 
-\subsection*{Part A}
+\paragraph{Proposition A.} If during the run of Bellman-Ford algorithm for \(i < |V| - 1\) there are no changes applying relaxation, then shortest paths have been found and the run can be halted.
 
-\paragraph{Proposition.} If during the run of Bellman-Ford algorithm for \(i < |V| - 1\) there are no changes applying relaxation, then shortest paths have been found and the run can be halted.
+\paragraph{True.} If there are no relaxations in one of the iterations for \(i < |V| - 1\), then nothing will change between iteration \(i\) and iteration \(i+1\). Therefore there will not be any relaxations in iteration \(i+1\). For the same reason there will be no more relaxations for all iterations after the \(i\)\textsuperscript{th}.
+
+\paragraph{Proposition B.} If there is a negative cycle in a graph, then no shortest path between any two vertices can be defined.
+
+\paragraph{False.}
 
 \end{document}
