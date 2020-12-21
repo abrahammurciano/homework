@@ -57,7 +57,7 @@ We are to add pseudocode to the Floyd-Warshall algorithm which checks for negati
 
 \begin{algorithm}
 	\begin{algorithmic}
-		\Function{FloydWarshallNegativeCycles}{$V$, $E$}
+		\Function{FloydWarshall}{$V$, $E$}
 		\For{\((u,v) \in V \times V\)} \Comment{Initialise all distances to infinity}
 		\State \(D_{u,v} := \infty\)
 		\EndFor
@@ -74,10 +74,26 @@ We are to add pseudocode to the Floyd-Warshall algorithm which checks for negati
 		\EndFor
 		\EndFor
 		\EndFor
+		\State \Return \(D\)
 		\EndFunction
 	\end{algorithmic}
 \end{algorithm}
 
-%test
+Suppose there exists at least one negative cycle (one such that the weights of its edges sum up to a negative number) in a graph \(G = (V, E)\). Now suppose \(a, b \in V\) are two distinct vertices within the most negative cycle. At the start of the algorithm, \(D_{a,a} = 0\). At some later point in the algorithm, the variables \(u\) and \(v\) will be referring to \(a\) and the variable \(k\) will be referring to \(b\). When this occurs, \(D_{a,a} = 0\) will be compared to \(D_{a,b} + D_{b,a}\). However, we can be certain that \(D_{a,b} + D_{b,a} < 0\), because a path \((a, \dots, b, \dots, a)\) forms a negative cycle. And thus \(D_{a,a}\) will be assigned a negative value.
+
+Therefore, if \(G\) contains negative cycles, when the algorithm concludes, it will tell us that \(\exists v \in V, D_{v,v} < 0\). So in order to check if there are negative cycles, we can modify the algorithm by calling the following function before returning. If this function returns true, then we know there is a negative cycle and can proceed to throw an exception.
+
+\begin{algorithm}
+	\begin{algorithmic}
+		\Function{CheckNegativeCycles}{$V$, $E$}
+		\For{\(v \in V\)}
+		\If{\(D_{v,v} < 0\)}
+		\Return true
+		\EndIf
+		\EndFor
+		\State \Return false
+		\EndFunction
+	\end{algorithmic}
+\end{algorithm}
 
 \end{document}
