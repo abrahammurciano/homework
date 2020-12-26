@@ -1,3 +1,5 @@
+// Abraham Murciano (910015) and Daniel Klein (343808119)
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -64,8 +66,8 @@ public class Main {
 	public static void hamburgerMenu(Scanner scanner) {
 		System.out.println("Choose from the following hamburgers:\n" + "cl: classic\n"
 				+ "sp: spicy\n" + "la: lamb\n" + "hm: homemade");
-		// TODO: Add a Hamburger Factory and use it to create a Hamburger
-		Hamburger hamburger = null;
+
+		Hamburger hamburger = HamburgerFactory.createHamburger(scanner.nextLine());
 
 		String choice = "";
 		while (!choice.equals("s")) {
@@ -85,9 +87,8 @@ public class Main {
 	}
 
 	public static Hamburger toppingMenu(Scanner scanner, Hamburger hamburger) {
-		System.out.println("Choose from the following toppings:\n" + "ch: chips\n"
-				+ "or: onion rings\n" + "sa: salad\n" + "fe: friedEgg");
-		// TODO: Add a Hamburger-Topping Factory and use it to create a decorated Hamburger
-		return null;
+		System.out.println(
+				"Choose from the following toppings:\nch: chips\nor: onion rings\nsa: salad\nfe: friedEgg");
+		return ToppingFactory.addTopping(hamburger, scanner.nextLine());
 	}
 }
