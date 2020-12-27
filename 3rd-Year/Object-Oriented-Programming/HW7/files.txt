@@ -1,0 +1,11 @@
+song.mp3 length in seconds: 354, 7901 bytes
+icon.jpg 32x32, 910 bytes
+doc
+doc/text.txt words: 583, 5263 bytes
+doc/other.html lines: 128, 3265 bytes
+doc/folder
+doc/folder/Swed.pptx slides: 20, 400400 bytes
+folder2
+folder2/word.docx words: 1029, pages: 3, 40000 bytes
+pic.jpg 35x32, 9210 bytes
+
