@@ -277,10 +277,18 @@ We are tasked with finding a maximal set of disjoint paths for the graph in figu
 
 We are to suggest an algorithm based on maximal flow that will find a maximal set of disjoint paths from \(s\) to \(t\) given a directed graph.
 
-If we construct a network out of the given graph, such that the capacities of each edge are all some constant \(c\), then we attempt to find the maximal flow using the Ford–Fulkerson method, returning a set of all augmenting paths.
+If we construct a network out of the given graph, such that the capacities of each edge are all some constant \(c\), then we attempt to find the maximal flow using the Ford–Fulkerson method, we can return a set of all augmenting paths as the maximal set of disjoint paths.
 
 This set must be disjoint, because once an edge has been used with a flow of \(c\), it is saturated and will not be used as part of another augmenting path. This set must also me maximal because we can send \(c\) units of flow through each augmenting path, so the maximal flow must be sent through the maximal number of augmenting paths.
 
 \section*{Question 4}
+
+Suppose that for a network, in addition to capacities being assigned to edges, capacity is also assigned to each vertex, so that maximal flow that can pass through vertex \(v\) is \(c_v\).
+
+We are to suggest an algorithm to find maximal flow through this network, specifying its run-time complexity.
+
+We can calculate the maximal flow of such a network by replacing each vertex \(v\) by two vertices \(v_1\) and \(v_2\). Then each edge of the form \((x, v)\) or \((v, y)\) is replaced with \((x, v_1)\) and \((v_2, y)\) respectively. We then add a single edge \((v_1, v_2)\) with the capacity \(c_v\). Thus we translate all the vertex capacities into edge capacities, transforming our problem into one we can already solve.
+
+The preprocessing stage can be done in \(O(|V|+|E|)\), and then if we use the Edmonds-Karp algorithm for the next stage, the total complexity would be that of the Edmonds-Karp algorithm; i.e. \(O(|V||E|^2)\).
 
 \end{document}
