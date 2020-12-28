@@ -60,6 +60,150 @@ We are given the network in figure \ref{q1}. We are to find the maximal flow usi
 	\label{q1}
 \end{figure}
 
+The first augmenting path which the algorithm finds can be \((s, b, e, t)\) (it may vary depending on the order that neighbours are selected in the BFS), through which a flow of 6 can be sent. The states of the graph at each point are shown in figure \ref{q1-steps}. (Saturated edges are omitted, and only remaining capacity is shown on each edge.)
 
+The next augmenting path could be \((s, b, g, t)\) with a flow of 1. After this one, another possible augmenting path is \((a, c, g, t)\), which has a flow of 4. Next is \(s, d, f, t\) with a flow of 3. The next augmenting path is \(s, b, e, g, t\). A flow of 2 can be sent through this one. The final augmenting path has a flow of 1, and is \((s, d, f, c, g, t)\).
+
+Once there are no more augmenting paths to be found, we can sum up the flows through all the augmenting paths to find the maximal flow, which for this network is \(6 + 1 + 4 + 3 + 2 + 1 = 17\).
+
+\begin{figure}[htbp]
+	\centering
+	\begin{tikzpicture}
+		[vertex/.style={circle, draw=black, node distance=1cm}]
+		\node[vertex] (s) {\(s\)};
+		\node[vertex, right=of s] (c) {\(c\)};
+		\node[vertex, above=of c] (b) {\(b\)};
+		\node[vertex, below=of c] (d) {\(d\)};
+		\node[vertex, right=of b] (e) {\(e\)};
+		\node[vertex, right=of d] (f) {\(f\)};
+		\node[vertex, right=of c] (g) {\(g\)};
+		\node[vertex, right=of g] (t) {\(t\)};
+		\node[right=of t]{};
+		\node[below=0.6cm of d]{};
+
+		\draw[->] (s) to["4"] (b);
+		\draw[->] (s) to["4"] (c);
+		\draw[->] (s) to["4"] (d);
+		\draw[->] (c) to["4"] (d);
+		\draw[->] (b) to["2"] (e);
+		\draw[->] (b) to["1"] (g);
+		\draw[->] (e) to["15"] (g);
+		\draw[->] (c) to["5"] (g);
+		\draw[->] (d) to["10"] (f);
+		\draw[->] (f) to["3" above right] (c);
+		\draw[->] (f) to["3"] (t);
+		\draw[->] (g) to["8"] (t);
+	\end{tikzpicture}
+	\begin{tikzpicture}
+		[vertex/.style={circle, draw=black, node distance=1cm}]
+		\node[vertex] (s) {\(s\)};
+		\node[vertex, right=of s] (c) {\(c\)};
+		\node[vertex, above=of c] (b) {\(b\)};
+		\node[vertex, below=of c] (d) {\(d\)};
+		\node[vertex, right=of b] (e) {\(e\)};
+		\node[vertex, right=of d] (f) {\(f\)};
+		\node[vertex, right=of c] (g) {\(g\)};
+		\node[vertex, right=of g] (t) {\(t\)};
+		\node[below=0.6cm of d]{};
+
+		\draw[->] (s) to["3"] (b);
+		\draw[->] (s) to["4"] (c);
+		\draw[->] (s) to["4"] (d);
+		\draw[->] (c) to["4"] (d);
+		\draw[->] (b) to["2"] (e);
+		\draw[->] (e) to["15"] (g);
+		\draw[->] (c) to["5"] (g);
+		\draw[->] (d) to["10"] (f);
+		\draw[->] (f) to["3" above right] (c);
+		\draw[->] (f) to["3"] (t);
+		\draw[->] (g) to["7"] (t);
+	\end{tikzpicture}
+	\begin{tikzpicture}
+		[vertex/.style={circle, draw=black, node distance=1cm}]
+		\node[vertex] (s) {\(s\)};
+		\node[vertex, right=of s] (c) {\(c\)};
+		\node[vertex, above=of c] (b) {\(b\)};
+		\node[vertex, below=of c] (d) {\(d\)};
+		\node[vertex, right=of b] (e) {\(e\)};
+		\node[vertex, right=of d] (f) {\(f\)};
+		\node[vertex, right=of c] (g) {\(g\)};
+		\node[vertex, right=of g] (t) {\(t\)};
+		\node[right=of t]{};
+		\node[below=0.6cm of d]{};
+
+		\draw[->] (s) to["3"] (b);
+		\draw[->] (s) to["4"] (d);
+		\draw[->] (c) to["4"] (d);
+		\draw[->] (b) to["2"] (e);
+		\draw[->] (e) to["15"] (g);
+		\draw[->] (c) to["1"] (g);
+		\draw[->] (d) to["10"] (f);
+		\draw[->] (f) to["3" above right] (c);
+		\draw[->] (f) to["3"] (t);
+		\draw[->] (g) to["3"] (t);
+	\end{tikzpicture}
+	\begin{tikzpicture}
+		[vertex/.style={circle, draw=black, node distance=1cm}]
+		\node[vertex] (s) {\(s\)};
+		\node[vertex, right=of s] (c) {\(c\)};
+		\node[vertex, above=of c] (b) {\(b\)};
+		\node[vertex, below=of c] (d) {\(d\)};
+		\node[vertex, right=of b] (e) {\(e\)};
+		\node[vertex, right=of d] (f) {\(f\)};
+		\node[vertex, right=of c] (g) {\(g\)};
+		\node[vertex, right=of g] (t) {\(t\)};
+		\node[below=0.6cm of d]{};
+
+		\draw[->] (s) to["3"] (b);
+		\draw[->] (s) to["1"] (d);
+		\draw[->] (c) to["4"] (d);
+		\draw[->] (b) to["2"] (e);
+		\draw[->] (e) to["15"] (g);
+		\draw[->] (c) to["1"] (g);
+		\draw[->] (d) to["7"] (f);
+		\draw[->] (f) to["3" above right] (c);
+		\draw[->] (g) to["3"] (t);
+	\end{tikzpicture}
+	\begin{tikzpicture}
+		[vertex/.style={circle, draw=black, node distance=1cm}]
+		\node[vertex] (s) {\(s\)};
+		\node[vertex, right=of s] (c) {\(c\)};
+		\node[vertex, above=of c] (b) {\(b\)};
+		\node[vertex, below=of c] (d) {\(d\)};
+		\node[vertex, right=of b] (e) {\(e\)};
+		\node[vertex, right=of d] (f) {\(f\)};
+		\node[vertex, right=of c] (g) {\(g\)};
+		\node[vertex, right=of g] (t) {\(t\)};
+		\node[right=of t]{};
+
+		\draw[->] (s) to["1"] (b);
+		\draw[->] (s) to["1"] (d);
+		\draw[->] (c) to["4"] (d);
+		\draw[->] (e) to["13"] (g);
+		\draw[->] (c) to["1"] (g);
+		\draw[->] (d) to["7"] (f);
+		\draw[->] (f) to["3" above right] (c);
+		\draw[->] (g) to["1"] (t);
+	\end{tikzpicture}
+	\begin{tikzpicture}
+		[vertex/.style={circle, draw=black, node distance=1cm}]
+		\node[vertex] (s) {\(s\)};
+		\node[vertex, right=of s] (c) {\(c\)};
+		\node[vertex, above=of c] (b) {\(b\)};
+		\node[vertex, below=of c] (d) {\(d\)};
+		\node[vertex, right=of b] (e) {\(e\)};
+		\node[vertex, right=of d] (f) {\(f\)};
+		\node[vertex, right=of c] (g) {\(g\)};
+		\node[vertex, right=of g] (t) {\(t\)};
+
+		\draw[->] (s) to["1"] (b);
+		\draw[->] (c) to["4"] (d);
+		\draw[->] (e) to["13"] (g);
+		\draw[->] (d) to["6"] (f);
+		\draw[->] (f) to["2" above right] (c);
+	\end{tikzpicture}
+	\caption{The stages of the graph after sending sending flow through each shortest path}
+	\label{q1-steps}
+\end{figure}
 
 \end{document}
