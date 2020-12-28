@@ -215,4 +215,21 @@ The minimal cut in the network must be a cut such that the sum of the capacities
 	(\{s, b\}, \{c, d, e, f, g, t\})
 \end{equation*}
 
+\section*{Question 2}
+
+\subsection*{Part A}
+
+Supposing we have a network \(N\), we are told that \(N'\) is a modified version of \(N\) such that all the capacities of \(N\) are multiplied by some constant \(c > 1\). If \(f_{\max}\) and \(f'_{\max}\) are the maximal flows of \(N\) and \(N'\) respectively, then \(f'_{\max} = cf_{\max}\)
+
+To demonstrate this, suppose \(P\) is the set of all augmenting paths found by a run of the Edmonds-Karp algorithm on either \(N\) or \(N'\) (\(P\) would be the same regardless of which network is used).
+
+Now for any \(p \in P\), we will denote by \(f_p\) and \(f'_p\) the amount of flow that can be sent through \(p\) on the networks \(N\) and \(N'\) respectively. This is equal to the smallest capacity of an edge along the path \(p\). But since all the capacities in \(N'\) are \(c\) multiplied by the corresponding capacity in \(N\), it follows that \(f'_p = cf_p\).
+
+Finally, we know the following.
+
+\begin{gather*}
+	f_{\max} = \sum_{p \in P} f_p \\
+	f'_{\max} = \sum_{p \in P} f'_p = \sum_{p \in P} cf_p = c \sum_{p \in P} f_p = cf_{\max} \\
+\end{gather*}
+
 \end{document}
