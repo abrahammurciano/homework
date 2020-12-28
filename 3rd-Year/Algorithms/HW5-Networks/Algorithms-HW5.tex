@@ -238,4 +238,49 @@ If we tweak the problem in part A such that \(0 < c < 1\), the answer would be t
 
 \section*{Question 3}
 
+We are tasked with finding a maximal set of disjoint paths for the graph in figure \ref{q3} from vertices 1 to 6. The maximal set for this graph is the set \(\{p_1, p_2, p_3\}\), such that:
+
+\begin{gather*}
+	p_1 = ((1,2), (2,6)) \\
+	p_2 = ((1,5), (5,6)) \\
+	p_2 = ((1,8), (8,7), (7,6))
+\end{gather*}
+
+\begin{figure}[htbp]
+	\centering
+	\begin{tikzpicture}
+		[vertex/.style={circle, draw=black, node distance=1.5cm, minimum size=0.7cm}]
+		\node[vertex] (a) {1};
+		\node[vertex, above right=of a] (b) {2};
+		\node[vertex, below right=of a] (h) {8};
+		\node[vertex, below right=of b] (e) {5};
+		\node[vertex, above right=of e] (c) {3};
+		\node[vertex, below right=of e] (g) {7};
+		\node[vertex, below right=of c] (f) {6};
+
+		\draw[->] (a) to (b);
+		\draw[->] (a) to (e);
+		\draw[->] (a) to (h);
+		\draw[->] (h) to (e);
+		\draw[->] (b) to (c);
+		\draw[->] (h) to (g);
+		\draw[->] (b) to (f);
+		\draw[->] (c) to (f);
+		\draw[->] (e) to (f);
+		\draw[->] (g) to (f);
+	\end{tikzpicture}
+	\caption{A sample graph for question 3}
+	\label{q3}
+\end{figure}
+
+\subsection*{Part B}
+
+We are to suggest an algorithm based on maximal flow that will find a maximal set of disjoint paths from \(s\) to \(t\) given a directed graph.
+
+If we construct a network out of the given graph, such that the capacities of each edge are all some constant \(c\), then we attempt to find the maximal flow using the Ford–Fulkerson method, returning a set of all augmenting paths.
+
+This set must be disjoint, because once an edge has been used with a flow of \(c\), it is saturated and will not be used as part of another augmenting path. This set must also me maximal because we can send \(c\) units of flow through each augmenting path, so the maximal flow must be sent through the maximal number of augmenting paths.
+
+\section*{Question 4}
+
 \end{document}
