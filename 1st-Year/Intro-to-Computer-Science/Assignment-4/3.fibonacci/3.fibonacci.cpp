@@ -15,10 +15,10 @@ using namespace std;
 
 int main() {
 
-	int n = 0;			 // User input
-	int fibN = 0;		 // Each value of the sequence
-	int fibNMinus1 = 1;  // Previous value of sequence
-	int fibNMinus2 = 0;  // 2nd previous value
+	int n = 0;			// User input
+	int fibN = 0;		// Each value of the sequence
+	int fibNMinus1 = 1; // Previous value of sequence
+	int fibNMinus2 = 0; // 2nd previous value
 
 	// Ask user for a non-negative integer
 	cout << "enter a number:" << endl;
@@ -37,11 +37,11 @@ int main() {
 	// Calculate each value of sequence until (n+1)th value
 	// Start at the 3rd value
 	for (int i = 2; i <= n; i++) {
-		fibN = fibNMinus1 + fibNMinus2;  // Calculate the new value
-		cout << ' ' << fibN;			 // Output new value
+		fibN = fibNMinus1 + fibNMinus2; // Calculate the new value
+		cout << ' ' << fibN;			// Output new value
 
-		fibNMinus2 = fibNMinus1;  // Update 2nd previous value
-		fibNMinus1 = fibN;		  // Update previous value
+		fibNMinus2 = fibNMinus1; // Update 2nd previous value
+		fibNMinus1 = fibN;		 // Update previous value
 	}
 
 	cout << endl;
