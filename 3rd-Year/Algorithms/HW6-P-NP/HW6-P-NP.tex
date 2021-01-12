@@ -1,0 +1,49 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}		% for algorithms in pseudo code. Usage: \begin{algorithmic}
+\MakeRobust{\Call}
+\newcommand{\lang}{\mathcal{L}}
+
+\setlength{\parskip}{\smallskipamount}
+
+\title{Analysis of Algorithms \\
+\medskip
+\large Homework 6 -- P vs NP}
+\author{Abraham Murciano \& Elad Harizy}
+
+\begin{document}
+
+\maketitle
+
+\section*{Question 1}
+
+\subsection*{Part A}
+
+We are to prove that if the languages \(\lang_1\) and \(\lang_2\) are in P, meaning that there automata that can tell us whether a word is in the language or not in polynomial time (\(O(n*k)\) for some constant \(k\)), then \(\lang_1 \cup \lang_2 \in P\).
+
+Since \(\lang_1\) and \(\lang_2\) can be decided in polynomial time, their union can also, as explained in Part B.
+
+\subsection*{Part B}
+
+We are told that the languages \(\lang_1, \lang_2\) can be decided in polynomial time using algorithms \(A_1, A_2\) respectively, with running times \(O(n^{k_1}), O(n^{k_2})\). To decide their union, one would have to decide each one individually, and decide their union based on their logical disjunction. Thus the complexity of deciding their union is \(O(n^{k_1} + n^{k_2})\), or \(O(n^{\max(k_1, k_2)})\), which is polynomial.
+
+\section*{Question 2}
+
+\subsection*{Part A}
+
+We must prove that if \(\lang \in P\) then \(\forall k \in \mathbb{N}, \lang^k \in P\). Meaning that for any constant \(k\), we can decide the concatenation of the language to itself \(k\) times, in polynomial time.
+
+We will use a lemma which states that if \(\lang_1, \lang_2 \in P\), then \(\lang_1\lang_2 \in P\). (Proof omitted.)
+
+We will prove this by induction.
+
+For \(k = 0, \lang^k = \lang^0 = \{\varepsilon\} \in P\).
+
+Assume that for \(k = n, \lang^k = \lang^n \in P\).
+
+Then for \(k = n + 1, \lang^k = \lang^{n+1} = \lang^n \lang\). However we know that both \(\land\) and \(\lang^n\) are in \(P\), so using our lemma, their concatenation, \(\lang^{n+1}\) must be in \(P\).
+
+\end{document}
