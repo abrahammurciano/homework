@@ -46,4 +46,10 @@ Assume that for \(k = n, \lang^k = \lang^n \in P\).
 
 Then for \(k = n + 1, \lang^k = \lang^{n+1} = \lang^n \lang\). However we know that both \(\land\) and \(\lang^n\) are in \(P\), so using our lemma, their concatenation, \(\lang^{n+1}\) must be in \(P\).
 
+\subsection*{Part B}
+
+Given that algorithm \(A_1\) decides \(\lang\) in \(O(n^c)\) time, we are to find the complexity of an algorithm \(A_2\) which decides \(\lang^k\) for some constant \(k\).
+
+To decide \(\lang^2\), the complexity would be \(O((n^c)^2)\), or \(O(n^{2c})\). This is because after each character, we must check if the remainder of the input is also in \(\lang\). So if we repeat this process \(k\) times, the algorithm results in a complexity of \(O(n^{kc})\).
+
 \end{document}
