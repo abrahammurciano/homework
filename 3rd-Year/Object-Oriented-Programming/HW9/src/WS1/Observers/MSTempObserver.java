@@ -5,6 +5,7 @@ public class MSTempObserver implements Observer<Integer> {
 	private MonitoringScreen monitoringScreen;
 
 	public MSTempObserver(MonitoringScreen monitoringScreen) {
+		System.out.println("MSTempObserver was created");
 		this.monitoringScreen = monitoringScreen;
 	}
 
@@ -15,7 +16,7 @@ public class MSTempObserver implements Observer<Integer> {
 
 	@Override
 	public String getName() {
-		return "pressure observer";
+		return "MSTempObserver";
 	}
 
 }

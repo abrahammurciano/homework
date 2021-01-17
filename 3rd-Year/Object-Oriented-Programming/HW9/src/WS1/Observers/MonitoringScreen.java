@@ -5,6 +5,7 @@ import WS1.Observables.WeatherMonitoringSystem;
 public class MonitoringScreen {
 
 	public MonitoringScreen() {
+		System.out.println("MonitoringScreen was created");
 		WeatherMonitoringSystem.theInstance().addTemperatureObserver(new MSTempObserver(this));
 		WeatherMonitoringSystem.theInstance().addPressureObserver(new MSPressObserver(this));
 	}

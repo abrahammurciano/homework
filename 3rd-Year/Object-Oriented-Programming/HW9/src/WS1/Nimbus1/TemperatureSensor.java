@@ -8,13 +8,18 @@ public class TemperatureSensor extends Sensor {
 	private Random random;
 
 	public TemperatureSensor(int interval) {
-		super("temperature sensor", interval);
+		super(interval);
 		random = new Random();
 	}
 
 	@Override
 	protected int read() {
 		return random.nextInt(41);
+	}
+
+	@Override
+	public String getName() {
+		return "temperature";
 	}
 
 }

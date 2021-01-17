@@ -51,7 +51,7 @@ public class PressureTrendSensor extends Observable<Trend> implements Observer<I
 
 	@Override
 	public String getName() {
-		return "pressure trend";
+		return "PressureTrendSensor";
 	}
 
 }

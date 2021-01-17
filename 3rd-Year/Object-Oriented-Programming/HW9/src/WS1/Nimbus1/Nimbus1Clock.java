@@ -5,6 +5,7 @@ import WS1.Observables.AlarmClock;
 public class Nimbus1Clock extends AlarmClock {
 	protected Nimbus1Clock() {
 		new Thread("polling Alarm Clock Records") {
+			@Override
 			public void run() {
 				System.out.println("running clock thread ---");
 				for (int i = 0; i < 60; i++) {
@@ -14,6 +15,7 @@ public class Nimbus1Clock extends AlarmClock {
 						Thread.sleep(CLOCK_INTERVAL_MILLIS);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
+						Thread.currentThread().interrupt();
 					}
 				}
 			}

@@ -1,6 +1,5 @@
 package WS1.Observables;
 
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 import WS1.Observers.Observer;
@@ -10,7 +9,6 @@ public abstract class Observable<T> {
 
 	protected Observable() {
 		this.observers = new ArrayList<>();
-		System.out.println(getName() + " was created");
 	}
 
 	public void registerObserver(Observer<T> observer) {

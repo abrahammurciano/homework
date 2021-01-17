@@ -5,6 +5,7 @@ public class MSPressObserver implements Observer<Integer> {
 	private MonitoringScreen monitoringScreen;
 
 	public MSPressObserver(MonitoringScreen monitoringScreen) {
+		System.out.println("MSPressObserver was created");
 		this.monitoringScreen = monitoringScreen;
 	}
 
@@ -15,7 +16,7 @@ public class MSPressObserver implements Observer<Integer> {
 
 	@Override
 	public String getName() {
-		return "pressure observer";
+		return "MSPressObserver";
 	}
 
 }
