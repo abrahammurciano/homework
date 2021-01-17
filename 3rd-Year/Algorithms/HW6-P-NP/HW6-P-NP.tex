@@ -52,4 +52,39 @@ Given that algorithm \(A_1\) decides \(\lang\) in \(O(n^c)\) time, we are to fin
 
 To decide \(\lang^2\), the complexity would be \(O((n^c)^2)\), or \(O(n^{2c})\). This is because after each character, we must check if the remainder of the input is also in \(\lang\). So if we repeat this process \(k\) times, the algorithm results in a complexity of \(O(n^{kc})\).
 
+\subsection*{Part C}
+
+Assuming \(\lang \in P\), and is decidable in \(O(n^c)\), we are to suggest an algorithm that decides \(\lang^*\) in polynomial time. We will use a dynamic programming approach to solve this. If \(w = w_1 w_2 \dots w_n\) is a word, we shall denote by \(w_{i,j}\) (when \(i \leq j\)) the substring of \(w\) which is \(w_i w_{i+1} \dots w_j\).
+
+We can decide that \(w \in \lang^*\) if and only if at least one of the following hold true.
+
+\begin{itemize}
+	\item \(w = \varepsilon\)
+	\item \(w \in \lang\)
+	\item \(\exists u v = w, \text{such that} u \in \lang^* \land v \in \lang^*\)
+\end{itemize}
+
+Using this we can compose the following algorithm.
+
+\begin{algorithm}
+	\begin{algorithmic}
+		\Function{KleeneInP}{$\lang, w$}
+		\If{\(w = \varepsilon\)}
+		\Return True
+		\EndIf
+		\If{\(w \in \lang\)}
+		\Return True
+		\EndIf
+		\For{\(i\) from 1 to \(|w|\)}
+		\If{\(\Call{KleeneInP}{\lang, w_{1, i}} \land \Call{KleeneInP}{\lang, w_{i+1, |w|}}\)}
+		\State \Return True
+		\EndIf
+		\EndFor
+		\State \Return False
+		\EndFunction
+	\end{algorithmic}
+\end{algorithm}
+
+Assuming all results are stored in a table and are only computed once, there are \(\frac{n^2}{2}\) different substrings \(w_{i,j}\) for which the function is called. And each of those calls it checks if the substring it received is in \(\lang\), which takes \(O(n^c)\) time. Thus the time complexity of this algorithm is at most \(O(n^2 \cdot n^c) = O(n^{2c})\)
+
 \end{document}
