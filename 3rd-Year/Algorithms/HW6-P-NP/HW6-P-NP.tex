@@ -85,6 +85,20 @@ Using this we can compose the following algorithm.
 	\end{algorithmic}
 \end{algorithm}
 
-Assuming all results are stored in a table and are only computed once, there are \(\frac{n^2}{2}\) different substrings \(w_{i,j}\) for which the function is called. And each of those calls it checks if the substring it received is in \(\lang\), which takes \(O(n^c)\) time. Thus the time complexity of this algorithm is at most \(O(n^2 \cdot n^c) = O(n^{2c})\)
+Assuming all results are stored in a table and are only computed once, there are \(\frac{n^2}{2}\) different substrings \(w_{i,j}\) for which the function is called. And each of those calls it checks if the substring it received is in \(\lang\), which takes \(O(n^c)\) time. Thus the time complexity of this algorithm is at most \(O(n^2 \cdot n^c) = O(n^{2c})\).
+
+\section*{Question 3}
+
+\subsection*{Part A}
+
+We are to prove the transitivity of the relation \(\leq_p\), which is the relation between two languages which indicates if the first language can be reduced to the second language in polynomial time.
+
+If \(\lang_1 \leq_p \lang_2\) then there exists some function \(f: \Sigma^* \to \Sigma^*\) which can be computed in polynomial time such that \(w \in \lang_1 \Leftrightarrow f(w) \in \lang_2\).
+
+Similarly, if \(\lang_2 \leq_p \lang_3\) then there exists some function \(g: \Sigma^* \to \Sigma^*\) which can be computed in polynomial time such that \(f(w) \in \lang_2 \Leftrightarrow g(f(w)) \in \lang_3\).
+
+Thus there exists a function \(h = g \circ f\) such that \(w \in \lang_1 \Leftrightarrow h(w) \in \lang_3\). And since \(f\) and \(g\) are both polynomial, \(h\), which takes the sum of the run times of \(f\) and \(g\) to run (as explained in part B), will also be polynomial. Therefore \(\lang_1 \leq_p \lang_3\), so \(\le_p\) is transitive.
+
+\subsection*{Part B}
 
 \end{document}
