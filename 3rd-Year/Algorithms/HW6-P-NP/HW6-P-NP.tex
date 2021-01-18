@@ -3,6 +3,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{algorithm}
+\usepackage{enumitem}
 \usepackage[noend]{algpseudocode}		% for algorithms in pseudo code. Usage: \begin{algorithmic}
 \MakeRobust{\Call}
 \newcommand{\lang}{\mathcal{L}}
@@ -100,5 +101,27 @@ Similarly, if \(\lang_2 \leq_p \lang_3\) then there exists some function \(g: \S
 Thus there exists a function \(h = g \circ f\) such that \(w \in \lang_1 \Leftrightarrow h(w) \in \lang_3\). And since \(f\) and \(g\) are both polynomial, \(h\), which takes the sum of the run times of \(f\) and \(g\) to run (as explained in part B), will also be polynomial. Therefore \(\lang_1 \leq_p \lang_3\), so \(\le_p\) is transitive.
 
 \subsection*{Part B}
+
+We seek the running time of a reduction from \(\lang_1\) to \(\lang_3\) given that there is a reduction \(f\) from \(\lang_1\) to \(\lang_2\) that takes \(O(n^{a})\) time and a reduction \(g\) from \(\lang_2\) to \(\lang_3\) that takes \(O(n^b)\) time.
+
+In order to reduce from \(\lang_1\) to \(\lang_3\), we must first for an input string \(w\), \(f(w)\). Then we apply \(g\) to the output of the first reduction; in other words we calculate \(g(f(w))\).
+
+This involves applying each of the reductions \(f\) and \(g\) once. So the running time would be \(O(n^a + n^b) = O(n^{\max(a, b)})\), which is polynomial.
+
+\section*{Question 4}
+
+We are to prove or refute each of the following propositions.
+
+\begin{enumerate}[label=\alph*.]
+	\item
+		If \(\lang_1, \lang_2 \in \mathit{NPC}\), then \(\lang_1 \leq_p \lang_2\) and \(\lang_2 \leq_p \lang_1\).
+
+		By definition of NP Complete, without loss of generality, if \(\lang_1 \in \mathit{NPC}\) then \(\forall \lang \in \mathit{NP}, \lang \leq_p \lang_1\). And since \(\lang_2\) is also in NPC, \(\lang_2 \in NP\), so \(\lang_2 \leq_p \lang_1\).
+
+	\item
+		If \(\lang_1, \lang_2 \in P\), then \(\lang_1 \leq_p \lang_2\) and \(\lang_2 \leq_p \lang_1\).
+
+		This is false, and can be shown to be as such by a counter example. Suppose \(\lang_2 = \phi\). Choose any \(w \in \lang_1\). It cannot be true for any \(f: \Sigma^* \to \Sigma^*\) that \(f(w) \in \lang_2\), since \(\lang_2\) is empty. Thus there cannot be any language that reduces to \(\lang_2\).
+\end{enumerate}
 
 \end{document}
