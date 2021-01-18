@@ -12,7 +12,7 @@
 
 \title{Analysis of Algorithms \\
 \medskip
-\large Homework 6 -- P vs NP}
+\large Homework 6 -- \textit{P} vs \textit{NP}}
 \author{Abraham Murciano \& Elad Harizy}
 
 \begin{document}
@@ -23,7 +23,7 @@
 
 \subsection*{Part A}
 
-We are to prove that if the languages \(\lang_1\) and \(\lang_2\) are in P, meaning that there automata that can tell us whether a word is in the language or not in polynomial time (\(O(n*k)\) for some constant \(k\)), then \(\lang_1 \cup \lang_2 \in P\).
+We are to prove that if the languages \(\lang_1\) and \(\lang_2\) are in \textit{P}, meaning that there automata that can tell us whether a word is in the language or not in polynomial time (\(O(n*k)\) for some constant \(k\)), then \(\lang_1 \cup \lang_2 \in P\).
 
 Since \(\lang_1\) and \(\lang_2\) can be decided in polynomial time, their union can also, as explained in Part B.
 
@@ -116,12 +116,27 @@ We are to prove or refute each of the following propositions.
 	\item
 		If \(\lang_1, \lang_2 \in \mathit{NPC}\), then \(\lang_1 \leq_p \lang_2\) and \(\lang_2 \leq_p \lang_1\).
 
-		By definition of NP Complete, without loss of generality, if \(\lang_1 \in \mathit{NPC}\) then \(\forall \lang \in \mathit{NP}, \lang \leq_p \lang_1\). And since \(\lang_2\) is also in NPC, \(\lang_2 \in NP\), so \(\lang_2 \leq_p \lang_1\).
+		This is true by definition of \textit{NP}-complete. Without loss of generality, if \(\lang_1 \in \mathit{NPC}\) then \(\forall \lang \in \mathit{NP}, \lang \leq_p \lang_1\). And since \(\lang_2\) is also in NPC, \(\lang_2 \in NP\), so \(\lang_2 \leq_p \lang_1\).
 
 	\item
 		If \(\lang_1, \lang_2 \in P\), then \(\lang_1 \leq_p \lang_2\) and \(\lang_2 \leq_p \lang_1\).
 
 		This is false, and can be shown to be as such by a counter example. Suppose \(\lang_2 = \phi\). Choose any \(w \in \lang_1\). It cannot be true for any \(f: \Sigma^* \to \Sigma^*\) that \(f(w) \in \lang_2\), since \(\lang_2\) is empty. Thus there cannot be any language that reduces to \(\lang_2\).
+
+	\item
+		If \(\lang_1 \in \mathit{NP}\) and \(\lang_2\) is \textit{NP}-hard, then \(\lang_2 \leq_p \lang_1\).
+
+		This proposition must be false. Since \(\lang_1 \in \mathit{NP}\), there must be a polynomial algorithm which given a solution, verifies that it is correct. So if \(\lang_2 \leq_p \lang_1\), then in polynomial time we can convert a solution to the problem represented by \(\lang_2\) to an solution to the problem represented by \(\lang_1\). Then we can verify that in polynomial time, and if it is verified for \(\lang_1\), then the original solution would be verified for \(\lang_2\), so \(\lang_2 \in \mathit{NP}\), so it cannot be \textit{NP}-hard.
+
+	\item
+		If \(\lang \in \mathit{NP}\), then \(\overline{\lang} \leq_p \text{Tautology}\) (where Tautology is the problem of determining whether a given Boolean formula is a tautology, which is co-\textit{NP}-complete).
+
+		By definition of co-\textit{NP}, if \(\lang \in \mathit{NP}\), then \(\overline{\lang} \in\) co-\textit{NP}. And since Tautology is co-\textit{NP}-complete, every language in co-\textit{NP} must be reducible to it. So \(\overline{\lang} \leq_p \text{Tautology}\).
+
+	\item
+		If \(\lang_1\) is \textit{NP}-hard and \(\lang_2 \in \mathit{NP}\), then \(\lang_1 \cap \lang_2 \in \mathit{NP}\).
+
+		We will disprove this claim by a counter-example. Suppose \(\lang_2 = \Sigma^*\). Therefore \(\lang_1 \cap \lang_2 = \lang_1 \in \mathit{NP}\). This contradicts the fact that \(\lang_1\) is \textit{NP}-hard. So \(\lang_1 \cap \lang_2 \notin \mathit{NP}\).
 \end{enumerate}
 
 \end{document}
