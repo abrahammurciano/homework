@@ -21,10 +21,27 @@
 
 \section{Subgraph Isomorphism}
 
-We are given two graphs, \(G_1\) and \(G_2\). The subgraph isomorphism problem (\textit{SGI}) is to determine if there exists a subgraph of \(G_2\) which is isomorphic to \(G_1\).
+We are given two graphs, \(G_1 = (V_1, E_1)\) and \(G_2 = (V_2, E_2)\). The subgraph isomorphism problem (\textit{SGI}) is to determine if there exists a subgraph of \(G_2\) which is isomorphic to \(G_1\).
 
 \subsection*{Part A}
 
 To prove that \(\mathit{SGI} \in \mathit{NP}\) we must show that there is a way to verify a solution to the problem in polynomial time.
+
+If we are given a solution to an \textit{SGI} problem in the form of a subgraph \(G_3 = (V_3, E_3) \subseteq G_2\) and a bijection \(f : V_1 \to V_3\), i.e. \(f\) maps from the vertices of \(G_1\) to the vertices of \(G_3\), then we can verify that they are in fact isomorphic as follows.
+
+\begin{algorithm}
+	\begin{algorithmic}
+		\Function{Isomorphic}{$G_1, G_3, f$}
+		\For{\((u, v) \in E_1\)}
+		\If{\((f(u), f(v)) \notin E_3\)}
+		\Return false
+		\EndIf
+		\EndFor
+		\State \Return true
+		\EndFunction
+	\end{algorithmic}
+\end{algorithm}
+
+This algorithm is clearly \(O(E)\), so is polynomial. Therefore \(\mathit{SCI} \in \mathit{NP}\).
 
 \end{document}
