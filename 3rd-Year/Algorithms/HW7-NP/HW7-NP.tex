@@ -21,13 +21,13 @@
 
 \section{Subgraph Isomorphism}
 
-We are given two graphs, \(G_1 = (V_1, E_1)\) and \(G_2 = (V_2, E_2)\). The subgraph isomorphism problem (\textit{SGI}) is to determine if there exists a subgraph of \(G_2\) which is isomorphic to \(G_1\).
+We are given two graphs, \(G_1 = (V_1, E_1)\) and \(G_2 = (V_2, E_2)\). The subgraph isomorphism problem (SGI) is to determine if there exists a subgraph of \(G_2\) which is isomorphic to \(G_1\).
 
 \subsection*{Part A}
 
-To prove that \(\mathit{SGI} \in \mathit{NP}\) we must show that there is a way to verify a solution to the problem in polynomial time.
+To prove that \(\text{SGI} \in \mathit{NP}\) we must show that there is a way to verify a solution to the problem in polynomial time.
 
-If we are given a solution to an \textit{SGI} problem in the form of a subgraph \(G_3 = (V_3, E_3) \subseteq G_2\) and a bijection \(f : V_1 \to V_3\), i.e. \(f\) maps from the vertices of \(G_1\) to the vertices of \(G_3\), then we can verify that they are in fact isomorphic as follows.
+If we are given a solution to an SGI problem in the form of \(G_3 = (V_3, E_3)\), which is a subgraph of \(G_2\); and a bijection \(f : V_1 \to V_3\),which is a map from the vertices of \(G_1\) to the vertices of \(G_3\), then we can verify that they are in fact isomorphic as follows.
 
 \begin{algorithm}
 	\begin{algorithmic}
@@ -43,5 +43,13 @@ If we are given a solution to an \textit{SGI} problem in the form of a subgraph 
 \end{algorithm}
 
 This algorithm is clearly \(O(E)\), so is polynomial. Therefore \(\mathit{SCI} \in \mathit{NP}\).
+
+\subsection*{Part B}
+
+To prove that SGI is \textit{NP}-complete, we will show that the Clique problem (which is known to be \textit{NP}-complete) is reducible to SGI.
+
+The Clique problem is to determine, given a graph \(G = (V, E)\) and a constant \(c \leq |V|\), whether or not \(K_c\) (a complete graph with \(c\) vertices) is a subgraph of \(G\).
+
+To reduce the Clique problem to SGI, we must convert every instance of the Clique problem into one of SGI, such that the solution will be the same for both. Consider some inputs to the Clique problem; a graph \(G\), and a constant \(c\). We can feed \(K_c\) and \(G\) as the inputs \(G_1\) and \(G_2\) of the SGI problem respectively. Then any SGI algorithm will tell us whether or not \(G = G_2\) has a subgraph isomorphic to \(K_c = G_1\), which is precisely the definition of the Clique problem.
 
 \end{document}
