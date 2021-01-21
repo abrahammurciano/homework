@@ -7,6 +7,9 @@
 \usepackage[noend]{algpseudocode}		% for algorithms in pseudo code. Usage: \begin{algorithmic}
 \MakeRobust{\Call}
 \newcommand{\lang}{\mathcal{L}}
+\usepackage{tikz}	% for diagrams
+\usetikzlibrary{positioning}
+\usetikzlibrary{quotes}
 
 \setlength{\parskip}{\smallskipamount}
 
@@ -51,5 +54,47 @@ To prove that SGI is \textit{NP}-complete, we will show that the Clique problem 
 The Clique problem is to determine, given a graph \(G = (V, E)\) and a constant \(c \leq |V|\), whether or not \(K_c\) (a complete graph with \(c\) vertices) is a subgraph of \(G\).
 
 To reduce the Clique problem to SGI, we must convert every instance of the Clique problem into one of SGI, such that the solution will be the same for both. Consider some inputs to the Clique problem; a graph \(G\), and a constant \(c\). We can feed \(K_c\) and \(G\) as the inputs \(G_1\) and \(G_2\) of the SGI problem respectively. Then any SGI algorithm will tell us whether or not \(G = G_2\) has a subgraph isomorphic to \(K_c = G_1\), which is precisely the definition of the Clique problem.
+
+
+\section{Simple Cycle Problem}
+
+This problem is to find whether or not a given graph has a simple cycle (a cycle with no repeating vertices, other than the first and last) of \(k\) distinct vertices.
+
+\subsection*{Part A}
+
+This problem is in \textit{NP}. This can be easily shown since if we are given a cycle, we can walk the cycle and verify that there are precisely \(k\) vertices in linear time, and we can verify that they are all distinct in linear time with the use of a hash-set, or certainly in quadratic time by comparing all vertices to all previously seen ones. Therefore the problem is in \textit{NP}.
+
+\subsection*{Part B}
+
+We will now show that our problem is \textit{NP}-complete by showing that the Hamiltonian Cycle problem, which is known to be \textit{NP}-complete reduces to it.
+
+The Hamiltonian Cycle problem goes as follows. Given a graph, is there a path that traverses all the vertices without repeating any, then ends back at the start?
+
+For any instance of the Hamiltonian Cycle problem, supposing the input is the graph \(G = (V, E)\), we can construct an equivalent Simple Cycle problem by asking is there a simple cycle in \(G\) of \(k = |V|\) distinct vertices. If there is one, that is a hamiltonian cycle. Otherwise, there is no hamiltonian cycle. Thus the Simple Cycle problem is also \textit{NP}-complete.
+
+\subsection*{Part C}
+
+We are presented with another similar problem. Given a graph, does it contain \emph{any} cycles? This problem is different to the Simple Cycle problem, in that we do not care about the size of the cycle, nor do we care if there are smaller cycles within it.
+
+This problem can be solved in polynomial time by performing a breadth-first search on the tree, and if back-edges are found, then there must be a cycle. Otherwise there cannot be one.
+
+\section{Cliques and 3-CNF}
+
+We are given the following boolean formula in 3-CNF.
+\begin{equation*}
+	\varphi = (a \lor b \lor \lnot c) \land (a \lor b \lor \lnot c) \land (\lnot a \lor \lnot b \lor c) \land (a \lor \lnot b \lor \lnot c)
+\end{equation*}
+
+In the reduction from a Clique problem to 3-CNF, the graph in figure \ref{q3-clique} would reduce to \(\varphi\) to serve as input into the 3-CNF problem.
+
+\begin{figure}[htbp]
+	\centering
+	\begin{tikzpicture}
+		[vertex/.style={circle, draw=black, node distance=1cm, minimum size=0.7cm}]
+		\node[vertex] {};
+	\end{tikzpicture}
+	\caption{A graph which reduces to \(\varphi\) when reducing to 3-CNF.}
+	\label{q3-clique}
+\end{figure}
 
 \end{document}
