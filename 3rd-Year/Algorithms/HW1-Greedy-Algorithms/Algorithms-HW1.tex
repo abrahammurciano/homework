@@ -139,10 +139,10 @@ This can be proven by contradiction. Suppose the contrary; that there exists a s
 		\For{\(h \in H\)}
 		\If{\(d_h > f + 2 R\)}
 		\Comment{\(h\) no longer fits into previous group}
-		\State \(p := p \cup \{f + R\}\)
-		\Comment{Position a station in for the previous group}
 		\State \(f := d_h\)
 		\Comment{Start a new group at the next house}
+		\State \(p := p \cup \{f + R\}\)
+		\Comment{Position a station in for the previous group}
 		\EndIf
 		\EndFor
 		\Return \(p\)
