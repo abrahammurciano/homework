@@ -231,7 +231,7 @@ For each of the following propositions we are to prove or disprove them. Let \(G
 	\item
 		We are given a connected undirected weighted graph \(G=(V,E,W)\). A new graph \(G' = (V, E, W')\) is formed by multiplying the weight of each of its edges by a constant \(a > 0\). (i.e. for each edge \(e \in E\) there is a new weight \(w'_e = aw_e\).) If \(T\) is a minimal spanning tree for \(G\), then it remains one for \(G'\).
 
-		\paragraph{Proof.} If \(X = (V_X, E_X, W_X)\) is a spanning tree of \(G\), then the total weight of the edges in \(X\) is \(w_X = \sum_{e \in E_X}(w_e)\). Therefore the total weight of \(X\) in \(G'\) must be \(\sum_{e \in E_X}(aw_e) = a \sum_{e \in E_X}(w_e) = aw_x\).
+		\paragraph{Proof.} If \(X = (V_X, E_X, W_X)\) is a spanning tree of \(G\), then the total weight of the edges in \(X\) is \(w_X = \sum_{e \in E_X}(w_e)\). Therefore the total weight of \(X\) in \(G'\) must be \(\sum_{e \in E_X}(aw_e) = a \sum_{e \in E_X}(w_e) = aw_X\).
 
 		Let \(S \neq T\) be the any spanning tree. Since \(T\) is minimal in \(G\), it must be that \(w_T < w_S\). Therefore the total weight of \(S\) in \(G'\), which is \(aw_S\) is greater than that of \(T\) in \(G'\), which is \(aw_T\). Therefore \(T\) must also be more minimal than \(S\) in \(G'\), proving that \(T\) is the most minimal spanning tree of \(G'\).
 \end{enumerate}
