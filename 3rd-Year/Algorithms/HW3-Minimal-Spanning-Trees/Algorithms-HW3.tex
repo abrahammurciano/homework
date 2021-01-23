@@ -226,7 +226,7 @@ For each of the following propositions we are to prove or disprove them. Let \(G
 
 		\paragraph{Proof.} We know that every spanning tree must have the same number of edges, namely \(|V| - 1\). Therefore if \(w_X\) is the total weight of a spanning tree \(X\) in \(G\), the total weight of \(X\) in \(G'\) must be \(w_X + (|V| - 1) \cdot a\), and \((|V| - 1) \cdot a\) is constant.
 
-		Let \(S \neq T\) be the any spanning tree. Since \(T\) is minimal in \(G\), it must be that \(w_T < w_S\). Therefore the total weight of \(S\) in \(G'\), which is \(w_S + |V| \cdot a\) is greater than that of \(T\) in \(G'\), which is \(w_T + |V| \cdot a\). Therefore \(T\) must also be more minimal than \(S\) in \(G'\), proving that \(T\) is the most minimal spanning tree of \(G'\).
+		Let \(S \neq T\) be the any spanning tree. Since \(T\) is minimal in \(G\), it must be that \(w_T < w_S\). Therefore the total weight of \(S\) in \(G'\), which is \(w_S + (|V| - 1) \cdot a\) is greater than that of \(T\) in \(G'\), which is \(w_T + (|V| - 1) \cdot a\). Therefore \(T\) must also be more minimal than \(S\) in \(G'\), proving that \(T\) is the most minimal spanning tree of \(G'\).
 
 	\item
 		We are given a connected undirected weighted graph \(G=(V,E,W)\). A new graph \(G' = (V, E, W')\) is formed by multiplying the weight of each of its edges by a constant \(a > 0\). (i.e. for each edge \(e \in E\) there is a new weight \(w'_e = aw_e\).) If \(T\) is a minimal spanning tree for \(G\), then it remains one for \(G'\).
