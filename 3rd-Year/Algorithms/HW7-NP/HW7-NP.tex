@@ -16,7 +16,7 @@
 \title{Analysis of Algorithms \\
 \medskip
 \large Homework 7 -- \textit{NP}}
-\author{Abraham Murciano}
+\author{Abraham Murciano \& Elad Harizy}
 
 \begin{document}
 
@@ -81,20 +81,107 @@ This problem can be solved in polynomial time by performing a breadth-first sear
 \section{Cliques and 3-CNF}
 
 We are given the following boolean formula in 3-CNF.
-\begin{equation*}
-	\varphi = (a \lor b \lor \lnot c) \land (a \lor b \lor \lnot c) \land (\lnot a \lor \lnot b \lor c) \land (a \lor \lnot b \lor \lnot c)
-\end{equation*}
+\begin{align*}
+	\varphi & = (a \lor b \lor \lnot c) \land (a \lor b \lor \lnot c) \land (\lnot a \lor \lnot b \lor c) \land (a \lor \lnot b \lor \lnot c) \\
+	        & = (a \lor b \lor \lnot c) \land (\lnot a \lor \lnot b \lor c) \land (a \lor \lnot b \lor \lnot c)
+\end{align*}
 
-In the reduction from a Clique problem to 3-CNF, the graph in figure \ref{q3-clique} would reduce to \(\varphi\) to serve as input into the 3-CNF problem.
+This boolean formula is solvable if and only if the graph in figure \ref{q3-clique} contains a clique of size three.
 
 \begin{figure}[htbp]
 	\centering
 	\begin{tikzpicture}
 		[vertex/.style={circle, draw=black, node distance=1cm, minimum size=0.7cm}]
-		\node[vertex] {};
+		\node[vertex] (a1) {\(a\)};
+		\node[vertex, below=of a1] (b1) {\(b\)};
+		\node[vertex, below=of b1] (c1) {\(\lnot c\)};
+
+		\node[vertex, below right=of c1] (a2) {\(\lnot a\)};
+		\node[vertex, right=of a2] (b2) {\(\lnot b\)};
+		\node[vertex, right=of b2] (c2) {\(c\)};
+
+		\node[vertex, above right=of c2] (a3) {\(a\)};
+		\node[vertex, above=of a3] (b3) {\(\lnot b\)};
+		\node[vertex, above=of b3] (c3) {\(\lnot c\)};
+
+		\draw (a1) to (a3);
+		\draw (a1) to (b2);
+		\draw (a1) to (b3);
+		\draw (a1) to (c2);
+		\draw (a1) to (c3);
+
+		\draw (b1) to (a2);
+		\draw (b1) to (a3);
+		\draw (b1) to (c2);
+		\draw (b1) to (c3);
+
+		\draw (c1) to (a2);
+		\draw (c1) to (a3);
+		\draw (c1) to (b2);
+		\draw (c1) to (b3);
+		\draw (c1) to (c3);
+
+		\draw (a2) to (b3);
+		\draw (a2) to (c3);
+
+		\draw (b2) to (a3);
+		\draw (b2) to (b3);
+		\draw (b2) to (c3);
+
+		\draw (c2) to (a3);
+		\draw (c2) to (b3);
 	\end{tikzpicture}
-	\caption{A graph which reduces to \(\varphi\) when reducing to 3-CNF.}
+	\caption{A graph which contains a clique of size three iff \(\varphi\) is satisfiable.}
 	\label{q3-clique}
+\end{figure}
+
+There are many cliques of size three in this graph, which means that there are many different ways to satisfy \(\varphi\). For example, figure \ref{q3-example} shows a few of the different cliques contained in the graph. If we take the red clique, that corresponds to the assignments \(a := \top, b := \bot\) in the context of the boolean formula \(\varphi\). Clearly, if we substitute these assignments into \(\varphi\), that would make \(\varphi = \top\), so it is obviously satisfiable.
+
+\begin{figure}[htbp]
+	\centering
+	\begin{tikzpicture}
+		[vertex/.style={circle, draw=black, node distance=1cm, minimum size=0.7cm}]
+		\node[vertex] (a1) {\(a\)};
+		\node[vertex, below=of a1] (b1) {\(b\)};
+		\node[vertex, below=of b1] (c1) {\(\lnot c\)};
+
+		\node[vertex, below right=of c1] (a2) {\(\lnot a\)};
+		\node[vertex, right=of a2] (b2) {\(\lnot b\)};
+		\node[vertex, right=of b2] (c2) {\(c\)};
+
+		\node[vertex, above right=of c2] (a3) {\(a\)};
+		\node[vertex, above=of a3] (b3) {\(\lnot b\)};
+		\node[vertex, above=of b3] (c3) {\(\lnot c\)};
+
+		\draw[thick, red] (a1) to (a3);
+		\draw[thick, red] (a1) to (b2);
+		\draw[thick, green] (a1) to (b3);
+		\draw[thick, green] (a1) to (c2);
+		\draw (a1) to (c3);
+
+		\draw[thick, blue] (b1) to (a2);
+		\draw (b1) to (a3);
+		\draw (b1) to (c2);
+		\draw[thick, blue] (b1) to (c3);
+
+		\draw (c1) to (a2);
+		\draw (c1) to (a3);
+		\draw[thick, cyan] (c1) to (b2);
+		\draw[thick, cyan] (c1) to (b3);
+		\draw (c1) to (c3);
+
+		\draw (a2) to (b3);
+		\draw[thick, blue] (a2) to (c3);
+
+		\draw[thick, red] (b2) to (a3);
+		\draw[thick, cyan] (b2) to (b3);
+		\draw (b2) to (c3);
+
+		\draw (c2) to (a3);
+		\draw[thick, green] (c2) to (b3);
+	\end{tikzpicture}
+	\caption{A graph which contains a clique of size three iff \(\varphi\) is satisfiable.}
+	\label{q3-example}
 \end{figure}
 
 \end{document}
