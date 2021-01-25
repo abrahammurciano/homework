@@ -184,4 +184,52 @@ There are many cliques of size three in this graph, which means that there are m
 	\label{q3-example}
 \end{figure}
 
+\section{Tasks and Machines}
+
+We are given a set of \(n\) tasks with durations \(T = \{t_1, t_2, \dots, t_n\}\), a number of machines \(m\), and a time limit \(l\). All machines start at the same time, and continually process tasks until the time limit \(l\) is reached. The problem is to determine if all the tasks can be finished before the time limit.
+
+\subsection*{Part A -- An Exponential Algorithm}
+
+Algorithm \ref{q4-algo} which checks every possible way to perform the tasks, and returns true if it finds one that finishes on time. The complexity is \(O(n!)\), since there are \(n!\) permutations of \(T\).
+
+\begin{algorithm}
+	\begin{algorithmic}
+		\Function{TasksAndMachines}{$T, m, l$}
+		\For{each permutation \(P\) of \(T\)}
+		\For{\(i\) from 1 to m} \Comment{Initialise working times of machines to 0}
+		\State \(w_i := 0\)
+		\EndFor
+		\State \(i := 0\)
+		\For{\(t \in P\)}
+		\If{\(w_i + t < l\)} \Comment{Check if \(t\) fits on current machine's time}
+		\State \(w_i := w_i + t\) \Comment{Reserve \(t\) time units on machine \(i\)}
+		\Else
+		\State \(i := i + 1\) \Comment{Move onto next machine}
+		\If{\(i > m\)}
+		\State Continue \Comment{No more machines. Try next permutation}
+		\EndIf
+		\State \(w_i := t\) \Comment{Reserve \(t\) time units}
+		\EndIf
+		\EndFor
+		\State \Return True \Comment{This permutation fits in the time limit}
+		\EndFor
+		\State \Return False \Comment{No permutations were found to fit}
+		\EndFunction
+	\end{algorithmic}
+	\caption{}
+	\label{q4-algo}
+\end{algorithm}
+
+\subsection*{Part B}
+
+This problem is in \textit{NP}, since if we are given a partitioning of \(T\) into at most \(m\) partitions, we can verify that the sum of each partition is less than \(l\), and we would know that indeed, each partition can be assigned to one machine, and they would all finish before the time limit. This can be checked in polynomial time.
+
+\subsection*{Part C -- Reduction from the Bin Packing Problem}
+
+In the bin packing problem, \(n\) items of different volumes \(V = \{v_1, v_2, \dots, v_n\}\) must be packed into \(k\) bins or containers, each of a fixed given volume \(b\). It is known that the bin packing problem is \textit{NP}-complete.
+
+Now to reduce the bin packing problem to our problem, we first create a task for each item whose duration is the same as the volume of the corresponding item; formally, \(\forall 1 \leq i \leq n, (t_i = v_i)\). We then set the time limit \(l\) to be equal to the volume of each bin \(b\). Finally, we set the number of machines to the number of bins available.
+
+Now we are able to partition the tasks into partitions for each machine, if and only if we are able to partition the items into bins.
+
 \end{document}
