@@ -1,0 +1,57 @@
+\documentclass[fleqn]{article}
+\usepackage[margin=3cm]{geometry}   % shrink margins
+\usepackage[margin=3cm]{caption}   % shrink captions
+\usepackage{amsmath}    % math equation environments
+\usepackage{amssymb}    % math symbols such as natural numbers N.
+
+\newenvironment{answers}{ % same as enumerate but with more space between each answer
+	\begin{enumerate}
+		\setlength{\itemsep}{\bigskipamount}
+}{\end{enumerate}}
+
+\newcommand\Item[1][]{ % custom \Item command for block math
+  \ifx\relax#1\relax  \item \else \item[#1] \fi
+  \abovedisplayskip=0pt\abovedisplayshortskip=0pt~\vspace*{-\baselineskip}}
+
+% paragraph indentation within enumerations
+\usepackage{enumitem}
+\setlist{parsep=4pt,listparindent=\parindent}
+
+\title{Linear Algebra 2 \\
+\medskip
+\large Homework 1 -- Complex Numbers}
+\author{Abraham Murciano}
+
+\begin{document}
+
+\maketitle
+
+\begin{answers}
+
+	\item[2.]
+		We are tasked with solving the following equations for \(z\).
+		\begin{enumerate}
+			\Item[(b)]
+				\begin{align*}
+					z^2                                            & = -10+20i \\
+					(a + bi)^2                                     & = -10+20i \\
+					a^2 + 2abi - b^2                               & = -10+20i \\
+					a^2 -b^2                                       & = -10 \\
+					2ab                                            & = 20 \\
+					b                                              & = \frac{10}{a} \\
+					a^2 -\left( \frac{10}{a} \right)^2             & = -10 \\
+					a^2 - \frac{100}{a^2}                          & = -10 \\
+					a^4 + 10a^2 - 100                              & = 0 \\
+					\text{Let } t                                  & = a^2 \\
+					t^2 + 10t - 100                                & = 0 \\
+					t                                              & = -5 \pm 5 \sqrt{5} \\
+					a = \pm\sqrt{-5+5\sqrt{5}}                     & = \pm\sqrt{5}\sqrt{\sqrt{5} - 1} \\
+					b = \pm \frac{10}{\sqrt{5}\sqrt{\sqrt{5} - 1}} & = \pm \frac{2\sqrt{5}}{\sqrt{\sqrt{5} - 1}} \\
+					z_1                                            & = \sqrt{5}\sqrt{\sqrt{5} - 1} + \frac{2\sqrt{5}}{\sqrt{\sqrt{5} - 1}}i \\
+					z_2                                            & = -\sqrt{5}\sqrt{\sqrt{5} - 1} - \frac{2\sqrt{5}}{\sqrt{\sqrt{5} - 1}}i
+				\end{align*}
+		\end{enumerate}
+
+\end{answers}
+
+\end{document}
