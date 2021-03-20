@@ -174,8 +174,69 @@
 			\item
 				We are to solve the equation \(z^4 = -36\) and calculate the sum of all of its solutions.
 				\begin{align*}
-					 &
+					z_1 & = \sqrt{3}(1+i) \\
+					    & = \sqrt{6}e^{\frac{\pi i}{4}} = \sqrt{6}\left( \cos\frac{\pi}{4} + i \sin\frac{\pi}{4} \right) = \sqrt{3} + \sqrt{3}i \\
+					z_2 & = \sqrt{6}e^{\frac{3\pi i}{4}} = \sqrt{6}\left( \cos\frac{3\pi}{4} + i \sin\frac{3\pi}{4} \right) = - \sqrt{3} + \sqrt{3}i \\
+					z_3 & = \sqrt{6}e^{\frac{5\pi i}{4}} = \sqrt{6}\left( \cos\frac{5\pi}{4} + i \sin\frac{5\pi}{4} \right) = - \sqrt{3} - \sqrt{3}i \\
+					z_4 & = \sqrt{6}e^{\frac{7\pi i}{4}} = \sqrt{6}\left( \cos\frac{7\pi}{4} + i \sin\frac{7\pi}{4} \right) = \sqrt{3} - \sqrt{3}i
 				\end{align*}
+				\begin{equation*}
+					\sum_{k=1}^4 z_k = 0
+				\end{equation*}
+		\end{enumerate}
+
+	\item[14.]
+		We are to prove or disprove the following claims.
+		\begin{enumerate}
+			\item[(b)]
+				The set \(\{(0, -1), (i, 0)\}\) is not a basis of \(\mathbb{C}^2\) as a vector space over \(\mathbb{R}\).
+
+				This is true, since the dimension of \(\mathbb{C}^2\) as a vector space over \(\mathbb{R}\) is four, but the set has only two elements, thus cannot be a basis.
+
+			\item[(c)]
+				The set \(\{(1 - i, 1 + i), (1 + i, 2 - i)\}\) is linearly independent when \(\mathbb{C}^2\) is considered as a vector space over \(\mathbb{C}\).
+
+				This set is linearly independent since the two vectors are not scalar multiplications of each other. \((1-i) \times i = 1+ i\), but \((1+i) \times i \neq 2-i\).
+		\end{enumerate}
+
+	\item[16.]
+		We are given the following system of equations.
+		\begin{align*}
+			cx + (1 + i)y  & = c \\
+			(1 - i)x - 2cy & = 2 - 2c
+		\end{align*}
+		\begin{enumerate}
+			\item
+				We seek \(c\) such that the system of equations has a unique solution.
+				\begin{gather*}
+					\begin{bmatrix}
+						c   & 1+i & c    \\
+						1-i & -2c & 2-2c
+					\end{bmatrix}
+					=
+					\begin{bmatrix}
+						1   & \frac{1+i}{c} & c    \\
+						1-i & -2c           & 2-2c
+					\end{bmatrix} \\
+					=
+					\begin{bmatrix}
+						1 & \frac{1+i}{c}   & c           \\
+						0 & -2c-\frac{2}{c} & 2 - 3c - ci
+					\end{bmatrix}
+				\end{gather*}
+				For there to be a unique solution,
+				\begin{align*}
+					-2c-\frac{2}{c} & \neq 0 \\
+					-c^2 - 1        & \neq 0 \\
+					c^2             & \neq -1 \\
+					c               & \neq \pm i
+				\end{align*}
+
+			\item
+				There are no values of \(c\) for which there are infinitely many solutions since no values of \(c\) cause the equations to be linearly dependent.
+
+			\item
+				For \(c = \pm i\), the equations have no solutions since as shown above, there would be a row in the reduced matrix where all but the last column have a value of 0, thus cannot be satisfied.
 		\end{enumerate}
 \end{answers}
 
