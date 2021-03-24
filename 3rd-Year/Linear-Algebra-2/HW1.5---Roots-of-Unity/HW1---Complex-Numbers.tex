@@ -57,6 +57,12 @@
 				For every odd \(n\) there must be exactly one real solutions to the equation \(x^n = 1\). For any \(n\), \(x=1\) must be a solution, then adding \(\frac{2\pi}{n}\) radians about the unit circle gives another, and another until we arrive again at 1. Since \(n\) here is odd, \(\frac{2k\pi}{n}\) can never be equal to \(\pi\), else we would have \(n=2k\), contradicting its oddity. Thus none of the solutions are precisely \(\pi\) radians around the unit circle from 1, denying us the solution \(x=-1\) which is the only other real number on the unit circle.
 		\end{enumerate}
 
+	\item
+		The polygon obtained by connecting consecutive roots of the equation \(x^n=1\) with line segments (and connecting the last to the first), must be a regular \(n\)-gon.
+
+		If \(e^{\alpha i}\) and \(e^{\beta i}\) are any two consecutive roots of the equation, then the difference between the angles \(\alpha\) and \(\beta\) must be \(\frac{2\pi}{n}\). All the roots lie on the unit circle. Now the line segment between any two consecutive roots, together with a line segment from each of them to the point 0, forms an isosceles triangle. The angles of all of these triangles at the origin are all equal (specifically \(\frac{2\pi}{n}\)). Additionally the two edges adjacent to this angle are always of length 1. The two fixed edge lengths along with the fixed angle in between them fixes the edge length of the line segment between the two consecutive roots. Therefore all the edges of the n-gon are of the same length.
+
+		Furthermore, since all the isosceles triangles are of the same dimensions, their angles must be the same as all other triangles. Thus the interior angles of the n-gon are all the same, since they each consist of the sum of one of the common angles from each of its adjacent triangles.
 \end{answers}
 
 \end{document}
