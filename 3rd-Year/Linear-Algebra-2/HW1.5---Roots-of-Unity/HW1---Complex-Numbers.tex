@@ -63,6 +63,13 @@
 		If \(e^{\alpha i}\) and \(e^{\beta i}\) are any two consecutive roots of the equation, then the difference between the angles \(\alpha\) and \(\beta\) must be \(\frac{2\pi}{n}\). All the roots lie on the unit circle. Now the line segment between any two consecutive roots, together with a line segment from each of them to the point 0, forms an isosceles triangle. The angles of all of these triangles at the origin are all equal (specifically \(\frac{2\pi}{n}\)). Additionally the two edges adjacent to this angle are always of length 1. The two fixed edge lengths along with the fixed angle in between them fixes the edge length of the line segment between the two consecutive roots. Therefore all the edges of the n-gon are of the same length.
 
 		Furthermore, since all the isosceles triangles are of the same dimensions, their angles must be the same as all other triangles. Thus the interior angles of the n-gon are all the same, since they each consist of the sum of one of the common angles from each of its adjacent triangles.
+
+	\item
+		If \(m\) is a multiple of \(n\), then any root of unity of order \(n\) must also be a root of unity of order \(m\).
+
+		The roots of unity of order \(n\) are \(e^{\frac{ki}{n}}\) for \(0 \leq k < n\). The roots of order \(m\) are \(e^{\frac{li}{m}}\) for \(0 \leq l < m\). Since \(m\) is a multiple of \(n\), then there exists some integer \(c\) such that \(n = \frac{m}{c}\).
+
+		Now we can say the roots of order \(n\) are \(e^{\frac{cki}{m}}\) for \(0 \leq k < n\). Since \(k < n\), therefore \(ck < cn = m\). So we can replace each \(ck\) with one equivalent \(l\), giving us for each root of order \(n\), an expression of the form \(e^{\frac{li}{m}}\) such than \(l < m\), which is exactly one of the roots of order \(m\).
 \end{answers}
 
 \end{document}
