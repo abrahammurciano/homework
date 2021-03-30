@@ -1,0 +1,179 @@
+\documentclass[fleqn]{article}
+\usepackage{amsmath}    % math equation environments
+\usepackage{amssymb}    % math symbols such as natural numbers N.
+
+\newenvironment{answers}{ % same as enumerate but with more space between each answer
+	\begin{enumerate}
+		\setlength{\itemsep}{\bigskipamount}
+}{\end{enumerate}}
+
+\newcommand\Item[1][]{ % custom \Item command for block math
+  \ifx\relax#1\relax  \item \else \item[#1] \fi
+  \abovedisplayskip=0pt\abovedisplayshortskip=0pt~\vspace*{-\baselineskip}}
+
+% paragraph indentation within enumerations
+\usepackage{enumitem}
+\setlist{parsep=4pt,listparindent=\parindent}
+
+\newcommand{\Adj}{\operatorname{Adj}}
+
+\title{Linear Algebra 2 \\
+\medskip
+\large Homework 0.5 -- Adjoint Matrices and Cramer's Rule}
+\author{Abraham Murciano}
+
+\begin{document}
+
+\maketitle
+
+\begin{answers}
+
+	\item
+		\begin{enumerate}
+			\item
+				We are to solve the following system of equations using Cramer's Rule.
+				\begin{equation*}
+					\begin{cases}
+						2x+y-2z = 10 \\
+						3x+2y-2z = 1 \\
+						5x+4y+3z = 4
+					\end{cases}
+				\end{equation*}
+
+				First, we find the determinant of the coefficient matrix for this system of equations.
+				\begin{equation*}
+					D =
+					\left|
+					\begin{matrix}
+						2 & 1 & -2 \\
+						3 & 2 & -2 \\
+						5 & 4 & 3
+					\end{matrix}
+					\right|
+					= 2 \times 14 - 19 - 2 \times 2 = 5
+				\end{equation*}
+
+				Now we calculate the determinants \(D_x\), \(D_y\), and \(D_z\). These are the determinents of the matrices produced by replacing the coefficients of \(x\), \(y\), and \(z\) respectively, with the right hand side of the equations in the coefficient matrix.
+				\begin{gather*}
+					D_x =
+					\left|
+					\begin{matrix}
+						10 & 1 & -2 \\
+						1  & 2 & -2 \\
+						4  & 4 & 3
+					\end{matrix}
+					\right|
+					= 10 \times 14 - 11 - 2 \times -4 = 137 \\
+					D_y =
+					\left|
+					\begin{matrix}
+						2 & 10 & -2 \\
+						3 & 1  & -2 \\
+						5 & 4  & 3
+					\end{matrix}
+					\right|
+					= 2 \times 11 + 10 \times -19 - 2 \times 7 = -182 \\
+					D_Z =
+					\left|
+					\begin{matrix}
+						2 & 1 & 10 \\
+						3 & 2 & 1  \\
+						5 & 4 & 4
+					\end{matrix}
+					\right|
+					= 2 \times 4 - 7 + 10 \times 2 = 21
+				\end{gather*}
+				Finally, we are able to compute the values of \(x\), \(y\), and \(z\).
+				\begin{equation*}
+					x = \frac{D_x}{D} = \frac{137}{5},\quad
+					y = \frac{D_y}{D} = -\frac{182}{5},\quad
+					z = \frac{D_z}{D} = \frac{21}{5}
+				\end{equation*}
+		\end{enumerate}
+
+	\item
+		\begin{enumerate}
+			\item[(c)]
+				We seek the adjoint matrix of \(A\), which is the following.
+				\begin{equation*}
+					A = \left[
+						\begin{matrix}
+							1 & 2 & 3 \\
+							1 & 3 & 4 \\
+							1 & 4 & 3
+						\end{matrix}
+						\right]
+				\end{equation*}
+
+				The adjoint matrix is the transposition of the cofactor matrix, so we must first find the cofactors.
+				\begin{align*}
+					c_{1,1} & = \left|\begin{matrix} 3 & 4 \\ 4 & 3 \end{matrix}\right| = -7  &
+					c_{1,2} & = \left|\begin{matrix} 4 & 1 \\ 3 & 1 \end{matrix}\right| = 1 \\
+					c_{1,3} & = \left|\begin{matrix} 1 & 3 \\ 1 & 4 \end{matrix}\right| = 1  &
+					c_{2,1} & = \left|\begin{matrix} 4 & 3 \\ 2 & 3 \end{matrix}\right| = 6 \\
+					c_{2,2} & = \left|\begin{matrix} 3 & 1 \\ 3 & 1 \end{matrix}\right| = 0  &
+					c_{2,3} & = \left|\begin{matrix} 1 & 4 \\ 1 & 2 \end{matrix}\right| = -2 \\
+					c_{3,1} & = \left|\begin{matrix} 2 & 3 \\ 3 & 4 \end{matrix}\right| = -1 &
+					c_{3,2} & = \left|\begin{matrix} 3 & 1 \\ 4 & 1 \end{matrix}\right| = -1 \\
+					c_{3,3} & = \left|\begin{matrix} 1 & 2 \\ 1 & 3 \end{matrix}\right| = 1
+				\end{align*}
+
+				Therefore the adjoint matrix of \(A\) is the transpose of the matrix defined by all \(c_{i,j}\).
+				\begin{equation*}
+					\Adj(A) = \left[ \begin{matrix}
+							-7 & 6  & -1 \\
+							1  & 0  & -1 \\
+							1  & -2 & 1
+						\end{matrix} \right]
+				\end{equation*}
+
+				In order to find \(A^{-1}\) using this, we can use the following equation.
+				\begin{align*}
+					A^{-1} & = |A|^{-1}\cdot \Adj(A) \\
+					       & = -\frac{1}{2}\Adj(A) \\
+					       & = \left[ \begin{matrix}
+							\frac{7}{2}  & -3 & \frac{1}{2}  \\[6pt]
+							-\frac{1}{2} & 0  & \frac{1}{2}  \\[6pt]
+							-\frac{1}{2} & 1  & -\frac{1}{2}
+						\end{matrix} \right]
+				\end{align*}
+		\end{enumerate}
+
+	\item
+		Let \(A\) and \(B\) be square invertible matrices of order \(n\).
+
+		\paragraph{Claim} \(\Adj(AB) = \Adj(A) \Adj(B)\)
+
+		\paragraph{Proof} We shall attempt to prove this using the formula which describes the relationship between adjoint matrices and inverse matrices.
+		\begin{align*}
+			A^{-1} = \frac{\Adj(A)}{|A|} &  & \Rightarrow &  & \Adj(A) = |A|A^{-1}
+		\end{align*}
+
+		We can now apply this to thr right hand side of our claim.
+		\begin{equation*}
+			\Adj(A) \Adj(B) = |A||B|A^{-1}B^{-1}
+		\end{equation*}
+
+		However, since \(|A||B| = |AB|\) and \(A^{-1}B^{-1} = (AB)^{-1}\), we can conclude that the above is equal to the following.
+		\begin{equation*}
+			\Adj(A) \Adj(B) = |AB|(AB)^{-1} = \Adj(AB)
+		\end{equation*}
+
+	\item[5.]
+		Let \(A\) be an invertible matrix whose entries are all integers and whose determinant is \(\pm1\).
+
+		\paragraph{Claim} All entries of \(A^{-1}\) are integers.
+
+		\paragraph{Lemma} All entries of \(\Adj(A)\) are integers.
+
+		\paragraph{Proof of Lemma} Each entry of \(\Adj(A)\) is a determinant of a submatrix of \(A\). Since each entry of \(A\) is an integer, and the determinant is calulated solely using multiplication and subtraction, both of which are functions that the integers are closed under, the result must be an integer, and so each entry of \(\Adj(A)\) must an integer as well.
+
+		\paragraph{Proof} Using this formula we can prove our claim as follows.
+		\begin{align*}
+			A^{-1} & = |A|^{-1}\cdot \Adj(A) \\
+			       & = (\pm1)^{-1}\Adj(A) = \pm\Adj(A)
+		\end{align*}
+		And due to our lemma, we know that this only contains integers.
+\end{answers}
+
+\end{document}
