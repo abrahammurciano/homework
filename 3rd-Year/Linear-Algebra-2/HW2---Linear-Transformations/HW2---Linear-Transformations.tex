@@ -1,0 +1,130 @@
+\documentclass{article}
+\usepackage{amsmath}    % math equation environments
+\usepackage{amssymb}    % math symbols such as natural numbers N.
+\usepackage{graphicx}
+
+\newenvironment{answers}{ % same as enumerate but with more space between each answer
+	\begin{enumerate}
+		\setlength{\itemsep}{\bigskipamount}
+}{\end{enumerate}}
+
+% paragraph indentation within enumerations
+\usepackage{enumitem}
+\setlist{parsep=4pt,listparindent=\parindent}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\st}{\text{ such that }}
+
+\title{Linear Algebra 2 \\
+\medskip
+\large Homework 2 -- Linear Transformations}
+\author{Abraham Murciano}
+
+\begin{document}
+
+\maketitle
+
+\begin{answers}
+
+	\item
+		Given the following transformations, we are tasked with determining their linearity.
+		\begin{enumerate}
+			\item[(b)]
+				\(T : \R^2 \to \R^2 \st T(x_1, x_2) = (2x_1 + |x_2|, -2x_2)\)
+
+				This transformation is not linear, since it does not satisfy \(T(c\vec{v}) = cT(\vec{v})\). A counter example is with \(c = -1\) and \(x_2 \neq 0\).
+				\begin{equation*}
+					-(2x_1 + |x_2|) = -2x_1 - |x_2| \neq -2x_1 + |x_2| = 2(-x_1) + |-x_2|
+				\end{equation*}
+
+			\item[(d)]
+				\(T : \R^3 \to \R \st T(x_1, x_2, x_3) = x_2\)
+
+				This is certainly a linear transformation since anything one adds or multiplies to \(x_1, x_2, x_3\) individually will obviously be applied to the result of the transformation, which is simply \(x_2\).
+
+			\item[(f)]
+				\(T : \C^2 \to \C^2 \st T(x_1, x_2) = (x_1 + ix_2, x_1 - 2ix_2)\)
+
+				This transformation is linear, since it preserves both vector addition and scalar multiplication.
+
+			\item[(h)]
+				\(T : \C \to \C \st T(z) = \overline{z}\) (as vector spaces over \(\C\))
+
+				This transformation is not linear as it does not preserve multiplication by a complex scalar. Take for example \(z = 1 + i\), whose conjugate \(\overline{z} = 1 - i\). However, \(T(iz) = \overline{iz} = \overline{i - 1} = -1 - i \neq i\overline{z} = i + 1\)
+
+			\item[(i)]
+				\(T : \C \to \C \st T(z) = \overline{z}\) (as vector spaces over \(\R\))
+
+				This transformation does preserve both multiplication by a scalar and vector addition, thus it is linear. This can be understood intuitively by recognising that the \(T\) is a reflection on the real axis, and scalar multiplication by a real number is a stretch away from 0. Thus it matters not the order in which one of each of these operations would be performed, for they would regardless conclude at the same point on the complex plain.
+
+				And regarding the preservation of vector addition, we may rely on the fact that \(\overline{z_1 + z_2} = \overline{z_1} + \overline{z_2}\).
+
+			\item[(k)]
+				\(T : \R^3 \to \R \st T(x_1, x_2, x_3) = x_1 + x_2 + \pi x_3\)
+
+				This transformation is trivially linear since both of the following hold true.
+				\begin{equation*}
+					(x_1 + x_2 + \pi x_3) + (y_1 + y_2 + \pi y_3) = (x_1 + y_1) + (x_2 + y_2) + \pi(x_3 + y_3)
+				\end{equation*}
+				\begin{equation*}
+					cx_1 + cx_2 + c\pi x_3 = c(x_1 + x_2 + \pi x_3)
+				\end{equation*}
+		\end{enumerate}
+
+	\item
+		\begin{enumerate}
+			\item[(c)]
+				We denote \(F[a,b]\) as the vector space over \(\R\) of all possible continuous functions from the interval \([a,b]\) to \(\R\). We must prove or disprove the linearity of the following transformation.
+				\begin{equation*}
+					T : F[-\pi,\pi] \to \R \st T(f) = f(0)
+				\end{equation*}
+
+				To show that this transformation is indeed linear, we must show that for any two functions \(f,g \in F[-\pi,\pi]\) our transformation preserves their addition. That is to say that \(T(f+g) = T(f) + T(g)\).
+
+				This is quite obviously true, since addition of functions is precisely defined as the addition of their evaluated outputs. That is, \((f+g)(0) = f(0) + g(0)\).
+
+				Similarly with regards to scalar multiplication of a function by a real number \(x\), this is defined as the multiplication of the function's evaluated output by said real number. Again, in our example, that means that \((xf)(0) = x \cdot f(0)\)
+		\end{enumerate}
+
+	\item
+		\begin{enumerate}
+			\item[(a)]
+				Given a linear transformation \(T\) and lines \(L_1\) and \(L_2\) defined below, we seek the images of the lines under the transformation.
+				\begin{gather*}
+					T: \R^2 \to \R^2 \st T(x_1, x_2) = (x_2, x_1) \\
+					L_1 = \{(x,y) : y - x = 0\} \\
+					L_2 = \{(x,y) : x + 3y = 0\}
+				\end{gather*}
+
+				By applying the transformation to each \((x,y)\), it simply makes \(x\) into \(y\) and vice versa. Therefore the images \(L'_1\) and \(L'_2\) of \(L_1\) and \(L_2\) respectively are the following.
+				\begin{gather*}
+					L'_1 = \{(x,y) : x - y = 0\} \\
+					L'_2 = \{(x,y) : y + 3x = 0\}
+				\end{gather*}
+		\end{enumerate}
+
+	\item
+		\begin{enumerate}
+			\item[(b)]
+				Letting \(T\) be a linear transformation over some field \(K\), we must either prove or disprove that if \(A = \{\vec{v}_1,\dots,\vec{v}_n\}\) is a linearly independent set, then so is \(B = \{T(\vec{v}_1),\dots,T(\vec{v}_n)\}\).
+
+				Consider the following as a counter-example.
+				\begin{gather*}
+					T: \R^2 \to \R \st T(x, y) = x \\
+					A = \{(1, 1), (2, 1)\} \Rightarrow B = \{1, 2\}
+				\end{gather*}
+
+				Here, \(A\) is clearly linearly independent since
+				\begin{equation*}
+					\nexists c \in \R,\st c \times 1 = 2 \land c \times 1 = 1
+				\end{equation*}
+
+				However, it is clear that \(B = \{1, 2\}\) is linearly dependent, since for \(c = 2\), we have \(c \times 1 = 2\).
+
+				It is worth noting however, that in the case where the transformation maps across vector spaces with the same basis, the claim would in fact stand true.
+		\end{enumerate}
+
+\end{answers}
+
+\end{document}
