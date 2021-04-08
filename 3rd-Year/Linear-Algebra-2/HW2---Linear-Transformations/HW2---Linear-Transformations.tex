@@ -15,6 +15,7 @@
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\st}{\text{ such that }}
+\newcommand{\img}{\operatorname{Im}}
 
 \title{Linear Algebra 2 \\
 \medskip
@@ -125,6 +126,59 @@
 				It is worth noting however, that in the case where the transformation maps across vector spaces with the same basis, the claim would in fact stand true.
 		\end{enumerate}
 
+	\item[6.]
+		We are given the following transformation.
+		\begin{equation*}
+			T: \R^3 \to \R^3 \st T(x, y, z) = (2x + 11y - 7z, -5y - 5z, 4x - 5y + 3z)
+		\end{equation*}
+		\begin{enumerate}
+			\item
+				We are tasked with finding the cartesian representation of the image of the plane \(P = \{(x,y,z):2x-y+z=1\}\) under \(T\).
+
+				Let the cartesian representation of \(\img P\) be the following.
+				\begin{equation}
+					ax'+by'+cz'=k \label{eq-1}
+				\end{equation}
+				We must now find \(a, b, c\) for some constant \(k\) that satisfies this equation.
+				\begin{equation}
+					(x', y', z') = T(x,y,z) \label{eq-2}
+				\end{equation}
+				By substituting equation \ref{eq-2} into \ref{eq-1}, we obtain this equation.
+				\begin{equation}
+					a(2x + 11y - 7z)+b(-5y - 5z)+c(4x - 5y + 3z)=k \label{eq-3}
+				\end{equation}
+				Now we can rearrange equation \ref{eq-3} into the following form.
+				\begin{equation}
+					(2a+4c)x+(11a-5b-5c)y+(-7a-5b+3c)z=k \label{eq-4}
+				\end{equation}
+
+				Next, we are able to choose any three triples \((x, y, z)\) which lie on the plane \(P\), which will, when substituted into equation \ref{eq-4}, give us a system of three equations with three unknowns. The points we shall use are \((0,0,1), (0, -1, 0)\) , and \((\frac{1}{2}, 0, 0)\); giving the following three equations.
+				\begin{align*}
+					-7a-5b+3c  & =k \\
+					-11a+5b+5c & =k \\
+					a+2c       & =k
+				\end{align*}
+
+				By forming a matrix and reducing it to echelon form, we obtain the following.
+				\begin{equation*}
+					\left[ \begin{matrix}
+							1 & 0 & 0 &                \\[6pt]
+							0 & 1 & 0 & -\frac{3}{55}k \\[6pt]
+							0 & 0 & 1 & \frac{5}{11}k
+						\end{matrix} \right]
+					\implies
+					\begin{cases}
+						a= \frac{1}{11} k \\
+						b= -\frac{3}{55}k \\
+						c= \frac{5}{11}k
+					\end{cases}
+				\end{equation*}
+
+				Finally, by selecting any arbitrary \(k\), let us say \(k=11\), we can have a cartesian representation for our transformed plane.
+				\begin{equation*}
+					x'+\frac{3}{5}y'+5z'=11
+				\end{equation*}
+		\end{enumerate}
 \end{answers}
 
 \end{document}
