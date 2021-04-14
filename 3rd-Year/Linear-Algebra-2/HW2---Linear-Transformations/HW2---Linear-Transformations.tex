@@ -129,7 +129,7 @@
 	\item[6.]
 		We are given the following transformation.
 		\begin{equation*}
-			T: \R^3 \to \R^3 \st T(x, y, z) = (2x + 11y - 7z, -5y - 5z, 4x - 5y + 3z)
+			T: \R^3 \to \R^3 \st T(x, y, z) = (2x - 11y - 7z, -5y - 5z, 4x - 5y + 3z)
 		\end{equation*}
 		\begin{enumerate}
 			\item
@@ -145,38 +145,38 @@
 				\end{equation}
 				By substituting equation \ref{eq-2} into \ref{eq-1}, we obtain this equation.
 				\begin{equation}
-					a(2x + 11y - 7z)+b(-5y - 5z)+c(4x - 5y + 3z)=k \label{eq-3}
+					a(2x - 11y - 7z)+b(-5y - 5z)+c(4x - 5y + 3z)=k \label{eq-3}
 				\end{equation}
 				Now we can rearrange equation \ref{eq-3} into the following form.
 				\begin{equation}
-					(2a+4c)x+(11a-5b-5c)y+(-7a-5b+3c)z=k \label{eq-4}
+					(2a+4c)x+(-11a-5b-5c)y+(-7a-5b+3c)z=k \label{eq-4}
 				\end{equation}
 
-				Next, we are able to choose any three triples \((x, y, z)\) which lie on the plane \(P\), which will, when substituted into equation \ref{eq-4}, give us a system of three equations with three unknowns. The points we shall use are \((0,0,1), (0, -1, 0)\) , and \((\frac{1}{2}, 0, 0)\); giving the following three equations.
+				Next, we are able to choose any three triples \((x, y, z)\) which lie on the plane \(P\), which will, when substituted into equation \ref{eq-4}, give us a system of three equations with three unknowns. The points we shall use are \((0,0,1), (1,2,1)\) , and \((\frac{1}{2}, 0, 0)\); giving the following three equations.
 				\begin{align*}
-					-7a-5b+3c  & =k \\
-					-11a+5b+5c & =k \\
-					a+2c       & =k
+					-7a-5b+3c    & =k \\
+					-27a-15b-11c & =k \\
+					a+2c         & =k
 				\end{align*}
 
 				By forming a matrix and reducing it to echelon form, we obtain the following.
 				\begin{equation*}
 					\left[ \begin{matrix}
-							1 & 0 & 0 &                \\[6pt]
-							0 & 1 & 0 & -\frac{3}{55}k \\[6pt]
-							0 & 0 & 1 & \frac{5}{11}k
+							1 & 0 & 0 & 2k              \\[6pt]
+							0 & 1 & 0 & -\frac{33}{10}k \\[6pt]
+							0 & 0 & 1 & -\frac{1}{2}k
 						\end{matrix} \right]
 					\implies
 					\begin{cases}
-						a= \frac{1}{11} k \\
-						b= -\frac{3}{55}k \\
-						c= \frac{5}{11}k
+						a= 2 k             \\
+						b= -\frac{33}{10}k \\
+						c= -\frac{1}{2}k
 					\end{cases}
 				\end{equation*}
 
-				Finally, by selecting any arbitrary \(k\), let us say \(k=11\), we can have a cartesian representation for our transformed plane.
+				Finally, by selecting any arbitrary \(k\), let us say \(k=10\), we can have a cartesian representation for our transformed plane.
 				\begin{equation*}
-					x'+\frac{3}{5}y'+5z'=11
+					20x'-33y'-5z'=10
 				\end{equation*}
 
 			\item
