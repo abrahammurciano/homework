@@ -1,0 +1,64 @@
+\documentclass{article}
+\usepackage{amsmath}    % math equation environments
+\usepackage{amssymb}    % math symbols such as natural numbers N.
+\usepackage{graphicx}
+
+\newenvironment{answers}{ % same as enumerate but with more space between each answer
+	\begin{enumerate}
+		\setlength{\itemsep}{\bigskipamount}
+}{\end{enumerate}}
+
+% paragraph indentation within enumerations
+\usepackage{enumitem}
+\setlist{parsep=4pt,listparindent=\parindent}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\st}{\text{ such that }}
+\newcommand{\img}{\operatorname{Im}}
+
+\title{Linear Algebra 2 \\
+\medskip
+\large Homework 3 -- Linear Transformations II}
+\author{Abraham Murciano}
+
+\begin{document}
+
+\maketitle
+
+\begin{answers}
+
+	\item
+		For the following transformations, our task is to find their matrix representation using standard bases, if the transformation is linear.
+		\begin{enumerate}
+			\item[(b)]
+				\(T : \R^2 \to \R^2 \st T(x, y) = (2x + |y|, -2y)\)
+
+				This transformation is not linear.
+
+			\item[(d)]
+				\(T : \R^3 \to \R \st T(x, y, z) = y\)
+
+				Since \(T\) maps from \(\R^3\) to \(\R\), the matrix must have dimensions such that when mutiplying it by a vector in \(\R^3\), the result must be in \(\R\). Therefore its dimensions must be three by one. And since we are only interested in the result containing \(y\), we can use the following matrix which multiplies any input vector \((x, y, z)\) as follows.
+				\begin{equation*}
+					\left[ \begin{matrix}
+							0 & 1 & 0
+						\end{matrix} \right]
+					\times
+					\left[ \begin{matrix}
+							x \\ y \\ z
+						\end{matrix} \right]
+					=
+					\left[ \begin{matrix}
+							y
+						\end{matrix} \right]
+				\end{equation*}
+
+			\item[(g)]
+				\(T : \C^2 \to \C^2 \st T(z_1, z_2) = (|z_1 + z_2|, z_1 - 2z_2)\) where \(\C^2\) is a vector space over \(\C\).
+
+				This is not a linear transformation either.
+		\end{enumerate}
+\end{answers}
+
+\end{document}
