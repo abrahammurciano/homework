@@ -2,4 +2,4 @@
 
 # print the names of everyone currently on the system
 
-who | awk '{print($1)}' | uniq
+who | cut -f1 -d' ' | uniq
