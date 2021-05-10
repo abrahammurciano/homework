@@ -110,9 +110,64 @@
 		\begin{enumerate}
 			\item
 				\(T\) cannot be one to one, since we shall show in part (c) that it is onto. And if it would be both one to one and onto, then it would be invertible, which is impossible since the range and domain have different dimensions.
+
 			\item
+				Since the transformation is onto, the dimension of the image is two. Therefore the dimension of the kernel is \(4-2=2\). So it suffices to find two independent vectors in \(\ker T\), and those will form a basis.
+
+				To find these, we can treat the matrix as a homogeneous one, to indicate that \(T(x_1, x_2, x_3, x_4) = (0, 0)\), then row reduce it to reduced row echelon form.
+				\begin{equation*}
+					\left[ \begin{matrix}
+							1 & 0 & \frac{5}{4} & \frac{7}{4} \\[6pt]
+							0 & 1 & \frac{7}{4} & \frac{9}{4}
+						\end{matrix} \right]
+				\end{equation*}
+
+				This gives us the following system of equations which holds when \([T]\vec{x} = (0,0)\).
+				\begin{gather*}
+					x = -\frac{5}{4}x_3 - \frac{7}{4}x_4 \\
+					y = -\frac{7}{4}x_3 - \frac{9}{4}x_4
+				\end{gather*}
+
+				In matrix form, this equation can be written like this.
+				\begin{equation*}
+					\vec{x} = \left[\begin{matrix}
+							x_1 \\ x_2 \\ x_3 \\ x_4
+						\end{matrix} \right]
+					= \left[ \begin{matrix}
+							-\frac{5}{4}x_3 - \frac{7}{4}x_4 \\[6pt] -\frac{7}{4}x_3 - \frac{9}{4}x_4 \\ x_3 \\ x_4
+						\end{matrix} \right]
+					= \left[ \begin{matrix}
+							-\frac{5}{4} \\[6pt] -\frac{7}{4} \\ 1 \\ 0
+						\end{matrix} \right]x_3 + \left[ \begin{matrix}
+							- \frac{7}{4} \\[6pt] - \frac{9}{4} \\ 0 \\ 1 \end{matrix} \right]x_4
+				\end{equation*}
+
+				This means that for all \(x_3, x_4 \in \R\), we can find some vector \(\vec{x} \in \ker T\) according to the previous equation. Therefore if we choose \(x_3 = 1, x_4 = 0\) we get one vector in the kernel, \((-\frac{5}{4}, -\frac{7}{4}, 1, 0)\). And choosing \(x_3 = 0, x_4 = 1\) gives us another vector in the kernel, \((- \frac{7}{4}, - \frac{9}{4}, 0, 1)\). Since these are independent, they form a basis for the kernel.
+
 			\item
-				\(T\) must be onto, since at two of the vectors in its image, for example \((1, -2)\) and \((1, 2)\), span the entire range \(\R^2\), since they are linearly independent.
+				\(T\) must be onto, since two of the vectors in its image, for example \((1, -2)\) and \((1, 2)\), span the entire range \(\R^2\), since they are linearly independent.
+		\end{enumerate}
+
+	\item[5.]
+		\begin{enumerate}
+			\item[(b)]
+				Given the transformation \(T : \C^2 \to \C^2\) over the vector space \(\C\) represented by the matrix below, we are tasked with proving that it is invertible, and we seek the inverse transformation matrix.
+				\begin{equation*}
+					[T] = \left[ \begin{matrix}
+							i & 2i \\
+							2 & i
+						\end{matrix} \right]
+				\end{equation*}
+
+				A linear transformation is invertible if and only if its transformation matrix is invertible. And a transformation matrix is invertible if and only if its determinant is not zero.
+				\begin{equation*}
+					\det [T] = i \times i - 2 \times 2i = i^2 - 4i = -1 - 4i \neq 0
+				\end{equation*}
+				\begin{equation*}
+					\left[ T^{-1} \right] = [T]^{-1}
+					= \frac{1}{-1-4i}\left[ \begin{matrix} i & -2i \\ -2 & i \end{matrix} \right]
+					= \frac{4i-1}{17}\left[ \begin{matrix} i & -2i \\ -2 & i \end{matrix} \right]
+				\end{equation*}
 		\end{enumerate}
 \end{answers}
 
