@@ -216,6 +216,54 @@
 					         & = T(zw)
 				\end{align*}
 		\end{enumerate}
+
+	\item[10.]
+		\begin{enumerate}
+			\item[(b)]
+				There does not exist a unique linear transformation \(T : \R^2 \to \R^2\) such that \(T(1, 2) = (1, 1)\), \(T(1, -1) = (2, -1)\), and \(T(1, -7) = (8, -5)\).
+
+				To prove this, let \([T]\) be defined as follows.
+				\begin{equation*}
+					[T] := \left[ \begin{matrix}
+							a & b \\ c & d
+						\end{matrix} \right]
+				\end{equation*}
+				With the above constraints we can form the following equations by multiplying the above matrix by the given input vectors and setting the result to the given output vectors.
+				\begin{align*}
+					a + 2b & = 1  &
+					c + 2d & = 1 \\
+					a - b  & = 2  &
+					c - d  & = -1 \\
+					a - 7b & = 8  &
+					c - 7d & = -5
+				\end{align*}
+				Using the first two equations on the left, we can conclude that \(a = \frac{5}{3}\) and \(b = -\frac{1}{3}\). Similarly, using the first two equations on the right we obtain \(c = -\frac{1}{3}\) and \(d = \frac{2}{3}\).
+
+				However, the last equation on the left does not fit with the calculated values for \(a\) and \(b\), therefore we must conclude that there exists no such linear transformation \(T\).
+
+			\item[(d)]
+				There does not exist a unique linear transformation \(T : M_2(\R) \to \R^3\) such that
+				\begin{equation*}
+					T\left( \left[ \begin{matrix} 1 & 0 \\ 0 & 0 \end{matrix} \right] \right) = (1, 2, 3)\quad \land\quad T\left( \left[ \begin{matrix} 0 & 1 \\ 0 & 0 \end{matrix} \right] \right) = (1, 2, 3)
+				\end{equation*}
+
+				These two constraints cannot be enough to uniquely define \(T\), since they are only defined on two elements in \(M_2(\R)\).Yet in order to uniquely define \(T\), we must define it on a basis of the domain, which has a dimension of four. Therefore two elements are not enough, so \(T\) is not unique.
+
+			\item[(h)]
+				There exists a unique linear transformation \(T : \R^3 \to \R^3\) such that the image of the plane \(P = \{(2,2,1) + s(1,1,1) + t(1,4,0)\}\) is the point \((0,3,1)\).
+
+				For \(T\) to meet these constraints, the following must hold true.
+				\begin{equation*}
+					\forall s,t \in \R,\ T((2,2,1) + s(1,1,1) + t(1,4,0)) = (0,3,1)
+				\end{equation*}
+				By linearity of \(T\), we can then say the following.
+				\begin{equation*}
+					\forall s,t \in \R,\ T(2,2,1) + s + tT(1,4,0) = (0,3,1)
+				\end{equation*}
+				Yet this can only be true if \(T(1,1,1) = T(1,4,0) = (0,0,0)\) and \(T(2,2,1) = (0,3,1)\).
+
+				Thus we have defined \(T\) on three vectors in \(\R^3\), and these form a basis over \(\R^3\), since there are as many of them as the dimension and they are independent. Hence we conclude that \(T\) is indeed unique.
+		\end{enumerate}
 \end{answers}
 
 \end{document}
