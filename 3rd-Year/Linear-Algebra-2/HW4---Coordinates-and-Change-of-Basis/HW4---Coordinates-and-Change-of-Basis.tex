@@ -1,0 +1,57 @@
+\documentclass{article}
+\usepackage{amsmath}    % math equation environments
+\usepackage{amssymb}    % math symbols such as natural numbers N.
+
+\newenvironment{answers}{ % same as enumerate but with more space between each answer
+	\begin{enumerate}
+		\setlength{\itemsep}{\bigskipamount}
+}{\end{enumerate}}
+
+% paragraph indentation within enumerations
+\usepackage{enumitem}
+\setlist{parsep=4pt,listparindent=\parindent}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\st}{\text{ such that }}
+
+\title{Linear Algebra 2 \\
+\medskip
+\large Homework 4 -- Coordinates and Change of Basis}
+\author{Abraham Murciano}
+
+\begin{document}
+
+\maketitle
+
+Throughout this document, \(E = (e_1, e_2, \dots, e_n)\) shall denote the standard basis of \(\R^n\) or \(\C^n\), as appropriate according to the context in which it is used.
+
+\begin{answers}
+
+	\item
+	We are given the transformation \(T : \R^2 \to \R^2 \st T(x,y) = (2x-y, x-3y)\).
+
+	\begin{enumerate}
+		\item
+		      To find \([T]^E_E\), we simply construct a matrix whose column vectors are the transformation of each of the elements in the standard basis.
+		      \begin{equation*}
+			      \left[ \begin{matrix}
+					      \left( \begin{matrix}
+						      \\ T(e_1) \\ {}
+					      \end{matrix} \right) &
+					      \left( \begin{matrix}
+						      \\ T(e_2) \\ {}
+					      \end{matrix} \right)
+				      \end{matrix} \right]
+			      = \left[ \begin{matrix}
+					      2 & -1 \\
+					      1 & -3
+				      \end{matrix} \right]
+		      \end{equation*}
+		\item
+		      To find \([T]^B_C\), where \(B = ((1,1), (2,5))\) and \(C=((2,2), (0,1))\),
+	\end{enumerate}
+
+\end{answers}
+
+\end{document}
