@@ -5,15 +5,6 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"type": "bashdb",
-			"request": "launch",
-			"name": "Bash-Debug (hardcoded script name)",
-			"cwd": "${workspaceFolder}",
-			"program": "${file}",
-			"args": [],
-			"terminalKind": "integrated"
-		},
-		{
 			"type": "java",
 			"name": "CodeLens (Launch) - AgglomerativeClusteringTest",
 			"request": "launch",
