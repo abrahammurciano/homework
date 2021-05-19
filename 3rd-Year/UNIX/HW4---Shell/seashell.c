@@ -24,7 +24,7 @@ int main() {
 		char* command = NULL;
 		size_t size = 0;
 		getline(&command, &size, stdin);
-		if (strcmp(command, "Quit") == 0) {
+		if (strcmp(command, "quit\n") == 0) {
 			return 0;
 		}
 		execute(command);

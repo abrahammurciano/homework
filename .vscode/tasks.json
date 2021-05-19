@@ -40,10 +40,7 @@
 			"label": "C/C++: gcc build active folder",
 			"command": "/usr/bin/gcc",
 			"args": [
-				"-g",
-				"${fileDirname}/*.c",
-				"-o",
-				"${fileDirname}/a.out"
+				"*.c"
 			],
 			"options": {
 				"cwd": "${fileDirname}"
