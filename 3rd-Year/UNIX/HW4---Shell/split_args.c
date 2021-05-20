@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 // Given a string and some delimiters, return the number of non-empty character sequences which do not contain any of the characters in delim.
-int count_tok(char* string, const char* delim) {
+int counttok(char* string, const char* delim) {
 	int count = 0;
 	int is_delim = (strchr(delim, string[0]) == NULL); // is the current char a delimiter
 
@@ -25,7 +25,7 @@ int count_tok(char* string, const char* delim) {
 
 char** split_args(char* command) {
 	const char* delim = " \t\r\n";
-	int size = count_tok(command, delim) + 1;
+	int size = counttok(command, delim) + 1;
 	char** words = malloc(size * sizeof(char*));
 	words[size - 1] = NULL;
 
