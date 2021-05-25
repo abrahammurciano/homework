@@ -34,7 +34,7 @@ string infixToPostfix(string exp) {
 				(str += '0') += ' ';
 			} else {
 				while (!stack.empty() && (stack.top() == '+' || stack.top() == '-' ||
-										  stack.top() == '*' || stack.top() == '/')) {
+					stack.top() == '*' || stack.top() == '/')) {
 					(str += stack.top()) += ' ';
 					stack.pop();
 				}
@@ -91,7 +91,7 @@ int calcPostfix(const string& exp) {
 			float left = stack.top();
 			stack.pop();
 			stack.push(c == '+' ? left + right
-								: c == '-' ? left - right : c == '*' ? left * right : left / right);
+				: c == '-' ? left - right : c == '*' ? left * right : left / right);
 		}
 	}
 	return stack.top();
