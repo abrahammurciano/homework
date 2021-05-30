@@ -32,52 +32,19 @@ void prompt() {
 	fflush(stdout);
 }
 
-// Given a directory and a filename, return the full path if the directory contains the file, or NULL otherwise. The returned string must be freed with free.
-char* file_exists(const char* dir, const char* file) {
-	struct stat buffer;
-	int size = strlen(dir) + strlen(file) + 2;
-	char* path = malloc(size);
-	snprintf(path, size, "%s/%s", dir, file);
-	if (stat(path, &buffer) == 0) {
-		return path;
-	} else {
-		free(path);
-		return NULL;
-	};
-}
-
-// Given a program name, it searches the path and returns the full path to said program (including the program name at the end). The returned string must be freed with free.
-char* find_path(const char* program) {
-	int size = strlen(getenv("PATH")) + 1;
-	char* path = malloc(size);
-	snprintf(path, size, "%s", getenv("PATH"));
-	char* full_filename = NULL;
-	for (char* dir = strtok(path, ":"); dir; dir = strtok(NULL, ":")) {
-		struct stat buffer;
-		full_filename = file_exists(dir, program);
-		if (full_filename) {
-			break;
-		}
-	}
-	free(path);
-	return full_filename;
-}
-
 // Given a space separated string called command, it searches the path for the program whose name is the first word of command and executes it, passing the rest of the words as arguments.
 int execute(char* command) {
 	char** argv = split_args(command);
-	char* path = find_path(argv[0]);
 	int exit_code;
 
 	pid_t child_pid = fork();
 	if (child_pid == 0) {
-		execv(path, argv);
+		execvp(argv[0], argv);
 		colour_print(RED, 1, "seashell: Program not found\n");
 		exit_code = 0;
 	} else {
 		waitpid(child_pid, &exit_code, 0);
 	}
-	free(path);
 	return exit_code;
 }
 
