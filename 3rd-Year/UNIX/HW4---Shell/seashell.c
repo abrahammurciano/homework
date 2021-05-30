@@ -7,7 +7,8 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include "colour.h"
-#include "split_args.h"
+#include "split.h"
+#include "process.h"
 
 // Print a welcome message.
 void welcome() {
@@ -32,20 +33,41 @@ void prompt() {
 	fflush(stdout);
 }
 
-// Given a space separated string called command, it searches the path for the program whose name is the first word of command and executes it, passing the rest of the words as arguments.
-int execute(char* command) {
-	char** argv = split_args(command);
-	int exit_code;
+// Given an array of commands, this function executes them, piping each one to the next, then returns the exit code of the last one.
+int execute_piped(char** commands, int count) {
+	struct process* children = malloc(count * sizeof(struct process));
+	children[count - 1].in_file = 0;
+	children[0].out_file = 1;
 
-	pid_t child_pid = fork();
-	if (child_pid == 0) {
-		execvp(argv[0], argv);
-		colour_print(RED, 1, "seashell: Program not found\n");
-		exit_code = 0;
-	} else {
-		waitpid(child_pid, &exit_code, 0);
+	for (int i = 0; i < count - 1; ++i) {
+		pipe(&children[i].in_file);
 	}
+
+	for (int i = count - 1; i >= 0; --i) {
+		char** argv = split(commands[count - i - 1], " \t\r\n", NULL);
+		children[i].pid = fork();
+		if (children[i].pid == 0) {
+			dup2(children[i].in_file, 0);
+			dup2(children[i].out_file, 1);
+			// TODO: close pipes https://stackoverflow.com/questions/33884291/pipes-dup2-and-exec
+			execvp(argv[0], argv);
+			colour_print(RED, 1, "seashell: Program not found\n");
+			children[i].exit_code = 0;
+		} else {
+			waitpid(children[i].pid, &children[i].exit_code, 0);
+		}
+	}
+
+	int exit_code = children[0].exit_code;
+	free(children);
 	return exit_code;
+}
+
+// Given a string representing a command, it executes the command and returns the exit code.
+int execute(char* command) {
+	int count;
+	char** commands = split(command, "|", &count);
+	execute_piped(commands, count);
 }
 
 int main() {
