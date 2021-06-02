@@ -40,7 +40,7 @@ int execute_piped(char** commands, int count) {
 	children[0].out_file = 1;
 
 	for (int i = 0; i < count - 1; ++i) {
-		pipe(&children[i].in_file);
+		pipe((int*)&children[i].in_file);
 	}
 
 	for (int i = count - 1; i >= 0; --i) {
@@ -49,11 +49,14 @@ int execute_piped(char** commands, int count) {
 		if (children[i].pid == 0) {
 			dup2(children[i].in_file, 0);
 			dup2(children[i].out_file, 1);
-			// TODO: close pipes https://stackoverflow.com/questions/33884291/pipes-dup2-and-exec
+			close(children[i].in_file);
+			close(children[i].out_file);
 			execvp(argv[0], argv);
 			colour_print(RED, 1, "seashell: Program not found\n");
 			children[i].exit_code = 0;
 		} else {
+			close(children[i].in_file);
+			close(children[i].out_file);
 			waitpid(children[i].pid, &children[i].exit_code, 0);
 		}
 	}
@@ -67,7 +70,7 @@ int execute_piped(char** commands, int count) {
 int execute(char* command) {
 	int count;
 	char** commands = split(command, "|", &count);
-	execute_piped(commands, count);
+	return execute_piped(commands, count);
 }
 
 int main() {
