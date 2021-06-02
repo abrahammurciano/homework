@@ -47,16 +47,12 @@ int execute_piped(char** commands, int count) {
 		char** argv = split(commands[count - i - 1], " \t\r\n", NULL);
 		children[i].pid = fork();
 		if (children[i].pid == 0) {
-			dup2(children[i].in_file, 0);
-			dup2(children[i].out_file, 1);
-			close(children[i].in_file);
-			close(children[i].out_file);
+			route_pipes(children[i]);
 			execvp(argv[0], argv);
 			colour_print(RED, 1, "seashell: Program not found\n");
 			children[i].exit_code = 0;
 		} else {
-			close(children[i].in_file);
-			close(children[i].out_file);
+			close_pipes(children[i]);
 			waitpid(children[i].pid, &children[i].exit_code, 0);
 		}
 	}
@@ -80,6 +76,9 @@ int main() {
 		char* command = NULL;
 		size_t size = 0;
 		getline(&command, &size, stdin);
+		if (command[0] == '\n') {
+			return 0;
+		}
 		if (strcmp(command, "exit\n") == 0) {
 			return 0;
 		}
