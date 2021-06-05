@@ -7,7 +7,8 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include "colour.h"
-#include "split_args.h"
+#include "split.h"
+#include "process.h"
 
 // Print a welcome message.
 void welcome() {
@@ -32,53 +33,40 @@ void prompt() {
 	fflush(stdout);
 }
 
-// Given a directory and a filename, return the full path if the directory contains the file, or NULL otherwise. The returned string must be freed with free.
-char* file_exists(const char* dir, const char* file) {
-	struct stat buffer;
-	int size = strlen(dir) + strlen(file) + 2;
-	char* path = malloc(size);
-	snprintf(path, size, "%s/%s", dir, file);
-	if (stat(path, &buffer) == 0) {
-		return path;
-	} else {
-		free(path);
-		return NULL;
-	};
-}
+// Given an array of commands, this function executes them, piping each one to the next, then returns the exit code of the last one.
+int execute_piped(char** commands, int count) {
+	struct process* children = malloc(count * sizeof(struct process));
+	children[count - 1].in_file = 0;
+	children[0].out_file = 1;
 
-// Given a program name, it searches the path and returns the full path to said program (including the program name at the end). The returned string must be freed with free.
-char* find_path(const char* program) {
-	int size = strlen(getenv("PATH")) + 1;
-	char* path = malloc(size);
-	snprintf(path, size, "%s", getenv("PATH"));
-	char* full_filename = NULL;
-	for (char* dir = strtok(path, ":"); dir; dir = strtok(NULL, ":")) {
-		struct stat buffer;
-		full_filename = file_exists(dir, program);
-		if (full_filename) {
-			break;
+	for (int i = 0; i < count - 1; ++i) {
+		pipe((int*)&children[i].in_file);
+	}
+
+	for (int i = count - 1; i >= 0; --i) {
+		char** argv = split(commands[count - i - 1], " \t\r\n", NULL);
+		children[i].pid = fork();
+		if (children[i].pid == 0) {
+			route_pipes(children[i]);
+			execvp(argv[0], argv);
+			colour_print(RED, 1, "seashell: Program not found\n");
+			children[i].exit_code = 0;
+		} else {
+			close_pipes(children[i]);
+			waitpid(children[i].pid, &children[i].exit_code, 0);
 		}
 	}
-	free(path);
-	return full_filename;
+
+	int exit_code = children[0].exit_code;
+	free(children);
+	return exit_code;
 }
 
-// Given a space separated string called command, it searches the path for the program whose name is the first word of command and executes it, passing the rest of the words as arguments.
+// Given a string representing a command, it executes the command and returns the exit code.
 int execute(char* command) {
-	char** argv = split_args(command);
-	char* path = find_path(argv[0]);
-	int exit_code;
-
-	pid_t child_pid = fork();
-	if (child_pid == 0) {
-		execv(path, argv);
-		colour_print(RED, 1, "seashell: Program not found\n");
-		exit_code = 0;
-	} else {
-		waitpid(child_pid, &exit_code, 0);
-	}
-	free(path);
-	return exit_code;
+	int count;
+	char** commands = split(command, "|", &count);
+	return execute_piped(commands, count);
 }
 
 int main() {
@@ -88,6 +76,9 @@ int main() {
 		char* command = NULL;
 		size_t size = 0;
 		getline(&command, &size, stdin);
+		if (command[0] == '\n') {
+			return 0;
+		}
 		if (strcmp(command, "exit\n") == 0) {
 			return 0;
 		}

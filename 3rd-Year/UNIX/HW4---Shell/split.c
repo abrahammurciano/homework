@@ -1,9 +1,8 @@
-#include "split_args.h"
+#include "split.h"
 #include <stddef.h>
 #include <string.h>
 #include <stdlib.h>
 
-// Given a string and some delimiters, return the number of non-empty character sequences which do not contain any of the characters in delim.
 int counttok(char* string, const char* delim) {
 	int count = 0;
 	int is_delim = (strchr(delim, string[0]) == NULL); // is the current char a delimiter
@@ -23,9 +22,11 @@ int counttok(char* string, const char* delim) {
 	return count;
 }
 
-char** split_args(char* command) {
-	const char* delim = " \t\r\n";
+char** split(char* command, char* delim, int* count) {
 	int size = counttok(command, delim) + 1;
+	if (count != NULL) {
+		*count = size;
+	}
 	char** words = malloc(size * sizeof(char*));
 	words[size - 1] = NULL;
 
