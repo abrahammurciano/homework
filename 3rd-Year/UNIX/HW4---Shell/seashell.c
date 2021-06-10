@@ -40,7 +40,7 @@ int execute_piped(char** commands, int count) {
 	children[0].out_file = 1;
 
 	for (int i = 0; i < count - 1; ++i) {
-		pipe((int*)&children[i].in_file);
+		pipe(&children[i].in_file);
 	}
 
 	for (int i = count - 1; i >= 0; --i) {
