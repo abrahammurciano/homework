@@ -1,0 +1,14 @@
+{
+	"name": "Jack Stein",
+	"courses": {
+		"science": {
+			"math": 80,
+			"physics": 80,
+			"chemistry": 80
+		},
+		"social": {
+			"psychology": 50,
+			"history": 50
+		}
+	}
+}
