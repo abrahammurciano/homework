@@ -51,6 +51,21 @@
         "types.h": "c",
         "stdlib.h": "c",
         "stdint.h": "c",
-        "stdint-gcc.h": "c"
+        "stdint-gcc.h": "c",
+        "*.tcc": "c",
+        "bitset": "c",
+        "algorithm": "c",
+        "memory": "c",
+        "random": "c",
+        "fstream": "c",
+        "iosfwd": "c",
+        "iostream": "c",
+        "istream": "c",
+        "numeric": "c",
+        "ostream": "c",
+        "ratio": "c",
+        "sstream": "c",
+        "streambuf": "c",
+        "valarray": "c"
     },
 }
