@@ -17,6 +17,13 @@ int main()
     int baseSize;
     printf("Enter the size of the diamond: ");
     scanf("%d", &baseSize);
+
+    if (baseSize < 0)
+    {
+        printf("Number cannot be negative.\n");
+        return 1;
+    }
+
     PrintDiamond(baseSize, '*');
     return 0;
 }
