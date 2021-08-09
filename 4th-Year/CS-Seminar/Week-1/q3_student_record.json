@@ -1,0 +1,29 @@
+{
+	"name": "Jack Stein",
+	"courses": {
+		"science": {
+			"math": {
+				"grade": 80,
+				"credits": 6
+			},
+			"physics": {
+				"grade": 80,
+				"credits": 6
+			},
+			"chemistry": {
+				"grade": 80,
+				"credits": 3
+			}
+		},
+		"social": {
+			"psychology": {
+				"grade": 50,
+				"credits": 5
+			},
+			"history": {
+				"grade": 50,
+				"credits": 3
+			}
+		}
+	}
+}

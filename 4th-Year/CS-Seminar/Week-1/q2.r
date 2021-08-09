@@ -1,6 +1,6 @@
 library("rjson")
 
-student_record <- fromJSON(file = "student_record.json")
+student_record <- fromJSON(file = "q2_student_record.json")
 
 cat(paste(
     student_record[["name"]], "had an average of",

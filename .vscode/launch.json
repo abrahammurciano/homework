@@ -9,7 +9,6 @@
 			"name": "Debug R-File",
 			"request": "launch",
 			"debugMode": "file",
-			"workingDirectory": "${fileDirname}",
 			"file": ""
 		},
 		{

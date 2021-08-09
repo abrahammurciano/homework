@@ -1,8 +1,3 @@
-input <- function(prompt = "") {
-    cat(prompt)
-    return(readLines("stdin", n = 1))
-}
-
 name <- readline(prompt = "Name: ")
 science <- c(
     math = as.integer(readline(prompt = "Math: ")),
