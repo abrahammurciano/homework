@@ -45,7 +45,12 @@
     "C_Cpp.vcFormat.wrap.preserveBlocks": "never",
     "editor.stickyTabStops": true,
     "files.associations": {
+        "*.pl": "prolog",
+        "*.agn": "lua",
+        "*.rmd": "markdown",
         "types.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "stdint.h": "c",
+        "stdint-gcc.h": "c"
     },
 }
