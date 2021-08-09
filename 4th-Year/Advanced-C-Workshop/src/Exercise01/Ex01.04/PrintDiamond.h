@@ -9,6 +9,9 @@
  *
  */
 
+#ifndef PrintDiamond_h
+#define PrintDiamond_h
+
 typedef unsigned int uint;
 
 /**
@@ -18,3 +21,5 @@ typedef unsigned int uint;
  * @param symbol The symbol to use to make the diamond.
  */
 void PrintDiamond(uint baseSize, char symbol);
+
+#endif // !PrintDiamond_h
