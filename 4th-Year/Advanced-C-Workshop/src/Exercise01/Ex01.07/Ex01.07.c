@@ -8,3 +8,33 @@
  * @copyright Copyright (c) 2021
  *
  */
+
+#include <stdbool.h>
+#include <stdio.h>
+#include "stack.h"
+
+int main()
+{
+    stack *s = create_stack();
+    int value;
+    while (true)
+    {
+        printf("Enter a number: ");
+        scanf("%d", &value);
+        if (value == 0)
+        {
+            break;
+        }
+        push(s, value);
+    }
+
+    printf("The numbers in reverse order are:\n");
+
+    while (pop(s, &value))
+    {
+        printf("%d ", value);
+    }
+    printf("\n");
+    destroy_stack(s);
+    return 0;
+}

@@ -21,7 +21,7 @@
 typedef struct node
 {
     int value;
-    node *next;
+    struct node *next;
 } node;
 
 /**
@@ -37,7 +37,7 @@ typedef struct stack
  *
  * @return stack The stack that was created.
  */
-stack create_stack();
+stack *create_stack();
 
 /**
  * @brief Destroy a stack object.
@@ -49,18 +49,19 @@ void destroy_stack(stack *s);
 /**
  * @brief Push a value onto the top of the stack.
  *
+ * @param s The stack to push a value to.
  * @param value The value to push onto the stack.
- * @return true if the value was pushed onto the stack successfully, false if a node was unable to be allocated.
  */
-bool push(int value);
+void push(stack *s, int value);
 
 /**
  * @brief Pop a value from the top of the stack.
  *
+ * @param s The stack to pop a value from.
  * @param value A pointer to where the popped value will be stored.
  * @return true if there was a value to pop, or false if the stack was empty.
  */
-bool pop(int *value);
+bool pop(stack *s, int *value);
 
 /**
  * @brief Check if the stack is empty.
@@ -68,6 +69,6 @@ bool pop(int *value);
  * @param s The stack to be checked.
  * @return true if there are no elements in the stack, or false if there are.
  */
-bool is_empty(stack s);
+bool is_empty(const stack *s);
 
 #endif // !stack_h
