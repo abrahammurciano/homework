@@ -13,16 +13,16 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "ForEachLine.h"
+#include "ForEachChar.h"
 
  /**
-  * @brief Echoes back to the console a given line.
+  * @brief Echoes back to the console a given character.
   *
-  * @param line The line to be echoed back.
+  * @param c The character to be echoed back.
   */
-void EchoLine(char *line)
+void EchoChar(char c)
 {
-    printf("You entered:\n%s", line);
+    printf("You entered:\n%c\n", c);
 }
 
 /**
@@ -32,6 +32,6 @@ void EchoLine(char *line)
  */
 int main()
 {
-    ForEachLine("Enter a string:\n", EchoLine, 'q');
+    ForEachChar("Enter a character:\n", EchoChar, 'q');
     return 0;
 }

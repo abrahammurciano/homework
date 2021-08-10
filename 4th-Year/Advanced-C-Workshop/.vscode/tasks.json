@@ -24,7 +24,7 @@
         },
         {
             "type": "shell",
-            "label": "Generade docs with doxygen",
+            "label": "Generade Doxygen Docs",
             "command": "doxygen",
             "args": [
                 "Doxyfile"
