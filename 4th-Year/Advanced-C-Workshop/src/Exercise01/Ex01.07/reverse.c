@@ -1,5 +1,5 @@
 /**
- * @file Ex01.07.c
+ * @file reverse.c
  * @author Abraham Murciano (abrahammurciano@gmail.com)
  * @brief A program that reads numbers from the user until the number 0 is entered, and then prints them in reverse order.
  * @version 0.1
@@ -15,7 +15,7 @@
 
 int main()
 {
-    stack *s = create_stack();
+    Stack *stack = CreateStack();
     int value;
     while (true)
     {
@@ -25,16 +25,16 @@ int main()
         {
             break;
         }
-        push(s, value);
+        Push(stack, value);
     }
 
     printf("The numbers in reverse order are:\n");
 
-    while (pop(s, &value))
+    while (Pop(stack, &value))
     {
         printf("%d ", value);
     }
     printf("\n");
-    destroy_stack(s);
+    DestroyStack(stack);
     return 0;
 }

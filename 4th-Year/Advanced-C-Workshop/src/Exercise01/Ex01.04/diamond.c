@@ -1,5 +1,5 @@
 /**
- * @file Ex01.04.c
+ * @file diamond.c
  * @author Abraham Murciano (abrahammurciano@gmail.com)
  * @brief Print diamonds of any size.
  * @version 0.1

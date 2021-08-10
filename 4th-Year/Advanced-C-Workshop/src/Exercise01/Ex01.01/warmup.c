@@ -1,5 +1,5 @@
 /**
- * @file Ex01.01.c
+ * @file warmup.c
  * @author Abraham Murciano (abrahammurciano@gmail.com)
  * @brief A program that receives character input from the user and prints it. The program terminates when the input is 'Q' or 'q'.
  * @version 0.1

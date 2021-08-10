@@ -1,5 +1,5 @@
 /**
- * @file Ex01.06.c
+ * @file fix_id.c
  * @author Abraham Murciano (abrahammurciano@gmail.com)
  * @brief Check the validity of an Israeli ID number.
  * @version 0.1

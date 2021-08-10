@@ -1,17 +1,17 @@
 #include "stack.h"
 
-stack *create_stack()
+Stack *CreateStack()
 {
-    stack *s = malloc(sizeof(stack));
-    s->head = NULL;
-    return s;
+    Stack *stack = malloc(sizeof(Stack));
+    stack->head = NULL;
+    return stack;
 }
 
-void destroy_stack(stack *s)
+void DestroyStack(Stack *stack)
 {
     int temp;
-    while (pop(s, &temp));
-    free(s);
+    while (pop(stack, &temp));
+    free(stack);
 }
 
 /**
@@ -19,45 +19,45 @@ void destroy_stack(stack *s)
  *
  * @param value The integer value to be stored by the node.
  * @param next A pointer to the next node.
- * @return node* A pointer to the created node.
+ * @return Node* A pointer to the created node.
  */
-node *create_node(int value, node *next)
+Node *CreateNode(int value, Node *next)
 {
-    node *n = malloc(sizeof(node));
-    n->value = value;
-    n->next = next;
+    Node *new = malloc(sizeof(Node));
+    new->value = value;
+    new->next = next;
 }
 
 /**
  * @brief Destroy a node object
  *
- * @param n A pointer to the node to destroy.
- * @return node* A pointer to the next node.
+ * @param node A pointer to the node to destroy.
+ * @return Node* A pointer to the next node.
  */
-node *destroy_node(node *n)
+Node *DestroyNode(Node *node)
 {
-    node *next = n->next;
-    free(n);
+    Node *next = node->next;
+    free(node);
     return next;
 }
 
-void push(stack *s, int value)
+void push(Stack *stack, int value)
 {
-    s->head = create_node(value, s->head);
+    stack->head = CreateNode(value, stack->head);
 }
 
-bool pop(stack *s, int *value)
+bool pop(Stack *stack, int *value)
 {
-    if (is_empty(s))
+    if (IsEmpty(stack))
     {
         return false;
     }
-    *value = s->head->value;
-    s->head = destroy_node(s->head);
+    *value = stack->head->value;
+    stack->head = DestroyNode(stack->head);
     return true;
 }
 
-bool is_empty(const stack *s)
+bool IsEmpty(const Stack *stack)
 {
-    return s->head == NULL;
+    return stack->head == NULL;
 }

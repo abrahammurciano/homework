@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef stack_h
-#define stack_h
+#ifndef Stack_h
+#define Stack_h
 
 #include <stdlib.h>
 #include <stdbool.h>
@@ -18,57 +18,63 @@
  /**
   * @brief A stack node contains one datum and a pointer to the next node.
   */
-typedef struct node
+typedef struct Node
 {
     int value;
-    struct node *next;
-} node;
+    struct Node *next;
+} Node;
 
 /**
  * @brief A data structure which allows pushing and popping of data in a last in first out order.
+ * @relates Stack
  */
-typedef struct stack
+typedef struct Stack
 {
-    node *head;
-} stack;
+    Node *head;
+} Stack;
 
 /**
  * @brief Create a stack object.
+ * @relates Stack
  *
- * @return stack The stack that was created.
+ * @return Stack The stack that was created.
  */
-stack *create_stack();
+Stack *CreateStack();
 
 /**
  * @brief Destroy a stack object.
+ * @relates Stack
  *
  * @param s The stack to be destroyed.
  */
-void destroy_stack(stack *s);
+void DestroyStack(Stack *s);
 
 /**
  * @brief Push a value onto the top of the stack.
+ * @relates Stack
  *
  * @param s The stack to push a value to.
  * @param value The value to push onto the stack.
  */
-void push(stack *s, int value);
+void Push(Stack *s, int value);
 
 /**
  * @brief Pop a value from the top of the stack.
+ * @relates Stack
  *
  * @param s The stack to pop a value from.
  * @param value A pointer to where the popped value will be stored.
  * @return true if there was a value to pop, or false if the stack was empty.
  */
-bool pop(stack *s, int *value);
+bool Pop(Stack *s, int *value);
 
 /**
  * @brief Check if the stack is empty.
+ * @relates Stack
  *
  * @param s The stack to be checked.
  * @return true if there are no elements in the stack, or false if there are.
  */
-bool is_empty(const stack *s);
+bool IsEmpty(const Stack *s);
 
-#endif // !stack_h
+#endif // !Stack_h

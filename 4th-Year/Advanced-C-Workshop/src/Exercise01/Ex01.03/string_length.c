@@ -1,5 +1,5 @@
 /**
- * @file Ex01.03.c
+ * @file string_length.c
  * @author Abraham Murciano (abrahammurciano@gmail.com)
  * @brief My own implementation of the strlen() standard C function.
  * @version 0.1
