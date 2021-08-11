@@ -123,7 +123,8 @@ int ReadInt()
     printf("Enter a number: ");
     while (scanf("%d", &input) < 1)
     {
-        printf("Error: Unknown error occured.\nEnter a number: ");
+        while (getchar() != '\n');
+        printf("Error: Could not read an integer.\nEnter a number: ");
     };
     return input;
 }
