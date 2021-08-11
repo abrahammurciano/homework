@@ -1,1 +1,1 @@
-../Ex01.01/ForEachChar.c
+../../../lib/ForEachChar.c

@@ -1,12 +1,14 @@
 library("rjson")
 
-student_record <- fromJSON(file = "q2_student_record.json")
+student_record <- fromJSON(
+    file = "4th-Year/R-Seminar/Week-1/q2_student_record.json"
+)
 
 cat(paste(
-    student_record[["name"]], "had an average of",
-    mean(unlist(student_record[["courses"]][["science"]])),
+    student_record$name, "had an average of",
+    mean(unlist(student_record$courses$science)),
     "in his science course and",
-    mean(unlist(student_record[["courses"]][["social"]])),
+    mean(unlist(student_record$courses$social)),
     "in his social science courses. His overall average was",
-    mean(unlist(student_record[["courses"]]), recursive = TRUE)
+    mean(unlist(student_record$courses), recursive = TRUE)
 ))

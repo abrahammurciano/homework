@@ -12,6 +12,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include "stack.h"
+#include "ReadInt.h"
 
 int main()
 {
@@ -19,8 +20,7 @@ int main()
     int value;
     while (true)
     {
-        printf("Enter a number: ");
-        scanf("%d", &value);
+        value = ReadInt("Enter a number: ");
         if (value == 0)
         {
             break;

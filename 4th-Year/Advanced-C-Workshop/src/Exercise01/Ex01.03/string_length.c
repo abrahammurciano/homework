@@ -32,13 +32,16 @@ size_t strlen(const char *str)
  */
 void PrintStringSize(const char *str)
 {
-    printf("The size of \"%s\" is %d characters.\n", str, strlen(str));
+    printf("The size of \"%s\" is %lu characters.\n", str, strlen(str));
 }
 
 int main()
 {
-    PrintStringSize("Hello, world!");
-    PrintStringSize("");
-    PrintStringSize("A");
+    char *line = NULL;
+    size_t length;
+    printf("Enter a string:\n");
+    getline(&line, &length, stdin);
+    PrintStringSize(line);
+    free(line);
     return 0;
 }

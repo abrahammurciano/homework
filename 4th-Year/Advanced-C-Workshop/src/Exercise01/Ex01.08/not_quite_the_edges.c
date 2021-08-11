@@ -13,6 +13,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "ReadInt.h"
 
 typedef bool (*BinaryIntPredicate)(int, int);
 typedef int (*IntProducer) ();
@@ -112,21 +113,9 @@ int NotQuiteTheEdges(int *secondSmallest, int *secondLargest, IntProducer produc
     }
 }
 
-/**
- * @brief Read an integer from stdin.
- *
- * @return int The integer read.
- */
-int ReadInt()
+int ProduceFromStdin()
 {
-    int input;
-    printf("Enter a number: ");
-    while (scanf("%d", &input) < 1)
-    {
-        while (getchar() != '\n');
-        printf("Error: Could not read an integer.\nEnter a number: ");
-    };
-    return input;
+    return ReadInt("Enter a number: ");
 }
 
 int main()
@@ -134,7 +123,7 @@ int main()
     int secondSmallest;
     int secondLargest;
 
-    while (NotQuiteTheEdges(&secondSmallest, &secondLargest, ReadInt, 0) != 0)
+    while (NotQuiteTheEdges(&secondSmallest, &secondLargest, ProduceFromStdin, 0) != 0)
     {
         printf("Error: You must enter at least two numbers. Please start over.\n");
     }

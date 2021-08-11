@@ -8,7 +8,9 @@
                 "-g",
                 "*.c",
                 "-o",
-                "${fileDirname}/a.out"
+                "${fileDirname}/a.out",
+                "-Wall",
+                "-Werror"
             ],
             "options": {
                 "cwd": "${fileDirname}"

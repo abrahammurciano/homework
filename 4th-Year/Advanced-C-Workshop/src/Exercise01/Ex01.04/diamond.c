@@ -10,20 +10,13 @@
  */
 
 #include <stdio.h>
+#include <limits.h>
 #include "PrintDiamond.h"
+#include "ReadInt.h"
 
 int main()
 {
-    int baseSize;
-    printf("Enter the size of the diamond: ");
-    scanf("%d", &baseSize);
-
-    if (baseSize < 0)
-    {
-        printf("Number cannot be negative.\n");
-        return 1;
-    }
-
+    int baseSize = ReadIntInRange("Enter the size of the diamond: ", 1, INT_MAX);
     PrintDiamond(baseSize, '*');
     return 0;
 }

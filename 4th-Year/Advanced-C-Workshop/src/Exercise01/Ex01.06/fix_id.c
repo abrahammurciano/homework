@@ -11,6 +11,7 @@
 
 #include <stdbool.h>
 #include <stdio.h>
+#include "ReadInt.h"
 
  /**
   * @brief Sums all the digits of parameter n
@@ -55,36 +56,11 @@ int CheckDigit(int n)
     return checkDigit;
 }
 
-/**
- * @brief Takes an input int between min and max inclusive, then returns the input. If the input is out of bounds, it prints an error message and tries again.
- *
- * @param min The smallest valid value.
- * @param max The largest valid value.
- * @return int The input value.
- */
-int Input(int min, int max)
-{
-    int input;
-    while (true)
-    {
-        scanf("%d", &input);
-        if (input >= min && input <= max)
-        {
-            return input;
-        }
-        printf("Error: Input must be between %d and %d", min, max);
-    }
-}
-
 int main()
 {
+    int id = ReadIntInRange("Enter the first 8 digits of your ID: ", 0, 99999999);  // Variable to store user input
 
-    printf("enter the first 8 digits of your ID:\n");  // Prompt user for a social security number
-
-    int id = Input(0, 99999999);  // Variable to store user input
-    int checkDigit = id % 10;
-
-    printf("%d%d\n", id, CheckDigit(id));
+    printf("Your ID number is: %d%d\n", id, CheckDigit(id));
 
     return 0;
 }

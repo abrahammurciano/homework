@@ -10,7 +10,7 @@ Stack *CreateStack()
 void DestroyStack(Stack *stack)
 {
     int temp;
-    while (pop(stack, &temp));
+    while (Pop(stack, &temp));
     free(stack);
 }
 
@@ -26,6 +26,7 @@ Node *CreateNode(int value, Node *next)
     Node *new = malloc(sizeof(Node));
     new->value = value;
     new->next = next;
+    return new;
 }
 
 /**
@@ -41,12 +42,12 @@ Node *DestroyNode(Node *node)
     return next;
 }
 
-void push(Stack *stack, int value)
+void Push(Stack *stack, int value)
 {
     stack->head = CreateNode(value, stack->head);
 }
 
-bool pop(Stack *stack, int *value)
+bool Pop(Stack *stack, int *value)
 {
     if (IsEmpty(stack))
     {
