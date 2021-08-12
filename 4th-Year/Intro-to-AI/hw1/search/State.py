@@ -49,5 +49,11 @@ class State:
 		return len(self.__path)
 
 	@property
+	def path(self) -> List[Move]:
+		"""A copy of the path of this state."""
+		return self.__path.copy()
+
+	@property
 	def board(self) -> Board:
+		"""The board of tiles of this state."""
 		return self.__board

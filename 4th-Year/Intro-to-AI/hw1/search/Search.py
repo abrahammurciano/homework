@@ -2,6 +2,8 @@ from typing import Optional
 from .State import State
 from .Board import Board
 from .Frontier import Frontier
+from .IterativeDeepeningFrontier import IterativeDeepeningFrontier
+import sys
 
 
 def search(frontier: Frontier, target: Board) -> Optional[State]:
@@ -16,7 +18,7 @@ def search(frontier: Frontier, target: Board) -> Optional[State]:
 	"""
 	while not frontier.is_empty():
 		state = frontier.extract()
-		if state.board == (target):
+		if state is None or state.board == target:
 			return state
 		for next_state in state.next_states():
 			frontier.insert(next_state)

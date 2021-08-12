@@ -5,6 +5,16 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
+			"name": "Python: Current File",
+			"type": "python",
+			"request": "launch",
+			"program": "${file}",
+			"args": [
+				"${input:args}"
+			],
+			"console": "integratedTerminal"
+		},
+		{
 			"type": "R-Debugger",
 			"name": "Debug R-File",
 			"request": "launch",
@@ -79,6 +89,13 @@
 			],
 			"preLaunchTask": "C/C++: gcc build active folder",
 			"miDebuggerPath": "/usr/bin/gdb"
+		}
+	],
+	"inputs": [
+		{
+			"id": "args",
+			"type": "promptString",
+			"description": "Arguments"
 		}
 	]
 }

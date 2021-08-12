@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Optional
 from .State import State
 
 
@@ -13,11 +14,11 @@ class Frontier(ABC):
 		pass
 
 	@abstractmethod
-	def extract(self) -> State:
+	def extract(self) -> Optional[State]:
 		"""Extract a state to expand from the frontier.
 
 		Returns:
-			State: The state to expand.
+			State: The state to expand, or None if the frontier is empty.
 		"""
 		pass
 

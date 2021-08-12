@@ -22,7 +22,7 @@ class Stack(Generic[T]):
 		Returns:
 			bool: True if the stack is empty, false otherwise.
 		"""
-		return bool(self.__list)
+		return not bool(self.__list)
 
 	def push(self, value: T):
 		"""Push an item onto the stack.

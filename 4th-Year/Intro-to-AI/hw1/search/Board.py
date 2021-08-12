@@ -1,5 +1,5 @@
 from typing import Collection, Optional
-from .Move import Move
+from search.Move import Move
 import random
 
 
@@ -37,7 +37,7 @@ class Board:
 
 	@property
 	def size(self):
-		"""The number of tiles per row of column."""
+		"""The number of tiles per row or column."""
 		return self.__size
 
 	def random_move(self) -> "Board":
@@ -66,9 +66,9 @@ class Board:
 			bool: True if the empty tile can be moved in the given direction, False otherwise.
 		"""
 		if move == Move.UP:
-			return self.__empty_tile < self.size
+			return self.__empty_tile >= self.size
 		elif move == Move.DOWN:
-			return self.__empty_tile >= self.size * (self.size - 1)
+			return self.__empty_tile < self.size * (self.size - 1)
 		elif move == Move.LEFT:
 			return self.__empty_tile % self.size != 0
 		else:
@@ -105,3 +105,11 @@ class Board:
 
 	def __eq__(self, board: object) -> bool:
 		return isinstance(board, Board) and self.__tiles == board.__tiles
+
+	def __str__(self):
+		return "\n".join(
+			[
+				" ".join(str(tile) for tile in self.__tiles[start : start + self.size])
+				for start in range(0, len(self.__tiles), self.size)
+			]
+		)

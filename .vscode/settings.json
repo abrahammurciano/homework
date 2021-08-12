@@ -67,5 +67,8 @@
 		"Kruskal's",
 		"Prim's",
 		"Warshall"
+	],
+	"python.analysis.extraPaths": [
+		"./4th-Year/Intro-to-AI/hw1"
 	]
 }
