@@ -42,3 +42,11 @@ class Stack(Generic[T]):
 			IndexError: If the stack was empty.
 		"""
 		return self.__list.pop()
+
+	def __len__(self) -> int:
+		"""Get the number of items in the stack.
+
+		Returns:
+			int: The number of items in the stack.
+		"""
+		return len(self.__list)

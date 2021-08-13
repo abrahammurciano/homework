@@ -43,3 +43,11 @@ class IterativeDeepeningFrontier(Frontier):
 			else:
 				return None  # There is no path to the target
 		return self.__stack.pop()
+
+	def __len__(self) -> int:
+		"""Get the number of states in the frontier.
+
+		Returns:
+			int: The number of states in the frontier.
+		"""
+		return len(self.__stack)

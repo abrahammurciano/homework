@@ -5,14 +5,35 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
+			"name": "Python: Sliding Puzzle",
+			"type": "python",
+			"request": "launch",
+			"program": "slidingpuzzle.py",
+			"args": [
+				"${input:size}",
+				"${input:n_puzzles}"
+			],
+			"console": "integratedTerminal"
+		},
+		{
 			"name": "Python: Current File",
 			"type": "python",
 			"request": "launch",
 			"program": "${file}",
-			"args": [
-				"3"
-			],
+			"args": [],
 			"console": "integratedTerminal"
+		}
+	],
+	"inputs": [
+		{
+			"id": "size",
+			"type": "promptString",
+			"description": "The size of each board."
+		},
+		{
+			"id": "n_puzzles",
+			"type": "promptString",
+			"description": "The number of puzzles to solve."
 		}
 	]
 }

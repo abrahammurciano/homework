@@ -1,9 +1,9 @@
 from abc import ABC, abstractmethod
-from typing import Optional
+from typing import Optional, Sized
 from .State import State
 
 
-class Frontier(ABC):
+class Frontier(ABC, Sized):
 	@abstractmethod
 	def is_empty(self) -> bool:
 		"""Check if the frontier is empty or not.
