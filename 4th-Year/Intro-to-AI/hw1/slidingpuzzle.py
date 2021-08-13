@@ -16,7 +16,7 @@ def solve_random_puzzle(size: int) -> Tuple[Optional[State], int]:
 
 def main():
 	size = int(sys.argv[1])
-	n_puzzles = int(sys.argv[2] or 100)
+	n_puzzles = int(sys.argv[2]) if len(sys.argv) > 2 else 100
 	start_time = time.time()
 	duration = 0
 	total_extractions = 0
