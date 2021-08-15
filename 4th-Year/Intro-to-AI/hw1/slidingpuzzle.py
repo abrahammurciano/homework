@@ -4,8 +4,8 @@ import sys
 from typing import Optional, Tuple
 from Board import Board
 from LoggingIterativeDeepeningFrontier import LoggingIterativeDeepeningFrontier
-from graph import State, search
 import time
+from pygraphsearch import search, State
 
 
 def random_board(size: int) -> Board:

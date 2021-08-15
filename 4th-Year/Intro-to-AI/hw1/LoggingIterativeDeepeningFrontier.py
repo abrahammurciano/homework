@@ -1,5 +1,5 @@
-from graph.Node import Node
-from graph.IterativeDeepeningFrontier import IterativeDeepeningFrontier
+from pygraphsearch.Node import Node
+from pygraphsearch.IterativeDeepeningFrontier import IterativeDeepeningFrontier
 
 
 class LoggingIterativeDeepeningFrontier(IterativeDeepeningFrontier):

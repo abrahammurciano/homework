@@ -1,6 +1,6 @@
-from graph.UndirectedEdge import UndirectedEdge
-from graph.Edge import Edge
-from graph.Node import Node
+from pygraphsearch.UndirectedEdge import UndirectedEdge
+from pygraphsearch.Edge import Edge
+from pygraphsearch.Node import Node
 from typing import Collection, Iterable, Optional
 from Move import Move
 import random
