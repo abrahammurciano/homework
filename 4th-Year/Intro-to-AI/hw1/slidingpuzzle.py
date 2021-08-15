@@ -28,7 +28,7 @@ def solve_random_puzzle(size: int) -> Tuple[Optional[State], int]:
 	print("Starting state:", start, sep="\n")
 	frontier = LoggingIterativeDeepeningFrontier(start)
 	target = Board(size, range(size * size))
-	return search(frontier, target), frontier.extract_count
+	return search(frontier, lambda board: board == target), frontier.extract_count
 
 
 def main():

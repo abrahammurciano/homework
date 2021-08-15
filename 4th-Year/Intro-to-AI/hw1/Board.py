@@ -1,4 +1,3 @@
-from pygraphsearch.UndirectedEdge import UndirectedEdge
 from pygraphsearch.Edge import Edge
 from pygraphsearch.Node import Node
 from typing import Collection, Iterable, Optional
@@ -45,9 +44,7 @@ class Board(Node):
 
 	def neighbours(self) -> Iterable[Edge]:
 		return [
-			UndirectedEdge(self, self.move(move), move)
-			for move in Move
-			if self.can_move(move)
+			Edge(self, self.move(move), move) for move in Move if self.can_move(move)
 		]
 
 	def random_move(self) -> "Board":
