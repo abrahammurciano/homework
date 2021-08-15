@@ -1,6 +1,6 @@
 from typing import Collection, List
-from .Board import Board
-from .Move import Move
+from Board import Board
+from Move import Move
 
 
 class State:

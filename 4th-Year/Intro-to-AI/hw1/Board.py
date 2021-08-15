@@ -1,9 +1,12 @@
-from typing import Collection, Optional
-from search.Move import Move
+from graph.UndirectedEdge import UndirectedEdge
+from graph.Edge import Edge
+from graph.Node import Node
+from typing import Collection, Iterable, Optional
+from Move import Move
 import random
 
 
-class Board:
+class Board(Node):
 	"""Represents a square board of dimensions n by n.
 
 	Each tile in the board contains a number from 0 to n, where 0 is the empty tile. The empty tile may be swapped with any tile directly adjacent to it.
@@ -39,6 +42,13 @@ class Board:
 	def size(self):
 		"""The number of tiles per row or column."""
 		return self.__size
+
+	def neighbours(self) -> Iterable[Edge]:
+		return [
+			UndirectedEdge(self, self.move(move), move)
+			for move in Move
+			if self.can_move(move)
+		]
 
 	def random_move(self) -> "Board":
 		"""Creates a copy of this board after moving the empty tile in a legal random direction.
@@ -105,6 +115,9 @@ class Board:
 
 	def __eq__(self, board: object) -> bool:
 		return isinstance(board, Board) and self.__tiles == board.__tiles
+
+	def __hash__(self) -> int:
+		return hash(tuple(self.__tiles))
 
 	def __str__(self):
 		return "\n".join(

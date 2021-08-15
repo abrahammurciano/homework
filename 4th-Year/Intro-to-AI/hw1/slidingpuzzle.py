@@ -2,13 +2,30 @@
 
 import sys
 from typing import Optional, Tuple
-from search import Board, LoggingIterativeDeepeningFrontier, State, search
+from Board import Board
+from LoggingIterativeDeepeningFrontier import LoggingIterativeDeepeningFrontier
+from graph import State, search
 import time
 
 
+def random_board(size: int) -> Board:
+	"""Create a random start state with an n by n board.
+
+	Args:
+		size (int): The number of tiles in each row or column of the board.
+
+	Returns:
+		State: The randomly generated start state.
+	"""
+	board = Board(size)
+	for _ in range(size * size * size):  # makes n^3 random moves
+		board = board.random_move()
+	return board
+
+
 def solve_random_puzzle(size: int) -> Tuple[Optional[State], int]:
-	start = State.random_start(size)
-	print("Starting state:", start.board, sep="\n")
+	start = random_board(size)
+	print("Starting state:", start, sep="\n")
 	frontier = LoggingIterativeDeepeningFrontier(start)
 	target = Board(size, range(size * size))
 	return search(frontier, target), frontier.extract_count

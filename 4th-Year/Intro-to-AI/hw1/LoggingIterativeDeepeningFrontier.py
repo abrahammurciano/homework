@@ -1,9 +1,9 @@
-from search.State import State
-from search.IterativeDeepeningFrontier import IterativeDeepeningFrontier
+from graph.Node import Node
+from graph.IterativeDeepeningFrontier import IterativeDeepeningFrontier
 
 
 class LoggingIterativeDeepeningFrontier(IterativeDeepeningFrontier):
-	def __init__(self, start: State, initial_depth: int = 1, depth_step: int = 1):
+	def __init__(self, start: Node, initial_depth: int = 1, depth_step: int = 1):
 		"""Construct a frontier for an interative deepening search algorithm.
 
 		Args:
