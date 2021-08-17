@@ -21,4 +21,4 @@ country <- factor(
 
 rownames(student_records) <- student_records$name
 
-print(student_records)
+print(student_records["Bob", ])
