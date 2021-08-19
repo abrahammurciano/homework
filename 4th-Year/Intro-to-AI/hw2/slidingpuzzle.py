@@ -1,11 +1,11 @@
 #!/usr/bin/python
 
 import sys
-from typing import Callable, Optional
-from Board import Board
 import time
+from typing import Callable, Optional
+from .Board import Board
+from .Move import Move
 from pygraphsearch import search, State, AStarFrontier
-from Move import Move
 
 
 def random_board(size: int) -> Board:

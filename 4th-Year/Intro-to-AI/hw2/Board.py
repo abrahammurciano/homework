@@ -1,7 +1,6 @@
-from pygraphsearch.Edge import Edge
-from pygraphsearch.Node import Node
 from typing import Collection, Iterable, List, Optional
-from Move import Move
+from pygraphsearch import Edge, Node
+from .Move import Move
 import random
 
 
@@ -41,6 +40,11 @@ class Board(Node):
 	def size(self):
 		"""The number of tiles per row or column."""
 		return self.__size
+
+	@property
+	def tiles(self) -> List[int]:
+		"""Get a copy of the tiles in order."""
+		return self.__tiles.copy()
 
 	def neighbours(self) -> Iterable[Edge]:
 		return [
@@ -109,10 +113,6 @@ class Board(Node):
 			new_tiles[new_empty_tile],
 		)
 		return Board(self.size, new_tiles, new_empty_tile)
-
-	@property
-	def tiles(self) -> List[int]:
-		return self.__tiles.copy()
 
 	def __eq__(self, board: object) -> bool:
 		return isinstance(board, Board) and self.__tiles == board.__tiles
