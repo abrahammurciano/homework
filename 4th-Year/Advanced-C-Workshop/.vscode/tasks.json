@@ -10,7 +10,7 @@
                 "-o",
                 "${fileDirname}/a.out",
                 "-Wall",
-                "-Werror"
+                "-Werror",
             ],
             "options": {
                 "cwd": "${fileDirname}"
