@@ -10,7 +10,8 @@
                 "-o",
                 "${fileDirname}/a.out",
                 "-Wall",
-                "-Werror"
+                "-Werror",
+                "-lgmp"
             ],
             "options": {
                 "cwd": "${fileDirname}"
