@@ -2,10 +2,11 @@
 
 import sys
 import time
-from typing import Callable, Optional
-from .Board import Board
-from .Move import Move
-from pygraphsearch import search, State, AStarFrontier
+from typing import Callable, Optional, Tuple
+from Board import Board
+from Move import Move
+from LoggingAStarFrontier import LoggingAStarFrontier
+from pygraphsearch import search, State
 
 
 def random_board(size: int) -> Board:
@@ -29,12 +30,12 @@ def solved(size: int) -> Board:
 
 def solve_random_puzzle(
 	size: int, heuristic: Callable[[State[Board, Move]], int]
-) -> Optional[State[Board, Move]]:
+) -> Tuple[Optional[State[Board, Move]], int]:
 	start = random_board(size)
 	print("Starting state:", start, sep="\n")
-	frontier = AStarFrontier[Board, Move](start, heuristic)
+	frontier = LoggingAStarFrontier(start, heuristic)
 	target = solved(size)
-	return search(frontier, lambda board: board == target)
+	return search(frontier, lambda board: board == target), frontier.total_inserts
 
 
 def solve_n_puzzles(
@@ -42,8 +43,10 @@ def solve_n_puzzles(
 ):
 	start_time = time.time()
 	duration: float = 0
+	total_inserts = 0
 	for i in range(1, n_puzzles + 1):
-		solution = solve_random_puzzle(size, heuristic)
+		solution, inserts = solve_random_puzzle(size, heuristic)
+		total_inserts += inserts
 		print(solution.path if solution is not None else "No solution.")
 		old_duration = duration
 		duration = time.time() - start_time
@@ -52,7 +55,8 @@ def solve_n_puzzles(
 			f"Total time: {duration}s",
 			f"Time for this solution: {duration - old_duration}s",
 			f"Average time per solution: {duration / i}s",
-			"\n",
+			f"Inserts into frontier: {inserts}",
+			f"Average inserts into frontier: {total_inserts / i}\n",
 			sep="\n",
 		)
 

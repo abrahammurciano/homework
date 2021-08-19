@@ -1,6 +1,6 @@
 from typing import Collection, Iterable, List, Optional
 from pygraphsearch import Edge, Node
-from .Move import Move
+from Move import Move
 import random
 
 
