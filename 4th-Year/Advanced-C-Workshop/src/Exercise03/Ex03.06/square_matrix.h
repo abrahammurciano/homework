@@ -14,12 +14,18 @@ typedef struct SquareMatrix
     size_t size;
 } SquareMatrix;
 
+typedef enum MatrixSymmetry
+{
+    SYMMETRIC, SKEW_SYMMETRIC, NOT_SYMMETRIC
+} MatrixSymmetry;
+
 /**
  * @brief Transpose a matrix.
  *
  * @param matrix The matrix to transpose.
+ * @return MatrixSymmetry The kind of symmetry of the matrix.
  */
-void transpose(SquareMatrix matrix);
+MatrixSymmetry transpose(SquareMatrix matrix);
 
 /**
  * @brief Get the pointer to the matrix entry at the given row and column.

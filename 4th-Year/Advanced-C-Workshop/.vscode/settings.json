@@ -66,6 +66,16 @@
         "ratio": "c",
         "sstream": "c",
         "streambuf": "c",
-        "valarray": "c"
+        "valarray": "c",
+        "cstdio": "cpp",
+        "compare": "c",
+        "optional": "c",
+        "limits": "c",
+        "new": "c",
+        "cmath": "c",
+        "tuple": "c",
+        "type_traits": "c",
+        "utility": "c",
+        "variant": "c"
     },
 }
