@@ -18,6 +18,7 @@ int main()
 {
     Stack *stack = CreateStack();
     int value;
+    int *copy;
     while (true)
     {
         value = ReadInt("Enter a number: ");
@@ -25,14 +26,17 @@ int main()
         {
             break;
         }
-        Push(stack, value);
+        copy = malloc(sizeof(int));
+        *copy = value;
+        Push(stack, copy);
     }
 
     printf("The numbers in reverse order are:\n");
 
-    while (Pop(stack, &value))
+    while (Pop(stack, (void *) &copy))
     {
-        printf("%d ", value);
+        printf("%d ", *copy);
+        free(copy);
     }
     printf("\n");
     DestroyStack(stack);
