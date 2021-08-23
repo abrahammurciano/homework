@@ -1,4 +1,4 @@
-student_records <- read.csv("4th-Year/R-Seminar/Week-1/q5_student_records.csv")
+student_records <- read.csv("q5_student_records.csv")
 
 student_records <- transform(
     student_records,

@@ -17,7 +17,7 @@ avg <- function(course_list) {
 }
 
 student_record <- fromJSON(
-    file = "4th-Year/R-Seminar/Week-1/q3_student_record.json"
+    file = "q3_student_record.json"
 )
 
 output(

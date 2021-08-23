@@ -5,7 +5,7 @@ output <- function(name, science_avg, social_avg, overall_avg, std_deviation) {
         name, " had an average of ", science_avg,
         " in his science courses and ", social_avg,
         " in his social science courses. His overall average was ",
-        overall_avg, " with a standard deviation of ", std_deviation, "."
+        overall_avg, " with a standard deviation of ", std_deviation, ".\n"
     ))
 }
 
@@ -17,7 +17,7 @@ avg <- function(course_list) {
 }
 
 student_record <- fromJSON(
-    file = "4th-Year/R-Seminar/Week-1/q3_student_record.json"
+    file = "q3_student_record.json"
 )
 
 output(

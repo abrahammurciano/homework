@@ -1,4 +1,4 @@
-student_records <- read.csv("4th-Year/R-Seminar/Week-1/q6_student_records.csv")
+student_records <- read.csv("q6_student_records.csv")
 
 sex <- 0
 sex <- factor(sex, levels = c("Male", "Female"))

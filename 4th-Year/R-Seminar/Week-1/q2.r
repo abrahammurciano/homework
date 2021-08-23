@@ -1,7 +1,7 @@
 library("rjson")
 
 student_record <- fromJSON(
-    file = "4th-Year/R-Seminar/Week-1/q2_student_record.json"
+    file = "q2_student_record.json"
 )
 
 cat(paste(
