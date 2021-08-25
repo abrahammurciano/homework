@@ -4,7 +4,6 @@ from status import Status
 from player import Player
 from typing import Any, Callable, Iterable, Sequence, List, Optional, Set, Tuple
 from itertools import product
-import copy
 import random
 
 Cell = Optional[Player]
@@ -231,8 +230,8 @@ class ConnectFourBoard(Node):
 			column_separator=self.__column_separator,
 			empty_symbol=self.__empty_symbol,
 			last_play=self.__last_play,
+			grid=[row.copy() for row in self.__grid],
 		)
-		new_board.__grid = copy.deepcopy(self.__grid)
 		return new_board
 
 	def __is_draw(self) -> bool:
