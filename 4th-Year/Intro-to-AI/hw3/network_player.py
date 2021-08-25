@@ -19,6 +19,10 @@ class NetworkPlayer(Player[ConnectFourBoard]):
 		self.__socket.bind(self.__addr)
 
 	@property
+	def socket(self) -> socket.socket:
+		return self.__socket
+
+	@property
 	def address(self) -> str:
 		"""The IP and port number this network player is listening on."""
 		return f"{self.__addr[0]}:{self.__addr[1]}"

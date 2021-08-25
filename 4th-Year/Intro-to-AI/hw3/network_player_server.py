@@ -20,7 +20,7 @@ class NetworkPlayerServer(NetworkPlayer):
 			str: The client's name.
 		"""
 		while True:
-			data, self.__client = self.__socket.recvfrom(64)
+			data, self.__client = self.socket.recvfrom(64)
 			msg = data.decode("utf-8")
 			if msg[0] != "@":
 				continue

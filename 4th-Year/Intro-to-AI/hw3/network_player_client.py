@@ -25,4 +25,4 @@ class NetworkPlayerClient(NetworkPlayer):
 			raise ValueError("Error: Client needs the server's address.")
 		self.__server = server
 		name = "@" + socket.gethostname()
-		self.__socket.sendto(name.encode("utf-8"), self.__server)
+		self.socket.sendto(name.encode("utf-8"), self.__server)
