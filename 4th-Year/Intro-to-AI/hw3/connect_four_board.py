@@ -2,9 +2,10 @@ from node import Node
 from exceptions import ColumnFullException, ColumnOutOfBoundsException
 from status import Status
 from player import Player
-from typing import Any, Callable, Sequence, List, Optional, Set, Tuple
+from typing import Any, Callable, Iterable, Sequence, List, Optional, Set, Tuple
 from itertools import product
 import copy
+import random
 
 Cell = Optional[Player]
 
@@ -24,6 +25,7 @@ class ConnectFourBoard(Node):
 		win_length: int = 4,
 		column_separator: str = "|",
 		empty_symbol: str = " ",
+		last_play: Optional[int] = None,
 		grid: Optional[List[List[Cell]]] = None,
 	):
 		"""
@@ -37,6 +39,7 @@ class ConnectFourBoard(Node):
 			win_length (int, optional): The length of winning sequence. Defaults to 4.
 			column_separator (string, optional): A string to print between each column of the board. Defaults to "|".
 			empty_symbol (string, optional): A string to print wherever there is no piece. Defaults to " ".
+			last_play (int, optional): The column where the last piece was played. Defaults to None, indicating no pieces have been played.
 			grid (List[List[Cell]]): 2D list marking where and whose pieces are on the board. Defaults to an empty board.
 		"""
 		self.__grid = grid or [[None for _ in range(columns)] for _ in range(rows)]
@@ -47,6 +50,7 @@ class ConnectFourBoard(Node):
 		self.__win_length = win_length
 		self.__column_separator = column_separator
 		self.__empty_symbol = empty_symbol
+		self.__last_play = last_play
 
 	@property
 	def rows(self) -> int:
@@ -66,6 +70,11 @@ class ConnectFourBoard(Node):
 	@property
 	def players(self) -> Tuple[Player["ConnectFourBoard"], Player["ConnectFourBoard"]]:
 		return self.__players
+
+	@property
+	def last_play(self) -> Optional[int]:
+		"""The column where the last piece was placed, or None if no pieces were played."""
+		return self.__last_play
 
 	def is_game_over(self) -> bool:
 		"""Returns True if the game is over, False otherwise."""
@@ -92,20 +101,23 @@ class ConnectFourBoard(Node):
 		board = self.__copy()
 		board.__grid[row][column] = self.active_player
 		board.__active_player = int(not board.__active_player)
+		board.__last_play = column
 		return board
 
-	def children(self) -> Set["ConnectFourBoard"]:
+	def children(self) -> Iterable["ConnectFourBoard"]:
 		"""
 		Find next states for the current board
 
 		Returns:
 			Set of board states that can be created by placing a piece
 		"""
-		return {
+		children = [
 			self.place_piece(col)
 			for col in range(self.__columns)
 			if not self.__column_is_full(col)
-		}
+		]
+		random.shuffle(children)
+		return children
 
 	def advance(self) -> "ConnectFourBoard":
 		"""Play the next move by the active player and return the resulting board.
@@ -218,6 +230,7 @@ class ConnectFourBoard(Node):
 			win_length=self.__win_length,
 			column_separator=self.__column_separator,
 			empty_symbol=self.__empty_symbol,
+			last_play=self.__last_play,
 		)
 		new_board.__grid = copy.deepcopy(self.__grid)
 		return new_board

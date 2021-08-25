@@ -29,7 +29,7 @@ class PossibleWinsPlayer(HeuristicPlayer):
 					# there are two different pieces in this sequence, so no one can win here
 					return
 				piece_count += 1
-			piece_count = piece_count * piece_count
+			piece_count = piece_count ** piece_count
 			value[0] += piece_count if player == self else -piece_count
 
 		board.for_each_sequence(add_sequence_value)
