@@ -26,3 +26,6 @@ class NetworkPlayerClient(NetworkPlayer):
 		self.__server = server
 		name = "@" + socket.gethostname()
 		self.socket.sendto(name.encode("utf-8"), self.__server)
+
+	def __str__(self) -> str:
+		return "Client"

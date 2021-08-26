@@ -2,11 +2,10 @@ from node import Node
 from exceptions import ColumnFullException, ColumnOutOfBoundsException
 from status import Status
 from player import Player
-from typing import Any, Callable, Iterable, Sequence, List, Optional, Set, Tuple
+from cell import Cell
+from typing import Callable, Iterable, Sequence, List, Optional, Tuple
 from itertools import product
 import random
-
-Cell = Optional[Player]
 
 
 class ConnectFourBoard(Node):
@@ -22,8 +21,6 @@ class ConnectFourBoard(Node):
 		columns: int = 7,
 		active_player: int = 0,
 		win_length: int = 4,
-		column_separator: str = "|",
-		empty_symbol: str = " ",
 		last_play: Optional[int] = None,
 		grid: Optional[List[List[Cell]]] = None,
 	):
@@ -41,14 +38,14 @@ class ConnectFourBoard(Node):
 			last_play (int, optional): The column where the last piece was played. Defaults to None, indicating no pieces have been played.
 			grid (List[List[Cell]]): 2D list marking where and whose pieces are on the board. Defaults to an empty board.
 		"""
-		self.__grid = grid or [[None for _ in range(columns)] for _ in range(rows)]
+		self.__grid = grid or [
+			[Cell(row, column) for column in range(columns)] for row in range(rows)
+		]
 		self.__rows = rows
 		self.__columns = columns
 		self.__players = players
 		self.__active_player = active_player
 		self.__win_length = win_length
-		self.__column_separator = column_separator
-		self.__empty_symbol = empty_symbol
 		self.__last_play = last_play
 
 	@property
@@ -67,17 +64,34 @@ class ConnectFourBoard(Node):
 		return self.players[self.__active_player]
 
 	@property
+	def inactive_player(self) -> Player["ConnectFourBoard"]:
+		"""The player whose turn it isn't."""
+		return self.players[1 - self.__active_player]
+
+	@property
 	def players(self) -> Tuple[Player["ConnectFourBoard"], Player["ConnectFourBoard"]]:
 		return self.__players
 
 	@property
 	def last_play(self) -> Optional[int]:
-		"""The column where the last piece was placed, or None if no pieces were played."""
+		"""The column where the last piece was placed (starting from 0), or None if no pieces were played."""
 		return self.__last_play
+
+	def cell(self, row: int, column: int) -> Cell:
+		"""Get the contents of the cell at the given row and column.
+
+		Args:
+			row (int): The row index. 0 is the top row.
+			column (int): The column index. 0 is the left column.
+
+		Returns:
+			Cell: The player whose piece is in the cell, or None if there is no piece in the cell.
+		"""
+		return self.__grid[row][column]
 
 	def is_game_over(self) -> bool:
 		"""Returns True if the game is over, False otherwise."""
-		return self.status() != Status.ONGOING
+		return self.status().game_over
 
 	def is_terminal(self) -> bool:
 		return self.is_game_over()
@@ -98,8 +112,8 @@ class ConnectFourBoard(Node):
 		if row is None:
 			raise ColumnFullException(column)
 		board = self.__copy()
-		board.__grid[row][column] = self.active_player
-		board.__active_player = int(not board.__active_player)
+		board.__grid[row][column] = Cell(row, column, self.active_player)
+		board.__active_player = 1 - board.__active_player
 		board.__last_play = column
 		return board
 
@@ -131,20 +145,13 @@ class ConnectFourBoard(Node):
 		Checks if the game is won, tied, or ongoing.
 
 		Returns:
-			Status.PLAYER_1_WINS if the first player wins
-			Status.PLAYER_2_WINS if the second player wins
-			Status.TIE if the game has ended in a tie
-			Status.ONGOING otherwise
+			A status indicating if the game is over, and who, if anyone, is the winner.
 		"""
 		if winner := self.__check_for_win():
-			return (
-				Status.PLAYER_1_WINS
-				if winner == self.players[0]
-				else Status.PLAYER_2_WINS
-			)
+			return Status(winner=winner)
 		if self.__is_draw():
-			return Status.TIE
-		return Status.ONGOING
+			return Status(game_over=True, winner=None)
+		return Status(game_over=False)
 
 	def for_each_sequence(self, action: Callable[[Sequence[Cell]], None]):
 		"""Apply an action to each sequence of `win_length` sequences of cells in a straight line.
@@ -213,8 +220,10 @@ class ConnectFourBoard(Node):
 				cells (Sequence[Cell]): The cells to check.
 			"""
 			first = next(iter(cells))
-			if first is not None and all(cell == first for cell in cells):
-				winner[0] = first
+			if not first.is_empty and all(
+				cell.player == first.player for cell in cells
+			):
+				winner[0] = first.player
 
 		self.for_each_sequence(is_winning_sequence)
 		return winner[0]
@@ -227,8 +236,6 @@ class ConnectFourBoard(Node):
 			players=self.__players,
 			active_player=self.__active_player,
 			win_length=self.__win_length,
-			column_separator=self.__column_separator,
-			empty_symbol=self.__empty_symbol,
 			last_play=self.__last_play,
 			grid=[row.copy() for row in self.__grid],
 		)
@@ -236,7 +243,7 @@ class ConnectFourBoard(Node):
 
 	def __is_draw(self) -> bool:
 		"""Returns True if the game has ended in a draw, False otherwise."""
-		return not any(any(cell is None for cell in row) for row in self.__grid)
+		return not any(any(cell.is_empty for cell in row) for row in self.__grid)
 
 	def __next_open_row(self, column: int) -> Optional[int]:
 		"""
@@ -251,7 +258,7 @@ class ConnectFourBoard(Node):
 		if self.__column_is_full(column):
 			return None
 		for row in range(self.__rows - 1, -1, -1):
-			if self.__grid[row][column] is None:
+			if self.__grid[row][column].is_empty:
 				return row
 		return None
 
@@ -265,23 +272,4 @@ class ConnectFourBoard(Node):
 		Returns:
 			True if column is full, False otherwise
 		"""
-		return self.__grid[0][column] is not None
-
-	def __repr__(self) -> str:
-		return str(self)
-
-	def __str__(self) -> str:
-		"""Output information about the current board state"""
-		# board
-		output = ""
-		for row in self.__grid:
-			output += (
-				f"{self.__column_separator}{self.__column_separator.join(str(cell) if cell else self.__empty_symbol for cell in row)}{self.__column_separator}\n"
-			)
-		# column numbers
-		output += f' {" ".join(f"{i}" for i in range(self.__columns))}\n\n'
-		# print game end state if game is over
-		status = self.status()
-		if status != Status.ONGOING:
-			output += f"{status.value}"
-		return output
+		return not self.__grid[0][column].is_empty

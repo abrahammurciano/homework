@@ -11,15 +11,6 @@ class Player(Generic[N], ABC):
 	A player has a symbol they play as and can be a human or AI
 	"""
 
-	def __init__(self, symbol: str):
-		"""Construct a player.
-
-		Args:
-			symbol (str): The symbol to use to represent the pieces of this player.
-			player_type (PlayerType): The type of player.
-		"""
-		self.__symbol = symbol
-
 	@abstractmethod
 	def play(self, node: N) -> N:
 		"""Ask this player to choose the next node from the given node.
@@ -32,14 +23,5 @@ class Player(Generic[N], ABC):
 		"""
 		pass
 
-	def __eq__(self, other) -> bool:
-		return isinstance(other, Player) and self.__symbol == other.__symbol
-
-	def __hash__(self):
-		return hash(self.__symbol)
-
-	def __repr__(self):
+	def __repr__(self) -> str:
 		return str(self)
-
-	def __str__(self):
-		return self.__symbol

@@ -10,7 +10,6 @@ Address = Tuple[str, int]
 
 class NetworkPlayer(Player[ConnectFourBoard]):
 	def __init__(self, symbol: str):
-		super().__init__(symbol)
 		self.__addr = (
 			socket.gethostbyname(socket.gethostname()),
 			random.randint(49152, 65535),

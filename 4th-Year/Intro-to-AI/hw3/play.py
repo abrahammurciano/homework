@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+from possible_wins_lower_player import PossibleWinsLowerPlayer
+from board_text_ui import BoardTextUI
 from network_player_client import NetworkPlayerClient
 from network_player_server import NetworkPlayerServer
 from random_player import RandomPlayer
@@ -11,7 +13,7 @@ from termcolor import colored
 from simple_term_menu import TerminalMenu
 
 
-def choose_player(number: int, symbol: str) -> Player:
+def choose_player(number: int) -> Player:
 	"""
 	Prompts user to choose a player.
 
@@ -24,20 +26,21 @@ def choose_player(number: int, symbol: str) -> Player:
 	"""
 
 	def get_server():
-		server = NetworkPlayerServer(symbol)
+		server = NetworkPlayerServer()
 		print(f"Please connect a client to {server.address}")
 		print(f"Connected to {server.connect()}.")
 		return server
 
 	def get_client():
-		client = NetworkPlayerClient(symbol)
+		client = NetworkPlayerClient()
 		client.connect((input("Server IP address: "), int(input("Port number: "))))
 		return client
 
 	players = {
-		"Human": lambda: HumanPlayer(symbol),
-		"Braniac": lambda: PossibleWinsPlayer(symbol),
-		"Baby": lambda: RandomPlayer(symbol),
+		"Human": lambda: HumanPlayer(),
+		"Braniac": lambda: PossibleWinsPlayer(),
+		"Jarvis": lambda: PossibleWinsLowerPlayer(),
+		"Baby": lambda: RandomPlayer(),
 		"Server": get_server,
 		"Client": get_client,
 	}
@@ -48,22 +51,21 @@ def choose_player(number: int, symbol: str) -> Player:
 
 
 def play_game():
-	players = (
-		choose_player(1, colored("X", "red", "on_blue", attrs=("bold",))),
-		choose_player(2, colored("O", "yellow", "on_blue", attrs=("bold",))),
-	)
-	board = ConnectFourBoard(
-		players=players,
-		column_separator=colored("|", "white", "on_blue", attrs=("bold",)),
+	players = (choose_player(1), choose_player(2))
+	board = ConnectFourBoard(players=players)
+	ui = BoardTextUI(
+		players[0],
+		players[1],
+		colored("\u2b24", "red", "on_blue"),
+		colored("\u2b24", "yellow", "on_blue"),
 		empty_symbol=colored(" ", "white", "on_blue", attrs=("bold",)),
+		column_separator=colored("|", "white", "on_blue", attrs=("bold",)),
 	)
 
+	ui.render(board)
 	while not board.is_game_over():
-		print(board)
 		board = board.advance()
-
-	# print the end game status (who won)
-	print(board)
+		ui.render(board)
 
 
 if __name__ == "__main__":

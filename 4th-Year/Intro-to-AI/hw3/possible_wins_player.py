@@ -1,13 +1,10 @@
-from status import Status
-from typing import Sequence
+from cell import Cell
+from typing import List, Sequence
 from heuristic_player import HeuristicPlayer
-from connect_four_board import Cell, ConnectFourBoard
+from connect_four_board import ConnectFourBoard
 
 
 class PossibleWinsPlayer(HeuristicPlayer):
-	def __init__(self, symbol: str):
-		super().__init__(symbol)
-
 	def heuristic(self, board: ConnectFourBoard) -> float:
 		"""This connect four heuristic counts the number of possible ways a player can win and weights them according to how many of the pieces have already been placed.
 
@@ -17,20 +14,27 @@ class PossibleWinsPlayer(HeuristicPlayer):
 		Returns:
 			float: A heuristic value that indicates how close player one is to winning. Positive means very closer than player two, negative means further.
 		"""
-		value = [0]
+		value = [0.0]
 
-		def add_sequence_value(cells: Sequence[Cell]):
-			piece_count = 0
-			player = None
-			for cell in [cell for cell in cells if cell is not None]:
-				if player is None:
-					player = cell
-				elif player != cell:
-					# there are two different pieces in this sequence, so no one can win here
-					return
-				piece_count += 1
-			piece_count = piece_count ** piece_count
-			value[0] += piece_count if player == self else -piece_count
+		def add_value(cells: Sequence[Cell]):
+			value[0] += self.sequence_value(cells) * self.player_factor(cells)
 
-		board.for_each_sequence(add_sequence_value)
+		board.for_each_sequence(add_value)
 		return value[0]
+
+	def sequence_value(self, cells: Sequence[Cell]) -> float:
+		piece_count = len([cell for cell in cells if not cell.is_empty])
+		return piece_count ** piece_count
+
+	def player_factor(self, cells: Sequence[Cell]) -> int:
+		player = None
+		for cell in cells:
+			if not cell.is_empty:
+				if player is None:
+					player = cell.player
+				elif player != cell.player:
+					return 0
+		return 1 if player == self else -1
+
+	def __str__(self) -> str:
+		return "Braniac"

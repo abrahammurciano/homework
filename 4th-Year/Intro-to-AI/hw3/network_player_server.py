@@ -25,3 +25,6 @@ class NetworkPlayerServer(NetworkPlayer):
 			if msg[0] != "@":
 				continue
 			return msg[1:]
+
+	def __str__(self) -> str:
+		return "Server"

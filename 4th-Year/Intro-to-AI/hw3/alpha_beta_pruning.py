@@ -38,7 +38,7 @@ def ab_minimax(
 	best_value, get_best = (-inf, max) if maximizing else (inf, min)
 	best_move: Optional[Node] = None
 	for child in node.children():
-		grandchild_value, grandchild = ab_minimax(
+		grandchild_value, _ = ab_minimax(
 			child, heuristic, not maximizing, depth - 1, beta, alpha
 		)
 		best_value, _, best_move = get_best(

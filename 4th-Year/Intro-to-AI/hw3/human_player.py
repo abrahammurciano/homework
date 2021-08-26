@@ -4,12 +4,12 @@ from player import Player
 
 
 class HumanPlayer(Player[ConnectFourBoard]):
-	def __init__(self, symbol: str):
-		super().__init__(symbol)
-
 	def play(self, board: ConnectFourBoard) -> ConnectFourBoard:
 		while True:
 			try:
-				return board.place_piece(int(input("Enter your move: ")))
+				return board.place_piece(int(input("Enter your move: ")) - 1)
 			except (IllegalMoveException, ValueError) as err:
 				print(err)
+
+	def __str__(self) -> str:
+		return "Human"
