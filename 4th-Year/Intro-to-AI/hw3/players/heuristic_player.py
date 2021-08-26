@@ -1,6 +1,5 @@
 from abc import abstractmethod
 from math import inf
-from status import Status
 from node import Node
 from alpha_beta_pruning import ab_minimax
 from connect_four_board import ConnectFourBoard

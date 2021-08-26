@@ -3,7 +3,7 @@ from typing import Optional
 import socket
 
 
-class NetworkPlayerClient(NetworkPlayer):
+class Client(NetworkPlayer):
 	def __init__(self, symbol: str):
 		super().__init__(symbol)
 		self.__server: Optional[Address] = None

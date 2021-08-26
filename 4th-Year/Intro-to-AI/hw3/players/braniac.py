@@ -1,10 +1,10 @@
 from cell import Cell
-from typing import List, Sequence
+from typing import Sequence
 from heuristic_player import HeuristicPlayer
 from connect_four_board import ConnectFourBoard
 
 
-class PossibleWinsPlayer(HeuristicPlayer):
+class Braniac(HeuristicPlayer):
 	def heuristic(self, board: ConnectFourBoard) -> float:
 		"""This connect four heuristic counts the number of possible ways a player can win and weights them according to how many of the pieces have already been placed.
 
@@ -24,7 +24,7 @@ class PossibleWinsPlayer(HeuristicPlayer):
 
 	def sequence_value(self, cells: Sequence[Cell]) -> float:
 		piece_count = len([cell for cell in cells if not cell.is_empty])
-		return piece_count ** piece_count
+		return piece_count ** 5
 
 	def player_factor(self, cells: Sequence[Cell]) -> int:
 		player = None
@@ -35,6 +35,3 @@ class PossibleWinsPlayer(HeuristicPlayer):
 				elif player != cell.player:
 					return 0
 		return 1 if player == self else -1
-
-	def __str__(self) -> str:
-		return "Braniac"

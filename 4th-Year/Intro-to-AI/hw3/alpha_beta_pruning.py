@@ -42,8 +42,9 @@ def ab_minimax(
 			child, heuristic, not maximizing, depth - 1, beta, alpha
 		)
 		best_value, _, best_move = get_best(
-			(best_value, next(__unique_nums), best_move),
-			(grandchild_value, next(__unique_nums), child),
+			# if theyre the same values, pick the first one unless best_move so far is None
+			(best_value, get_best(2, -2) if best_move else 0, best_move),
+			(grandchild_value, get_best(1, -1), child),
 		)
 		if get_best(best_value, beta) == best_value:
 			break

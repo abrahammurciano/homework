@@ -1,12 +1,12 @@
 #!/usr/bin/python
 
-from possible_wins_lower_player import PossibleWinsLowerPlayer
+from players.jarvis import Jarvis
 from board_text_ui import BoardTextUI
-from network_player_client import NetworkPlayerClient
-from network_player_server import NetworkPlayerServer
-from random_player import RandomPlayer
-from possible_wins_player import PossibleWinsPlayer
-from human_player import HumanPlayer
+from players.client import Client
+from players.server import Server
+from players.baby import Baby
+from players.braniac import Braniac
+from players.human import Human
 from player import Player
 from connect_four_board import ConnectFourBoard
 from termcolor import colored
@@ -26,21 +26,21 @@ def choose_player(number: int) -> Player:
 	"""
 
 	def get_server():
-		server = NetworkPlayerServer()
+		server = Server()
 		print(f"Please connect a client to {server.address}")
 		print(f"Connected to {server.connect()}.")
 		return server
 
 	def get_client():
-		client = NetworkPlayerClient()
+		client = Client()
 		client.connect((input("Server IP address: "), int(input("Port number: "))))
 		return client
 
 	players = {
-		"Human": lambda: HumanPlayer(),
-		"Braniac": lambda: PossibleWinsPlayer(),
-		"Jarvis": lambda: PossibleWinsLowerPlayer(),
-		"Baby": lambda: RandomPlayer(),
+		"Human": lambda: Human(),
+		"Braniac": lambda: Braniac(),
+		"Jarvis": lambda: Jarvis(),
+		"Baby": lambda: Baby(),
 		"Server": get_server,
 		"Client": get_client,
 	}

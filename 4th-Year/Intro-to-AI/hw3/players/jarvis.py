@@ -1,10 +1,10 @@
-from possible_wins_player import PossibleWinsPlayer
+from braniac import Braniac
 from cell import Cell
 from typing import Sequence
 from statistics import mean
 
 
-class PossibleWinsLowerPlayer(PossibleWinsPlayer):
+class Jarvis(Braniac):
 	def sequence_value(self, cells: Sequence[Cell]):
 		result = super().sequence_value(cells)
 		if cell_rows := [cell.row for cell in cells]:

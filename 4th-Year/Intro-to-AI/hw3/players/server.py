@@ -2,7 +2,7 @@ from network_player import Address, NetworkPlayer
 from typing import Optional
 
 
-class NetworkPlayerServer(NetworkPlayer):
+class Server(NetworkPlayer):
 	def __init__(self, symbol: str):
 		super().__init__(symbol)
 		self.__client = None
