@@ -1,4 +1,4 @@
-from network_player import Address, NetworkPlayer
+from players.abc.network_player import Address, NetworkPlayer
 from typing import Optional
 
 

@@ -1,7 +1,7 @@
 import itertools
 from math import inf
 from node import Node
-from typing import Callable, Optional, Tuple, TypeVar
+from typing import Callable, Optional, Tuple
 
 MAX_DEPTH = 2
 

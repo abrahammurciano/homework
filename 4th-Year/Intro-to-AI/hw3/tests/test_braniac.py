@@ -1,4 +1,4 @@
-from player import Player
+from players.abc.player import Player
 from typing import Iterable, Tuple
 from connect_four_board import ConnectFourBoard
 from players.human import Human

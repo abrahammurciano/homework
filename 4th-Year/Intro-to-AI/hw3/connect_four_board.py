@@ -1,7 +1,7 @@
 from node import Node
 from exceptions import ColumnFullException, ColumnOutOfBoundsException
 from status import Status
-from player import Player
+from players.abc.player import Player
 from cell import Cell
 from typing import Callable, Iterable, Sequence, List, Optional, Tuple
 from itertools import product

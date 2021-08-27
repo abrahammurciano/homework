@@ -3,12 +3,17 @@ from math import inf
 from node import Node
 from alpha_beta_pruning import ab_minimax
 from connect_four_board import ConnectFourBoard
-from player import Player
+from players.abc.player import Player
 
 
 class HeuristicPlayer(Player[ConnectFourBoard]):
+	def __init__(self, depth=None):
+		self.__depth = depth if depth is not None else 2
+
 	def play(self, board: ConnectFourBoard) -> ConnectFourBoard:
-		_, best_board = ab_minimax(board, lambda node: self.__heuristic(node))
+		_, best_board = ab_minimax(
+			board, lambda node: self.__heuristic(node), depth=self.__depth
+		)
 		assert isinstance(best_board, ConnectFourBoard)
 		return best_board
 

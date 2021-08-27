@@ -1,6 +1,6 @@
 from exceptions import IllegalMoveException
 from connect_four_board import ConnectFourBoard
-from player import Player
+from players.abc.player import Player
 import random
 
 

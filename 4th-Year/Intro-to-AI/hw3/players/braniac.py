@@ -1,10 +1,13 @@
 from cell import Cell
 from typing import Sequence
-from heuristic_player import HeuristicPlayer
+from players.abc.heuristic_player import HeuristicPlayer
 from connect_four_board import ConnectFourBoard
 
 
 class Braniac(HeuristicPlayer):
+	def __init__(self, depth: int = None):
+		super().__init__(depth=depth)
+
 	def heuristic(self, board: ConnectFourBoard) -> float:
 		"""This connect four heuristic counts the number of possible ways a player can win and weights them according to how many of the pieces have already been placed.
 

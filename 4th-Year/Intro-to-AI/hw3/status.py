@@ -1,5 +1,5 @@
 from typing import Optional
-from player import Player
+from players.abc.player import Player
 
 
 class Status:

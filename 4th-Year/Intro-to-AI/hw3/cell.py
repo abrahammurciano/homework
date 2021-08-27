@@ -1,5 +1,5 @@
 from typing import Optional, TYPE_CHECKING
-from player import Player
+from players.abc.player import Player
 
 if TYPE_CHECKING:
 	from connect_four_board import ConnectFourBoard

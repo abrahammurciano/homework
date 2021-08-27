@@ -7,7 +7,7 @@ from players.server import Server
 from players.baby import Baby
 from players.braniac import Braniac
 from players.human import Human
-from player import Player
+from players.abc.player import Player
 from connect_four_board import ConnectFourBoard
 from termcolor import colored
 from simple_term_menu import TerminalMenu
@@ -38,8 +38,8 @@ def choose_player(number: int) -> Player:
 
 	players = {
 		"Human": lambda: Human(),
-		"Braniac": lambda: Braniac(),
-		"Jarvis": lambda: Jarvis(),
+		"Braniac": lambda: Braniac(int(input("Choose difficulty level: "))),
+		"Jarvis": lambda: Jarvis(int(input("Choose difficulty level: "))),
 		"Baby": lambda: Baby(),
 		"Server": get_server,
 		"Client": get_client,
@@ -47,7 +47,9 @@ def choose_player(number: int) -> Player:
 	keys = list(players.keys())
 	menu = TerminalMenu(keys)
 	print("Choose player", number)
-	return players[keys[menu.show()]]()
+	key = keys[menu.show()]
+	print(key)
+	return players[key]()
 
 
 def play_game():
