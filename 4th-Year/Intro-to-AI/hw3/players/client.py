@@ -1,11 +1,12 @@
 from players.abc.network_player import Address, NetworkPlayer
 from typing import Optional
 import socket
+import random
 
 
 class Client(NetworkPlayer):
-	def __init__(self, symbol: str):
-		super().__init__(symbol)
+	def __init__(self, ip: str):
+		super().__init__(ip, random.randint(49152, 65535))
 		self.__server: Optional[Address] = None
 
 	@property
