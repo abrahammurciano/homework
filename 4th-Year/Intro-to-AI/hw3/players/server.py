@@ -3,8 +3,8 @@ from typing import Optional
 
 
 class Server(NetworkPlayer):
-	def __init__(self, symbol: str):
-		super().__init__(symbol)
+	def __init__(self, ip: str, port: int):
+		super().__init__(ip, port)
 		self.__client = None
 
 	@property

@@ -11,6 +11,7 @@ from players.abc.player import Player
 from connect_four_board import ConnectFourBoard
 from termcolor import colored
 from simple_term_menu import TerminalMenu
+import os
 
 
 def choose_player(number: int) -> Player:
@@ -25,14 +26,17 @@ def choose_player(number: int) -> Player:
 	    A new player of the requested type.
 	"""
 
+	def get_ip() -> str:
+		return os.getenv("IP") or input("Enter your local IP address")
+
 	def get_server():
-		server = Server()
+		server = Server(get_ip(), 6969)
 		print(f"Please connect a client to {server.address}")
 		print(f"Connected to {server.connect()}.")
 		return server
 
 	def get_client():
-		client = Client()
+		client = Client(get_ip())
 		client.connect((input("Server IP address: "), int(input("Port number: "))))
 		return client
 

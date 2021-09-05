@@ -2,18 +2,14 @@ from typing import Optional, Tuple
 from players.abc.player import Player
 from connect_four_board import ConnectFourBoard
 import socket
-import random
 from abc import abstractmethod
 
 Address = Tuple[str, int]
 
 
 class NetworkPlayer(Player[ConnectFourBoard]):
-	def __init__(self, symbol: str):
-		self.__addr = (
-			socket.gethostbyname(socket.gethostname()),
-			random.randint(49152, 65535),
-		)
+	def __init__(self, ip: str, port: int):
+		self.__addr = (ip, port)
 		self.__socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 		self.__socket.bind(self.__addr)
 
