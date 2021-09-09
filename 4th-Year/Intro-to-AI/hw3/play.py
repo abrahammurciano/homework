@@ -72,6 +72,8 @@ def play_game():
 	while not board.is_game_over():
 		board = board.advance()
 		ui.render(board)
+	board.advance()
+	ui.render(board)
 
 
 if __name__ == "__main__":

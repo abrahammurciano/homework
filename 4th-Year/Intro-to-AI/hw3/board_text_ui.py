@@ -49,6 +49,6 @@ class BoardTextUI:
 	def __print_status(self, board: ConnectFourBoard):
 		if board.is_game_over():
 			if winner := board.status().winner:
-				print(f"\nPlayer {self.__symbols[winner]} is the winner!")
+				print(f"\n{winner} {self.__symbols[winner]} is the winner!")
 			else:
 				print("\nIt's a tie!")
