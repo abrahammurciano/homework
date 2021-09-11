@@ -1,8 +1,8 @@
 from gender import Gender
-from typing import Iterator, Sequence, Optional
+from typing import Any, Iterator, Sequence, Optional
 
 
-class Vector:
+class Vector(Sequence[float]):
 	def __init__(self, data: Sequence[float], gender: Optional[Gender]):
 		"""Constuct a vector.
 
@@ -13,7 +13,7 @@ class Vector:
 		self.data = list(data)
 		self.gender = gender
 
-	def __getitem__(self, index: int) -> float:
+	def __getitem__(self, index):
 		return self.data[index]
 
 	def __len__(self) -> int:

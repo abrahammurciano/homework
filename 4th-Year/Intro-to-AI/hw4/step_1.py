@@ -40,7 +40,7 @@ def main():
 	# create a list called distances, which contains the point-to-point
 	# distance for any other vector in the file, along with the tagging of the
 	# vector.
-	distances = [Distance(point, v) for v in vectors]
+	distances = [Distance(point, v, euclidean) for v in vectors]
 
 	# Part 6
 	# You must sort the list you created in the previous section.
