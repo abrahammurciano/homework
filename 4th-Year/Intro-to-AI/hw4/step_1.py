@@ -24,7 +24,7 @@ def main():
 
 	# Part 4
 	# Enter code to read from myFile.csv file into list
-	_, vectors = dataio.read("myFile.csv")
+	vectors, _ = dataio.read("myFile.csv")
 
 	# Part 4a
 	# You must print the first 2 vectors of the file
