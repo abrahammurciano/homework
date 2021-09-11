@@ -13,6 +13,7 @@ class Distance:
 		Args:
 			start (Vector): The vector to calculate the distance from.
 			vector (Vector): The vector to calculate the distance to.
+			distance_func (DistanceFunction): A function to calculate the distance between two vectors.
 		"""
 		self.distance = distance_func(start, vector)
 		self.vector = vector
