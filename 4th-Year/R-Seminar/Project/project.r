@@ -1,4 +1,3 @@
-setwd("/home/abraham/Documents/homework/4th-Year/R-Seminar/Project")
 shirts <- read.csv("shirts.csv")
 
 # Create a class Option which has a label and a function
@@ -35,6 +34,14 @@ population_sd <- function(x) sqrt(population_var(x))
 stat_mode <- function(x) {
     ux <- unique(x)
     ux[which.max(tabulate(match(x, ux)))]
+}
+
+shirts_mean_by_group <- function(group_by) {
+    return(aggregate(
+        shirts[c("Strength", "Quality", "Dye")],
+        list(group_by),
+        mean
+    ))
 }
 
 options <- list(
@@ -175,12 +182,23 @@ options <- list(
         }
     ),
     Option$new(
+        label = "What are the means for each country?",
+        action = function() {
+            print(shirts_mean_by_group(shirts$Origin))
+        }
+    ),
+    Option$new(
+        label = "What are the means for each material?",
+        action = function() {
+            print(shirts_mean_by_group(shirts$Material))
+        }
+    ),
+    Option$new(
         label = paste(
-            "Is there any interaction between different countries and",
-            "different materials?"
+            "What are the means for each country together with each material?"
         ),
         action = function() {
-            print(summary(lm(Material ~ Origin, shirts)))
+            print(aggregate(. ~ Origin + Material, shirts, mean))
         }
     )
 )
